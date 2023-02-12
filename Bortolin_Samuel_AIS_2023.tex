@@ -1,7 +1,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % Template for Master degrees
-% DISI - Dipartimento di Ingegneria e Scienza dell’Informazione
 % DISI - Department of Information Engineering and Computer Science
 %
 % update 2020-08-30
@@ -19,6 +18,8 @@
 \usepackage{epsfig}
 \usepackage{plain}
 \usepackage{setspace}
+\usepackage{array}
+\usepackage{afterpage}
 \usepackage[paperheight=29.7cm,paperwidth=21cm,outer=1.5cm,inner=2.5cm,top=2cm,bottom=2cm]{geometry} % layout setting
 \usepackage{titlesec} % custom setup title of chanpter
 % \usepackage{newtxtext,newtxmath} % times new roman
@@ -27,13 +28,16 @@
 % support for accented letters
 %
 %\usepackage[latin1]{inputenc} % Windows;
-\usepackage[utf8x]{inputenc} % Linux (unicode package is required);
-%\usepackage[applemac]{inputenc} % Mac.
+%\usepackage[utf8x]{inputenc} % Linux (unicode package is required);
+\usepackage[applemac]{inputenc} % Mac.
 
 \singlespacing
 
 % italian language
 %\usepackage[italian]{babel}
+
+\usepackage[backend=bibtex, maxbibnames=10, style=numeric]{biblatex}
+\addbibresource{bibliography.bib}
 
 \begin{document}
 
@@ -41,7 +45,7 @@
   \pagenumbering{gobble} 
   \input{front}
 
-  \clearpage
+  \cleardoublepage
  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -51,10 +55,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \input{acknowledgements}
-  \clearpage
+  \afterpage{\null\thispagestyle{empty}\clearpage}
   \pagestyle{plain} % no heading, footer with centered page number
 
-  
   % page number with Arabic format
   \mainmatter
 
@@ -70,22 +73,21 @@
 %% Exclude:
 %%   title page
 %%   acknowledgments
+%%   bibliography
 %%   attachments
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     % index
     \tableofcontents
-    \clearpage
-    
-    
-          
+    \afterpage{\null\thispagestyle{empty}\clearpage}
+
     % group to define space between chapters
     \begingroup
       % no page break between chapters
       % override clear page commands
-      \renewcommand{\cleardoublepage}{} 
-      \renewcommand{\clearpage}{} 
+      %\renewcommand{\cleardoublepage}{} 
+      %\renewcommand{\clearpage}{} 
       % override format of title chapter
       % from
       %   Chapter X
@@ -102,11 +104,13 @@
       
       % summary / abstract
       \input{abstract}
+      \afterpage{\null\thispagestyle{empty}\clearpage}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Note
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% The first chapter of the final thesis must contain a summary of a 
+%% The first chapter (abstract) of the final thesis must contain a summary of a 
 %% maximum length of 3 pages, introducing the context and motivations,
 %% resuming the problem faced by the student, the techniques used for the
 %% investigation and the reached outcomes.
@@ -120,22 +124,30 @@
       %
       % \input or \include
       %
-      \input{chapter1}
-      \input{chapter2}
-      \input{chapter3}
-      %\input{chapter4}
-      
-      
-    \endgroup
+      \input{introduction}
+      \afterpage{\null\thispagestyle{empty}\clearpage}
+      \input{state_of_the_art}
+      \afterpage{\null\thispagestyle{empty}\clearpage}
+      \input{system_model}
+      \afterpage{\null\thispagestyle{empty}\clearpage}
+      \input{implementation}
+      \afterpage{\null\thispagestyle{empty}\clearpage}
+      \input{performance_evaluation}
+      \afterpage{\null\thispagestyle{empty}\clearpage}
+      \input{conclusions}
+      \afterpage{\null\thispagestyle{empty}\clearpage}
 
+    \endgroup
 
     % bibliography - bibtex format
     %
     % add chapter to index
-    \addcontentsline{toc}{chapter}{Bibliography}
+    %\addcontentsline{toc}{chapter}{Bibliography}
     % alphabetical order of authors
-    \bibliographystyle{plain}
-    \bibliography{biblio}
+    %\bibliographystyle{plain}
+    %\bibliography{bibliography}
+    \printbibliography[heading=bibintoc, title={Bibliography}]
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Nota
@@ -172,10 +184,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
 
-    \titleformat{\chapter}
-        {\normalfont\Huge\bfseries}{Appendix \thechapter}{1em}{}
+    %\titleformat{\chapter}
+    %    {\normalfont\Huge\bfseries}{Appendix \thechapter}{1em}{}
     % Appendix / attachment section - optional
-    \appendix
-    \input{attachments}
+    %\appendix
+    %\input{attachments}
 
 \end{document}
