@@ -14,28 +14,29 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % 2 side format
-\documentclass[epsfig,a4paper,11pt,titlepage,twoside,openany]{book}
+\documentclass[epsfig, a4paper, 11pt, titlepage, twoside, openany]{book}
 \usepackage{epsfig}
 \usepackage{plain}
 \usepackage{setspace}
 \usepackage{array}
 \usepackage{afterpage}
-\usepackage[paperheight=29.7cm,paperwidth=21cm,outer=1.5cm,inner=2.5cm,top=2cm,bottom=2cm]{geometry} % layout setting
+\usepackage[paperheight=29.7cm, paperwidth=21cm, outer=1.5cm, inner=2.5cm, top=2cm, bottom=2cm]{geometry} % layout setting
 \usepackage{titlesec} % custom setup title of chanpter
 % \usepackage{newtxtext,newtxmath} % times new roman
+\usepackage{wrapfig}
+\usepackage{float}
 
 %%%%%%%%%%%%%%
 % support for accented letters
-%
-%\usepackage[latin1]{inputenc} % Windows;
-%\usepackage[utf8x]{inputenc} % Linux (unicode package is required);
-\usepackage[applemac]{inputenc} % Mac.
+\usepackage[utf8]{inputenc}
 
 \singlespacing
 
-% italian language
-%\usepackage[italian]{babel}
+\usepackage[english]{babel}
+\usepackage{chngcntr}
+\counterwithout{footnote}{chapter}
 
+\usepackage[autostyle,italian=guillemets]{csquotes}
 \usepackage[backend=bibtex, maxbibnames=10, style=numeric]{biblatex}
 \addbibresource{bibliography.bib}
 
@@ -44,7 +45,6 @@
   % no page number
   \pagenumbering{gobble} 
   \input{front}
-
   \cleardoublepage
  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -55,8 +55,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \input{acknowledgements}
-  \afterpage{\null\thispagestyle{empty}\clearpage}
+  \clearpage
   \pagestyle{plain} % no heading, footer with centered page number
+  \afterpage{\null\thispagestyle{empty}\clearpage}
 
   % page number with Arabic format
   \mainmatter
@@ -123,18 +124,29 @@
       % chapters
       %
       % \input or \include
-      %
+
       \input{introduction}
+      % \newpage
       \afterpage{\null\thispagestyle{empty}\clearpage}
+
       \input{state_of_the_art}
+      % \newpage
       \afterpage{\null\thispagestyle{empty}\clearpage}
+
       \input{system_model}
+      % \newpage
       \afterpage{\null\thispagestyle{empty}\clearpage}
+
       \input{implementation}
+      % \newpage
       \afterpage{\null\thispagestyle{empty}\clearpage}
+
       \input{performance_evaluation}
+      % \newpage
       \afterpage{\null\thispagestyle{empty}\clearpage}
+
       \input{conclusions}
+      % \newpage
       \afterpage{\null\thispagestyle{empty}\clearpage}
 
     \endgroup
