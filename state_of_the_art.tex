@@ -72,7 +72,7 @@ Analyze the transformers ...
 \cite{9892274}
 \cite{9586824}
 \cite{9688968}
-
+\cite{HEIDARI2020626}
 
 \vspace{0.1 cm}
 \subsection{AutoML}
@@ -106,12 +106,53 @@ Analyze the AutoML ...
 
 Analyze the electricity demand forecasting techniques ...
 
+In \cite{MIRASGEDIS2006208} Mirasgedis et al. presented how to incorporate weather into models for mid-term electricity demand forecasting.
+It is a paper from 2005, so no DL involved.
+They studied the daily and monthly electricity demand.
+They noticed that montlhy model performs better thanks to the aggregation but also that the influence of weather in electricity demand is in a more aggregated way and thus may not account well for the influence of unusual or extreme weather on electricity consumption.
+The temperature of the day that electricity demand is projected, the temperature of the two previous days and the relative humidity have been found to be the most important weather parameters that affect electricity consumption in the Greek interconnected power system.
+
+In \cite{BEDI20191312}, Bedi and Toshniwal proposed a deep learning based framework to forecast electricity demand by taking care of long-term historical dependencies (existing methods are useful only for handling short-term dependencies).
+The proposed approach is called D-FED: Long Short Term Memory network multi-input multi-output + moving window based active learning.
+It is applied to the electricity consumption data of Union Territory Chandigarh, India.
+Performance of the proposed approach is evaluated by comparing the prediction results with Artificial Neural Network, Recurrent Neural Network and Support Vector Regression models.
+
+In \cite{ALMUSAYLH20181}, Al-Musaylh et al. addreesed the short-term electricity demand forecasting with MARS (Multivariate Adaptive Regression Spline), SVR and ARIMA models using aggregated demand data in Queensland, Australia.
+They fuond out that the MARS and SVR models can be considered more suitable for short-term electricity demand forecasting in Queensland, Australia, when compared to the ARIMA model.
+As expected, given its linear formulation in the modelling process, the ARIMA model’s performance was lower for all forecasting horizons as it generated very high forecast errors.
+This study found that the MARS models provide a powerful, yet simple and fast forecasting framework when compared to the SVR models.
+
+In \cite{WEN2020106073}, Wen et al. proposed a deep learning model to forecast the load demand of aggregated residential buildings with a one-hour resolution, while considering its complexity and variability.
+Hourly-measured residential load data in Austin, Texas, USA were used to demonstrate the effectiveness of the proposed model, and the forecasting error was quantitatively evaluated using several metrics.
+The model is a deep RNN model with GRU (DRNN-GRU).
+This model assumes knowledge of the future weather data to make a forecast, which would affect the accuracy due to the weather uncertainty over a short to medium period.
+The results showed that the proposed model forecasts the aggregated and disaggregated load demand of residential buildings with higher accuracy compared to conventional methods.
+
+In \cite{WANG2020117197}, Wang et al. proposed a novel approach based on long short-term memory (LSTM) network for predicting the periodic energy consumption (general forecasting methods do not concern periodicity).
+Hidden features are extracted by the autocorrelation graph among the real industrial data.
+Experiments using a cooling system under one-step-ahead forecasting are conducted to verify the performance of LSTM.
+
 
 \section{Consumption baseline forecasting}
 \label{sec:baselinesoa}
 \vspace{0.2 cm}
 
 Analyze the consumption baseline forecasting techniques ...
+
+In \cite{KIM201972}, Kim and Cho proposed a CNN-LSTM neural network that can extract spatial and temporal features to effectively predict the housing energy consumption.
+The CNN layer can extract the features between several variables affecting energy consumption, and the LSTM layer is appropriate for modeling temporal information of irregular trends in time series components. The proposed CNN-LSTM method achieves almost perfect prediction performance for electric energy consumption that was previously difficult to predict.
+Also, it records the smallest value of root mean square error compared to the conventional forecasting methods for the dataset on individual household power consumption.
+It predicts complex electric energy consumption with the highest performance in all cases of minutely, hourly, daily, and weekly unit resolutions compared to other methods.
+Household characteristics such as occupancy and behavior have a large influence on predicting electric energy consumption.
+
+In \cite{SOMU2020114131}, Somu et al. proposed a hybrid model for building energy consumption forecasting using long short term memory networks.
+In particular, they presented eDemand, an energy consumption forecasting model which employs long short term memory networks and improved sine cosine optimization algorithm for accurate and robust building energy consumption forecasting.
+Live energy consumption data obtained from an academic building in Indian Institute of Technology, Bombay to forecast short term, mid-term, and long term energy consumption.
+
+In \cite{WANG201910}, a probabilistic load forecasting method for individual consumers is proposed to handle the variability and uncertainty of future load profiles.
+Pinball loss guided long short-term memory (LSTM), is used to model both the long-term and short-term dependencies within the load profiles.
+Forecasting for both residential and commercial consumers is tested.
+Results show that the proposed method has superior performance over traditional methods.
 
 
 \section{Electricity production forecasting}
