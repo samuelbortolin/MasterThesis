@@ -12,6 +12,7 @@ Literature review ...
 Analyze the electricity data standards ...
 \cite{CHEN201798}
 \cite{8577770}
+\cite{WILCOX2019250}
 \cite{8284772}
 \cite{5772503}
 
@@ -240,6 +241,8 @@ The testing results demonstrate the effectiveness of the proposed method achieci
 
 Analyze the consumption baseline forecasting techniques ...
 
+Cite the guideline on how to create a consumption baseline\footnote{ \url{https://www.smartgrid-engagement-toolkit.eu/fileadmin/s3ctoolkit/user/guidelines/GUIDELINE_HOW_TO_CREATE_A_CONSUMPTION_BASELINE.pdf} }
+
 In \cite{KIM201972}, Kim and Cho proposed a CNN-LSTM neural network that can extract spatial and temporal features to effectively predict the housing energy consumption.
 The CNN layer can extract the features between several variables affecting energy consumption, and the LSTM layer is appropriate for modeling temporal information of irregular trends in time series components. The proposed CNN-LSTM method achieves almost perfect prediction performance for electric energy consumption that was previously difficult to predict.
 Also, it records the smallest value of root mean square error compared to the conventional forecasting methods for the dataset on individual household power consumption.
@@ -294,9 +297,47 @@ The proposed load forecasting method achieves its best performance with a four-u
 The optimal performance corresponds to 15.33\%, 56.86 kW, and 82.50 kW in terms of MAPE, MAE, and RMSE, respectively.
 The proposed method is demonstrated to be an effective choice for day-ahead residential load forecasting. Meanwhile, the method requires more than five residential customers for the sake of interconnected user selection.
 
+\cite{CAI20191078} aimed to use deep learning-based techniques for day-ahead multi-step load forecasting in commercial buildings.
+RNN and CNN have been proposed and formulated under both recursive and direct multi-step manners.
+The performances are compared with the Seasonal ARIMAX model, the gated 24-h CNN model, performed in a direct multi-step manner, proves itself to have the best performance, improving the forecasting accuracy by 22.6\% compared to that of the seasonal ARIMAX.
+
+\cite{LUSIS2017654} studied how calendar effects, forecasting granularity and the length of the training set affect the accuracy of a day-ahead load forecast for residential customers.
+Regression trees, neural networks, and support vector regression yielded similar average RMSE results, but statistical analysis showed that regression trees technique is significantly better.
+The use of historical load profiles with daily and weekly seasonality, combined with weather data, leaves the explicit calendar effects a very low predictive power.
+In the setting studied here, it was shown that forecast errors can be reduced by using a coarser forecast granularity.
+It was also found that one year of historical data is sufficient to develop a load forecast model for residential customers as a further increase in training dataset has a marginal benefit.
+
+Forecast in household-level is also getting more and more popular on smart building control and demand response program.
+This inspires Dong et al. to develop a hybrid model to address the problem of residential hour and day ahead load forecasting through the integration of data-driven techniques \cite{DONG2016341}.
+Evaluations of five different machine learning algorithms, artificial neural network (ANN), support vector regression (SVR), least-square support vector machine (LS-SVM), Gaussian process regression (GPR) and Gaussian mixture model (GMM), applied to four residential data set that contains smart meters.
+Subdicision of air conditioning (AC) consumptions and not-AC for better results.
+The final result showing improvements of coefficient of variance between the best data-driven model and hybrid model are 6–10\% and 2–15\% for hour ahead and 24-h ahead, respectively.
+
+\cite{AMBER2018886} aimed to compare prediction capabilities of five different intelligent system techniques by forecasting electricity consumption of an administration building.
+These five techniques are; Multiple Regression (MR), Genetic Programming (GP), Artificial Neural Network (ANN), Deep Neural Network (DNN) and Support Vector Machine (SVM). 
+The prediction models are developed based on five years of observed data of five different parameters such as solar radiation, temperature, wind speed, humidity and weekday index.
+Weekday index is an important parameter introduced to differentiate between working and non-working days.
+ANN performs better than all other four techniques with a Mean Absolute Percentage Error (MAPE) of 6\% whereas MR, GP, SVM and DNN have MAPE of 8.5\%, 8.7\%, 9\% and 11\%, respectively.
+
+\cite{7576207} proposes a baseline load forecasting and optimal method based on non-demand-response factors, considering the effects of non-demand-response factors on costumer load characteristics and customer baseline load (CBL) forecasting.
+The proposed method combines non-demand-response factors mining, similar days selecting and CBL calculating.
+A combined calculation model is adopted to predict the CBL.
+The case study reveals the greater accuracy of this method.
+
+In \cite{7463810}, Kim et al. examined a number of different data mining techniques and demonstrate Gradient Tree Boosting (GTB) to be an effective method to build the baseline.
+They trained GTB on data prior to the introduction of new pricing schemes, and applied the known temperature following the introduction of new pricing schemes to predict electricity usage with the expected temperature correction.
+Their experiments and analyses showed that the baseline models generated by GTB capture the core characteristics over the two years with the new pricing schemes.
+In contrast to the majority of regression based techniques which fail to capture the lag between the peak of daily temperature and the peak of electricity usage, the GTB generated baselines are able to correctly capture the delay between the temperature peak and the electricity peak.
+Furthermore, subtracting this temperature-adjusted baseline from the observed electricity usage, we find that the resulting values are more amenable to interpretation, which demonstrates that the temperature-adjusted baseline is indeed effective.
+Instead of providing accurate short-term forecasts, our baseline model aims to capture intraday characteristics that persists for years.
+
+Ahmad et al. in \cite{AHMAD2018301} focused on reviewing data-driven approached and large-scale building energy predicting-based approaches.
+A thorough review of different techniques is presented in the study.
+
 
 \section{Electricity production forecasting}
 \label{sec:productionsoa}
 \vspace{0.2 cm}
 
 Analyze the electricity production forecasting techniques ...
+
