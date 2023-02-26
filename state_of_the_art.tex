@@ -341,3 +341,55 @@ A thorough review of different techniques is presented in the study.
 
 Analyze the electricity production forecasting techniques ...
 
+Cite PVGIS tool\footnote{ \url{https://joint-research-centre.ec.europa.eu/pvgis-online-tool_en} }
+
+In \cite{AHMED2020109792}, Ahmed et al. reviewed and evaluated contemporary forecasting techniques.
+They noticed with correlation analysis that solar irradiance is the most correlated feature with Photovoltaic output, and so, weather classification and cloud motion study are crucial.
+In addition, they stated that the best data cleansing processes are normalization and wavelet transforms, and augmentation using generative adversarial network are recommended for network training and forecasting.
+Furthermore, thay analyzed also that optimization of inputs and network parameters can be sone by using genetic algorithm and particle swarm optimization.
+They determined that ensembles of artificial neural networks are best for forecasting short term photovoltaic power forecast.
+
+\cite{INMAN2013535} reviewed the theory behind the forecasting methodologies, and presented a number of successful applications of solar forecasting methods for both the solar resource and the power output of solar plants at the utility scale level.
+
+in \cite{DAS2018912}, Das et al. based on the recent studies up to 2018 found out that ANN and SVM-based forecasting models performed well under rapid and varying environmental conditions.
+In addition, the most of the studies adopted numerous techniques to develop the forecasting model for better accuracy.
+Moreover, a considerable number of studies classified the forecasted day into different categories based on the weather conditions using several techniques and then developed the forecasting model.
+However, the range of the observed error was remarkably high due to different weather conditions.
+The separate sub-model for each weather condition has to perform well to minimize errors.
+
+\cite{SOBRI2018459} classifies solar PV forecasting methods into three major categories i.e., time-series statistical, physical, and ensemble methods.
+Artificial Neural Network (ANN) and Support Vector Machine (SVM) are widely used due to their ability in solving complex and non-linear forecasting models.
+The metrics assessment shows that Artificial Intelligence (AI) models could decrease the error compared to other statistical approaches.
+The ensemble method has been introduced recently for its ability to merge linear and non-linear techniques which enhances the accuracy and performance of models in comparison with individual models.
+The metrics assessment that used for evaluating the solar prediction accuracy is presented as well for specific applications and hence the appropriate solar forecasting approaches can be selected to ensure better performance.
+
+\cite{DEFREITASVISCONDI201954} presenteda literature review on big data models for solar photovoltaic electricity generation forecasts, aiming to evaluate the most applicable and accurate state-of-art techniques to the problem, including the motivation behind each project proposal, the characteristics and quality of data used to address the problem, among other issues.
+They affirm thatuse of these models to predict solar electricity generation is currently an ongoing academic research question.
+Machine learning is widely used, and neural networks is considered the most accurate algorithm.
+Extreme learning machine (ELM) has reduced time and raised precision.
+
+\cite{9848724} examined the performance of the LSTM method in Turkey's electricity production estimation and to determine the optimization technique that provides the best performance in the LSTM estimation method.
+It was observed that the energy production estimation of LSTM and Adam optimization technique achieved successful results. 
+
+\cite{9248865} presented case studies on forecasting PV power production and electricity demand in Portugal.
+They studied an ensemble of different machine learning methods (SVM, Random Forest, LSTM and ARIMA) to exploit the growing collection of energy supply and demand records.
+The ensemble uses only electricity data to forecast, since this data is available online for any forecasting horizon.
+The ensemble relies on offline training and online forecasting, by applying the most recent power measurements to trained models.
+The different machine learning methods perform different non-linear transformations to the same electricity data, thus introducing diversity in the ensemble.
+To assess the forecasting performance of this system, they considered two forecasting horizons relevant to the Internal Electricity Market, namely 36 hours ahead, relevant to the single day-ahead coupling, and 2 hours ahead, relevant to the single intraday coupling.
+The forecasting performance using only electricity data compares gracefully with the state-of-the-art and improves the reference accuracy in our case studies.
+Since the ensemble relies only on energy data, the results show that machine learning methods are useful to exploit energy big data towards efficient energy forecasting systems.
+
+In \cite{GELLERT2019546}, Gellert et al. proposed and evaluated a context-based technique to anticipate the electricity production and consumption in buildings.
+They focused on a household with photovoltaics and energy storage system.
+They analyze the efficiency of Markov chains, stride predictors and also their combination into a hybrid predictor in modelling the evolution of electricity production and consumption.
+Experimental results showed that the best evaluated predictor is the Markov chain configured with an electric power history of 100 values, a context of one electric power value and the interval size of 1.
+
+Zamo et al. in 2014 presented a pair of articles proposing a benchmark of statistical regression methods for short-term forecasting of photovoltaic electricity production.
+The first one is for Deterministic forecast of hourly production \cite{ZAMO2014792}, and the second one for Probabilistic forecast of daily production \cite{ZAMO2014804}.
+The proposed benchmark designated random forests as the best forecast model for hourly PV production with a short lead time (28 to 45 h).
+Their results also suggested that the RMSE can be reduced to about 5.8\% by first forecasting the production for each individual power plant and then summing these forecasts up.
+For probabilistic forecasts of daily production 2 days ahead, QR-based (quantile regression based) forecasts perform significantly better than the climatology, with a CRPS (continuous ranked probability score) lowered by 25–50\%.
+For most power plants, a QR-based forecast performs better than the others.
+But the most accurate forecast may vary from one power plant to another and with the number of forecast quantiles
+
