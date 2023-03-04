@@ -9,26 +9,29 @@ In particular, several implementations and some use cases are presented.
 Also an in-depth discussion on two hot topics, Transformas and AutoML, is treated in dedicated subsections.
 Furthermore, the three use cases of interest, electricity demand forecasting, consumption baseline forecasting and electricity production forecasting, are treated more in details in dedicated sections.
 At the end of this chapter, it will be clear the context around which the proposed system is developed.
-Unlike other solutions, our system is able to achieave a competitive MAPE in all the three use cases with a low-cost implementation.
+Unlike other solutions, our system is able to achieve a competitive MAPE in all the three use cases with a low-computational implementation.
 
 
 \section{Electricity data}
 \label{sec:data}
 \vspace{0.2 cm}
 
-In this section, the electricity data and proposed standards are presented.
+In this section, a discussion on electricity data and proposed standards is presented.
 
 \cite{CHEN201798} studied the data quality of electricity consumption data in a smart grid environment.
 The definition and classification of data quality issues are explained.
 The data quality issues of electricity consumption data are classified into three types: noise data, incomplete data and outlier data.
 These three types of data quality issues are discussed.
 The paper introduced the causes of electricity consumption outlier data and provided a review on the possible detection methods.
+This is a relevant study since most industrial studies in this field uses real-world data that present theses issues.
 
-The Green Button Data\footnote{ \url{https://www.greenbuttondata.org/} } is an industry initiative in response to the 2012 White House call-to-action to provide utility customers with easy and secure access to their energy usage information in a consumer-friendly and computer-friendly format for electricity, natural gas, and water usage.
+The Green Button Data\footnote{ \url{https://www.greenbuttondata.org/} } is an industry initiative in response to the 2012 White House call-to-action to provide customers a easy and secure access to their energy usage information in both consumer-friendly and computer-friendly format.
+This data may include electricity, natural gas, and water usage.
 Customers using this service are able to securely download their own detailed energy usage in a standard format with a simple click.
 They may choose to upload their own data to a third party applications or automate the secure transfer their own energy usage data to authorized third parties, based on affirmative customer consent and control.
+It is a very nice inititiative in U.S.and services like UtilityAPI are compatible with the Green Button standard providing support for APIs and XML schemas\footnote{ \url{https://utilityapi.com/docs/greenbutton} }.
 
-\cite{Nguyen2019} provided a case study and explained the lessons learned through the roll-out of the U.S. National Institute of Standards and Technology and U.S. Department of Energy Green Button electricity, natural gas, and water data-access initiative: to make readily available energy and water consumption data for consumers and third-party companies assisting mutual customers of utilities while protecting the security and privacy of the data.
+\cite{Nguyen2019} provided a case study and explained the lessons learned through the roll-out of Green Button electricity, natural gas, and water data-access initiative, in order to make readily available energy and water consumption data for consumers and third-party companies, that can assist customers while ensuring security and privacy of their data.
 This paper presented a case study using the Green Button standard and the steps taken to ensure data security and privacy while enabling access to those consumption data by the consumer and third parties.
 Data security and privacy were achieved through use of the Green Button standard and subsequent implementation by the Green Button Alliance of a compliance-testing program.
 Considerations and solutions were needed for data in transit, data at rest, and the authorization mechanisms for allowing unregulated third-party companies to interface directly to utilities on behalf of the consumer while ensuring the consumer maintains complete control of what is to be shared and the ability to revoke that sharing at any time.
@@ -39,7 +42,7 @@ They also analyzed in-depth data for pattern identification, relational analysis
 
 \cite{WILCOX2019250} proposed a novel broker-client system architecture for big data analytics: Smart Meter Analytics Scaled by Hadoop (SMASH).
 They demonstrated that SMASH is able to perform data storage, query, analysis and visualization tasks on large data sets at 20 TB scale.
-Experimental results suggested that SMASH is able to provide a competitive and easily operable platform to manage big energy data and visualize knowledge, with potential to support data-intensive decision making.
+Experimental results suggested that SMASH is able to provide a competitive and easily operable platform to manage big energy data and visualize knowledge, with the potential to provide support to data-intensive decision making.
 
 
 \section{Time series forecasting}
@@ -52,7 +55,7 @@ Forecasting competitions were proposed to promote the development of new solutio
 \cite{HYNDMAN20207}
 \cite{SPILIOTIS202037}
 
-Papers to cite.
+Relevant papers in the time series forecasting context to cite.
 \cite{DEGOOIJER2006443}
 \cite{SMYL202075}
 \cite{Lim2021}
@@ -83,7 +86,7 @@ Papers to cite.
 \label{sec:transformers}
 \vspace{0.1 cm}
 
-In this section, the attention-based and transformers approaches are presented, with a focus also on time series forecasting.
+In this subsection, an overview on attention-based and transformers approaches is presented, with a focus on time series forecasting applications.
 \cite{Grigsby2021}
 \cite{Wu2020}
 \cite{Zhou2020}
@@ -102,12 +105,13 @@ In this section, the attention-based and transformers approaches are presented, 
 \cite{9688968}
 \cite{HEIDARI2020626}
 
+
 \vspace{0.1 cm}
 \subsection{AutoML}
 \label{sec:automl}
 \vspace{0.1 cm}
 
-In this section, the AutoML developed approaches are presented, with a focus also on time series forecasting.
+In this subsection, an overview on the developed AutoML approaches is presented, with a focus on time series forecasting applications.
 \cite{HE2021106622}
 \cite{Gijsbers2019}
 \cite{Feurer2020}
