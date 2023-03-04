@@ -3,46 +3,46 @@
 \vspace{0.4 cm}
 
 In this chapter, the current state of the art is analyzed in the context of electricity data and time series forecasting methods.
-In the first section, a breif introduction to the proposed standards for electrity data is presented.
+In the first section, a brief introduction to the proposed standards for electricity data is presented.
 Subsequently, various technologies presented in the literature for time series forecasting are discussed.
-In particular, several implementations and some use cases are presented.
-Also an in-depth discussion on two hot topics, Transformas and AutoML, is treated in dedicated subsections.
-Furthermore, the three use cases of interest, electricity demand forecasting, consumption baseline forecasting and electricity production forecasting, are treated more in details in dedicated sections.
+In particular, several implementations and use cases are presented.
+Also, an in-depth discussion on two hot topics, Transformers and AutoML, is treated in dedicated subsections.
+Furthermore, the three use cases of interest, electricity demand forecasting, consumption baseline forecasting, and electricity production forecasting, are treated more in detail in dedicated sections.
 At the end of this chapter, it will be clear the context around which the proposed system is developed.
-Unlike other solutions, our system is able to achieve a competitive MAPE in all the three use cases with a low-computational implementation.
+Unlike other solutions, our system is able to achieve a competitive MAPE in all three use cases with a low-computational implementation.
 
 
 \section{Electricity data}
 \label{sec:data}
 \vspace{0.2 cm}
 
-In this section, a discussion on electricity data and proposed standards is presented.
+In this section, a discussion of electricity data and proposed standards is presented.
 
 \cite{CHEN201798} studied the data quality of electricity consumption data in a smart grid environment.
 The definition and classification of data quality issues are explained.
-The data quality issues of electricity consumption data are classified into three types: noise data, incomplete data and outlier data.
+The data quality issues of electricity consumption data are classified into three types: noise data, incomplete data, and outlier data.
 These three types of data quality issues are discussed.
-The paper introduced the causes of electricity consumption outlier data and provided a review on the possible detection methods.
-This is a relevant study since most industrial studies in this field uses real-world data that present theses issues.
+The paper introduced the causes of electricity consumption outlier data and provided a review of the possible detection methods.
+This is a relevant study since most industrial studies in this field use real-world data that presents these issues.
 
-The Green Button Data\footnote{ \url{https://www.greenbuttondata.org/} } is an industry initiative in response to the 2012 White House call-to-action to provide customers a easy and secure access to their energy usage information in both consumer-friendly and computer-friendly format.
+The Green Button Data\footnote{ \url{https://www.greenbuttondata.org/} } is an industry initiative in response to the 2012 White House call-to-action to provide customers easy and secure access to their energy usage information in a both consumer-friendly and computer-friendly format.
 This data may include electricity, natural gas, and water usage.
 Customers using this service are able to securely download their own detailed energy usage in a standard format with a simple click.
-They may choose to upload their own data to a third party applications or automate the secure transfer their own energy usage data to authorized third parties, based on affirmative customer consent and control.
-It is a very nice inititiative in U.S.and services like UtilityAPI are compatible with the Green Button standard providing support for APIs and XML schemas\footnote{ \url{https://utilityapi.com/docs/greenbutton} }.
+They may choose to upload their own data to a third-party application or automate the secure transfer of their own energy usage data to authorized third parties, based on affirmative customer consent and control.
+It is a very nice initiative in the U.S.and services like UtilityAPI are compatible with the Green Button standard providing support for APIs and XML schemas\footnote{ \url{https://utilityapi.com/docs/greenbutton} }.
 
 \cite{Nguyen2019} provided a case study and explained the lessons learned through the roll-out of Green Button electricity, natural gas, and water data-access initiative, in order to make readily available energy and water consumption data for consumers and third-party companies, that can assist customers while ensuring security and privacy of their data.
 This paper presented a case study using the Green Button standard and the steps taken to ensure data security and privacy while enabling access to those consumption data by the consumer and third parties.
-Data security and privacy were achieved through use of the Green Button standard and subsequent implementation by the Green Button Alliance of a compliance-testing program.
-Considerations and solutions were needed for data in transit, data at rest, and the authorization mechanisms for allowing unregulated third-party companies to interface directly to utilities on behalf of the consumer while ensuring the consumer maintains complete control of what is to be shared and the ability to revoke that sharing at any time.
+Data security and privacy were achieved through the use of the Green Button standard and subsequent implementation by the Green Button Alliance of a compliance-testing program.
+Considerations and solutions were needed for data in transit, data at rest, and the authorization mechanisms for allowing unregulated third-party companies to interface directly with utilities on behalf of the consumer while ensuring the consumer maintains complete control of what is to be shared and the ability to revoke that sharing at any time.
 
 \cite{8577770} presented a big-data-based framework for dealing with electricity consumption behavior.
-It conduced an analysis of the current state of the art methodologies for the extraction of electro-information.
-They also analyzed in-depth data for pattern identification, relational analysis and actions to perform on electricity usage.
+It conduced an analysis of the current state-of-the-art methodologies for the extraction of electro-information.
+They also analyzed in-depth data for pattern identification, relational analysis, and actions to perform on electricity usage.
 
 \cite{WILCOX2019250} proposed a novel broker-client system architecture for big data analytics: Smart Meter Analytics Scaled by Hadoop (SMASH).
-They demonstrated that SMASH is able to perform data storage, query, analysis and visualization tasks on large data sets at 20 TB scale.
-Experimental results suggested that SMASH is able to provide a competitive and easily operable platform to manage big energy data and visualize knowledge, with the potential to provide support to data-intensive decision making.
+They demonstrated that SMASH is able to perform data storage, query, analysis, and visualization tasks on large data sets at a 20 TB scale.
+Experimental results suggested that SMASH is able to provide a competitive and easily operable platform to manage big energy data and visualize knowledge, with the potential to provide support to data-intensive decision-making.
 
 
 \section{Time series forecasting}
@@ -51,7 +51,7 @@ Experimental results suggested that SMASH is able to provide a competitive and e
 
 In this section, the techniques for time series forecasting are presented.
 
-Forecasting competitions were proposed to promote the development of new solutions and novel techniques. 
+Forecasting competitions were proposed to promote the development of new solutions and novel techniques.
 \cite{HYNDMAN20207}
 \cite{SPILIOTIS202037}
 
@@ -138,131 +138,130 @@ In this subsection, an overview on the developed AutoML approaches is presented,
 
 In this section, the techniques for electricity demand forecasting are presented.
 
-\cite{TAYLOR200357} investigated the use of weather ensemble predictions in electricity demand forecasting for lead times from 1 to 10 days ahead.
-A weather ensemble prediction consists of 51 scenarios for a weather variable.
-They used these scenarios to produce 51 scenarios for the weather-related component of electricity demand.
-The results show that the average of the demand scenarios is a more accurate demand forecast than that produced using traditional weather forecasts.
-The mean of the 51 scenarios is equivalent to take the expectation of an estimate of the demand probability density function.
-They also used the distribution of the demand scenarios to estimate the demand forecast uncertainty.
-
-In \cite{MIRASGEDIS2006208} Mirasgedis et al. presented how to incorporate weather into models for mid-term electricity demand forecasting.
-It is a paper from 2005, so DL and avanced recent techniques are involved.
-They studied the daily and monthly electricity demand.
-They noticed that montlhy model performs better thanks to the high level of aggregation but also that the influence of weather in electricity demand is in a more aggregated way and thus may not account well for the influence of unusual or extreme weather on electricity consumption.
-The temperature of the day in which electricity demand is projected, the temperature of the two previous days and the relative humidity have been found to be the most important weather parameters that affect electricity consumption in the Greek interconnected power system.
-
-\cite{5686767} is a 2010 paper, it proposed a Neural Network (NN) with Backpropagation learning algorithm and compared with a regression analysis model showing the higher effectiveness of the NN.
-
-\cite{5518553} is a 2010 paper and proposed two models for short-term Singapore electricity demand forecasting: the multiplicative decomposition model and the seasonal ARIMA Model.
-Results show that both models can accurately predict the short-term Singapore demand and that the Multiplicative decomposition model slightly outperforms the seasonal ARIMA model.
-
-\cite{singh2013overview} presents a review of electricity demand forecasting techniques.
-Load forecasting can be broadly divided into three categories:
+\cite{singh2013overview} presented a review of electricity demand forecasting techniques.
+They classified load forecasting into three categories:
 short-term forecasts which are usually from one hour to one week,
 medium forecasts which are usually from a week to a year,
 and long-term forecasts which are longer than a year.
-Based on the various types of studies presented in these papers, the load forecasting techniques may be presented in three major groups: Traditional Forecasting techniques (regression methods, exponential smoothing and iterative reweighted least-squares), Modified Traditional Techniques (adaptive demand forecasting, AR, ARMA, ARIMA, SVM) and Soft Computing Techniques (genetic algorithms, fuzzy logic, NNs, knowledge-based expert systems).
+Based on the various types of studies presented, load forecasting techniques may be presented in three major groups: Traditional Forecasting techniques (regression methods, exponential smoothing, iterative reweighted least-squares), Modified Traditional Techniques (adaptive demand forecasting, AR, ARMA, ARIMA, SVM) and Soft Computing Techniques (genetic algorithms, fuzzy logic, NNs, knowledge-based expert systems).
 From the work, it can be inferred that demand forecasting techniques based on soft computing methods are gaining major advantages for their effective use.
 There is also a clear move towards hybrid methods, which combine two or more of these techniques.
 
-\cite{8093428} is an empirical study in which some forecasting models are develped for electricity demand using publicly available data and three models based on machine learning algorithms.
-Accuracy of these models is compared using different evaluation metrics.
-The data consists of several measurements and observations related to the electricity market in Turkey from 2011 to 2016.
-It is available in different time granularities.
-According to the best result of mean absolute percentage error (MAPE), electricity demand was predicted with 1.4 percentage error with random forest model. 
+\cite{TAYLOR200357} investigated the use of weather ensemble predictions in electricity demand forecasting from 1 to 10 days ahead.
+They proposed a weather ensemble prediction by considering 51 scenarios for a weather variable.
+For each scenario, they produced a scenario for the weather-related component of electricity demand.
+The results showed that the average of the demand scenarios is a more accurate demand forecast than that produced using traditional weather forecasts.
+The mean of the 51 scenarios is mathematically equivalent to taking the expectation over the weather-related component of the demand probability density function.
+They also used the distribution of the demand scenarios to estimate the demand forecast uncertainty.
 
-In \cite{9046493}, a modeling approach based on association rules (association rules are useful to describe a model in terms of cause and effect) was proposed.
-It does not outperforms ARIMA but helps to locate the most frequent patterns of electricity consumption.
+In \cite{MIRASGEDIS2006208}, Mirasgedis et al. presented how to incorporate weather into models for mid-term electricity demand forecasting.
+They studied the daily and monthly electricity demand.
+They noticed that the monthly model performs better thanks to the higher level of aggregation but also that the influence of weather on electricity demand is in a more aggregated way and thus may not account well for the influence of unusual or extreme weather on electricity consumption.
+The temperature of the day in which electricity demand is projected, the temperature of the two previous days, and the relative humidity have been found to be the most important weather parameters that affect electricity consumption in the Greek interconnected power system.
 
-In \cite{ALMUSAYLH20181}, Al-Musaylh et al. addreesed the short-term electricity demand forecasting with MARS (Multivariate Adaptive Regression Spline), SVR and ARIMA models using aggregated demand data of Queensland, Australia.
-They fuond out that the MARS and SVR models can be considered more suitable for short-term electricity demand forecasting when compared to the ARIMA model.
-As expected, given its linear formulation in the modelling process, the ARIMA model’s performance was lower for all forecasting horizons as it generated very high forecast errors.
-This study found that the MARS models provide a powerful, yet simple and fast forecasting framework when compared to the SVR models.
+\cite{5686767} proposed a first use of a Neural Network (NN) with the Backpropagation learning algorithm for Lao state yearly electricity demand forecasting.
+They compared with a regression analysis model showing the higher effectiveness of the NN.
 
-To counter the high nonlinearity between inputs and outputs of building energy consumption prediction models, in \cite{ZHONG2019403} a novel vector field-based support vector regression method is proposed.
-Through multi-distortions in the sample data space or high-dimensional feature space mapped by a vector field, the optimal feature space is found, in which the high non-linearity between inputs and outputs is approximated by linearity. 
-The proposed method ensures a high accuracy, a generalization ability, and robustness for building energy consumption prediction.
-A large office building in a coastal town of China is used for a case study, and its summer hourly cooling load data are used as energy consumption data.
+\cite{5518553} proposed two models for short-term Singapore electricity demand forecasting: the multiplicative decomposition model and the seasonal ARIMA Model.
+Results showed that both models can accurately predict the short-term Singapore demand and that the Multiplicative decomposition model slightly outperforms the seasonal ARIMA model.
 
-\cite{MA20193433} presents the method of support vector regress (SVR) to forecast building energy consumption in southern China.
-To improve the reliability of SVR in building energy consumption prediction, multiple parameters including weather data such as yearly mean outdoor dry-bulb temperature, relative humidity and global solar radiation and economic factors such as the ratio of urbanization, gross domestic product, household consumption level and total area of structure are taken as inputs.
+\cite{8093428} is an empirical study in which some forecasting models are developed for electricity demand using publicly available data and three models based on machine learning algorithms.
+The performances of these models are compared by using different evaluation metrics.
+The data consists of several measurements of the electricity market in Turkey from 2011 to 2016 and is available for different time granularities (from hourly to yearly aggregated).
+According to the best result of mean absolute percentage error (MAPE), electricity demand was predicted with a 1.4 percentage error with the random forest model.
 
-\cite{SHAO2020102128} studies and analyzes the energy consumption of hotel buildings by establishing a support vector machine energy consumption prediction model.
-The support vector machine model takes the weather parameters and operating parameters of the hotel air-conditioning system as input variables.
+In \cite{9046493}, a modeling approach based on association rules was proposed.
+Association rules are useful to describe a model in terms of cause and effect.
+It did not outperform ARIMA but helped to locate the most frequent patterns of electricity consumption.
 
-In \cite{8404313}, an RNN based time series approach for forecasting turkish electricity load was proposed.
-Recurrent Neural Networks (RNN), Long-Short Term Memory (LSTM), Gated Recurrent Units (GRU) are used.
-Resulting 0.71\% MAPE success of their experiments yields better results than existing researches based on ARIMA and artificial neural networks on Turkish electricity load forecasting which have 2.6\% and 1.8\% success rate respectively.
+In \cite{ALMUSAYLH20181}, Al-Musaylh et al. addressed the short-term electricity demand forecasting with MARS (Multivariate Adaptive Regression Spline), SVR, and ARIMA models using aggregated demand data of Queensland, Australia.
+They found out that the MARS and SVR models can be considered more suitable for short-term electricity demand forecasting when compared to the ARIMA model.
+As expected, given its linear formulation in the modeling process, the ARIMA model’s performance was lower for all forecasting horizons as it generated very high forecast errors.
+The study found that the MARS models were able to provide a powerful, yet simple and fast forecasting framework when compared to the SVR models.
 
-In \cite{DU2018533} a novel hybrid forecasting system was successfully developed, including four modules: data preprocessing module, optimization module, forecasting module and evaluation module.
-A signal processing approach is employed to decompose, reconstruct, identify and mine the primary characteristics of electrical power system time series in data preprocessing module.
+\cite{MA20193433} presented a method based on a support vector regressor (SVR) to forecast building energy consumption in southern China.
+To improve the reliability of SVR in building energy consumption prediction, multiple parameters including weather data (such as yearly mean outdoor dry-bulb temperature, relative humidity, and global solar radiation) and economic factors (such as the ratio of urbanization, gross domestic product, household consumption level and total area of the structure) are taken as inputs.
+
+In \cite{8404313}, a RNN based time series approach for forecasting Turkish electricity load was proposed.
+Recurrent Neural Networks (RNN), Long-Short Term Memory (LSTM) Networks, and Gated Recurrent Units (GRU) Networks are used.
+The resulting 0.71\% MAPE of their experiments yields better results than existing methods based on ARIMA and artificial neural networks on Turkish electricity load forecasting which have 2.6\% and 1.8\% MAPE respectively.
+
+Most of the presented techniques are considered very simple nowadays and they rely on large aggregated data, both on the number of people considered (e.g., the consumption generated by an entire country) or on a very large temporal aggregation (up to 1 year aggregated data).
+Our use case is limited to the customers of a small company, from 2 to 4 thousand customers, and need to provide forecasts on an hourly basis for a one-month time horizon.
+
+In \cite{DU2018533} a novel hybrid forecasting system was successfully developed.
+It was composed of four modules: data preprocessing module, optimization module, forecasting module, and evaluation module.
+In the data preprocessing module, a signal processing approach is employed to decompose, reconstruct, identify, and mine the primary characteristics of the electrical power system time series.
 Optimization algorithms are also employed to optimize the parameters of these individual models in the optimization and forecasting modules.
 Experimental results showed that the hybrid system can be able to satisfactorily approximate the actual value.
+This is an interesting study from which to take inspiration for the system modeling structure, which can be intended for general-purpose and not just for the electrical power use case.
 
 \cite{KIM2019328} proposed a recurrent inception convolution neural network (RICNN) that combines RNN and 1-dimensional CNN (1-D CNN).
 They used the 1-D convolution inception module to calibrate the prediction time and the hidden state vector values calculated from nearby time steps.
 By doing so, the inception module generates an optimized network via the prediction time generated in the RNN and the nearby hidden state vectors.
 The proposed RICNN model has been verified in terms of the power usage data of three large distribution complexes in South Korea.
 Experimental results demonstrate that the RICNN model outperforms the benchmarked multi-layer perception, RNN, and 1-D CNN in daily electric load forecasting (48-time steps with an interval of 30 minutes).
+This is an interesting network structure that can be suited for our specific use case but has to be effective also on a wider time horizon.
 
-In \cite{BEDI20191312}, Bedi and Toshniwal proposed a deep learning based framework to forecast electricity demand by taking care of long-term historical dependencies (existing methods are useful only for handling short-term dependencies).
-The proposed approach is called D-FED and is based on Long Short Term Memory network and moving window based multi-input multi-output mapping approach of active learning.
+In \cite{BEDI20191312}, Bedi and Toshniwal proposed a deep learning based framework to forecast electricity demand by taking care of long-term historical dependencies.
+In fact, existing methods are able only of handling short-term dependencies.
+The proposed approach is called D-FED and is based on a Long Short Term Memory network and a moving window based multi-input multi-output mapping approach of active learning.
 It is applied to the electricity consumption data of Union Territory Chandigarh, India.
-Performance of the proposed approach is evaluated by comparing the prediction results with Artificial Neural Network, Recurrent Neural Network and Support Vector Regression models.
+The performance of the proposed approach is evaluated by comparing the prediction results with Artificial Neural Network, Recurrent Neural Network, and Support Vector Regression models.
 
-In \cite{MUZAFFAR20192922}, Muzaffar et al. have picked up an electrical load data with exogenous variables including temperature, humidity, and wind speed and used to train a LSTM network. 
+In \cite{MUZAFFAR20192922}, Muzaffar and Afshari have picked up electrical load data with exogenous variables including temperature, humidity, and wind speed, and used them to train a LSTM network.
+It has been shown in this work that LSTM outperforms the other traditional methods such as ARMA, SARIMA, and ARMAX reducing the percentage of errors in forecasting the load time series.
+From the study, they found out that LSTM can learn the seasonality patterns and the trend as well instead of extracting these features a priori.
 
 In \cite{WEN2020106073}, Wen et al. proposed a deep learning model to forecast the load demand of aggregated residential buildings with a one-hour resolution, while considering its complexity and variability.
 Hourly-measured residential load data in Austin, Texas, USA were used to demonstrate the effectiveness of the proposed model, and the forecasting error was quantitatively evaluated using several metrics.
-The model is a deep RNN model with GRU (DRNN-GRU).
+The used model is a deep RNN model with GRU (DRNN-GRU).
 This model assumes knowledge of the future weather data to make a forecast, which would affect the accuracy due to the weather uncertainty over a short to medium period.
 The results showed that the proposed model forecasts the aggregated and disaggregated load demand of residential buildings with higher accuracy compared to conventional methods.
 
-\cite{CHITALIA2020115410} presents a robust short-term electrical load forecasting framework that can capture variations in building operation, regardless of building type and location.
+\cite{CHITALIA2020115410} presented a robust short-term electrical load forecasting framework that can capture variations in building operation, regardless of building type and location.
 Nine different hybrids of recurrent neural networks and clustering are explored.
-The test cases involve five commercial buildings of five different building types, i.e., academic, research laboratory, office, school and grocery store.
-Load forecasting results indicate that the deep learning algorithms implemented in this paper deliver 20-45\% improvement in load forecasting performance as compared to the current state-of-the-art results for both hour-ahead and 24-ahead load forecasting.
+The test cases involve five commercial buildings of five different building types, i.e., academic, research laboratory, office, school, and grocery store.
+Load forecasting results indicate that the deep learning algorithms implemented in the paper deliver 20-45\% improvement in load forecasting performance as compared to the current state-of-the-art results for both hour-ahead and 24-ahead load forecasting.
 It is found that:
 (i) the use of hybrid deep learning algorithms can take as less as one month of data to deliver satisfactory hour-ahead load prediction,
-(ii) similar to the clustering technique, 15-minutes resolution data, if available, delivers 30\% improvement in hour-ahead load forecasting,
+(ii) 15-minute resolution data, if available, delivers 30\% improvement in hour-ahead load forecasting,
 and (iii) the formulated methods are found to be robust against weather forecasting errors.
+This study gives useful insights about the quantity and granularity of data needed for a short-term prediction range, these are great findings but do not generalize to longer prediction ranges.
 
-In \cite{WANG2020117197}, Wang et al. proposed a novel approach based on long short-term memory (LSTM) network for predicting the periodic energy consumption (while general forecasting methods do not concern periodicity).
+In \cite{WANG2020117197}, Wang et al. proposed a novel approach based on long short-term memory (LSTM) network for predicting periodic energy consumption.
+They stated that this is novel since general forecasting methods do not concern periodicity.
 Hidden features are extracted by the autocorrelation graph among the real industrial data.
 Experiments using a cooling system under one-step-ahead forecasting are conducted to verify the performance of LSTM.
+It was compared with several traditional forecasting methods, such as the autoregressive moving average model (ARMA), autoregressive fractional integrated moving average model (ARFIMA), and back propagation neural network (BPNN).
+The RMSE of LSTM is 19.7\%, 54.85\%, and 64.59\% lower than BPNN, ARMA, and ARFIMA on the test data.
+Furthermore, they demonstrated that the proposed algorithm had the highest generalization capability.
 
 In \cite{WANG2020114561}, Wang et al. proposed a stacking model capable of combining the advantages of various basic prediction algorithms and transforming them into “meta-features” to ensure that the final model can observe datasets from different spatial and structural angles.
-The results indicate that the stacking method achieves better performance than other tested ML models, regarding accuracy, generalization, and robustness.
-Operation data retrieved from two educational buildings in the coastal city of Tianjin, China, is employed for the case study. The case study buildings mainly contain classrooms for students and offices for university staff. Case A is a three-star green building with three stories, and Case B is a conventional building with four stories.
+Load data retrieved from two educational buildings in the coastal city of Tianjin, China, is employed for the case study.
+The case study buildings are made of classrooms for students and offices for university staff.
+Experimental results indicated that the stacking method achieves better performance than other tested ML models (Random Forest, Gradient Boosted Decision Tree, Extreme Gradient Boosting, Support Vector Machine, and K-Nearest Neighbor) regarding accuracy, generalization, and robustness.
 
 In \cite{SOMU2021110591}, Somu et al. presented kCNN-LSTM, a deep learning framework that operates on the energy consumption data recorded at predefined intervals to provide accurate building energy consumption forecasts.
 kCNN-LSTM employs:
-(i) k means clustering - to perform cluster analysis to understand the energy consumption pattern\slash trend;
-(ii) Convolutional Neural Networks (CNN) - to extract complex features with non-linear interactions that affect energy consumption;
-and (iii) Long Short Term Memory (LSTM) neural networks - to handle long-term dependencies through modeling temporal information in the time series data.
-Since the major objective of this research is to forecast the overall energy consumption of the considered buildings, the consumption data provided by the smart meter installed at the MAINS is used for experimentations.
-The performance of kCNN-LSTM was compared with the k means variant of the state-of-the-art energy demand forecast models in terms of MSE, RMSE, MAE, and MAPE.
+(i) k means clustering to perform cluster analysis to understand the energy consumption pattern\slash trend;
+(ii) Convolutional Neural Network (CNN) to extract complex features with non-linear interactions that affect energy consumption;
+and (iii) Long Short Term Memory (LSTM) network to handle long-term dependencies through modeling temporal information in the time series data.
+The performance of kCNN-LSTM was compared with the k means variant of the state-of-the-art energy demand forecast models in terms of MSE, RMSE, MAE, and MAPE showing the efficiency of kCNN-LSTM model over other models in providing accurate energy consumption demand forecasting.
 
 In \cite{10033079}, an attention-based deep learning model with interpretable insights into temporal dynamics is presented to forecast short-term loads.
-The temporal fusion transformers (TFT) included the sequence-to-sequence model, which processes the historical and future covariates to enhance the forecasting performance.
+The temporal fusion transformers (TFT) included a sequence-to-sequence model, which processes the historical and future covariates to enhance the forecasting performance.
 Gated Residual Network (GRN) is applied to drop out unnecessary information and improve efficiency.
 The proposed method is tested on anonymized data from a university campus.
 The anomalies and missing data are imputed with the k-nearest neighbor (KNN) method.
-The testing results demonstrate the effectiveness of the proposed method achiecing less than 5\% MAPE.
+The testing results demonstrate the effectiveness of the proposed method achieving less than 5\% MAPE.
+This is an interesting work on a TFT model, which should be extended to obtain great performance also with a higher prediction range in order to be applicable to the use case treated in this thesis.
 
 \cite{LI2023108743} presented a probabilistic forecasting method for hourly load time series based on an improved temporal fusion transformer (ITFT) model to achieve more accurate and thorough forecasting results.
-Hourly load time series was reconstructed into multiple day-to-day load time series at different hour-points.
+Hourly load time series was reconstructed into multiple day-to-day load time series at different hour points.
 ITFT model replaces the long short-term memory (LSTM) with a gated recurrent unit (GRU) to learn long-term dependence more efficiently.
 Quantile constraints and prediction interval (PI) penalty terms were incorporated into the original quantile loss function to prevent quantile crossover and construct more compact prediction intervals (PIs).
-The results show that the proposed method is explanatory and can significantly improve the reliability and compactness of probabilistic load forecasting results compared with other popular methods.
-
-\cite{NAZIR2023100888} proposed a daily, weekly, and monthly energy consumption prediction model using Temporal Fusion Transformer (TFT).
-This study relies on a TFT model for energy forecasting, which considers both primary and valuable data sources and batch training techniques.
-The model’s performance has been related to the Long Short-Term Memory (LSTM), LSTM interpretable, and Temporal Convolutional Network (TCN) models.
-The model’s performance has remained better than the other algorithms.
-The overall symmetric mean absolute percentage error (sMAPE) of LSTM, LSTM interpretable, TCN, and proposed TFT remained at 29.78\%, 31.10\%, 36.42\%, and 26.46\%, respectively.
-The sMAPE of the TFT has proved that the model has performed better than the other deep learning models.
-169 customers have been considered and tested on data from only one customer.
+The results show that the proposed method is explanatory and can significantly improve the reliability and compactness of probabilistic load forecasting results compared with other popular methods, such as Quantile regression neural network (QRNN) and temporal convolutional network (TCN).
 
 
 \section{Consumption baseline forecasting}
@@ -278,14 +277,14 @@ They explained that the baseline calculation method consists of the three criter
 i) data selection method,
 ii) estimation method
 and iii) result adjustment.
-They pointed out that the combination of these criteria depends on user consumption, weather dependency (incl. seasonal behavior) and load behavior and should all together fit the user consumption pattern.
+They pointed out that the combination of these criteria depends on user consumption, weather dependency (including seasonal behavior) and load behavior and should all together fit the user consumption pattern.
 
 In \cite{DEB2017902}, Deb et al. presented a comprison of different time series forecasting techniques for building energy consumption: ANN, ARIMA, SVM, Case-Based Reasoning (CBR), Fuzzy time series, Grey prediction model, Moving average and exponential smoothing (MA \& ES), K - Nearest Neighbor prediction method (kNN) and Hybrid models.
 Also hybrid models are reviewed and analyzed, i.e., the combination of two or more forecasting techniques.
 The various combinations of the hybrid model are found to be the most effective in time series energy forecasting for single buildings.
 
 \cite{AMBER2018886} aimed to compare prediction capabilities of five different intelligent system techniques by forecasting electricity consumption of an administration building.
-These five techniques are; Multiple Regression (MR), Genetic Programming (GP), Artificial Neural Network (ANN), Deep Neural Network (DNN) and Support Vector Machine (SVM). 
+These five techniques are; Multiple Regression (MR), Genetic Programming (GP), Artificial Neural Network (ANN), Deep Neural Network (DNN) and Support Vector Machine (SVM).
 The prediction models are developed based on five years of observed data of five different parameters such as solar radiation, temperature, wind speed, humidity and weekday index.
 Weekday index is an important parameter introduced to differentiate between working and non-working days.
 ANN performs better than all other four techniques with a Mean Absolute Percentage Error (MAPE) of 6\% whereas MR, GP, SVM and DNN have MAPE of 8.5\%, 8.7\%, 9\% and 11\%, respectively.
@@ -325,11 +324,19 @@ The final results showed improvements of the hybrid model compared to the other 
 In \cite{MOCANU201691}, Mocanu et al. investigated two newly developed stochastic models for time series prediction of energy consumption, namely Conditional Restricted Boltzmann Machine (CRBM) and Factored Conditional Restricted Boltzmann Machine (FCRBM).
 The assessment is made on a benchmark dataset consisting of almost four years of one minute resolution electric power consumption data collected from an individual residential customer.
 As the prediction horizon is increasing, FCRBMs and CRBMs seem to be more robust and their prediction error is typically half that of the ANN.
-In addition from other the experiments, it can be observed that all methods perform better when predicting the aggregated active power consumption, than predicting the demand of intermittent appliances (e.g. electric water-heater) recorded from sub-meterings.
+In addition from other the experiments, it can be observed that all methods perform better when predicting the aggregated active power consumption, than predicting the demand of intermittent appliances (e.g., electric water-heater) recorded from sub-meterings.
 
 In \cite{ALOBAIDI2018997}, a robust ensemble model was proposed to predict day-ahead mean daily electricity consumption on the household level.
 The proposed ensemble learning strategy utilized a two-stage resampling plan, which generated diversity-controlled but random resamples that were used to train individual ANN members.
 Experimental results on a case study showed that the proposed ensemble is able to generate better estimates compared to ANN models and Bagging ensemble.
+
+To counter the high nonlinearity between inputs and outputs of building energy consumption prediction models, in \cite{ZHONG2019403} a novel vector field-based support vector regression method is proposed.
+Through multi-distortions in the sample data space or high-dimensional feature space mapped by a vector field, the optimal feature space is found, in which the high non-linearity between inputs and outputs is approximated by linearity.
+The proposed method ensures a high accuracy, a generalization ability, and robustness for building energy consumption prediction.
+A large office building in a coastal town of China is used for a case study, and its summer hourly cooling load data are used as energy consumption data.
+
+\cite{SHAO2020102128} studies and analyzes the energy consumption of hotel buildings by establishing a support vector machine energy consumption prediction model.
+The support vector machine model takes the weather parameters and operating parameters of the hotel air-conditioning system as input variables.
 
 \cite{FAN2019700} investigated the performance of different strategies for multi-step ahead predictions.
 Results of the study seem to validate the potential of recurrent models in short-term building energy predictions.
@@ -346,7 +353,8 @@ The performances are compared with the Seasonal ARIMAX model.
 The gated 24-h CNN model, performed in a direct multi-step manner, proves itself to have the best performance, improving the forecasting accuracy by 22.6\% compared to that of the seasonal ARIMAX.
 
 In \cite{KIM201972}, Kim and Cho proposed a CNN-LSTM neural network that can extract spatial and temporal features to effectively predict the housing energy consumption.
-The CNN layer can extract the features between several variables affecting energy consumption, and the LSTM layer is appropriate for modeling temporal information of irregular trends in time series components. The proposed CNN-LSTM method achieves almost perfect prediction performance for electric energy consumption that was previously difficult to predict.
+The CNN layer can extract the features between several variables affecting energy consumption, and the LSTM layer is appropriate for modeling temporal information of irregular trends in time series components.
+The proposed CNN-LSTM method achieves almost perfect prediction performance for electric energy consumption that was previously difficult to predict.
 Also, it records the smallest value of root mean square error compared to the conventional forecasting methods for the dataset on individual household power consumption.
 It predicts complex electric energy consumption with the highest performance in all cases of minutely, hourly, daily, and weekly unit resolutions compared to other methods.
 Household characteristics such as occupancy and behavior have a large influence on predicting electric energy consumption.
@@ -377,7 +385,16 @@ Finally, a hybrid model with two input channels is developed by combining long s
 The case studies are conducted on a practical dataset containing multiple residential users.
 The proposed load forecasting method achieves its best performance with a four-user data pool, 49 time-steps, and 24 feature dimensions.
 The optimal performance corresponds to 15.33\%, 56.86 kW, and 82.50 kW in terms of MAPE, MAE, and RMSE, respectively.
-The proposed method is demonstrated to be an effective choice for day-ahead residential load forecasting. Meanwhile, the method requires more than five residential customers for the sake of interconnected user selection.
+The proposed method is demonstrated to be an effective choice for day-ahead residential load forecasting.
+Meanwhile, the method requires more than five residential customers for the sake of interconnected user selection.
+
+\cite{NAZIR2023100888} proposed a daily, weekly, and monthly energy consumption prediction model for single customer by using a Temporal Fusion Transformer (TFT).
+This study relies on a TFT model for energy forecasting, which considers both primary and valuable data sources and batch training techniques.
+169 customers have been considered in the study and the TFT was tested on data from only one customer since what they built is a customer-based predictive model, that has the advantage that does not depend on overall energy consumption.
+The model’s performance has been related to the Long Short-Term Memory (LSTM), LSTM interpretable, and Temporal Convolutional Network (TCN) models.
+The overall symmetric mean absolute percentage error (sMAPE) of LSTM, LSTM interpretable, TCN, and proposed TFT remained at 29.78\%, 31.10\%, 36.42\%, and 26.46\%, respectively.
+The sMAPE of the TFT has proved that the model has performed better than the other deep learning models.
+This is a very smart recent work, by using time series of also different customers is able to forecast better than other models for a single customer.
 
 
 \section{Electricity production forecasting}
@@ -461,13 +478,13 @@ The ensemble uses only electricity data to forecast, since this data is availabl
 The ensemble relies on offline training and online forecasting, by applying the most recent power measurements to trained models.
 The different machine learning methods perform different non-linear transformations to the same electricity data, thus introducing diversity in the ensemble.
 To assess the forecasting performance of this system, they considered two forecasting horizons relevant to the Internal Electricity Market, namely 36 hours ahead, relevant to the single day-ahead coupling, and 2 hours ahead, relevant to the single intraday coupling.
-The forecasting performance using only electricity data compares gracefully with the state-of-the-art and improves the reference accuracy in their case studies.
+The forecasting performance using only electricity data compares gracefully with state-of-the-art models and improves the reference accuracy in their case studies.
 Since the ensemble relies only on energy data, the results show that machine learning methods are useful to exploit energy big data towards efficient energy forecasting systems.
 
 A novel hybrid method for deterministic PV power forecasting based on wavelet transform (WT) and deep convolutional neural network (DCNN) is proposed in \cite{WANG2017409}.
 WT is used to decompose the original signal into several frequency series.
 Each frequency has better outlines and behaviors.
-DCNN is employed to extract the nonlinear features and invariant structures exhibited in each frequency. 
+DCNN is employed to extract the nonlinear features and invariant structures exhibited in each frequency.
 A probabilistic PV power forecasting model that combines the proposed deterministic method and spine quantile regression (QR) is developed to statistically evaluate the probabilistic information in PV power data.
 Statistical results showed that the average MAPE, RMSE and MAE of the proposed deterministic model outperform the compared benchmarks in terms of seasons, forecasting horizons and PV power locations.
 
@@ -500,7 +517,7 @@ The results show that the investigated DLNNs provide very good accuracy, particu
 The new advanced deep NN algorithms are able to lead to acceptable accuracy in the case of cloudy days.
 
 \cite{9848724} examined the performance of the LSTM method in Turkey's electricity production estimation and to determine the optimization technique that provides the best performance in the LSTM estimation method.
-It was observed that the energy production estimation of LSTM and Adam optimization technique achieved successful results. 
+It was observed that the energy production estimation of LSTM and Adam optimization technique achieved successful results.
 
 \cite{en15145232} aimed to predict hourly day-ahead PV power generation by applying Temporal Fusion Transformer (TFT).
 It incorporates an interpretable explanation of temporal dynamics and high-performance forecasting over multiple horizons.
