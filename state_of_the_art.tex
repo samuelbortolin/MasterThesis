@@ -413,125 +413,137 @@ This is a very smart recent work in which by using time series of also different
 
 In this section, the techniques for electricity production forecasting are presented.
 
-PVGIS\footnote{ \url{https://joint-research-centre.ec.europa.eu/pvgis-online-tool_en} } is tool of the EU-Joint Research Center that provides information about solar radiation and photovoltaic (PV) system performance for any location in Europe and Africa, as well as a large part of Asia and America.
+PVGIS\footnote{ \url{https://joint-research-centre.ec.europa.eu/pvgis-online-tool_en} } is a tool of the EU-Joint Research Center that provides information about solar radiation and photovoltaic (PV) system performance for any location in Europe and Africa, as well as a large part of Asia and America.
 PVGIS uses high-quality solar radiation data obtained from satellite images, as well as ambient temperature and wind speed from climate reanalysis models.
-It is a free tool that allows by specifying the details of a PV plant to obtain its potential generation.
+It is a free tool that allows specifying the details of a PV plant to obtain its potential generation.
+It is useful to get an indication of the potential generation but it is not accurate as the methods presented in the literature.
+In fact, specific methods can focus on specific plants taking into account historical data from which to extract the specific production performance and consider the most recent weather forecasts available.
 
-\cite{INMAN2013535} reviewed the theory behind the forecasting methodologies, and presented a number of successful applications of solar forecasting methods for both the solar resource and the power output of solar plants at the utility scale level.
-Some examples of the presented approaches are Regressive methods, Artificial Neural Networks, Numerical Weather Prediction and hybrid methods incorporating two or more of techniques.
+\cite{INMAN2013535} reviewed the theory behind the forecasting methodologies, and presented a number of successful applications of solar forecasting methods for both the solar resource and the power output of solar plants at the utility-scale level.
+Some examples of the presented approaches are Regressive methods, Artificial Neural Networks, Numerical Weather Prediction, and hybrid methods incorporating two or more techniques.
 
 Zamo et al. in 2014 presented a pair of articles proposing a benchmark of statistical regression methods for short-term forecasting of photovoltaic electricity production.
-The first one is for Deterministic forecast of hourly production \cite{ZAMO2014792}, and the second one for Probabilistic forecast of daily production \cite{ZAMO2014804}.
-The proposed benchmark designated random forests as the best forecast model for hourly PV production with a short lead time (28 to 45 h).
+The first one treated deterministic forecast of hourly production \cite{ZAMO2014792}, and the second one probabilistic forecast of daily production \cite{ZAMO2014804}.
+The proposed benchmark designated random forests as the best forecast model for hourly PV production with a short lead time (from 28 to 45 h).
 Their results also suggested that the RMSE can be reduced to about 5.8\% by first forecasting the production for each individual power plant and then summing these forecasts up.
-For probabilistic forecasts of daily production 2 days ahead, QR-based (quantile regression based) forecasts perform significantly better than the climatology, with a CRPS (continuous ranked probability score) lowered by up to 50\%.
+For probabilistic forecasts of 2 days ahead daily production, QR-based (quantile regression based) forecasts performed significantly better than the climatology, with a CRPS (continuous ranked probability score) lowered by up to 50\%.
 For most power plants, a QR-based forecast performs better than the others.
-But the most accurate forecast may vary from one power plant to another and with the number of forecast quantiles
+But the most accurate forecast may vary from one power plant to another and with the number of forecast quantiles.
 
-\cite{ANTONANZAS201678} is a 2016 paper presenting a review of photovoltaic power forecasting.
-Forecasting tecniques such as regressive methods, ANN, k-NN, SVM, RF and hybrid methods are presented.
-Alsso spatial and temporal horizons and performance metrics are discussed.
+\cite{ANTONANZAS201678} presented a review of photovoltaic power forecasting up to 2016.
+Forecasting techniques such as regressive methods, ANN, k-NN, SVM, RF, and hybrid methods are presented.
+Most recent papers used machine learning techniques, due to the ease of modeling without the need of knowing PV plant characteristics, since these approaches are able to learn them from data.
+Also, spatial and temporal horizons and performance metrics are discussed.
+The forecast horizon where most research has been done is the day ahead.
+The reason is that most of the energy is traded in day-ahead markets when planning and unit commitment takes place.
+They discussed that spatial averaging is very used since it reduces the variability of the solar resource and generates regional forecasts that are more reliable than single-site ones.
+This is caused by the smoothing effect, which cancels errors with opposite signs in different PV plants.
 
-Barbieri et al. in \cite{BARBIERI2017242} found out that ANNs and SVM are appropriate approach for short-term horizons and numerical weather prediction (NWP) are better suited for longer horizons.
-While a probabilistic method based on historical data may be valuable for very long term forecasts, such an approach cannot take into consideration the complex variations of the cloud cover causing short-term sunlight disruptions.
-Only a deterministic atmospheric modelling approach can deal with the stochastic changes of solar radiance during the day.
-Within this type of model, NWP data-based models are well adapted for day ahead forecasts but suffer from a too coarse temporal resolution.
-Sky imagers are a precious tool to identify cloud types and anticipate the impact of the shading on PV power generation.
-They conclude by introducing some future works as the elaboration of algorithms that can calculate cloud cover and classify clouds using online data and a fine sampling period.
-In addition, measuring precisely the effects of each type of cloud on the solar irradiance could greatly help in improving the results.
+Barbieri et al. in \cite{BARBIERI2017242} found out that ANNs and SVM are appropriate approaches for short-term horizons and numerical weather prediction (NWP) are better suited for longer horizons.
+In fact, while a probabilistic method based on historical data may be valuable for very long-term forecasts, such an approach cannot take into consideration the complex variations of the cloud cover causing short-term sunlight disruptions.
+Only a deterministic atmospheric modeling approach can deal with the stochastic changes of solar radiance during the day.
+Within this type of model, NWP data-based models are well adapted for day-ahead forecasts but suffer from a too coarse temporal resolution.
+Sky imagers are a precious tool to identify cloud types and anticipate the impact of shading on PV power generation.
+They concluded by introducing some future works as the elaboration of algorithms that can calculate cloud cover and classify clouds using online data and a fine sampling period.
+In addition, measuring precisely the effects of each type of cloud on solar irradiance could greatly help in improving the results.
 
 In \cite{DAS2018912}, Das et al. based on the studies dated up to 2018 found out that ANN and SVM-based forecasting models performed well under rapid and varying environmental conditions.
-In addition, most of the studies adopted numerous techniques to develop the forecasting model for better accuracy.
+In addition, most of the studies adopted numerous techniques to develop their forecasting model in order to obtain better accuracy.
 Moreover, a considerable number of studies classified the forecasted day into different categories based on the weather conditions using several techniques and then developed the forecasting model.
 However, the range of the observed error was remarkably high due to different weather conditions.
-The separate sub-model for each weather condition has to perform well to minimize errors.
+For performing good predictions and minimizing errors, the separate sub-model for each weather condition has to perform well.
 
-\cite{SOBRI2018459} classifies solar PV forecasting methods into three major categories, i.e., time-series statistical, physical, and ensemble methods.
-Artificial Neural Network (ANN) and Support Vector Machine (SVM) are widely used due to their ability in solving complex and non-linear forecasting models.
+\cite{SOBRI2018459} classified solar PV forecasting methods into three major categories, that are time-series statistical, physical, and ensemble methods.
+Among the most used methods, there are Artificial Neural Network (ANN) and Support Vector Machine (SVM) thanks to their ability in solving complex and non-linear forecasting models.
 The metrics assessment shows that Artificial Intelligence (AI) models could decrease the error compared to other statistical approaches.
-The ensemble method has been introduced recently for its ability to merge linear and non-linear techniques which enhances the accuracy and performance of models in comparison with individual models.
-The metrics assessment that used for evaluating the solar prediction accuracy is presented as well for specific applications and hence the appropriate solar forecasting approaches can be selected to ensure better performance.
+The ensemble methods have been introduced recently and thanks to their ability to merge linear and non-linear techniques enhanced the accuracy and performance in comparison with individual models.
+The standard metrics that are used for evaluating solar prediction accuracy were presented for specific applications, they allow the selection of the appropriate solar forecasting approaches to ensure better performance.
 
-\cite{DEFREITASVISCONDI201954} presented a literature review on big data models for solar photovoltaic electricity generation forecasts, aiming to evaluate the most applicable and accurate state-of-art techniques to the problem, including the motivation behind each project proposal, the characteristics and quality of data used to address the problem, among other issues.
-They affirmed that the use of these models to predict solar electricity generation is currently an ongoing academic research question.
-Machine learning is widely used, and neural networks is considered the most accurate algorithm.
-Extreme learning machine (ELM) has reduced training time and raised precision.
+\cite{DEFREITASVISCONDI201954} presented a literature review on big data models for solar photovoltaic electricity generation forecasts, aiming to evaluate the most applicable and accurate state-of-art techniques to the problem.
+They included also the motivation behind each project proposal, and the characteristics and quality of data used to address the problem, among other issues.
+They affirmed that the prediction of solar electricity generation is currently an ongoing academic research question.
+Machine learning is widely used, and approaches based on neural networks are considered the most accurate.
+Extreme learning machine (ELM) was also a great addition and it has reduced training time and raised precision.
 
-\cite{AHMAD2018465} investigated the accuracy, stability and computational cost of random forest (RF) and extra trees (ET) for predicting hourly PV generation output, and compared their performance with support vector regression (SVR).
+\cite{AHMAD2018465} investigated the accuracy, stability, and computational cost of random forest (RF) and extra trees (ET) techniques for predicting the hourly PV generation output.
+They compared the performance of the proposed methods with support vector regression (SVR).
 They proved that all developed models have comparable predictive power and are equally applicable for predicting hourly PV output.
 Despite their comparable predictive power, ET outperformed RF and SVR in terms of computational cost.
-The stability and algorithmic efficiency of ETs make them an ideal candidate for wider deployment in PV output forecasting.
+They concluded by affirming that the stability and algorithmic efficiency of ET makes this technique an ideal candidate for wider adoption in PV output forecasting.
 
 In \cite{AHMED2020109792}, Ahmed et al. reviewed and evaluated contemporary PV solar power forecasting techniques.
-They noticed through correlation analysis that solar irradiance is the most correlated feature with Photovoltaic output, and so, weather classification and cloud motion study are crucial.
-In addition, they stated that the best data cleansing processes are normalization and wavelet transforms, and augmentation using generative adversarial network are recommended for network training and forecasting.
-Furthermore, thay analyzed also that optimization of inputs and network parameters can be done by using genetic algorithm and particle swarm optimization.
-They determined that ensembles of artificial neural networks are the best approach for forecasting short term photovoltaic power.
-
-In \cite{GELLERT2019546}, Gellert et al. proposed and evaluated a context-based technique to anticipate the electricity production and consumption in buildings.
-They focused on a household with photovoltaics and energy storage system.
-They analyze the efficiency of Markov chains, stride predictors and also their combination into a hybrid predictor in modelling the evolution of electricity production and consumption.
-Experimental results showed that the best evaluated predictor is the Markov chain configured with an electric power history of 100 values, a context of one electric power value and the interval size of 1.
-
-A genetic algorithm-based support vector machine (GASVM) model for short-term power forecasting of residential scale PV system is proposed in \cite{VANDEVENTER2019367}.
-The GASVM model classifies the historical weather data using an SVM classifier initially and later it is optimized by the genetic algorithm using an ensemble technique.
-Experimental results demonstrated that the proposed GASVM model outperforms the conventional SVM model by the difference of about 669.624W in the RMSE value and 98.7648\% of the MAPE error.
-
-In \cite{ZHOU2020117894}, a hybrid model (SDA-GA-ELM) based on extreme learning machine (ELM), genetic algorithm (GA) and customized similar day analysis (SDA) has been developed to predict hourly PV power output.
-In the SDA, Pearson correlation coefficient is employed to measure the similarity between different days based on five meteorological factors, and the data samples similar to those from the target forecast day are selected as the training set of ELM.
-In the ELM, the optimal values of the hidden bias and the input weight are searched by GA to improve the prediction accuracy.
-The results show that the SDA-GA-ELM model has higher accuracy and stability than other tested approaches in day-ahead PV power prediction.
-
-\cite{9248865} presented case studies on forecasting PV power production and electricity demand in Portugal.
-They studied an ensemble of different machine learning methods (SVM, Random Forest, LSTM and ARIMA) to exploit the growing collection of energy supply and demand records.
-The ensemble uses only electricity data to forecast, since this data is available online for any forecasting horizon.
-The ensemble relies on offline training and online forecasting, by applying the most recent power measurements to trained models.
-The different machine learning methods perform different non-linear transformations to the same electricity data, thus introducing diversity in the ensemble.
-To assess the forecasting performance of this system, they considered two forecasting horizons relevant to the Internal Electricity Market, namely 36 hours ahead, relevant to the single day-ahead coupling, and 2 hours ahead, relevant to the single intraday coupling.
-The forecasting performance using only electricity data compares gracefully with state-of-the-art models and improves the reference accuracy in their case studies.
-Since the ensemble relies only on energy data, the results show that machine learning methods are useful to exploit energy big data towards efficient energy forecasting systems.
-
-A novel hybrid method for deterministic PV power forecasting based on wavelet transform (WT) and deep convolutional neural network (DCNN) is proposed in \cite{WANG2017409}.
-WT is used to decompose the original signal into several frequency series.
-Each frequency has better outlines and behaviors.
-DCNN is employed to extract the nonlinear features and invariant structures exhibited in each frequency.
-A probabilistic PV power forecasting model that combines the proposed deterministic method and spine quantile regression (QR) is developed to statistically evaluate the probabilistic information in PV power data.
-Statistical results showed that the average MAPE, RMSE and MAE of the proposed deterministic model outperform the compared benchmarks in terms of seasons, forecasting horizons and PV power locations.
-
-Day-ahead power output time-series forecasting methods are proposed in \cite{GAO2019115838}, in which ideal weather type and non-ideal weather types have been separately discussed.
-For ideal weather conditions, a forecasting method is proposed based on meteorology data of next day using long short term memory (LSTM) networks.
-For non-ideal weather conditions, time-series relevance and specific non-ideal weather type characteristic are considered in LSTM model by introducing adjacent day time-series and typical weather type information.
-Specifically, daily total power, which is obtained by discrete grey model (DGM), is regarded as input variables and applied to correct power output time-series prediction.
-Prediction performance comparison between proposed methods with traditional algorithms reveal that the RMSE accuracy of forecasting methods based on LSTM networks can reach 4.62\% for ideal weather condition.
-For non-ideal weather condition, the dynamic characteristic is effectively described by proposed methods and the proposed methods obtained superior prediction accuracy.
-
-In \cite{WANG2019113315}, a convolutional neural network, a long short-term memory network, and a hybrid model based on convolutional neural network and long short-term memory network models were proposed by Wang et al.
-The results showed that when the input sequence is increased, the accuracy of the model is also improved, and the prediction effect of the hybrid model is the best, followed by that of convolutional neural network.
-While long short-term memory network had the worst prediction effect, the training time was the shortest.
-
-In \cite{WANG2019116225}, a hybrid deep learning model (LSTM-Convolutional Network) is proposed and applied to photovoltaic power prediction.
-In the proposed hybrid prediction model, the temporal features of the data are extracted first by the long-short term memory network, and then the spatial features of the data are extracted by the convolutional neural network model.
-The results showed that the hybrid prediction model had a better prediction effect than the single prediction models (long-short term memory network, convolutional neural network), and the proposed hybrid model is also better than Convolutional-LSTM Network (extract the spatial characteristics of data first, and then extract the temporal characteristics of data).
-
-A hybrid deep learning model combining wavelet packet decomposition (WPD) and long short-term memory (LSTM) networks is proposed in \cite{LI2020114216}.
-The hybrid deep learning model is utilized for one-hour-ahead PV power forecasting with five-minute intervals.
-WPD is first used to decompose the original PV power series into sub-series.
-Next, four independent LSTM networks are developed for these sub-series.
-Finally, the results predicted by each LSTM network are reconstructed and a linear weighting method is employed to obtain the final forecasting results.
-Results show that the proposed hybrid deep learning model exhibits superior performance in both forecasting accuracy and stability with respect to LSTM, RNN, GRU, and MLP.
-
-In \cite{MELLIT2021276}, different kinds of deep learning neural networks (DLNN) for short-term output PV power forecasting have been developed and compared: Long Short-Term Memory (LSTM), Bidirectional LSTM (BiLSTM), Gated Recurrent Unit (GRU), Bidirectional GRU (BiGRU), One-Dimension Convolutional Neural Network (CNN1D), as well as other hybrid configurations such as CNN1D-LSTM and CNN1D-GRU.
-A database of the PV power produced by the microgrid installed at the University of Trieste (Italy) is used to train and comparatively test the neural networks.
-The performance has been evaluated over four different time horizons, for one-Step and multi-step ahead.
-The results show that the investigated DLNNs provide very good accuracy, particularly in the case of 1 minute time horizon with one-step ahead (correlation coefficient is close to 1), while for the case of multi-step ahead (up to 8 steps ahead) the results are found to be acceptable (correlation coefficient ranges between 96.9\% and 98\%).
-The new advanced deep NN algorithms are able to lead to acceptable accuracy in the case of cloudy days.
+They noticed through correlation analysis that solar irradiance is the most correlated feature with Photovoltaic output and consequently weather classification and cloud motion study are crucial operations for optimal results.
+In addition, they stated that the best data-cleaning processes are normalization and wavelet transforms, and that augmentation using generative adversarial networks is recommended for network training and forecasting.
+Furthermore, they analyzed also that the optimization of inputs and network parameters can be done by using genetic algorithms and particle swarm optimization.
+They determined that ensembles of artificial neural networks are the best approach for forecasting short-term photovoltaic power.
 
 \cite{9848724} examined the performance of the LSTM method in Turkey's electricity production estimation and to determine the optimization technique that provides the best performance in the LSTM estimation method.
 It was observed that the energy production estimation of LSTM and Adam optimization technique achieved successful results.
 
-\cite{en15145232} aimed to predict hourly day-ahead PV power generation by applying Temporal Fusion Transformer (TFT).
-It incorporates an interpretable explanation of temporal dynamics and high-performance forecasting over multiple horizons.
+In \cite{GELLERT2019546}, Gellert et al. proposed and evaluated a context-based technique to anticipate electricity production and consumption in buildings.
+They focused on a household with photovoltaics and an energy storage system.
+They analyze the efficiency of Markov chains, stride predictors, and also their combination into a hybrid predictor in modeling the evolution of electricity production and consumption.
+Experimental results showed that the best predictor is the Markov chain configured with an electric power history of 100 values, a context of one electric power value, and an interval size of 1.
+
+A genetic algorithm-based support vector machine (GASVM) model for short-term power forecasting of residential-scale PV systems is proposed in \cite{VANDEVENTER2019367}.
+The GASVM model classified the historical weather data using an SVM classifier initially and later it is optimized by the genetic algorithm using an ensemble technique.
+Experimental results demonstrated that the proposed GASVM model outperformed the conventional SVM model by a difference of about 669.624W in the RMSE value and 98.7648\% of the MAPE error.
+
+In \cite{ZHOU2020117894}, a hybrid model (SDA-GA-ELM) based on extreme learning machine (ELM), genetic algorithm (GA), and customized similar day analysis (SDA) has been developed to predict hourly PV power output.
+In the SDA, the Pearson correlation coefficient is employed to measure the similarity between different days based on five meteorological factors, and the data samples similar to those from the target forecast day are selected as the training set of ELM.
+In the ELM, the optimal values of the parameters are searched by the GA to improve the prediction accuracy.
+The results show that the SDA-GA-ELM model has higher accuracy and stability than other tested approaches in day-ahead PV power prediction, such as ELM, SVM, SDA-ELM, and SVM-ELM.
+
+\cite{9248865} presented case studies on forecasting PV power production and electricity demand in Portugal.
+They studied an ensemble of different machine learning methods (SVM, Random Forest, LSTM, and ARIMA) to exploit the growing collection of energy supply and demand records.
+The ensemble used only electricity data to forecast since only this data is available online for any forecasting horizon.
+The ensemble method was based on offline training and online forecasting, by applying the most recent power measurements to trained models.
+The different machine learning methods performed different non-linear transformations to the same electricity data, thus introducing diversity in the ensemble.
+To assess the forecasting performance of the system, they considered two forecasting horizons relevant to the Internal Electricity Market, namely 36 hours ahead, relevant to the single day-ahead coupling, and 2 hours ahead, relevant to the single intraday coupling.
+The forecasting performance using only electricity data is compared with state-of-the-art models and improves the reference accuracy in their case studies.
+Since the ensemble relies only on energy data, the results showed that machine learning methods are useful to exploit energy big data for efficient energy forecasting systems.
+As demonstrated by other papers, weather information such as solar irradiance has an high correlation with energy production, and when studying a few plants, instead of all the ones in Portugal, this information has a relevant impact on performance.
+
+A novel hybrid method for deterministic PV power forecasting based on wavelet transform (WT) and deep convolutional neural network (DCNN) is proposed in \cite{WANG2017409}.
+WT is used to decompose the original signal into different frequency series.
+DCNN is employed to extract the nonlinear features and invariant structures exhibited in each frequency.
+A probabilistic PV power forecasting model that combines the proposed deterministic method and spine quantile regression (QR) is developed to statistically evaluate the probabilistic information in PV power data.
+Statistical results showed that the average MAPE, RMSE, and MAE of the proposed deterministic model outperformed the compared benchmarks in terms of seasons, forecasting horizons, and PV power locations.
+
+Day-ahead power output time-series forecasting methods are proposed in \cite{GAO2019115838}, in which the ideal weather type and non-ideal weather types have been separately discussed.
+For ideal weather conditions, a forecasting method is proposed based on meteorology data of the next day using long short term memory (LSTM) networks.
+For non-ideal weather conditions, time-series relevance and specific non-ideal weather type characteristic are considered in the LSTM model by introducing adjacent day time-series and typical weather type information.
+Specifically, daily total power, which is obtained by the discrete grey model (DGM), is regarded as input variables and applied to correct power output time-series prediction.
+Prediction performance comparison between proposed methods with traditional algorithms revealed that the RMSE accuracy of forecasting methods based on LSTM networks can reach 4.62\% for ideal weather conditions.
+For non-ideal weather conditions, the dynamic characteristic is effectively described by proposed methods and the proposed methods obtained superior prediction accuracy.
+This is an interesting study on how to treat the problem in two subcases, however,  for real applications, a single network able to adapt to weather conditions by itself is needed.
+
+In \cite{WANG2019113315}, a convolutional neural network, a long short-term memory network, and a hybrid model based on convolutional neural network and long short-term memory network models were proposed by Wang et al and they are applied to the data of the DKASC college photovoltaic system.
+The results showed that when the input sequence is increased, the accuracy of the model is also improved, and the prediction effect of the hybrid model is the best, followed by that of the convolutional neural network.
+While the long short-term memory network had the worst prediction effect, the training time was the shortest.
+
+In \cite{WANG2019116225}, a hybrid deep learning model (LSTM-Convolutional Network) is proposed and applied to photovoltaic power prediction.
+In the proposed hybrid prediction model, the temporal features of the data are extracted first by the long short term memory network, and then the spatial features of the data are extracted by the convolutional neural network model.
+The results showed that the hybrid prediction model had a better prediction effect than the single prediction models in isolation, and the proposed hybrid model is also better than the Convolutional-LSTM Network (extract the spatial characteristics of data first, and then extract the temporal characteristics of data).
+
+A hybrid deep learning model combining wavelet packet decomposition (WPD) and long short-term memory (LSTM) networks is proposed in \cite{LI2020114216}.
+The hybrid deep learning model is utilized for one-hour-ahead PV power forecasting with five-minute intervals.
+WPD is first used to decompose the original PV power series into sub-series.
+After the decomposition, four independent LSTM networks are developed for the sub-series.
+Finally, the results predicted by each LSTM network are reconstructed and a linear weighting method is employed to obtain the final forecasting results.
+Experimental results show that the proposed hybrid deep learning model exhibits superior performance in both forecasting accuracy and stability with respect to LSTM, RNN, GRU, and MLP.
+
+In \cite{MELLIT2021276}, different kinds of deep learning neural networks (DLNN) for short-term output PV power forecasting have been developed and compared: Long Short-Term Memory (LSTM), Bidirectional-LSTM (BiLSTM), Gated Recurrent Unit (GRU), Bidirectional-GRU (BiGRU), One-Dimension Convolutional Neural Network (CNN1D), as well as other hybrid configurations such as CNN1D-LSTM and CNN1D-GRU.
+A database of the PV power produced by the microgrid installed at the University of Trieste (Italy) is used to train and comparatively test the neural networks.
+The performance has been evaluated over four different time horizons, for one-step and multi-step ahead.
+The results show that the investigated DLNNs provide very good accuracy, particularly in the case of a 1-minute time horizon with one-step ahead (correlation coefficient is close to 1), while for the case of multi-step ahead (up to 8 steps ahead) the results are found to be acceptable (correlation coefficient ranges between 96.9\% and 98\%).
+The new advanced deep NN algorithms are able to lead to acceptable accuracy in the case of cloudy days.
+However, even though the models have great potential for fine time granularity, these time ranges are quite limited and they should be proved to be effective also on longer ranges to be used by PV plant owners.
+
+\cite{en15145232} aimed to predict hourly day-ahead PV power generation by applying the Temporal Fusion Transformer (TFT) model.
+TFT incorporates an interpretable explanation of temporal dynamics and high-performance forecasting over multiple horizons.
 The proposed forecasting model has been trained and tested using data from six different facilities located in Germany and Australia.
-The results have been compared with other algorithms like Auto Regressive Integrated Moving Average (ARIMA), Long Short-Term Memory (LSTM), Multi-Layer Perceptron (MLP), and Extreme Gradient Boosting (XGBoost).
-The use of TFT has been shown to be more accurate than the rest of the algorithms in forecasting PV generation in the different facilities.
+The results have been compared with other algorithms like Auto-Regressive Integrated Moving Average (ARIMA), Long Short-Term Memory (LSTM), Multi-Layer Perceptron (MLP), and Extreme Gradient Boosting (XGBoost).
+The use of TFT has been shown to be more accurate than the rest of the algorithms in forecasting PV generation in the tested different facilities.
 The importance of the decoder and encoder variables has been also calculated, revealing that solar horizontal irradiation and the zenith angle are the key variables for the model.
+This model was proved to be effective also in this task, showing the superiority of the TFTs over standard DL models, even though is quite more complex and requires a larger amount of data to achieve good prediction results.
