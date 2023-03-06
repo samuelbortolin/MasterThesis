@@ -52,84 +52,101 @@ Experimental results suggested that SMASH is able to provide a competitive and e
 In this section, the techniques for time series forecasting are presented.
 
 Forecasting competitions were proposed to promote the development of new solutions and novel techniques.
-\cite{HYNDMAN20207}
-\cite{SPILIOTIS202037}
+A brief briefly review was proposed in \cite{HYNDMAN20207}.
+The first and most influential forecasting competitions were, and currently are, the M-competitions\footnote{ \url{https://en.wikipedia.org/wiki/Makridakis_Competitions} }.
+These competitions promoted the application of the most recent statistical (such as ARIMA), machine learning (such as SVR), and deep learning (such as LSTM) approaches developed over time to be applied to the forecasting field.
+Issues like the statistical significance of the results, cheating using part of the test sets, and reproducibility of the results were addressed over the competitions.
+Also, other competitions were open such as Sante Fe competitions, the KDD cup, Neural network competitions, Kaggle time series competitions, and Global energy forecasting competitions.
 
-Relevant papers in the time series forecasting context to cite.
+\cite{SPILIOTIS202037} discussed whether forecasting competition data are representative of reality.
+This is a very important point since the performances of new forecasting methods are typically evaluated by exploiting data from past forecasting competitions.
+However, due to their many limitations, these datasets might not be indicative.
+Since obtaining a complete picture of the real world is impossible in practice, the paper proposed to use the M4 competition data as an indication of the real world.
+This is reasonable since this data set is composed of many series from the business world.
+The properties of this dataset representative of reality are then compared with past datasets, showing that many popular benchmarks may deviate from reality.
+The main differences observed were referred to the abnormality of the data, in fact, reality data are relatively more skewed series with outliers, as well as their limited randomness\slash trend.
+
+In \cite{BERGMEIR2012192}, Bergmeir and Benítez presented a study on the use of cross-validation for time series predictor evaluation.
+They aimed to combine the evaluation of traditional forecasting procedures, on the one hand, and the evaluation of machine learning techniques on the other hand.
+In fact, in traditional forecasting, a part from the end of each time series is reserved for testing, and to use the rest is used for training.
+Instead, when evaluating machine learning and other regression methods, often cross-validation is used in the evaluation process without paying much attention to the fact that there are theoretical problems with respect to temporal evolutionary effects and dependencies within the data that invalidate the fundamental assumptions of cross-validation.
+They suggested that the use of a blocked form of cross-validation for time series evaluation should be the standard procedure, thus using all available information and circumventing the theoretical problems.
+They also affirmed that the use of cross-validation techniques led to a more robust model selection.
+
+Relevant papers in the time series forecasting context
 \cite{DEGOOIJER2006443}
-\cite{SMYL202075}
-\cite{Lim2021}
-\cite{ZHANG2003159}
 \cite{Nesreen2010}
-\cite{SEZER2020106181}
-\cite{en16031371}
-\cite{HEWAMALAGE2021388}
-\cite{BENTAIEB20127067}
-\cite{CAO2003321}
-\cite{LI2019104785}
-\cite{DU2020269}
-\cite{Sean2017}
-\cite{Masini2023}
-\cite{Borovykh2017}
-\cite{SHEN2020302}
-\cite{DEOSANTOSJUNIOR201972}
+\cite{BENTAIEB20127067} 
+\cite{TEALAB2018334}
 \cite{Athiyarath2020}
 \cite{Cerqueira2020}
+\cite{SEZER2020106181}
+\cite{Lim2021}
+\cite{Masini2023}
+\cite{ZHANG2003159}
+\cite{CAO2003321}
 \cite{6210391}
-\cite{TEALAB2018334}
 \cite{Oliveira2015}
-\cite{BERGMEIR2012192}
+\cite{Sean2017}
+\cite{Borovykh2017}
+\cite{LI2019104785}
+\cite{DEOSANTOSJUNIOR201972}
+\cite{SHEN2020302}
+\cite{SMYL202075}
+\cite{HEWAMALAGE2021388}
+\cite{en16031371}.
 
 
 \vspace{0.1 cm}
-\subsection{Transformers}
+\subsection{Attention and transformers}
 \label{sec:transformers}
 \vspace{0.1 cm}
 
-In this subsection, an overview on attention-based and transformers approaches is presented, with a focus on time series forecasting applications.
+In this subsection, an overview on attention-based and transformers approaches is presented, with a focus on time series forecasting applications
+\cite{NIU202148}
+\cite{9586824}
+\cite{Shih2019}
+\cite{DU2020269}
+\cite{HEIDARI2020626}
+\cite{LIU2020113082}
+\cite{9688968}
+\cite{10019616}
+\cite{9892274}
+\cite{9676694}
+\cite{Vaswani2017}
 \cite{Grigsby2021}
 \cite{Wu2020}
 \cite{Zhou2020}
-\cite{Vaswani2017}
-\cite{NIU202148}
 \cite{LIM20211748}
-\cite{LIU2020113082}
-\cite{Shih2019}
-\cite{WU2022123990}
-\cite{ZHANG2022329}
 \cite{9745215}
-\cite{10019616}
-\cite{9676694}
-\cite{9892274}
-\cite{9586824}
-\cite{9688968}
-\cite{HEIDARI2020626}
+\cite{WU2022123990}
+\cite{ZHANG2022329}.
 
 
 \vspace{0.1 cm}
-\subsection{AutoML}
+\subsection{Automated machine learning}
 \label{sec:automl}
 \vspace{0.1 cm}
 
-In this subsection, an overview on the developed AutoML approaches is presented, with a focus on time series forecasting applications.
-\cite{HE2021106622}
-\cite{Gijsbers2019}
-\cite{Feurer2020}
-\cite{Zimmer2020}
-\cite{Deng2022}
-\cite{su142215292}
-\cite{Karmaker2021}
-\cite{Chen2021}
-\cite{computers10010011}
+In this subsection, an overview on the developed Automated machine learning (AutoML) approaches is presented, with a focus on time series forecasting applications
 \cite{Elshawi2019}
-\cite{Feurer2015}
-\cite{9534091}
-\cite{9579526}
-\cite{9660073}
-\cite{8955514}
 \cite{8995391}
 \cite{9033810}
+\cite{computers10010011}
+\cite{HE2021106622}
+\cite{9579526}
+\cite{Karmaker2021}
+\cite{Chen2021}
+\cite{Feurer2015}
+\cite{8955514}
+\cite{Gijsbers2019}
+\cite{9660073}
 \cite{9564380}
+\cite{9534091}
+\cite{su142215292}
+\cite{Feurer2020}
+\cite{Zimmer2020}
+\cite{Deng2022}.
 
 
 \section{Electricity demand forecasting}
