@@ -49,7 +49,7 @@ Experimental results suggested that SMASH is able to provide a competitive and e
 \label{sec:timeseries}
 \vspace{0.2 cm}
 
-In this section, the techniques for time series forecasting are presented.
+In this section, a brief introduction to forecasting competitions, the use of cross-validation for time series predictor evaluation, and techniques for time series forecasting are presented.
 
 Forecasting competitions were proposed to promote the development of new solutions and novel techniques.
 A brief briefly review was proposed in \cite{HYNDMAN20207}.
@@ -71,30 +71,103 @@ They aimed to combine the evaluation of traditional forecasting procedures, on t
 In fact, in traditional forecasting, a part from the end of each time series is reserved for testing, and to use the rest is used for training.
 Instead, when evaluating machine learning and other regression methods, often cross-validation is used in the evaluation process without paying much attention to the fact that there are theoretical problems with respect to temporal evolutionary effects and dependencies within the data that invalidate the fundamental assumptions of cross-validation.
 They suggested that the use of a blocked form of cross-validation for time series evaluation should be the standard procedure, thus using all available information and circumventing the theoretical problems.
-They also affirmed that the use of cross-validation techniques led to a more robust model selection.
+They also affirmed that the use of cross-validation techniques, together with an adequate control for stationarity, led to a more robust model selection.
 
-Relevant papers in the time series forecasting context
-\cite{DEGOOIJER2006443}
-\cite{Nesreen2010}
-\cite{BENTAIEB20127067} 
-\cite{TEALAB2018334}
-\cite{Athiyarath2020}
-\cite{Cerqueira2020}
-\cite{SEZER2020106181}
-\cite{Lim2021}
-\cite{Masini2023}
-\cite{ZHANG2003159}
-\cite{CAO2003321}
-\cite{6210391}
-\cite{Oliveira2015}
-\cite{Sean2017}
-\cite{Borovykh2017}
-\cite{LI2019104785}
-\cite{DEOSANTOSJUNIOR201972}
-\cite{SHEN2020302}
-\cite{SMYL202075}
-\cite{HEWAMALAGE2021388}
-\cite{en16031371}.
+In \cite{Cerqueira2020}, Cerqueira et al. studied the application of performance estimation methods to time series forecasting tasks.
+The dependency among observations in time series raises some caveats about the most appropriate way to estimate performance in this type of data, in fact, cross-validation cannot be applied since requires i.i.d. Data.
+Results of a comparative study of different performance estimation methods showed noticeable differences among them.
+In particular, their empirical experiments suggested that blocked cross-validation can be applied to stationary time series.
+However, when the time series are non-stationary, the most accurate estimates were produced by out-of-sample methods, particularly the holdout approach repeated in multiple testing periods.
+
+The following are relevant studies in the time series forecasting context.
+
+\cite{DEGOOIJER2006443} is a paper published in 2006 that review the research into time series forecasting made from 1982 to 2005.
+Many relevant methods were presented such as Exponential smoothing, ARIMA, State space and structural models and the Kalman filter, Regime-switching models, Functional-coefficient models, Neural nets, and many others also involving the combination of approaches.
+There were also a lot of relevant studies that presented theoretical concepts such as Seasonality, Forecast evaluation and accuracy measures, and Prediction intervals and densities.
+They concluded by saying that enormous progress has been made in many areas, but they found out that there were a large number of topics that need further development such as multivariate time series forecasting, forecasting methods based on nonlinear models, model selection procedures, robust statistical methods, and improved forecast intervals.
+
+In \cite{Nesreen2010}, Nesreen et al. presented a large-scale comparison study for the major machine learning models for time series forecasting.
+The models considered were multilayer perceptron, Bayesian neural networks, radial basis functions, generalized regression neural networks, K-nearest neighbor regression, CART regression trees, support vector regression, and Gaussian processes.
+The study revealed significant differences between the different methods and proclaimed as the best two methods on the monthly M3 time series competition data the multilayer perceptron and the Gaussian process regression.
+
+\cite{BENTAIEB20127067} proposed a review and a comparison of different strategies for multi-step ahead time series forecasting based on the NN5 forecasting competition.
+They also considered the effects of deseasonalization, input variable selection, and combination on the strategies.
+From experimental results, they figured out that:
+(i) Multiple-Output strategies are the best-performing approaches,
+(ii) deseasonalization leads to uniformly improved forecast accuracy,
+and (iii) input selection is more effective when performed in conjunction with deseasonalization.
+
+\cite{TEALAB2018334} studied the advances in time series forecasting models using artificial neural network methodologies.
+They took into consideration the papers published from 2006 to 2016.
+From the analysis of the papers, they concluded that, although there are many studies that presented the application of neural network models, few of them proposed new neural network models for forecasting.
+They found out that these many studies had a similar hybrid methodology that consisted in adjusting a linear time series model, and subsequently using the residuals as the input variables of an ANN model.
+
+\cite{Athiyarath2020} proposed a comparative study and analysis of various time series forecasting techniques such as linear regression model, ARIMA, LSTM, and many others.
+In particular, it explored their limitations and utility for different types of time-series data across different domains.
+
+\cite{SEZER2020106181} provided a comprehensive literature review of DL studies with a focus on financial time series forecasting implementation.
+They categorized the studies according to their intended forecasting implementation areas and grouped them based on their DL model choices, such as Convolutional Neural Networks (CNNs), Deep Belief Networks (DBNs), and Long-Short Term Memory (LSTM).
+
+In \cite{HEWAMALAGE2021388}, Hewamalage et al. presented an extensive empirical study and an open-source software framework of existing RNN architectures for forecasting.
+They concluded that RNNs are capable of modeling seasonality directly if the series in the dataset possess homogeneous seasonal patterns; otherwise, they recommend a deseasonalization step.
+Comparisons against exponential smoothing and ARIMA demonstrated that (semi-) automatic RNN models are not perfect, but they were competitive alternatives in many situations.
+
+In \cite{Lim2021}, Lim and Zohren analyzed the main architecture used in both one-step-ahead and multi-horizon time-series forecasting.
+They described how temporal information is incorporated into predictions by each of the models, such as CNNs, RNNs, and networks with attention mechanisms.
+They highlighted also the recent developments in hybrid deep learning models, which combine statistical models with neural network components to improve performance.
+
+\cite{Masini2023} presented the recent machine learning advances for time series forecasting.
+They started analyzing the linear methods, paying more attention to penalized regressions and ensembles of models.
+They continued presenting nonlinear methods, including tree-based methods, such as random forests and boosted trees, and shallow and deep neural networks, in their feedforward and recurrent versions.
+Finally, they also consider ensemble and hybrid models by combining different alternatives.
+
+\cite{ZHANG2003159} presented a hybrid methodology that combines ARIMA and ANN models.
+This was innovative in 2003 and was done in order to take advantage of the unique strengths of ARIMA and ANN models in linear and nonlinear modeling.
+The experimental results indicated that the combined model can be an effective way to improve the forecasting accuracy achieved by both models used separately.
+
+\cite{CAO2003321} proposed using multiple support vector machines (SVMs) for time series forecasting.
+The multiple SVMs that best fit the regions partitioned by a self-organizing feature map are constructed by finding the most appropriate kernel function and the optimal free parameters of SVMs.
+Simulation results showed that the proposed multiple SVMs achieve significant improvement in the generalization performance in comparison with the single SVMs models.
+In addition, the multiple SVMs also converge faster and use fewer support vectors.
+
+\cite{6210391} attempted to develop an automatic ANN modeling scheme for Time-Series Forecasting.
+This scheme was based on the generalized regression neural network (GRNN), a special type of neural network.
+By taking advantage of several GRNN properties (i.e., a single design parameter and fast learning) and by incorporating several design strategies (e.g., fusing multiple GRNNs), they were able to make the proposed modeling scheme to be effective for modeling large-scale business time series.
+
+\cite{Oliveira2015} described a new type of ensemble that aims at improving the predictive performance of this type of approach in time series forecasting.
+In particular, they proposed a new form of diversity generation that explores some specific properties of time series prediction tasks.
+Their experiments confirmed that the proposed method for generating diversity is able to improve the performance of the equivalent ensembles with standard diversity generation procedures.
+
+In \cite{Sean2017}, Sean and Letham proposed Prophet, a modular regression model with interpretable parameters that can be intuitively adjusted by analysts with domain knowledge about the time series.
+They also described a component for measuring and tracking forecast accuracy, and flagging forecasts that should be checked manually to help analysts make incremental improvements.
+This is a crucial component that allows analysts to identify when adjustments need to be made to the model or when an entirely different model may be appropriate.
+
+In \cite{Borovykh2017}, Borovykh et al. presented a method for conditional time series forecasting based on an adaptation of the recent deep convolutional WaveNet architecture.
+The proposed method took advantage of dilated convolutions for considering a broad history horizon when forecasting.
+Conditioning was performed by applying multiple convolutional filters in parallel to separate time series which allowed fast processing of data and the exploitation of the correlation structure between the multivariate time series.
+Experimental results showed that the proposed network was well-suited for regression-type problems and was able to effectively learn dependencies in and between the series without the need for long historical time series and tends to outperform linear and recurrent models.
+
+An evolutionary attention-based LSTM training with competitive random search was proposed for multivariate time series prediction in \cite{LI2019104785}.
+An evolutionary attention learning approach is introduced to LSTM.
+In particular, an evolutionary computation-inspired competitive random search method was proposed to configure in an optimal way the parameters in the attention layer.
+Experimental results have illustrated that the proposed model can achieve competitive prediction performance compared with other baseline methods.
+
+\cite{DEOSANTOSJUNIOR201972} proposed a hybrid system that searches for a suitable function to combine the forecasts of linear and nonlinear models.
+The proposed system performed linear and nonlinear modeling of the time series and a data-driven combination that searches for the most suitable function, between linear and nonlinear formalisms, and also the number of models that maximizes the performance of the combination.
+As the linear model, the ARIMA model is used and as nonlinear models, Multi-Layer Perceptron (MLP) and Support Vector Regression (SVR) were used.
+Experimental results showed that the proposed hybrid system attains superior performance when compared with single and hybrid models in the literature.
+
+In \cite{SHEN2020302}, Shen et al. proposed a novel time series forecasting model, named SeriesNet, which can fully learn features of time series data in different interval lengths.
+It is composed of a LSTM network and a dilated causal convolution network.
+The fact that the proposed model could learn multi-range and multi-level features from time series data led to a higher predictive accuracy compared to those models using fixed time intervals.
+
+\cite{SMYL202075} presented the winning submission of the M4 forecasting competition.
+The submission used a dynamic computational graph neural network system that enabled a standard exponential smoothing model to be mixed with advanced long short term memory networks into a common framework.
+The result was a hybrid and hierarchical forecasting method able to perform better than all the other submitted models.
+
+In the context of building better pricing modeling and forecasting frameworks to meet difficulties, \cite{en16031371} proposed to combine seasonal and trend decomposition utilizing LOESS (locally estimated scatterplot smoothing) and Prophet methodologies to perform a more accurate and resilient time series analysis of Italian electricity spot prices.
+The proposed method could assist in enhancing projections and providing a better understanding of the variables driving the data.
+Experimental results showed that the combination of approaches improved the forecast accuracy and lowered the mean absolute percentage error (MAPE) performance metric by 18\% compared to the Prophet baseline model.
 
 
 \vspace{0.1 cm}
@@ -200,7 +273,7 @@ The study found that the MARS models were able to provide a powerful, yet simple
 To improve the reliability of SVR in building energy consumption prediction, multiple parameters including weather data (such as yearly mean outdoor dry-bulb temperature, relative humidity, and global solar radiation) and economic factors (such as the ratio of urbanization, gross domestic product, household consumption level and total area of the structure) are taken as inputs.
 
 In \cite{8404313}, a RNN based time series approach for forecasting Turkish electricity load was proposed.
-Recurrent Neural Networks (RNN), Long-Short Term Memory (LSTM) Networks, and Gated Recurrent Units (GRU) Networks are used.
+Recurrent Neural Networks (RNN), Long Short Term Memory (LSTM) Networks, and Gated Recurrent Units (GRU) Networks are used.
 The resulting 0.71\% MAPE of their experiments yields better results than existing methods based on ARIMA and artificial neural networks on Turkish electricity load forecasting which have 2.6\% and 1.8\% MAPE respectively.
 
 Most of the presented techniques are considered very simple nowadays and they rely on large aggregated data, both on the number of people considered (e.g., the consumption generated by an entire country) or on a very large temporal aggregation (up to 1 year aggregated data).
@@ -246,7 +319,7 @@ It is found that:
 and (iii) the formulated methods are found to be robust against weather forecasting errors.
 This study gives useful insights about the quantity and granularity of data needed for a short-term prediction range, these are great findings but do not generalize to longer prediction ranges.
 
-In \cite{WANG2020117197}, Wang et al. proposed a novel approach based on long short-term memory (LSTM) network for predicting periodic energy consumption.
+In \cite{WANG2020117197}, Wang et al. proposed a novel approach based on long short term memory (LSTM) network for predicting periodic energy consumption.
 They stated that this is novel since general forecasting methods do not concern periodicity.
 Hidden features are extracted by the autocorrelation graph among the real industrial data.
 Experiments using a cooling system under one-step-ahead forecasting are conducted to verify the performance of LSTM.
@@ -276,7 +349,7 @@ This is an interesting work on a TFT model, which should be extended to obtain g
 
 \cite{LI2023108743} presented a probabilistic forecasting method for hourly load time series based on an improved temporal fusion transformer (ITFT) model to achieve more accurate and thorough forecasting results.
 Hourly load time series was reconstructed into multiple day-to-day load time series at different hour points.
-ITFT model replaces the long short-term memory (LSTM) with a gated recurrent unit (GRU) to learn long-term dependence more efficiently.
+ITFT model replaces the long short term memory (LSTM) with a gated recurrent unit (GRU) to learn long-term dependence more efficiently.
 Quantile constraints and prediction interval (PI) penalty terms were incorporated into the original quantile loss function to prevent quantile crossover and construct more compact prediction intervals (PIs).
 The results show that the proposed method is explanatory and can significantly improve the reliability and compactness of probabilistic load forecasting results compared with other popular methods, such as Quantile regression neural network (QRNN) and temporal convolutional network (TCN).
 
@@ -365,7 +438,7 @@ This use case is different from the standard single-building forecasts since a h
 Moreover, in this case, hotel parameters like the air conditioning system are available and help in reducing the overall forecast error.
 
 In \cite{WANG201910}, a probabilistic load forecasting method for individual consumers is proposed to handle the variability and uncertainty of future load profiles.
-Pinball loss-guided long short-term memory (LSTM) network is used to model both the long-term and short-term dependencies within the load profiles.
+Pinball loss-guided long short term memory (LSTM) network is used to model both the long-term and short-term dependencies within the load profiles.
 Forecasting for both residential and commercial consumers is tested.
 Experimental results over different customers showed that the proposed method had superior performance over traditional methods such as quantile regression neural network, gradient boosting regression tree, and traditional LSTM.
 
@@ -381,8 +454,8 @@ It recorded the smallest value of root mean square error compared to the convent
 It managed to predict complex electric energy consumption and obtained the highest performance in all cases of minutely, hourly, daily, and weekly unit resolutions compared to other methods.
 They stated also that having household characteristics such as occupancy and behavior of the residents might have a large influence on predicting electric energy consumption and could improve the performance of the model.
 
-In \cite{SOMU2020114131}, Somu et al. proposed a hybrid model for building energy consumption forecasting using long short-term memory networks.
-In particular, they presented eDemand, which is an energy consumption forecasting model which employs long short-term memory networks and an improved sine cosine optimization algorithm for accurate and robust building energy consumption forecasting.
+In \cite{SOMU2020114131}, Somu et al. proposed a hybrid model for building energy consumption forecasting using long short term memory networks.
+In particular, they presented eDemand, which is an energy consumption forecasting model which employs long short term memory networks and an improved sine cosine optimization algorithm for accurate and robust building energy consumption forecasting.
 Live energy consumption data was obtained from an academic building, the Indian Institute of Technology in Bombay, and it is used to forecast short-term, mid-term, and long-term energy consumption.
 The conducted experiments revealed that the proposed model outperforms the state-of-the-art energy consumption forecast models according to different evaluation metrics.
 
@@ -409,7 +482,7 @@ However, this technique in order to be applicable needs customers’ personal in
 \cite{ZANG2021120682} proposed a novel day-ahead residential load forecasting method based on feature engineering, pooling, and a hybrid deep learning model.
 Feature engineering was performed using two-stage preprocessing on data from each user, i.e., first decomposition and then multi-source input dimension reconstruction.
 Subsequently, the pooling operation was adopted to merge data from both the target user and its interconnected users, in a descending order based on mutual information.
-Finally, a hybrid model with two input channels was developed by combining long short-term memory (LSTM) with a self-attention mechanism (SAM).
+Finally, a hybrid model with two input channels was developed by combining long short term memory (LSTM) with a self-attention mechanism (SAM).
 The case studies were conducted on a practical dataset containing multiple residential users.
 The proposed load forecasting method achieved the best performance with a four-user data pool, 49 time steps, and 24 feature dimensions.
 The optimal performance corresponded to 15.33\%, 56.86 kW, and 82.50 kW in terms of MAPE, MAE, and RMSE, respectively.
@@ -418,7 +491,7 @@ The proposed method was demonstrated to be an effective choice for day-ahead res
 \cite{NAZIR2023100888} proposed a daily, weekly, and monthly energy consumption prediction model for single customers by using a Temporal Fusion Transformer (TFT).
 The study used a TFT which considered both primary and valuable data sources, and batch training techniques.
 A data set of 169 customers have been considered in the study and the TFT was tested on data from only one customer for demonstrating the effectiveness of the customer-based predictive model, which has the advantage that does not depend on overall energy consumption.
-The model’s performance has been related to the Long Short-Term Memory (LSTM), LSTM interpretable, and Temporal Convolutional Network (TCN) models.
+The model’s performance has been related to the Long Short Term Memory (LSTM), LSTM interpretable, and Temporal Convolutional Network (TCN) models.
 The overall symmetric mean absolute percentage error (sMAPE) of LSTM, LSTM interpretable, TCN, and proposed TFT remained at 29.78\%, 31.10\%, 36.42\%, and 26.46\%, respectively.
 The sMAPE of the TFT has proved that the model has performed better than the other deep learning models.
 This is a very smart recent work in which by using time series of also different customers is able to improve the quality of forecasts with respect to other models for a single customer.
@@ -535,22 +608,22 @@ Prediction performance comparison between proposed methods with traditional algo
 For non-ideal weather conditions, the dynamic characteristic is effectively described by proposed methods and the proposed methods obtained superior prediction accuracy.
 This is an interesting study on how to treat the problem in two subcases, however,  for real applications, a single network able to adapt to weather conditions by itself is needed.
 
-In \cite{WANG2019113315}, a convolutional neural network, a long short-term memory network, and a hybrid model based on convolutional neural network and long short-term memory network models were proposed by Wang et al and they are applied to the data of the DKASC college photovoltaic system.
+In \cite{WANG2019113315}, a convolutional neural network, a long short term memory network, and a hybrid model based on convolutional neural network and long short term memory network models were proposed by Wang et al and they are applied to the data of the DKASC college photovoltaic system.
 The results showed that when the input sequence is increased, the accuracy of the model is also improved, and the prediction effect of the hybrid model is the best, followed by that of the convolutional neural network.
-While the long short-term memory network had the worst prediction effect, the training time was the shortest.
+While the long short term memory network had the worst prediction effect, the training time was the shortest.
 
 In \cite{WANG2019116225}, a hybrid deep learning model (LSTM-Convolutional Network) is proposed and applied to photovoltaic power prediction.
 In the proposed hybrid prediction model, the temporal features of the data are extracted first by the long short term memory network, and then the spatial features of the data are extracted by the convolutional neural network model.
 The results showed that the hybrid prediction model had a better prediction effect than the single prediction models in isolation, and the proposed hybrid model is also better than the Convolutional-LSTM Network (extract the spatial characteristics of data first, and then extract the temporal characteristics of data).
 
-A hybrid deep learning model combining wavelet packet decomposition (WPD) and long short-term memory (LSTM) networks is proposed in \cite{LI2020114216}.
+A hybrid deep learning model combining wavelet packet decomposition (WPD) and long short term memory (LSTM) networks is proposed in \cite{LI2020114216}.
 The hybrid deep learning model is utilized for one-hour-ahead PV power forecasting with five-minute intervals.
 WPD is first used to decompose the original PV power series into sub-series.
 After the decomposition, four independent LSTM networks are developed for the sub-series.
 Finally, the results predicted by each LSTM network are reconstructed and a linear weighting method is employed to obtain the final forecasting results.
 Experimental results show that the proposed hybrid deep learning model exhibits superior performance in both forecasting accuracy and stability with respect to LSTM, RNN, GRU, and MLP.
 
-In \cite{MELLIT2021276}, different kinds of deep learning neural networks (DLNN) for short-term output PV power forecasting have been developed and compared: Long Short-Term Memory (LSTM), Bidirectional-LSTM (BiLSTM), Gated Recurrent Unit (GRU), Bidirectional-GRU (BiGRU), One-Dimension Convolutional Neural Network (CNN1D), as well as other hybrid configurations such as CNN1D-LSTM and CNN1D-GRU.
+In \cite{MELLIT2021276}, different kinds of deep learning neural networks (DLNN) for short-term output PV power forecasting have been developed and compared: Long Short Term Memory (LSTM), Bidirectional-LSTM (BiLSTM), Gated Recurrent Unit (GRU), Bidirectional-GRU (BiGRU), One-Dimension Convolutional Neural Network (CNN1D), as well as other hybrid configurations such as CNN1D-LSTM and CNN1D-GRU.
 A database of the PV power produced by the microgrid installed at the University of Trieste (Italy) is used to train and comparatively test the neural networks.
 The performance has been evaluated over four different time horizons, for one-step and multi-step ahead.
 The results show that the investigated DLNNs provide very good accuracy, particularly in the case of a 1-minute time horizon with one-step ahead (correlation coefficient is close to 1), while for the case of multi-step ahead (up to 8 steps ahead) the results are found to be acceptable (correlation coefficient ranges between 96.9\% and 98\%).
@@ -560,7 +633,7 @@ However, even though the models have great potential for fine time granularity, 
 \cite{en15145232} aimed to predict hourly day-ahead PV power generation by applying the Temporal Fusion Transformer (TFT) model.
 TFT incorporates an interpretable explanation of temporal dynamics and high-performance forecasting over multiple horizons.
 The proposed forecasting model has been trained and tested using data from six different facilities located in Germany and Australia.
-The results have been compared with other algorithms like Auto-Regressive Integrated Moving Average (ARIMA), Long Short-Term Memory (LSTM), Multi-Layer Perceptron (MLP), and Extreme Gradient Boosting (XGBoost).
+The results have been compared with other algorithms like Auto-Regressive Integrated Moving Average (ARIMA), Long Short Term Memory (LSTM), Multi-Layer Perceptron (MLP), and Extreme Gradient Boosting (XGBoost).
 The use of TFT has been shown to be more accurate than the rest of the algorithms in forecasting PV generation in the tested different facilities.
 The importance of the decoder and encoder variables has been also calculated, revealing that solar horizontal irradiation and the zenith angle are the key variables for the model.
 This model was proved to be effective also in this task, showing the superiority of the TFTs over standard DL models, even though is quite more complex and requires a larger amount of data to achieve good prediction results.
