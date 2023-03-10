@@ -37,7 +37,7 @@ Data security and privacy were achieved through the use of the Green Button stan
 Considerations and solutions were needed for data in transit, data at rest, and the authorization mechanisms for allowing unregulated third-party companies to interface directly with utilities on behalf of the consumer while ensuring the consumer maintains complete control of what is to be shared and the ability to revoke that sharing at any time.
 
 \cite{8577770} presented a big-data-based framework for dealing with electricity consumption behavior.
-It conduced an analysis of the current state-of-the-art methodologies for the extraction of electro-information.
+It conducted an analysis of the current state-of-the-art methodologies for the extraction of electro-information.
 They also analyzed in-depth data for pattern identification, relational analysis, and actions to perform on electricity usage.
 
 \cite{WILCOX2019250} proposed a novel broker-client system architecture for big data analytics: Smart Meter Analytics Scaled by Hadoop (SMASH).
@@ -139,7 +139,7 @@ In particular, they proposed a new form of diversity generation that explores so
 Their experiments confirmed that the proposed method for generating diversity is able to improve the performance of the equivalent ensembles with standard diversity generation procedures.
 
 In \cite{Sean2017}, Sean and Letham proposed Prophet, a modular regression model with interpretable parameters that can be intuitively adjusted by analysts with domain knowledge about the time series.
-They also described a component for measuring and tracking forecast accuracy, and flagging forecasts that should be checked manually to help analysts make incremental improvements.
+They also described a component for measuring and tracking forecast accuracy and flagging forecasts that should be checked manually to help analysts make incremental improvements.
 This is a crucial component that allows analysts to identify when adjustments need to be made to the model or when an entirely different model may be appropriate.
 
 In \cite{Borovykh2017}, Borovykh et al. presented a method for conditional time series forecasting based on an adaptation of the recent deep convolutional WaveNet architecture.
@@ -175,25 +175,76 @@ Experimental results showed that the combination of approaches improved the fore
 \label{sec:transformers}
 \vspace{0.1 cm}
 
-In this subsection, an overview on attention-based and transformers approaches is presented, with a focus on time series forecasting applications
-\cite{NIU202148}
-\cite{9586824}
-\cite{Shih2019}
-\cite{DU2020269}
-\cite{HEIDARI2020626}
-\cite{LIU2020113082}
-\cite{9688968}
-\cite{10019616}
-\cite{9892274}
-\cite{9676694}
-\cite{Vaswani2017}
-\cite{Grigsby2021}
+In this subsection, an overview of attention-based and transformer approaches is presented, with a focus on time series forecasting applications.
+
+\cite{NIU202148} provided an overview of the state-of-the-art attention models proposed.
+To provide a general understanding of attention mechanisms, they defined a unified model suitable for most attention structures.
+They classified existing attention models according to the following criteria: the softness of attention, forms of input features, input representation, and output representation.
+They also summarized the network architectures used in conjunction with the attention mechanism and described some applications where attention mechanisms are used to improve performance.
+Finally, we discuss the interpretability that attention mechanisms provide to the DL models, but also the challenges and prospects of attention models. 
+
+\cite{9586824} presented a review of the developed attention mechanism with a focus on the neural machine translation task.
+They covered the most adopted attention models and their variants, such as self-attention, soft attention, hard attention, local attention, global attention, additive attention, and multiplicative attention.
+
+\cite{9892274} analyzed that attention mechanisms have raised significant interest in the research community since they promise relevant improvements in the performance of neural network architectures.
+In particular, since self-attention was proposed, it has been widely used in transformer-like architectures and has led to significant breakthroughs in many applications.
+In the work, Pedro and Oliveira performed an objective comparison of a number of different attention mechanisms for the classification of samples in the Skin Cancer MNIST dataset.
+The results showed that attention modules only sometimes improved the performance of convolutional neural network architectures, but also that this improvement was not consistent in different settings.
+On the other hand, the results obtained with self-attention mechanisms showed consistent and significant improvements, leading to the best results even in architectures with a reduced number of parameters.
+
+In \cite{Vaswani2017}, Vaswani et al. proposed the Transformer architecture, based solely on attention mechanisms and fully connected feed-forward networks, plus layer normalization and residual connections.
+Experimental results on machine translation tasks showed that this groundbreaking model was superior in quality achieving better results than existing methods while being more parallelizable and requiring significantly less time to train.
+Moreover, they also showed that the Transformer is able to generalize to other tasks like English constituency parsing both with large and limited training data.
+
+In \cite{Shih2019}, Shih et al. analyzed that the standard attention mechanisms in multivariate time series forecasting only review the information at each previous time step and select relevant information to help generate the outputs.
+For this reason, they failed to capture temporal patterns across multiple time steps.
+In the study, they proposed a set of filters to extract time-invariant temporal patterns and then a novel attention mechanism to select relevant time series and use frequency domain information for multivariate time series forecasting.
+Finally, they applied the proposed approach to many real-world tasks demonstrating that it was able to achieve state-of-the-art performance in most of them.
+
+In \cite{DU2020269}, Du et al. proposed a novel temporal attention encoder-decoder model to successfully deal with multivariate time series forecasting.
+They developed an end-to-end deep learning structure that integrates the traditional idea of the encoder-decoder learning structure and a temporal attention mechanism for jointly learning long-term temporal dependency and hidden non-linear correlation features of multivariate temporal data.
+Experimental results on five multivariate time series datasets showed that the proposed model had the best forecasting performance compared with baseline models, such as SVR, RNN, CNN, LSTM, and GRU.
+
+\cite{HEIDARI2020626} aimed to predict the energy use of solar-assisted water heating systems using a novel machine learning approach.
+They proposed to use a LSTM network enhanced by an attention mechanism and the decomposition of input data into sub-layers.
+They compared the performance of the proposed approach with a Feed-Forward neural network, a LSTM network, and an Attention-based LSTM neural network.
+Experimental results showed that the proposed model had superior performance over the conventional models in this task.
+
+Liu et al. analyzed that the current attention-based recurrent neural networks can effectively represent and learn the dynamic spatiotemporal relationships between exogenous series and target series, but they only perform well in one-step time prediction and short-term time prediction.
+In \cite{LIU2020113082}, they proposed dual-stage two-phase-based RNN (DSTP-RNN) for long-term time series prediction.
+The DSTP-based structure enhanced the spatial correlations between exogenous series.
+The first phase produces violent but decentralized response weights, while the second phase leads to stationary and concentrated response weights.
+Then, they employed multiple head attention on target series to boost the long-term dependency.
+Experimental results demonstrated that the proposed model can be successfully used to develop systems for a wide range of applications, with performances superior to nine baseline methods on four datasets in the fields of energy, finance, environment, and medicine.
+
+Qi et al. analyzed that with the development of attention mechanisms, the frequency and time attention information of audio can be fully exploited, and the amplitude properties of audio can also be better integrated with a good fusion module.
+In \cite{10019616}, they improved existing frequency-temporal attention by extracting the attention information with the frequency-temporal attention and performing an additive fusion of features.
+Then, they applied attentional feature fusion based on multi-scale channel attention, and finally, temporal dependencies are learned through a self-attention module.
+Experimental results on four datasets demonstrated that the proposed model outperformed existing state-of-the-art models.
+
+In the context of Aspect-Based Sentiment Analysis (ABSA), Feng et al. argued that the original attention mechanism is not the ideal configuration, as most of the time only a small portion of terms are strongly related to the sentiment polarity of an aspect or entity.
+In fact, standard attention mechanisms apply the complete computed attention weights and do not place any restrictions on the attention assignment.
+In \cite{9676694}, they proposed a masked attention mechanism with two different approaches to generate the mask.
+The first approach was done by setting an attention weight threshold that is determined by the maximum of all weights and keeping only attention scores above the threshold.
+The second approach was done by selecting the top inputs with the highest weights.
+Both approaches removed the lower score parts that were assumed to be less relevant to the aspect of focus.
+By ignoring part of the input that is claimed irrelevant, a large proportion of input noise is removed, keeping the downstream model more focused and reducing calculation cost.
+Experiments showed significant improvements over state-of-the-art models with full attention, demonstrating the effectiveness of the masked attention mechanism.
+
 \cite{Wu2020}
+
 \cite{Zhou2020}
+
+\cite{Grigsby2021}
+
+
 \cite{LIM20211748}
+
 \cite{9745215}
+
 \cite{WU2022123990}
-\cite{ZHANG2022329}.
+
+\cite{ZHANG2022329}
 
 
 \vspace{0.1 cm}
@@ -201,25 +252,45 @@ In this subsection, an overview on attention-based and transformers approaches i
 \label{sec:automl}
 \vspace{0.1 cm}
 
-In this subsection, an overview on the developed Automated machine learning (AutoML) approaches is presented, with a focus on time series forecasting applications
+In this subsection, an overview of the developed Automated machine learning (AutoML) approaches is presented, with a focus on time series forecasting applications.
+
 \cite{Elshawi2019}
+
 \cite{8995391}
+
 \cite{9033810}
+
 \cite{computers10010011}
+
 \cite{HE2021106622}
+
 \cite{9579526}
+
 \cite{Karmaker2021}
+
 \cite{Chen2021}
+
+
 \cite{Feurer2015}
+
 \cite{8955514}
+
 \cite{Gijsbers2019}
+
 \cite{9660073}
+
 \cite{9564380}
+
 \cite{9534091}
+
 \cite{su142215292}
+
+
 \cite{Feurer2020}
+
 \cite{Zimmer2020}
-\cite{Deng2022}.
+
+\cite{Deng2022}
 
 
 \section{Electricity demand forecasting}
@@ -272,7 +343,7 @@ The study found that the MARS models were able to provide a powerful, yet simple
 \cite{MA20193433} presented a method based on a support vector regressor (SVR) to forecast building energy consumption in southern China.
 To improve the reliability of SVR in building energy consumption prediction, multiple parameters including weather data (such as yearly mean outdoor dry-bulb temperature, relative humidity, and global solar radiation) and economic factors (such as the ratio of urbanization, gross domestic product, household consumption level and total area of the structure) are taken as inputs.
 
-In \cite{8404313}, a RNN based time series approach for forecasting Turkish electricity load was proposed.
+In \cite{8404313}, a RNN-based time series approach for forecasting Turkish electricity load was proposed.
 Recurrent Neural Networks (RNN), Long Short Term Memory (LSTM) Networks, and Gated Recurrent Units (GRU) Networks are used.
 The resulting 0.71\% MAPE of their experiments yields better results than existing methods based on ARIMA and artificial neural networks on Turkish electricity load forecasting which have 2.6\% and 1.8\% MAPE respectively.
 
@@ -293,9 +364,9 @@ The proposed RICNN model has been verified in terms of the power usage data of t
 Experimental results demonstrate that the RICNN model outperforms the benchmarked multi-layer perception, RNN, and 1-D CNN in daily electric load forecasting (48-time steps with an interval of 30 minutes).
 This is an interesting network structure that can be suited for our specific use case but has to be effective also on a wider time horizon.
 
-In \cite{BEDI20191312}, Bedi and Toshniwal proposed a deep learning based framework to forecast electricity demand by taking care of long-term historical dependencies.
+In \cite{BEDI20191312}, Bedi and Toshniwal proposed a deep learning-based framework to forecast electricity demand by taking care of long-term historical dependencies.
 In fact, existing methods are able only of handling short-term dependencies.
-The proposed approach is called D-FED and is based on a Long Short Term Memory network and a moving window based multi-input multi-output mapping approach of active learning.
+The proposed approach is called D-FED and is based on a Long Short Term Memory network and a moving window-based multi-input multi-output mapping approach of active learning.
 It is applied to the electricity consumption data of Union Territory Chandigarh, India.
 The performance of the proposed approach is evaluated by comparing the prediction results with Artificial Neural Network, Recurrent Neural Network, and Support Vector Regression models.
 
@@ -315,7 +386,7 @@ The test cases involve five commercial buildings of five different building type
 Load forecasting results indicate that the deep learning algorithms implemented in the paper deliver 20-45\% improvement in load forecasting performance as compared to the current state-of-the-art results for both hour-ahead and 24-ahead load forecasting.
 It is found that:
 (i) the use of hybrid deep learning algorithms can take as less as one month of data to deliver satisfactory hour-ahead load prediction,
-(ii) 15-minute resolution data, if available, delivers 30\% improvement in hour-ahead load forecasting,
+(ii) 15-minute resolution data, if available, delivers a 30\% improvement in hour-ahead load forecasting,
 and (iii) the formulated methods are found to be robust against weather forecasting errors.
 This study gives useful insights about the quantity and granularity of data needed for a short-term prediction range, these are great findings but do not generalize to longer prediction ranges.
 
@@ -473,7 +544,7 @@ Single customer data is more noisy and very few works consider a single habitati
 Doing a model for every single user is not very scalable (high computational complexity) and a model that is able to use the information about a customer as features and can generalize over a customer base would be the best solution for an energy company.
 The next few recent works try to use novel and advanced techniques to try out this approach.
 
-A novel deep ensemble learning based probabilistic load forecasting framework is proposed in \cite{YANG2019116324} to quantify the load uncertainties of individual customers.
+A novel deep ensemble learning-based probabilistic load forecasting framework is proposed in \cite{YANG2019116324} to quantify the load uncertainties of individual customers.
 The presented framework employed the profiles of different customer groups and integrated them into the understanding of the task.
 Specifically, customers are clustered into separate groups based on their profiles and a multitask representation learning approach is employed on these groups simultaneously.
 This technique led to better feature learning across groups and it was particularly useful to improve the performance of predicting residential demand response and managing home energy in smart grids.
@@ -567,7 +638,7 @@ In addition, they stated that the best data-cleaning processes are normalization
 Furthermore, they analyzed also that the optimization of inputs and network parameters can be done by using genetic algorithms and particle swarm optimization.
 They determined that ensembles of artificial neural networks are the best approach for forecasting short-term photovoltaic power.
 
-\cite{9848724} examined the performance of the LSTM method in Turkey's electricity production estimation and to determine the optimization technique that provides the best performance in the LSTM estimation method.
+\cite{9848724} examined the performance of the LSTM method in Turkey's electricity production estimation and determined the optimization technique that provides the best performance in the LSTM estimation method.
 It was observed that the energy production estimation of LSTM and Adam optimization technique achieved successful results.
 
 In \cite{GELLERT2019546}, Gellert et al. proposed and evaluated a context-based technique to anticipate electricity production and consumption in buildings.
@@ -592,7 +663,7 @@ The different machine learning methods performed different non-linear transforma
 To assess the forecasting performance of the system, they considered two forecasting horizons relevant to the Internal Electricity Market, namely 36 hours ahead, relevant to the single day-ahead coupling, and 2 hours ahead, relevant to the single intraday coupling.
 The forecasting performance using only electricity data is compared with state-of-the-art models and improves the reference accuracy in their case studies.
 Since the ensemble relies only on energy data, the results showed that machine learning methods are useful to exploit energy big data for efficient energy forecasting systems.
-As demonstrated by other papers, weather information such as solar irradiance has an high correlation with energy production, and when studying a few plants, instead of all the ones in Portugal, this information has a relevant impact on performance.
+As demonstrated by other papers, weather information such as solar irradiance has a high correlation with energy production, and when studying a few plants, instead of all the ones in Portugal, this information has a relevant impact on performance.
 
 A novel hybrid method for deterministic PV power forecasting based on wavelet transform (WT) and deep convolutional neural network (DCNN) is proposed in \cite{WANG2017409}.
 WT is used to decompose the original signal into different frequency series.
