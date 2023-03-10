@@ -192,10 +192,6 @@ In the work, Pedro and Oliveira performed an objective comparison of a number of
 The results showed that attention modules only sometimes improved the performance of convolutional neural network architectures, but also that this improvement was not consistent in different settings.
 On the other hand, the results obtained with self-attention mechanisms showed consistent and significant improvements, leading to the best results even in architectures with a reduced number of parameters.
 
-In \cite{Vaswani2017}, Vaswani et al. proposed the Transformer architecture, based solely on attention mechanisms and fully connected feed-forward networks, plus layer normalization and residual connections.
-Experimental results on machine translation tasks showed that this groundbreaking model was superior in quality achieving better results than existing methods while being more parallelizable and requiring significantly less time to train.
-Moreover, they also showed that the Transformer is able to generalize to other tasks like English constituency parsing both with large and limited training data.
-
 In \cite{Shih2019}, Shih et al. analyzed that the standard attention mechanisms in multivariate time series forecasting only review the information at each previous time step and select relevant information to help generate the outputs.
 For this reason, they failed to capture temporal patterns across multiple time steps.
 In the study, they proposed a set of filters to extract time-invariant temporal patterns and then a novel attention mechanism to select relevant time series and use frequency domain information for multivariate time series forecasting.
@@ -231,12 +227,27 @@ Both approaches removed the lower score parts that were assumed to be less relev
 By ignoring part of the input that is claimed irrelevant, a large proportion of input noise is removed, keeping the downstream model more focused and reducing calculation cost.
 Experiments showed significant improvements over state-of-the-art models with full attention, demonstrating the effectiveness of the masked attention mechanism.
 
-\cite{Wu2020}
+In \cite{Vaswani2017}, Vaswani et al. proposed the Transformer architecture, based solely on attention mechanisms and fully connected feed-forward networks, plus layer normalization and residual connections.
+Experimental results on machine translation tasks showed that this groundbreaking model was superior in quality achieving better results than existing methods while being more parallelizable and requiring significantly less time to train.
+Moreover, they also showed that the Transformer is able to generalize to other tasks like English constituency parsing both with large and limited training data.
 
-\cite{Zhou2020}
+In \cite{Wu2020}, Wu et al. presented a new approach to time series forecasting by developing a novel method that employs Transformer-based machine learning models to forecast time series data.
+The approach leveraged self-attention mechanisms to learn complex patterns and dynamics from time series data.
+They created a generic framework that can be applied to univariate and multivariate time series data, as well as time series embeddings.
+The influenza-like illness (ILI) forecasting was used as a case study.
+They showed the effectiveness of the proposed approach and that the produced forecasting results are favorably comparable to the state-of-the-art.
 
-\cite{Grigsby2021}
+\cite{Zhou2020} discussed the several severe issues of Transformer architecture that prevent it from being directly applicable to long sequence time-series forecasting (LSTF), including quadratic time complexity, high memory usage, and the limitation of the encoder-decoder architecture.
+To address these issues, Zhou et al. designed an efficient transformer-based model for LSTF, named Informer.
+It had some distinctive characteristics, such as a ProbSparse self-attention mechanism, which achieves O(L log L) in time complexity and memory usage, the self-attention distilling highlights dominating attention by halving cascading layer input, the generative style decoder predicts the long time-series sequences in one forward operation rather than a step-by-step way.
+Extensive experiments on four large-scale datasets demonstrated that Informer significantly outperformed existing methods and provided a new solution to the LSTF problem.
 
+\cite{Grigsby2021} analyzed the state-of-the-art models for Multivariate Time Series Forecasting.
+The sequence-to-sequence models rely on attention between timesteps, which allows for temporal learning but fails to consider distinct spatial relationships between variables.
+In contrast, graph neural network methods explicitly model variable relationships, however, often rely on predefined graphs and perform separate spatial and temporal updates without establishing direct connections between each variable at every timestep.
+The study addressed the presented problems by using a Transformer and translating the multi-variate forecasting task into a spatiotemporal sequence formulation so that each Transformer input represented the value of a single variable at a given time.
+Using this formulation, Long-Range Transformers can then jointly learn interactions between space, time, and value information.
+The proposed method, called Spacetimeformer, achieved competitive results on benchmarks of different domains while learning fully-connected spatiotemporal relationships purely from data.
 
 \cite{LIM20211748}
 
