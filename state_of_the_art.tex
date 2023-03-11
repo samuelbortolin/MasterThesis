@@ -181,7 +181,7 @@ In this subsection, an overview of attention-based and transformer approaches is
 To provide a general understanding of attention mechanisms, they defined a unified model suitable for most attention structures.
 They classified existing attention models according to the following criteria: the softness of attention, forms of input features, input representation, and output representation.
 They also summarized the network architectures used in conjunction with the attention mechanism and described some applications where attention mechanisms are used to improve performance.
-Finally, we discuss the interpretability that attention mechanisms provide to the DL models, but also the challenges and prospects of attention models. 
+Finally, we discuss the interpretability that attention mechanisms provide to the DL models, but also the challenges and prospects of attention models.
 
 \cite{9586824} presented a review of the developed attention mechanism with a focus on the neural machine translation task.
 They covered the most adopted attention models and their variants, such as self-attention, soft attention, hard attention, local attention, global attention, additive attention, and multiplicative attention.
@@ -279,30 +279,68 @@ Moreover, TFT allowed gaining information about the importance ranking of the de
 \label{sec:automl}
 \vspace{0.1 cm}
 
-In this subsection, an overview of the developed Automated machine learning (AutoML) approaches is presented, with a focus on time series forecasting applications.
+In this subsection, an overview of the developed approaches in the automated machine learning (AutoML) field is presented, with a focus on time series forecasting applications.
 
-\cite{Elshawi2019}
+\cite{Elshawi2019} exposed the need for automating the process of building good machine learning models, mainly due to the fact that with the continuous and vast increase of the amount of data, it was recognized that the number of data scientists cannot be scaled to tackle all this data.
+In this study, Elshawi et al. presented a comprehensive survey of the state-of-the-art efforts for dealing with the Combined Algorithm Selection and Hyper-parameter tuning (CASH) problem in the machine learning domain.
+In addition, they highlighted the research work of automating also the other steps of the full complex machine learning pipeline (AutoML) from data understanding to model deployment.
+Furthermore, they provided an overview of the various tools and frameworks that have been proposed.
+Finally, they discussed some of the research directions and open challenges that need to be addressed in order to achieve the vision and goals of the AutoML process, such as scalability, optimization techniques to use, time budget management, and data preparation.
 
-\cite{8995391}
+In \cite{8995391}, Truong et al. investigated the current state of AutoML tools aiming to automate repetitive tasks in ML pipelines, such as data pre-processing, feature engineering, model selection, hyperparameter optimization, and prediction result analysis.
+They conducted various evaluations of the tools on many datasets to examine their performance and compare their advantages and disadvantages.
+They observed that most AutoML tools obtain reasonable results in terms of their performance across many datasets and no tool managed to outperform all others on all the tasks.
+Across the various evaluations and benchmarks they tested, H2O-Automl, Auto-keras, and Auto-sklearn performed better than Ludwig, Darwin, TPOT, and Auto-ml.
 
-\cite{9033810}
+\cite{9033810} reviewed the various AutoML, hyperparameter tuning, and meta-learning approaches available and pointed out that most of them are neither properly documented nor very clear due to the differences in the approaches.
+The strengts and drawbacks of the various approaches and their reviews in terms of algorithms supported, features, and implementations are explored.
 
-\cite{computers10010011}
+\cite{HE2021106622} presented a comprehensive review of the state-of-the-art in AutoML.
+According to the DL pipeline, He et al. introduced AutoML methods covering data preparation, feature engineering, hyperparameter optimization, and neural architecture search (NAS).
+They summarized the representative NAS algorithms’ performance on the CIFAR-10 and ImageNet datasets and discussed relevant topics of the NAS methods such as one\slash two-stage NAS, one-shot NAS, joint hyperparameter and architecture optimization, and resource-aware NAS.
+Finally, they discussed some open problems related to the existing AutoML methods for future research such as flexible search space, areas exploration, interpretability, reproducibility, and robustness.
 
-\cite{HE2021106622}
+\cite{9579526} observed that data scientists cannot tackle the growing number of challenging tasks due to a lack of expertise and experience across all task domains.
+To help address this issue, the study provided a survey of ongoing research in the field of Meta-Learning and AutoML.
+It covered AutoML tools such as TransmogrifAI, Auto-sklearn, AutoGluon, and NNI.
+It also summarized possible uses of Meta-Learning for deep learning, few-shot learning, and for automating the machine learning process.
 
-\cite{9579526}
+In \cite{Karmaker2021}, Karmaker et al. introduced a new classification system for AutoML systems, using a tier schematic to distinguish systems based on their level of autonomy.
+They described what an end-to-end machine learning pipeline actually looks like and analyzed which subtasks have been automated and which are done manually.
+In fact, most AutoML systems require human involvement in some steps, including understanding the attributes of domain-specific data, defining prediction problems, creating a suitable training dataset, and selecting a promising machine learning technique.
+These steps often require a prolonged back-and-forth that makes this process inefficient and keeps AutoML systems from being truly automatic.
+Next, they introduced the proposed level-based taxonomy for AutoML systems and define each level according to the scope of automation support provided.
+Finally, they discussed the challenges that stand in the way of automating the whole end-to-end machine learning pipeline.
 
-\cite{Karmaker2021}
+In \cite{Chen2021}, Chen et al. described AutoML as a bi-level optimization problem, where one problem is nested within another to search the optimum in the search space, and reviewed the current developments of AutoML in terms of three categories:
+automated feature engineering (AutoFE),
+automated model and hyperparameter tuning (AutoMHT),
+and automated deep learning (AutoDL).
+The state-of-the-art techniques and frameworks in the three categories are presented.
+They concluded by presenting the open challenges of AutoML such as the lack of authoritative benchmarks, efficiency, design of search spaces, and interpretability.
 
-\cite{Chen2021}
+In 2015, Feurer et al. stated that to be effective in practice, machine learning systems need to automatically choose a good algorithm and feature preprocessing steps for a new dataset at hand, and also set their respective hyperparameters.
+Starting from existing work on efficient Bayesian optimization methods, in \cite{Feurer2015} they presented a robust new AutoML system based on the scikit-learn framework: Auto-Sklearn.
+It was using 15 classifiers, 14 feature preprocessing methods, and 4 data preprocessing methods, giving rise to a structured hypothesis space with 110 hyperparameters.
+Auto-Sklearn improved on existing AutoML methods by automatically taking into account past performance on similar datasets, and by constructing ensembles from the models evaluated during the optimization.
+Results on over 100 diverse datasets showed that Auto-Sklearn substantially outperformed the previous state of the art in AutoML.
 
+In \cite{8955514}, Dyrmishi et al. presented a methodology and framework for using Meta-Learning techniques to develop new methods that serve as effective decision support for the AutoML process.
+Meta-Learning allows learning from previous experience gained during applying various learning algorithms on different types of data and helps reduce the time needed to learn new tasks.
+In particular, they used Meta-Learning techniques to answer several crucial questions for the AutoML process such as which classifiers are expected to be the best performing on a given dataset, whether it is possible to predict the training time of a classifier, and which classifiers are worth investing a larger portion of the time budget to improve their performance by tuning them.
+In the Meta-Learning process, they used 200 datasets with different characteristics and 30 classifiers from Weka and Scikit-learn libraries.
+Results and Meta-Models have been obtained in a fully automated way.
 
-\cite{Feurer2015}
+\cite{Gijsbers2019} introduced an open-source benchmark framework for comparing different AutoML systems, that follows best practices and avoids common mistakes.
+The framework is extensible both in terms of AutoML frameworks and tasks.
+They used the framework to conduct a thorough comparison of 4 AutoML systems (Auto-WEKA, Auto-Sklearn, TPOT, and H2O AutoML) across 39 datasets and analyze the results.
+The presented results highlighted the need for further AutoML research.
+In fact, on some datasets, none of the frameworks outperformed a Random Forest within 4 hours, and high-dimensional or highly multi-class problems were often challenging.
 
-\cite{8955514}
-
-\cite{Gijsbers2019}
+In \cite{computers10010011}, Vaccaro et al. reviewed some Machine Learning (ML) models and methods proposed in the literature to analyze their strengths and weaknesses.
+Then, they proposed their use, alone or in combination with other approaches, to provide possible valid AutoML solutions.
+They analyzed these solutions from a theoretical point of view and evaluated them empirically on three Atari games.
+The objective of the study was to identify what could be some promising ways to create effective AutoML frameworks able to replace the human expert as much as possible and thereby making easier the process of applying ML approaches to typical problems of specific domains.
 
 \cite{9660073}
 
@@ -467,7 +505,7 @@ ii) estimation method,
 and iii) result adjustment.
 They pointed out that the combination of these criteria depends on user consumption, weather dependency (including seasonal behavior), and load behavior and should all together fit the user consumption pattern.
 
-In \cite{DEB2017902}, Deb et al. presented a comparison of different time series forecasting techniques for building energy consumption: ANN, ARIMA, SVM, Case-Based Reasoning (CBR), Fuzzy time series, Grey prediction model, Moving average and exponential smoothing (MA \& ES), K - Nearest Neighbor prediction method (kNN) and Hybrid models.
+In \cite{DEB2017902}, Deb et al. presented a comparison of different time series forecasting techniques for building energy consumption: ANN, ARIMA, SVM, Case-Based Reasoning (CBR), Fuzzy time series, Grey prediction model, Moving average and exponential smoothing (MA \& ES), K-Nearest Neighbor prediction method (kNN) and Hybrid models.
 Also, hybrid models are reviewed and analyzed, i.e., the combination of two or more forecasting techniques.
 The various combinations of the hybrid model are found to be the most effective in time series energy forecasting for single buildings.
 
