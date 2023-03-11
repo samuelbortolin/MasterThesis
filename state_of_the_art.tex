@@ -249,13 +249,29 @@ The study addressed the presented problems by using a Transformer and translatin
 Using this formulation, Long-Range Transformers can then jointly learn interactions between space, time, and value information.
 The proposed method, called Spacetimeformer, achieved competitive results on benchmarks of different domains while learning fully-connected spatiotemporal relationships purely from data.
 
-\cite{LIM20211748}
+In \cite{LIM20211748}, Lim et al. introduced the Temporal Fusion Transformer (TFT): a novel attention-based architecture that combines high-performance multi-horizon forecasting with interpretable insights into temporal dynamics.
+The presented TFT relied on recurrent layers for local processing and on interpretable self-attention layers for long-term dependencies.
+It was able to select relevant features and suppress unnecessary components through a series of gating layers.
+Experimental results on a variety of real-world datasets demonstrated significant performance improvements over existing benchmarks and they also highlighted some practical interpretability use cases enabled by the TFT architecture.
 
-\cite{9745215}
+TFT architecture was a breakthrough in time series forecasting and achieved state-of-the-art performance in several tasks.
+Hereafter, some studies using this architecture are presented.
 
-\cite{WU2022123990}
+In \cite{9745215}, the Temporal Fusion Transformer (TFT) was applied to forecast the trajectory of future vital signs based on time-varying measurements of past vital signs.
+This is quite important since the deterioration of a patient’s condition is usually preceded by several hours of abnormal physiology as indicated by the patient’s vital signs.
+The model was developed using the Songklanagarind critical care dataset, which includes vital sign measurements from 140 patients.
+Experimental results showed that TFT was able to capture the temporal dynamics of vital signs and can potentially be used to detect irregular patterns in vital sign time series.
 
-\cite{ZHANG2022329}
+In \cite{ZHANG2022329}, a TFT was adopted to predict freeway speed with prediction horizons from 5 to 150 minutes.
+A traffic speed data set was used to train and test the prediction model for demonstrating the advantage provided by TFT.
+The TFT prediction performance was compared with several classic traffic speed prediction methods, and the results revealed that the TFT performed better than the other classic models when the prediction horizon is longer than 30 minutes.
+Moreover, the TFT is also more stable when the prediction horizon is 60 minutes or longer.
+
+\cite{WU2022123990} used a novel forecasting approach for interpretable wind speed prediction by incorporating variational mode decomposition, a TFT model, and an evolutionary algorithm.
+In the proposed approach, variational mode decomposition was employed to break down the raw wind speed sequence into a set of intrinsic mode functions.
+Adaptive differential evolution was then used for optimizing several parameters of a TFT allowing it to achieve satisfactory forecasting performance.
+Empirical studies using real-world wind speed data sets demonstrated that the proposed model outperformed other comparable models in nearly all performance metrics.
+Moreover, TFT allowed gaining information about the importance ranking of the decomposed wind speed sub-sequences, meteorological data, and attention analysis of different step lengths.
 
 
 \vspace{0.1 cm}
