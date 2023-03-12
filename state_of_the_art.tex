@@ -325,6 +325,10 @@ It was using 15 classifiers, 14 feature preprocessing methods, and 4 data prepro
 Auto-Sklearn improved on existing AutoML methods by automatically taking into account past performance on similar datasets, and by constructing ensembles from the models evaluated during the optimization.
 Results on over 100 diverse datasets showed that Auto-Sklearn substantially outperformed the previous state of the art in AutoML.
 
+In \cite{Jin2019}, Jin et al. proposed a novel framework for efficient neural architecture search enabling Bayesian optimization to guide the network morphism, which essentially keeps the functionality of a neural network while changing its neural architecture.
+The framework, called Auto-Keras, developed a neural network kernel and a tree-structured optimization algorithm to efficiently explore the search space.
+Extensive experiments on real-world benchmark datasets demonstrated the superior performance of the developed framework over the state-of-the-art neural architecture search methods.
+
 In \cite{8955514}, Dyrmishi et al. presented a methodology and framework for using Meta-Learning techniques to develop new methods that serve as effective decision support for the AutoML process.
 Meta-Learning allows learning from previous experience gained during applying various learning algorithms on different types of data and helps reduce the time needed to learn new tasks.
 In particular, they used Meta-Learning techniques to answer several crucial questions for the AutoML process such as which classifiers are expected to be the best performing on a given dataset, whether it is possible to predict the training time of a classifier, and which classifiers are worth investing a larger portion of the time budget to improve their performance by tuning them.
@@ -342,20 +346,44 @@ Then, they proposed their use, alone or in combination with other approaches, to
 They analyzed these solutions from a theoretical point of view and evaluated them empirically on three Atari games.
 The objective of the study was to identify what could be some promising ways to create effective AutoML frameworks able to replace the human expert as much as possible and thereby making easier the process of applying ML approaches to typical problems of specific domains.
 
-\cite{9660073}
+Nguyen et al. investigated that most AutoML-based Bayesian optimization (BO) approaches convert the AutoML optimization problem into a Hyperparameter Optimization (HPO) problem, i.e., by modeling the choice of algorithms as an additional categorical hyperparameter.
+They pointed out that using this approach algorithms and their local hyper-parameters are referred to at the same level, and this makes the initial sampling less robust.
+In \cite{9660073}, they attempted to formulate the AutoML optimization problem as a BO problem instead of transferring it into a HPO problem.
+They proposed a novel initial sampling approach to maximize the coverage of the AutoML search space to help BO construct a robust surrogate model.
+They experimented with this approach on 2 independent scenarios of AutoML with 2 operators and 6 operators over 117 benchmark datasets.
+Experimental results demonstrated that the performance of BO significantly improved by using the proposed sampling approach.
 
-\cite{9564380}
+In \cite{Feurer2020}, Feurer et al. introduced a new AutoML approach, named PoSH (Portfolio Successive Halving) Auto-sklearn, which enabled AutoML systems to work well on large datasets under rigid time limits by using a meta-learning technique and a bandit strategy for budget allocation.
+They also studied how to let AutoML explore the design space of AutoML and automatically select the best configuration by itself.
+These changes combined give rise to the next generation of their original Auto-sklearn AutoML system, called Auto-sklearn 2.0.
+They verified the improvements of these additions in an extensive experimental study on 39 AutoML benchmark datasets and compared the results to other popular AutoML frameworks and Auto-sklearn 1.0, showing that the relative error is reduced by up to a factor of 4.5, and yielding a performance in 10 minutes that was better than what Auto-sklearn 1.0 achieved within an hour.
 
-\cite{9534091}
+In \cite{Zimmer2020}, Zimmer et al. presented Auto-PyTorch, which jointly and robustly optimized the network architecture and the training pipelines with their hyperparameters to enable fully automated deep learning (AutoDL).
+Auto-PyTorch achieved state-of-the-art performance on several tabular benchmarks by combining multi-fidelity optimization with portfolio construction for warm starting and ensembling of deep neural networks (DNNs) and common baselines for tabular data.
+To verify the effectiveness of the proposed framework, they introduced a new benchmark on learning curves for DNNs and run extensive studies on typical AutoML benchmarks showing that Auto-PyTorch performed better than several state-of-the-art competitors.
 
-\cite{su142215292}
+\cite{9534091} presented a benchmark of AutoML tools.
+Firstly, it analyzed the characteristics of eight recent open-source AutoML tools (Auto-Keras, Auto-PyTorch, Auto-Sklearn, AutoGluon, H2O AutoML, rminer, TPOT, and TransmogrifAI) and described twelve popular OpenML datasets that were used as benchmarks for different tasks such as regression, binary and multi-class classification tasks.
+Then, it performed an experimental comparison study by considering predictive scores and computational effort.
+The best predictive results achieved were compared with the best OpenML public results showing that AutoML tools obtained competitive results, outperforming the best OpenML models in five datasets.
+The results confirmed the potential of AutoML tools to fully automate the Machine Learning algorithm selection and tuning.
 
+\cite{9564380} presented a data augmentation method to significantly improve the performance of neural networks since their modeling capacities in time-series forecasting are limited in cases where enough data may not be available.
+The proposed method, called Augmented-Neural-Network, used forecasts from statistical models which help produce competitive results on intermediate-length time series.
+They showed that data augmentation, when paired with AutoML techniques such as Neural Architecture Search, can help to find an adequate neural architecture for a given time series.
+Using this combination, they demonstrated that led to significant enhancement in the forecasting accuracy of some neural network-based models used on a COVID-19 dataset.
+The improvement in forecasting accuracy with respect to the same neural networks that do not use augmented data was around 20\%.
 
-\cite{Feurer2020}
+\cite{su142215292} conducted experiments on time series forecasting using machine learning, deep learning, and AutoML techniques.
+The datasets used in the experiments were quantitative data of the real prices of the currently most used cryptocurrencies.
+The results demonstrated that AutoML for time series is still in the development stage and needs more study to be the main solution to adopt since it was unable to outperform manually designed ML and DL models.
 
-\cite{Zimmer2020}
-
-\cite{Deng2022}
+In recent years AutoDL systems efficiency has tremendously improved, but little attention has been paid to AutoDL frameworks for time series forecasting.
+In \cite{Deng2022}, Deng et al. proposed an efficient approach for the joint optimization of neural architecture and hyperparameters of the entire data processing pipeline for time series forecasting.
+In contrast to common NAS search spaces, they designed a novel neural architecture search space covering various state-of-the-art architectures, allowing for an efficient macro-search over different DL approaches.
+To efficiently search in such a large configuration space, they employed Bayesian optimization with multi-fidelity optimization.
+They empirically studied several different budget types enabling efficient multi-fidelity optimization on different forecasting datasets.
+Furthermore, they compared the final system, called Auto-PyTorch-TS, against several established baselines and showed that it significantly outperformed all of them across several datasets.
 
 
 \section{Electricity demand forecasting}
@@ -463,7 +491,7 @@ It was compared with several traditional forecasting methods, such as the autore
 The RMSE of LSTM is 19.7\%, 54.85\%, and 64.59\% lower than BPNN, ARMA, and ARFIMA on the test data.
 Furthermore, they demonstrated that the proposed algorithm had the highest generalization capability.
 
-In \cite{WANG2020114561}, Wang et al. proposed a stacking model capable of combining the advantages of various basic prediction algorithms and transforming them into “meta-features” to ensure that the final model can observe datasets from different spatial and structural angles.
+In \cite{WANG2020114561}, Wang et al. proposed a stacking model capable of combining the advantages of various basic prediction algorithms and transforming them into meta-features to ensure that the final model can observe datasets from different spatial and structural angles.
 Load data retrieved from two educational buildings in the coastal city of Tianjin, China, is employed for the case study.
 The case study buildings are made of classrooms for students and offices for university staff.
 Experimental results indicated that the stacking method achieves better performance than other tested ML models (Random Forest, Gradient Boosted Decision Tree, Extreme Gradient Boosting, Support Vector Machine, and K-Nearest Neighbor) regarding accuracy, generalization, and robustness.
