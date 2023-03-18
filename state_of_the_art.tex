@@ -2,25 +2,24 @@
 \label{cha:soa}
 \vspace{0.4 cm}
 
-In this chapter, the current state of the art is analyzed in the context of electricity data and time series forecasting methods.
-In the first section, a brief introduction to the proposed standards for electricity data is presented.
+In this chapter, the current state of the art is analyzed in the context of electricity data representation and time series forecasting methods.
+In the first section, a brief introduction to the proposed standards for electricity data representation is presented.
 Subsequently, various technologies presented in the literature for time series forecasting are discussed.
 In particular, several implementations and use cases are presented.
-Also, an in-depth discussion on two hot topics, Transformers and AutoML, is treated in dedicated subsections.
+Also, an in-depth discussion on two hot topics, Transformers and Automated Machine Learning (AutoML), is treated in dedicated subsections.
 Furthermore, the three use cases of interest, electricity demand forecasting, consumption baseline forecasting, and electricity production forecasting, are treated more in detail in dedicated sections.
 At the end of this chapter, it will be clear the context around which the proposed system is developed.
-Unlike other solutions, our system is able to achieve a competitive MAPE in all three use cases with a low-computational implementation.
 
 
-\section{Electricity data}
+\section{Electricity data representation}
 \label{sec:data}
 \vspace{0.2 cm}
 
-In this section, a discussion of electricity data and proposed standards is presented.
+In this section, a discussion of electricity data representation and proposed standards is presented.
 
-\cite{CHEN201798} studied the data quality of electricity consumption data in a smart grid environment.
+In \cite{CHEN201798},  Chen et al. studied the data quality of electricity consumption data in a smart grid environment.
 The definition and classification of data quality issues are explained.
-The data quality issues of electricity consumption data are classified into three types: noise data, incomplete data, and outlier data.
+The data quality issues related to electricity consumption are classified into three types: noisy data, incomplete data, and outlier data.
 These three types of data quality issues are discussed.
 The paper introduced the causes of electricity consumption outlier data and provided a review of the possible detection methods.
 This is a relevant study since most industrial studies in this field use real-world data that presents these issues.
@@ -51,15 +50,18 @@ Experimental results suggested that SMASH is able to provide a competitive and e
 
 In this section, a brief introduction to forecasting competitions, the use of cross-validation for time series predictor evaluation, and techniques for time series forecasting are presented.
 
+Time series forecasting is a classic and well-studied topic.
+The classical approaches, based on statistical methods such as Auto-Regressive Integrated Moving Average (ARIMA), have been joined in recent years by standard Machine Learning (ML) methods and recently also by Deep Learning (DL) methods with the use of neural networks and transformers.
+
 Forecasting competitions were proposed to promote the development of new solutions and novel techniques.
-A brief briefly review was proposed in \cite{HYNDMAN20207}.
+A brief review was proposed in \cite{HYNDMAN20207}.
 The first and most influential forecasting competitions were, and currently are, the M-competitions\footnote{ \url{https://en.wikipedia.org/wiki/Makridakis_Competitions} }.
-These competitions promoted the application of the most recent statistical (such as ARIMA), machine learning (such as SVR), and deep learning (such as LSTM) approaches developed over time to be applied to the forecasting field.
+These competitions promoted the application of the most recent statistical such as ARIMA, ML such as Support Vector Regression (SVR), and DL such as Long Short-Term Memory (LSTM) approaches developed over time to be applied to the forecasting field.
 Issues like the statistical significance of the results, cheating using part of the test sets, and reproducibility of the results were addressed over the competitions.
 Also, other competitions were open such as Sante Fe competitions, the KDD cup, Neural network competitions, Kaggle time series competitions, and Global energy forecasting competitions.
 
 \cite{SPILIOTIS202037} discussed whether forecasting competition data are representative of reality.
-This is a very important point since the performances of new forecasting methods are typically evaluated by exploiting data from past forecasting competitions.
+This is a very important point since the performance of new forecasting methods are typically evaluated by exploiting data from past forecasting competitions.
 However, due to their many limitations, these datasets might not be indicative.
 Since obtaining a complete picture of the real world is impossible in practice, the paper proposed to use the M4 competition data as an indication of the real world.
 This is reasonable since this data set is composed of many series from the business world.
@@ -67,14 +69,14 @@ The properties of this dataset representative of reality are then compared with 
 The main differences observed were referred to the abnormality of the data, in fact, reality data are relatively more skewed series with outliers, as well as their limited randomness\slash trend.
 
 In \cite{BERGMEIR2012192}, Bergmeir and Benítez presented a study on the use of cross-validation for time series predictor evaluation.
-They aimed to combine the evaluation of traditional forecasting procedures, on the one hand, and the evaluation of machine learning techniques on the other hand.
+They aimed to combine the evaluation of traditional forecasting procedures, on the one hand, and the evaluation of ML techniques on the other hand.
 In fact, in traditional forecasting, a part from the end of each time series is reserved for testing, and to use the rest is used for training.
-Instead, when evaluating machine learning and other regression methods, often cross-validation is used in the evaluation process without paying much attention to the fact that there are theoretical problems with respect to temporal evolutionary effects and dependencies within the data that invalidate the fundamental assumptions of cross-validation.
+Instead, when evaluating ML and other regression methods, often cross-validation is used in the evaluation process without paying much attention to the fact that there are theoretical problems with respect to temporal evolutionary effects and dependencies within the data that invalidate the fundamental assumptions of cross-validation.
 They suggested that the use of a blocked form of cross-validation for time series evaluation should be the standard procedure, thus using all available information and circumventing the theoretical problems.
 They also affirmed that the use of cross-validation techniques, together with an adequate control for stationarity, led to a more robust model selection.
 
 In \cite{Cerqueira2020}, Cerqueira et al. studied the application of performance estimation methods to time series forecasting tasks.
-The dependency among observations in time series raises some caveats about the most appropriate way to estimate performance in this type of data, in fact, cross-validation cannot be applied since requires i.i.d. data.
+The dependency among observations in time series raises some caveats about the most appropriate way to estimate performance in this type of data, in fact, cross-validation cannot be applied since requires i.i.d. (independent and identically distributed) data.
 Results of a comparative study of different performance estimation methods showed noticeable differences among them.
 In particular, their empirical experiments suggested that blocked cross-validation can be applied to stationary time series.
 However, when the time series are non-stationary, the most accurate estimates were produced by out-of-sample methods, particularly the holdout approach repeated in multiple testing periods.
@@ -82,13 +84,13 @@ However, when the time series are non-stationary, the most accurate estimates we
 The following are relevant studies in the time series forecasting context.
 
 \cite{DEGOOIJER2006443} is a paper published in 2006 that review the research into time series forecasting made from 1982 to 2005.
-Many relevant methods were presented such as Exponential smoothing, ARIMA, State space and structural models and the Kalman filter, Regime-switching models, Functional-coefficient models, Neural nets, and many others also involving the combination of approaches.
+Many relevant methods were presented such as exponential smoothing, ARIMA, state space and structural models and the Kalman filter, regime-switching models, functional-coefficient models, neural networks, and many others also involving the combination of approaches.
 There were also a lot of relevant studies that presented theoretical concepts such as Seasonality, Forecast evaluation and accuracy measures, and Prediction intervals and densities.
 They concluded by saying that enormous progress has been made in many areas, but they found out that there were a large number of topics that need further development such as multivariate time series forecasting, forecasting methods based on nonlinear models, model selection procedures, robust statistical methods, and improved forecast intervals.
 
-In \cite{Nesreen2010}, Nesreen et al. presented a large-scale comparison study for the major machine learning models for time series forecasting.
-The models considered were multilayer perceptron, Bayesian neural networks, radial basis functions, generalized regression neural networks, K-nearest neighbor regression, CART regression trees, support vector regression, and Gaussian processes.
-The study revealed significant differences between the different methods and proclaimed as the best two methods on the monthly M3 time series competition data the multilayer perceptron and the Gaussian process regression.
+In \cite{Nesreen2010}, Nesreen et al. presented a large-scale comparison study for the major ML models for time series forecasting.
+The models considered were MLP, Bayesian neural networks, radial basis functions, Generalized Regression Neural Networks (GRNN), K-Nearest Neighbor (KNN) regression, Classification and Regression Trees (CART), SVR, and Gaussian processes.
+The study revealed significant differences between the different methods and proclaimed as the best two methods on the monthly M3 time series competition data the MLP and the Gaussian process regression.
 
 \cite{BENTAIEB20127067} proposed a review and a comparison of different strategies for multi-step ahead time series forecasting based on the NN5 forecasting competition.
 They also considered the effects of deseasonalization, input variable selection, and combination on the strategies.
@@ -97,7 +99,7 @@ From experimental results, they figured out that:
 (ii) deseasonalization leads to uniformly improved forecast accuracy,
 and (iii) input selection is more effective when performed in conjunction with deseasonalization.
 
-\cite{TEALAB2018334} studied the advances in time series forecasting models using artificial neural network methodologies.
+In \cite{TEALAB2018334}, Tealab studied the advances in time series forecasting models using Artificial Neural Network (ANN) methodologies.
 They took into consideration the papers published from 2006 to 2016.
 From the analysis of the papers, they concluded that, although there are many studies that presented the application of neural network models, few of them proposed new neural network models for forecasting.
 They found out that these many studies had a similar hybrid methodology that consisted in adjusting a linear time series model, and subsequently using the residuals as the input variables of an ANN model.
@@ -106,35 +108,35 @@ They found out that these many studies had a similar hybrid methodology that con
 In particular, it explored their limitations and utility for different types of time-series data across different domains.
 
 \cite{SEZER2020106181} provided a comprehensive literature review of DL studies with a focus on financial time series forecasting implementation.
-They categorized the studies according to their intended forecasting implementation areas and grouped them based on their DL model choices, such as Convolutional Neural Networks (CNNs), Deep Belief Networks (DBNs), and Long-Short Term Memory (LSTM).
+They categorized the studies according to their intended forecasting implementation areas and grouped them based on their DL model choices, such as Convolutional Neural Networks (CNNs), Deep Belief Networks (DBNs), and LSTM.
 
-In \cite{HEWAMALAGE2021388}, Hewamalage et al. presented an extensive empirical study and an open-source software framework of existing RNN architectures for forecasting.
+In \cite{HEWAMALAGE2021388}, Hewamalage et al. presented an extensive empirical study and an open-source software framework of existing Recurrent Neural Network (RNN) architectures for forecasting.
 They concluded that RNNs are capable of modeling seasonality directly if the series in the dataset possess homogeneous seasonal patterns; otherwise, they recommend a deseasonalization step.
 Comparisons against exponential smoothing and ARIMA demonstrated that (semi-) automatic RNN models are not perfect, but they were competitive alternatives in many situations.
 
 In \cite{Lim2021}, Lim and Zohren analyzed the main architecture used in both one-step-ahead and multi-horizon time-series forecasting.
 They described how temporal information is incorporated into predictions by each of the models, such as CNNs, RNNs, and networks with attention mechanisms.
-They highlighted also the recent developments in hybrid deep learning models, which combine statistical models with neural network components to improve performance.
+They highlighted also the recent developments in hybrid DL models, which combine statistical models with neural network components to improve performance.
 
-\cite{Masini2023} presented the recent machine learning advances for time series forecasting.
+\cite{Masini2023} presented the recent ML advances for time series forecasting.
 They started analyzing the linear methods, paying more attention to penalized regressions and ensembles of models.
-They continued presenting nonlinear methods, including tree-based methods, such as random forests and boosted trees, and shallow and deep neural networks, in their feedforward and recurrent versions.
+They continued presenting nonlinear methods, including tree-based methods, such as Random Forest and Gradient-Boosted Decision Trees (GBDT), and shallow and deep neural networks, in their feed-forward and recurrent versions.
 Finally, they also consider ensemble and hybrid models by combining different alternatives.
 
 \cite{ZHANG2003159} presented a hybrid methodology that combines ARIMA and ANN models.
 This was innovative in 2003 and was done in order to take advantage of the unique strengths of ARIMA and ANN models in linear and nonlinear modeling.
 The experimental results indicated that the combined model can be an effective way to improve the forecasting accuracy achieved by both models used separately.
 
-\cite{CAO2003321} proposed using multiple support vector machines (SVMs) for time series forecasting.
+\cite{CAO2003321} proposed using multiple Support Vector Machines (SVMs) for time series forecasting.
 The multiple SVMs that best fit the regions partitioned by a self-organizing feature map are constructed by finding the most appropriate kernel function and the optimal free parameters of SVMs.
 Simulation results showed that the proposed multiple SVMs achieve significant improvement in the generalization performance in comparison with the single SVMs models.
 In addition, the multiple SVMs also converge faster and use fewer support vectors.
 
 \cite{6210391} attempted to develop an automatic ANN modeling scheme for Time-Series Forecasting.
-This scheme was based on the generalized regression neural network (GRNN), a special type of neural network.
+This scheme was based on the GRNN, a special type of neural network.
 By taking advantage of several GRNN properties (i.e., a single design parameter and fast learning) and by incorporating several design strategies (e.g., fusing multiple GRNNs), they were able to make the proposed modeling scheme to be effective for modeling large-scale business time series.
 
-\cite{Oliveira2015} described a new type of ensemble that aims at improving the predictive performance of this type of approach in time series forecasting.
+\cite{Oliveira2015} described a new type of ensembles improving the predictive performance with respect to exisitng ensembles for time series forecasting.
 In particular, they proposed a new form of diversity generation that explores some specific properties of time series prediction tasks.
 Their experiments confirmed that the proposed method for generating diversity is able to improve the performance of the equivalent ensembles with standard diversity generation procedures.
 
@@ -147,14 +149,13 @@ The proposed method took advantage of dilated convolutions for considering a bro
 Conditioning was performed by applying multiple convolutional filters in parallel to separate time series which allowed fast processing of data and the exploitation of the correlation structure between the multivariate time series.
 Experimental results showed that the proposed network was well-suited for regression-type problems and was able to effectively learn dependencies in and between the series without the need for long historical time series and tends to outperform linear and recurrent models.
 
-An evolutionary attention-based LSTM training with competitive random search was proposed for multivariate time series prediction in \cite{LI2019104785}.
-An evolutionary attention learning approach is introduced to LSTM.
+In \cite{LI2019104785}, an evolutionary attention learning approach was introduced to LSTM for multivariate time series prediction.
 In particular, an evolutionary computation-inspired competitive random search method was proposed to configure in an optimal way the parameters in the attention layer.
-Experimental results have illustrated that the proposed model can achieve competitive prediction performance compared with other baseline methods.
+Experimental results illustrated that the proposed model can achieve competitive prediction performance compared with other baseline methods.
 
 \cite{DEOSANTOSJUNIOR201972} proposed a hybrid system that searches for a suitable function to combine the forecasts of linear and nonlinear models.
 The proposed system performed linear and nonlinear modeling of the time series and a data-driven combination that searches for the most suitable function, between linear and nonlinear formalisms, and also the number of models that maximizes the performance of the combination.
-As the linear model, the ARIMA model is used and as nonlinear models, Multi-Layer Perceptron (MLP) and Support Vector Regression (SVR) were used.
+As the linear model, the ARIMA model is used and as nonlinear models, Multi-Layer Perceptron (MLP) and SVR were used.
 Experimental results showed that the proposed hybrid system attains superior performance when compared with single and hybrid models in the literature.
 
 In \cite{SHEN2020302}, Shen et al. proposed a novel time series forecasting model, named SeriesNet, which can fully learn features of time series data in different interval lengths.
@@ -162,12 +163,12 @@ It is composed of a LSTM network and a dilated causal convolution network.
 The fact that the proposed model could learn multi-range and multi-level features from time series data led to a higher predictive accuracy compared to those models using fixed time intervals.
 
 \cite{SMYL202075} presented the winning submission of the M4 forecasting competition.
-The submission used a dynamic computational graph neural network system that enabled a standard exponential smoothing model to be mixed with advanced long short term memory networks into a common framework.
+The submission used a dynamic computational graph neural network system that enabled a standard exponential smoothing model to be mixed with advanced LSTM networks into a common framework.
 The result was a hybrid and hierarchical forecasting method able to perform better than all the other submitted models.
 
 In the context of building better pricing modeling and forecasting frameworks to meet difficulties, \cite{en16031371} proposed to combine seasonal and trend decomposition utilizing LOESS (locally estimated scatterplot smoothing) and Prophet methodologies to perform a more accurate and resilient time series analysis of Italian electricity spot prices.
 The proposed method could assist in enhancing projections and providing a better understanding of the variables driving the data.
-Experimental results showed that the combination of approaches improved the forecast accuracy and lowered the mean absolute percentage error (MAPE) performance metric by 18\% compared to the Prophet baseline model.
+Experimental results showed that the combination of approaches improved the forecast accuracy and lowered the Mean Absolute Percentage Error (MAPE) performance metric by 18\% compared to the Prophet baseline model.
 
 
 \vspace{0.1 cm}
@@ -189,7 +190,7 @@ They covered the most adopted attention models and their variants, such as self-
 \cite{9892274} analyzed that attention mechanisms have raised significant interest in the research community since they promise relevant improvements in the performance of neural network architectures.
 In particular, since self-attention was proposed, it has been widely used in transformer-like architectures and has led to significant breakthroughs in many applications.
 In the work, Pedro and Oliveira performed an objective comparison of a number of different attention mechanisms for the classification of samples in the Skin Cancer MNIST dataset.
-The results showed that attention modules only sometimes improved the performance of convolutional neural network architectures, but also that this improvement was not consistent in different settings.
+The results showed that attention modules only sometimes improved the performance of CNN architectures, but also that this improvement was not consistent in different settings.
 On the other hand, the results obtained with self-attention mechanisms showed consistent and significant improvements, leading to the best results even in architectures with a reduced number of parameters.
 
 In \cite{Shih2019}, Shih et al. analyzed that the standard attention mechanisms in multivariate time series forecasting only review the information at each previous time step and select relevant information to help generate the outputs.
@@ -198,12 +199,12 @@ In the study, they proposed a set of filters to extract time-invariant temporal 
 Finally, they applied the proposed approach to many real-world tasks demonstrating that it was able to achieve state-of-the-art performance in most of them.
 
 In \cite{DU2020269}, Du et al. proposed a novel temporal attention encoder-decoder model to successfully deal with multivariate time series forecasting.
-They developed an end-to-end deep learning structure that integrates the traditional idea of the encoder-decoder learning structure and a temporal attention mechanism for jointly learning long-term temporal dependency and hidden non-linear correlation features of multivariate temporal data.
-Experimental results on five multivariate time series datasets showed that the proposed model had the best forecasting performance compared with baseline models, such as SVR, RNN, CNN, LSTM, and GRU.
+They developed an end-to-end DL structure that integrates the traditional idea of the encoder-decoder learning structure and a temporal attention mechanism for jointly learning long-term temporal dependency and hidden non-linear correlation features of multivariate temporal data.
+Experimental results on five multivariate time series datasets showed that the proposed model had the best forecasting performance compared with baseline models, such as SVR, RNN, CNN, LSTM, and Gated Recurrent Unit (GRU).
 
-\cite{HEIDARI2020626} aimed to predict the energy use of solar-assisted water heating systems using a novel machine learning approach.
+\cite{HEIDARI2020626} aimed to predict the energy use of solar-assisted water heating systems using a novel ML approach.
 They proposed to use a LSTM network enhanced by an attention mechanism and the decomposition of input data into sub-layers.
-They compared the performance of the proposed approach with a Feed-Forward neural network, a LSTM network, and an Attention-based LSTM neural network.
+They compared the performance of the proposed approach with a feed-forward neural network, a LSTM network, and an Attention-based LSTM neural network.
 Experimental results showed that the proposed model had superior performance over the conventional models in this task.
 
 Liu et al. analyzed that the current attention-based recurrent neural networks can effectively represent and learn the dynamic spatiotemporal relationships between exogenous series and target series, but they only perform well in one-step time prediction and short-term time prediction.
@@ -211,14 +212,14 @@ In \cite{LIU2020113082}, they proposed dual-stage two-phase-based RNN (DSTP-RNN)
 The DSTP-based structure enhanced the spatial correlations between exogenous series.
 The first phase produces violent but decentralized response weights, while the second phase leads to stationary and concentrated response weights.
 Then, they employed multiple head attention on target series to boost the long-term dependency.
-Experimental results demonstrated that the proposed model can be successfully used to develop systems for a wide range of applications, with performances superior to nine baseline methods on four datasets in the fields of energy, finance, environment, and medicine.
+Experimental results demonstrated that the proposed model can be successfully used to develop systems for a wide range of applications, with performance superior to nine baseline methods on four datasets in the fields of energy, finance, environment, and medicine.
 
 Qi et al. analyzed that with the development of attention mechanisms, the frequency and time attention information of audio can be fully exploited, and the amplitude properties of audio can also be better integrated with a good fusion module.
 In \cite{10019616}, they improved existing frequency-temporal attention by extracting the attention information with the frequency-temporal attention and performing an additive fusion of features.
 Then, they applied attentional feature fusion based on multi-scale channel attention, and finally, temporal dependencies are learned through a self-attention module.
 Experimental results on four datasets demonstrated that the proposed model outperformed existing state-of-the-art models.
 
-In the context of Aspect-Based Sentiment Analysis (ABSA), Feng et al. argued that the original attention mechanism is not the ideal configuration, as most of the time only a small portion of terms are strongly related to the sentiment polarity of an aspect or entity.
+In the context of Aspect-Based Sentiment Analysis, Feng et al. argued that the original attention mechanism is not the ideal configuration, as most of the time only a small portion of terms are strongly related to the sentiment polarity of an aspect or entity.
 In fact, standard attention mechanisms apply the complete computed attention weights and do not place any restrictions on the attention assignment.
 In \cite{9676694}, they proposed a masked attention mechanism with two different approaches to generate the mask.
 The first approach was done by setting an attention weight threshold that is determined by the maximum of all weights and keeping only attention scores above the threshold.
@@ -231,7 +232,7 @@ In \cite{Vaswani2017}, Vaswani et al. proposed the Transformer architecture, bas
 Experimental results on machine translation tasks showed that this groundbreaking model was superior in quality achieving better results than existing methods while being more parallelizable and requiring significantly less time to train.
 Moreover, they also showed that the Transformer is able to generalize to other tasks like English constituency parsing both with large and limited training data.
 
-In \cite{Wu2020}, Wu et al. presented a new approach to time series forecasting by developing a novel method that employs Transformer-based machine learning models to forecast time series data.
+In \cite{Wu2020}, Wu et al. presented a new approach to time series forecasting by developing a novel method that employs Transformer-based ML models to forecast time series data.
 The approach leveraged self-attention mechanisms to learn complex patterns and dynamics from time series data.
 They created a generic framework that can be applied to univariate and multivariate time series data, as well as time series embeddings.
 The influenza-like illness (ILI) forecasting was used as a case study.
@@ -257,7 +258,7 @@ Experimental results on a variety of real-world datasets demonstrated significan
 TFT architecture was a breakthrough in time series forecasting and achieved state-of-the-art performance in several tasks.
 Hereafter, some studies using this architecture are presented.
 
-In \cite{9745215}, the Temporal Fusion Transformer (TFT) was applied to forecast the trajectory of future vital signs based on time-varying measurements of past vital signs.
+In \cite{9745215}, the TFT was applied to forecast the trajectory of future vital signs based on time-varying measurements of past vital signs.
 This is quite important since the deterioration of a patient’s condition is usually preceded by several hours of abnormal physiology as indicated by the patient’s vital signs.
 The model was developed using the Songklanagarind critical care dataset, which includes vital sign measurements from 140 patients.
 Experimental results showed that TFT was able to capture the temporal dynamics of vital signs and can potentially be used to detect irregular patterns in vital sign time series.
@@ -279,55 +280,55 @@ Moreover, TFT allowed gaining information about the importance ranking of the de
 \label{sec:automl}
 \vspace{0.1 cm}
 
-In this subsection, an overview of the developed approaches in the automated machine learning (AutoML) field is presented, with a focus on time series forecasting applications.
+In this subsection, an overview of the developed approaches in the AutoML field is presented, with a focus on time series forecasting applications.
 
-\cite{Elshawi2019} exposed the need for automating the process of building good machine learning models, mainly due to the fact that with the continuous and vast increase of the amount of data, it was recognized that the number of data scientists cannot be scaled to tackle all this data.
-In this study, Elshawi et al. presented a comprehensive survey of the state-of-the-art efforts for dealing with the Combined Algorithm Selection and Hyper-parameter tuning (CASH) problem in the machine learning domain.
-In addition, they highlighted the research work of automating also the other steps of the full complex machine learning pipeline (AutoML) from data understanding to model deployment.
+\cite{Elshawi2019} exposed the need for automating the process of building good ML models, mainly due to the fact that with the continuous and vast increase of the amount of data, it was recognized that the number of data scientists cannot be scaled to tackle all this data.
+In this study, Elshawi et al. presented a comprehensive survey of the state-of-the-art efforts for dealing with the Combined Algorithm Selection and Hyper-parameter tuning (CASH) problem in the ML domain.
+In addition, they highlighted the research work of automating also the other steps of the full complex ML pipeline from data understanding to model deployment.
 Furthermore, they provided an overview of the various tools and frameworks that have been proposed.
 Finally, they discussed some of the research directions and open challenges that need to be addressed in order to achieve the vision and goals of the AutoML process, such as scalability, optimization techniques to use, time budget management, and data preparation.
 
 In \cite{8995391}, Truong et al. investigated the current state of AutoML tools aiming to automate repetitive tasks in ML pipelines, such as data pre-processing, feature engineering, model selection, hyperparameter optimization, and prediction result analysis.
 They conducted various evaluations of the tools on many datasets to examine their performance and compare their advantages and disadvantages.
 They observed that most AutoML tools obtain reasonable results in terms of their performance across many datasets and no tool managed to outperform all others on all the tasks.
-Across the various evaluations and benchmarks they tested, H2O-Automl, Auto-keras, and Auto-sklearn performed better than Ludwig, Darwin, TPOT, and Auto-ml.
+Across the various evaluations and benchmarks they tested, H2O AutoML, Auto-Keras, and Auto-Sklearn performed better than Ludwig, Darwin, TPOT, and Auto-ml.
 
 \cite{9033810} reviewed the various AutoML, hyperparameter tuning, and meta-learning approaches available and pointed out that most of them are neither properly documented nor very clear due to the differences in the approaches.
 The strengths and drawbacks of the various approaches and their reviews in terms of algorithms supported, features, and implementations are explored.
 
 \cite{HE2021106622} presented a comprehensive review of the state-of-the-art in AutoML.
-According to the DL pipeline, He et al. introduced AutoML methods covering data preparation, feature engineering, hyperparameter optimization, and neural architecture search (NAS).
+According to the DL pipeline, He et al. introduced AutoML methods covering data preparation, feature engineering, hyperparameter optimization, and Neural Architecture Search (NAS).
 They summarized the representative NAS algorithms’ performance on the CIFAR-10 and ImageNet datasets and discussed relevant topics of the NAS methods such as one\slash two-stage NAS, one-shot NAS, joint hyperparameter and architecture optimization, and resource-aware NAS.
 Finally, they discussed some open problems related to the existing AutoML methods for future research such as flexible search space, areas exploration, interpretability, reproducibility, and robustness.
 
 \cite{9579526} observed that data scientists cannot tackle the growing number of challenging tasks due to a lack of expertise and experience across all task domains.
 To help address this issue, the study provided a survey of ongoing research in the field of Meta-Learning and AutoML.
-It covered AutoML tools such as TransmogrifAI, Auto-sklearn, AutoGluon, and NNI.
-It also summarized possible uses of Meta-Learning for deep learning, few-shot learning, and for automating the machine learning process.
+It covered AutoML tools such as TransmogrifAI, Auto-Sklearn, AutoGluon, and NNI.
+It also summarized possible uses of Meta-Learning for DL, few-shot learning, and for automating the ML process.
 
 In \cite{Karmaker2021}, Karmaker et al. introduced a new classification system for AutoML systems, using a tier schematic to distinguish systems based on their level of autonomy.
-They described what an end-to-end machine learning pipeline actually looks like and analyzed which subtasks have been automated and which are done manually.
-In fact, most AutoML systems require human involvement in some steps, including understanding the attributes of domain-specific data, defining prediction problems, creating a suitable training dataset, and selecting a promising machine learning technique.
+They described what an end-to-end ML pipeline actually looks like and analyzed which subtasks have been automated and which are done manually.
+In fact, most AutoML systems require human involvement in some steps, including understanding the attributes of domain-specific data, defining prediction problems, creating a suitable training dataset, and selecting a promising ML technique.
 These steps often require a prolonged back-and-forth that makes this process inefficient and keeps AutoML systems from being truly automatic.
 Next, they introduced the proposed level-based taxonomy for AutoML systems and define each level according to the scope of automation support provided.
-Finally, they discussed the challenges that stand in the way of automating the whole end-to-end machine learning pipeline.
+Finally, they discussed the challenges that stand in the way of automating the whole end-to-end ML pipeline.
 
 In \cite{Chen2021}, Chen et al. described AutoML as a bi-level optimization problem, where one problem is nested within another to search the optimum in the search space, and reviewed the current developments of AutoML in terms of three categories:
 automated feature engineering (AutoFE),
 automated model and hyperparameter tuning (AutoMHT),
-and automated deep learning (AutoDL).
+and Automated Deep Learning (AutoDL).
 The state-of-the-art techniques and frameworks in the three categories are presented.
 They concluded by presenting the open challenges of AutoML such as the lack of authoritative benchmarks, efficiency, design of search spaces, and interpretability.
 
-In 2015, Feurer et al. stated that to be effective in practice, machine learning systems need to automatically choose a good algorithm and feature preprocessing steps for a new dataset at hand, and also set their respective hyperparameters.
+In 2015, Feurer et al. stated that to be effective in practice, ML systems need to automatically choose a good algorithm and feature preprocessing steps for a new dataset at hand, and also set their respective hyperparameters.
 Starting from existing work on efficient Bayesian optimization methods, in \cite{Feurer2015} they presented a robust new AutoML system based on the scikit-learn framework: Auto-Sklearn.
 It was using 15 classifiers, 14 feature preprocessing methods, and 4 data preprocessing methods, giving rise to a structured hypothesis space with 110 hyperparameters.
 Auto-Sklearn improved on existing AutoML methods by automatically taking into account past performance on similar datasets, and by constructing ensembles from the models evaluated during the optimization.
 Results on over 100 diverse datasets showed that Auto-Sklearn substantially outperformed the previous state of the art in AutoML.
 
-In \cite{Jin2019}, Jin et al. proposed a novel framework for efficient neural architecture search enabling Bayesian optimization to guide the network morphism, which essentially keeps the functionality of a neural network while changing its neural architecture.
+In \cite{Jin2019}, Jin et al. proposed a novel framework for efficient NAS enabling Bayesian optimization to guide the network morphism, which essentially keeps the functionality of a neural network while changing its neural architecture.
 The framework, called Auto-Keras, developed a neural network kernel and a tree-structured optimization algorithm to efficiently explore the search space.
-Extensive experiments on real-world benchmark datasets demonstrated the superior performance of the developed framework over the state-of-the-art neural architecture search methods.
+Extensive experiments on real-world benchmark datasets demonstrated the superior performance of the developed framework over the state-of-the-art NAS methods.
 
 In \cite{8955514}, Dyrmishi et al. presented a methodology and framework for using Meta-Learning techniques to develop new methods that serve as effective decision support for the AutoML process.
 Meta-Learning allows learning from previous experience gained during applying various learning algorithms on different types of data and helps reduce the time needed to learn new tasks.
@@ -341,46 +342,46 @@ They used the framework to conduct a thorough comparison of 4 AutoML systems (Au
 The presented results highlighted the need for further AutoML research.
 In fact, on some datasets, none of the frameworks outperformed a Random Forest within 4 hours, and high-dimensional or highly multi-class problems were often challenging.
 
-In \cite{computers10010011}, Vaccaro et al. reviewed some Machine Learning (ML) models and methods proposed in the literature to analyze their strengths and weaknesses.
+In \cite{computers10010011}, Vaccaro et al. reviewed some ML models and methods proposed in the literature to analyze their strengths and weaknesses.
 Then, they proposed their use, alone or in combination with other approaches, to provide possible valid AutoML solutions.
 They analyzed these solutions from a theoretical point of view and evaluated them empirically on three Atari games.
 The objective of the study was to identify what could be some promising ways to create effective AutoML frameworks able to replace the human expert as much as possible and thereby making easier the process of applying ML approaches to typical problems of specific domains.
 
-Nguyen et al. investigated that most AutoML-based Bayesian optimization (BO) approaches convert the AutoML optimization problem into a Hyperparameter Optimization (HPO) problem, i.e., by modeling the choice of algorithms as an additional categorical hyperparameter.
+Nguyen et al. investigated that most AutoML-based Bayesian optimization approaches convert the AutoML optimization problem into a Hyperparameter Optimization (HPO) problem, i.e., by modeling the choice of algorithms as an additional categorical hyperparameter.
 They pointed out that using this approach algorithms and their local hyper-parameters are referred to at the same level, and this makes the initial sampling less robust.
-In \cite{9660073}, they attempted to formulate the AutoML optimization problem as a BO problem instead of transferring it into a HPO problem.
-They proposed a novel initial sampling approach to maximize the coverage of the AutoML search space to help BO construct a robust surrogate model.
+In \cite{9660073}, they attempted to formulate the AutoML optimization problem as a Bayesian optimization problem instead of transferring it into a HPO problem.
+They proposed a novel initial sampling approach to maximize the coverage of the AutoML search space to help Bayesian optimization construct a robust surrogate model.
 They experimented with this approach on 2 independent scenarios of AutoML with 2 operators and 6 operators over 117 benchmark datasets.
-Experimental results demonstrated that the performance of BO significantly improved by using the proposed sampling approach.
+Experimental results demonstrated that the performance of Bayesian optimization significantly improved by using the proposed sampling approach.
 
-In \cite{Feurer2020}, Feurer et al. introduced a new AutoML approach, named PoSH (Portfolio Successive Halving) Auto-sklearn, which enabled AutoML systems to work well on large datasets under rigid time limits by using a meta-learning technique and a bandit strategy for budget allocation.
+In \cite{Feurer2020}, Feurer et al. introduced a new AutoML approach, named PoSH (Portfolio Successive Halving) Auto-Sklearn, which enabled AutoML systems to work well on large datasets under rigid time limits by using a meta-learning technique and a bandit strategy for budget allocation.
 They also studied how to let AutoML explore the design space of AutoML and automatically select the best configuration by itself.
-These changes combined give rise to the next generation of their original Auto-sklearn AutoML system, called Auto-sklearn 2.0.
-They verified the improvements of these additions in an extensive experimental study on 39 AutoML benchmark datasets and compared the results to other popular AutoML frameworks and Auto-sklearn 1.0, showing that the relative error is reduced by up to a factor of 4.5, and yielding a performance in 10 minutes that was better than what Auto-sklearn 1.0 achieved within an hour.
+These changes combined give rise to the next generation of their original Auto-Sklearn AutoML system, called Auto-Sklearn 2.0.
+They verified the improvements of these additions in an extensive experimental study on 39 AutoML benchmark datasets and compared the results to other popular AutoML frameworks and Auto-Sklearn 1.0, showing that the relative error is reduced by up to a factor of 4.5, and yielding a performance in 10 minutes that was better than what Auto-Sklearn 1.0 achieved within an hour.
 
-In \cite{Zimmer2020}, Zimmer et al. presented Auto-PyTorch, which jointly and robustly optimized the network architecture and the training pipelines with their hyperparameters to enable fully automated deep learning (AutoDL).
-Auto-PyTorch achieved state-of-the-art performance on several tabular benchmarks by combining multi-fidelity optimization with portfolio construction for warm starting and ensembling of deep neural networks (DNNs) and common baselines for tabular data.
+In \cite{Zimmer2020}, Zimmer et al. presented Auto-PyTorch, which jointly and robustly optimized the network architecture and the training pipelines with their hyperparameters to enable fully AutoDL.
+Auto-PyTorch achieved state-of-the-art performance on several tabular benchmarks by combining multi-fidelity optimization with portfolio construction for warm starting and ensembling of Deep Neural Networks (DNNs) and common baselines for tabular data.
 To verify the effectiveness of the proposed framework, they introduced a new benchmark on learning curves for DNNs and run extensive studies on typical AutoML benchmarks showing that Auto-PyTorch performed better than several state-of-the-art competitors.
 
 \cite{9534091} presented a benchmark of AutoML tools.
 Firstly, it analyzed the characteristics of eight recent open-source AutoML tools (Auto-Keras, Auto-PyTorch, Auto-Sklearn, AutoGluon, H2O AutoML, rminer, TPOT, and TransmogrifAI) and described twelve popular OpenML datasets that were used as benchmarks for different tasks such as regression, binary and multi-class classification tasks.
 Then, it performed an experimental comparison study by considering predictive scores and computational effort.
-The best predictive results achieved were compared with the best OpenML public results showing that AutoML tools obtained competitive results, outperforming the best OpenML models in five datasets.
-The results confirmed the potential of AutoML tools to fully automate the Machine Learning algorithm selection and tuning.
+The best predictive results achieved by the AutoML tools were compared with the best OpenML public results showing that AutoML tools obtained competitive results, outperforming the best OpenML models in five datasets.
+The results confirmed the potential of AutoML tools to fully automate the ML algorithm selection and tuning.
 
 \cite{9564380} presented a data augmentation method to significantly improve the performance of neural networks since their modeling capacities in time-series forecasting are limited in cases where enough data may not be available.
 The proposed method, called Augmented-Neural-Network, used forecasts from statistical models which help produce competitive results on intermediate-length time series.
-They showed that data augmentation, when paired with AutoML techniques such as Neural Architecture Search, can help to find an adequate neural architecture for a given time series.
+They showed that data augmentation, when paired with AutoML techniques such as NAS, can help to find an adequate neural architecture for a given time series.
 Using this combination, they demonstrated that led to significant enhancement in the forecasting accuracy of some neural network-based models used on a COVID-19 dataset.
 The improvement in forecasting accuracy with respect to the same neural networks that do not use augmented data was around 20\%.
 
-\cite{su142215292} conducted experiments on time series forecasting using machine learning, deep learning, and AutoML techniques.
+\cite{su142215292} conducted experiments on time series forecasting using ML, DL, and AutoML techniques.
 The datasets used in the experiments were quantitative data of the real prices of the currently most used cryptocurrencies.
 The results demonstrated that AutoML for time series is still in the development stage and needs more study to be the main solution to adopt since it was unable to outperform manually designed ML and DL models.
 
 In recent years AutoDL systems efficiency has tremendously improved, but little attention has been paid to AutoDL frameworks for time series forecasting.
 In \cite{Deng2022}, Deng et al. proposed an efficient approach for the joint optimization of neural architecture and hyperparameters of the entire data processing pipeline for time series forecasting.
-In contrast to common NAS search spaces, they designed a novel neural architecture search space covering various state-of-the-art architectures, allowing for an efficient macro-search over different DL approaches.
+In contrast to common NAS search spaces, they designed a novel NAS space covering various state-of-the-art architectures, allowing for an efficient macro-search over different DL approaches.
 To efficiently search in such a large configuration space, they employed Bayesian optimization with multi-fidelity optimization.
 They empirically studied several different budget types enabling efficient multi-fidelity optimization on different forecasting datasets.
 Furthermore, they compared the final system, called Auto-PyTorch-TS, against several established baselines and showed that it significantly outperformed all of them across several datasets.
@@ -391,13 +392,15 @@ Furthermore, they compared the final system, called Auto-PyTorch-TS, against sev
 \vspace{0.2 cm}
 
 In this section, the techniques for electricity demand forecasting are presented.
+Most of the presented techniques are considered very simple nowadays and they rely on large aggregated data, both on the number of people considered (e.g., the consumption generated by an entire country) or on a very large temporal aggregation (up to 1 year aggregated data).
+Our use case is limited to the customers of a small company, from 2 to 4 thousand customers, and need to provide forecasts on an hourly basis for a one-month time horizon.
 
 \cite{singh2013overview} presented a review of electricity demand forecasting techniques.
 They classified load forecasting into three categories:
 short-term forecasts which are usually from one hour to one week,
 medium forecasts which are usually from a week to a year,
 and long-term forecasts which are longer than a year.
-Based on the various types of studies presented, load forecasting techniques may be presented in three major groups: Traditional Forecasting techniques (regression methods, exponential smoothing, iterative reweighted least-squares), Modified Traditional Techniques (adaptive demand forecasting, AR, ARMA, ARIMA, SVM) and Soft Computing Techniques (genetic algorithms, fuzzy logic, NNs, knowledge-based expert systems).
+Based on the various types of studies presented, load forecasting techniques may be presented in three major groups: Traditional Forecasting techniques (regression methods, exponential smoothing, iterative reweighted least-squares), Modified Traditional Techniques (adaptive demand forecasting, Auto-Regressive (AR), Auto-Regressive Moving Average (ARMA), ARIMA, SVM) and Soft Computing Techniques (Genetic Algorithms (GAs), fuzzy logic, neural networks, knowledge-based expert systems).
 From the work, it can be inferred that demand forecasting techniques based on soft computing methods are gaining major advantages for their effective use.
 There is also a clear move towards hybrid methods, which combine two or more of these techniques.
 
@@ -413,16 +416,16 @@ They studied the daily and monthly electricity demand.
 They noticed that the monthly model performs better thanks to the higher level of aggregation but also that the influence of weather on electricity demand is in a more aggregated way and thus may not account well for the influence of unusual or extreme weather on electricity consumption.
 The temperature of the day in which electricity demand is projected, the temperature of the two previous days, and the relative humidity have been found to be the most important weather parameters that affect electricity consumption in the Greek interconnected power system.
 
-\cite{5686767} proposed a first use of a Neural Network (NN) with the Backpropagation learning algorithm for Lao state yearly electricity demand forecasting.
-They compared with a regression analysis model showing the higher effectiveness of the NN.
+\cite{5686767} proposed a first use of a neural network with the Backpropagation learning algorithm for Lao state yearly electricity demand forecasting.
+They compared with a regression analysis model showing the higher effectiveness of the neural network.
 
-\cite{5518553} proposed two models for short-term Singapore electricity demand forecasting: the multiplicative decomposition model and the seasonal ARIMA Model.
-Results showed that both models can accurately predict the short-term Singapore demand and that the Multiplicative decomposition model slightly outperforms the seasonal ARIMA model.
+\cite{5518553} proposed two models for short-term Singapore electricity demand forecasting: the multiplicative decomposition model and the Seasonal ARIMA (SARIMA) model.
+Results showed that both models can accurately predict the short-term Singapore demand and that the Multiplicative decomposition model slightly outperforms the SARIMA model.
 
-\cite{8093428} is an empirical study in which some forecasting models are developed for electricity demand using publicly available data and three models based on machine learning algorithms.
-The performances of these models are compared by using different evaluation metrics.
+\cite{8093428} is an empirical study in which some forecasting models are developed for electricity demand using publicly available data and three models based on ML algorithms.
+The performance of these models are compared by using different evaluation metrics.
 The data consists of several measurements of the electricity market in Turkey from 2011 to 2016 and is available for different time granularities (from hourly to yearly aggregated).
-According to the best result of mean absolute percentage error (MAPE), electricity demand was predicted with a 1.4 percentage error with the random forest model.
+According to the best result of MAPE, electricity demand was predicted with a 1.4 percentage error with the Random Forest model.
 
 In \cite{9046493}, a modeling approach based on association rules was proposed.
 Association rules are useful to describe a model in terms of cause and effect.
@@ -433,15 +436,12 @@ They found out that the MARS and SVR models can be considered more suitable for 
 As expected, given its linear formulation in the modeling process, the ARIMA model’s performance was lower for all forecasting horizons as it generated very high forecast errors.
 The study found that the MARS models were able to provide a powerful, yet simple and fast forecasting framework when compared to the SVR models.
 
-\cite{MA20193433} presented a method based on a support vector regressor (SVR) to forecast building energy consumption in southern China.
+\cite{MA20193433} presented a method based on a SVR to forecast building energy consumption in southern China.
 To improve the reliability of SVR in building energy consumption prediction, multiple parameters including weather data (such as yearly mean outdoor dry-bulb temperature, relative humidity, and global solar radiation) and economic factors (such as the ratio of urbanization, gross domestic product, household consumption level and total area of the structure) are taken as inputs.
 
 In \cite{8404313}, a RNN-based time series approach for forecasting Turkish electricity load was proposed.
-Recurrent Neural Networks (RNN), Long Short Term Memory (LSTM) Networks, and Gated Recurrent Units (GRU) Networks are used.
-The resulting 0.71\% MAPE of their experiments yields better results than existing methods based on ARIMA and artificial neural networks on Turkish electricity load forecasting which have 2.6\% and 1.8\% MAPE respectively.
-
-Most of the presented techniques are considered very simple nowadays and they rely on large aggregated data, both on the number of people considered (e.g., the consumption generated by an entire country) or on a very large temporal aggregation (up to 1 year aggregated data).
-Our use case is limited to the customers of a small company, from 2 to 4 thousand customers, and need to provide forecasts on an hourly basis for a one-month time horizon.
+RNNs, LSTM networks, and GRU networks are used.
+The resulting 0.71\% MAPE of their experiments yields better results than existing methods based on ARIMA and ANNs on Turkish electricity load forecasting which have 2.6\% and 1.8\% MAPE respectively.
 
 In \cite{DU2018533} a novel hybrid forecasting system was successfully developed.
 It was composed of four modules: data preprocessing module, optimization module, forecasting module, and evaluation module.
@@ -450,24 +450,24 @@ Optimization algorithms are also employed to optimize the parameters of these in
 Experimental results showed that the hybrid system can be able to satisfactorily approximate the actual value.
 This is an interesting study from which to take inspiration for the system modeling structure, which can be intended for general-purpose and not just for the electrical power use case.
 
-\cite{KIM2019328} proposed a recurrent inception convolution neural network (RICNN) that combines RNN and 1-dimensional CNN (1-D CNN).
+\cite{KIM2019328} proposed a recurrent inception CNN (RICNN) that combines RNN and 1-dimensional CNN (1-D CNN).
 They used the 1-D convolution inception module to calibrate the prediction time and the hidden state vector values calculated from nearby time steps.
 By doing so, the inception module generates an optimized network via the prediction time generated in the RNN and the nearby hidden state vectors.
 The proposed RICNN model has been verified in terms of the power usage data of three large distribution complexes in South Korea.
 Experimental results demonstrate that the RICNN model outperforms the benchmarked multi-layer perception, RNN, and 1-D CNN in daily electric load forecasting (48-time steps with an interval of 30 minutes).
 This is an interesting network structure that can be suited for our specific use case but has to be effective also on a wider time horizon.
 
-In \cite{BEDI20191312}, Bedi and Toshniwal proposed a deep learning-based framework to forecast electricity demand by taking care of long-term historical dependencies.
+In \cite{BEDI20191312}, Bedi and Toshniwal proposed a DL-based framework to forecast electricity demand by taking care of long-term historical dependencies.
 In fact, existing methods are able only of handling short-term dependencies.
-The proposed approach is called D-FED and is based on a Long Short Term Memory network and a moving window-based multi-input multi-output mapping approach of active learning.
+The proposed approach is called D-FED and is based on a LSTM network and a moving window-based multi-input multi-output mapping approach of active learning.
 It is applied to the electricity consumption data of Union Territory Chandigarh, India.
-The performance of the proposed approach is evaluated by comparing the prediction results with Artificial Neural Network, Recurrent Neural Network, and Support Vector Regression models.
+The performance of the proposed approach is evaluated by comparing the prediction results with ANN, RNN, and SVR models.
 
 In \cite{MUZAFFAR20192922}, Muzaffar and Afshari have picked up electrical load data with exogenous variables including temperature, humidity, and wind speed, and used them to train a LSTM network.
-It has been shown in this work that LSTM outperforms the other traditional methods such as ARMA, SARIMA, and ARMAX reducing the percentage of errors in forecasting the load time series.
+It has been shown in this work that LSTM outperforms the other traditional methods such as ARMA, SARIMA, and ARMA with exogenous inputs (ARMAX) reducing the percentage of errors in forecasting the load time series.
 From the study, they found out that LSTM can learn the seasonality patterns and the trend as well instead of extracting these features a priori.
 
-In \cite{WEN2020106073}, Wen et al. proposed a deep learning model to forecast the load demand of aggregated residential buildings with a one-hour resolution, while considering its complexity and variability.
+In \cite{WEN2020106073}, Wen et al. proposed a DL model to forecast the load demand of aggregated residential buildings with a one-hour resolution, while considering its complexity and variability.
 Hourly-measured residential load data in Austin, Texas, USA were used to demonstrate the effectiveness of the proposed model, and the forecasting error was quantitatively evaluated using several metrics.
 The used model is a deep RNN model with GRU (DRNN-GRU).
 This model assumes knowledge of the future weather data to make a forecast, which would affect the accuracy due to the weather uncertainty over a short to medium period.
@@ -476,46 +476,46 @@ The results showed that the proposed model forecasts the aggregated and disaggre
 \cite{CHITALIA2020115410} presented a robust short-term electrical load forecasting framework that can capture variations in building operation, regardless of building type and location.
 Nine different hybrids of recurrent neural networks and clustering are explored.
 The test cases involve five commercial buildings of five different building types, i.e., academic, research laboratory, office, school, and grocery store.
-Load forecasting results indicate that the deep learning algorithms implemented in the paper deliver 20-45\% improvement in load forecasting performance as compared to the current state-of-the-art results for both hour-ahead and 24-ahead load forecasting.
+Load forecasting results indicate that the DL algorithms implemented in the paper deliver 20-45\% improvement in load forecasting performance as compared to the current state-of-the-art results for both hour-ahead and 24-ahead load forecasting.
 It is found that:
-(i) the use of hybrid deep learning algorithms can take as less as one month of data to deliver satisfactory hour-ahead load prediction,
+(i) the use of hybrid DL algorithms can take as less as one month of data to deliver satisfactory hour-ahead load prediction,
 (ii) 15-minute resolution data, if available, delivers a 30\% improvement in hour-ahead load forecasting,
 and (iii) the formulated methods are found to be robust against weather forecasting errors.
 This study gives useful insights about the quantity and granularity of data needed for a short-term prediction range, these are great findings but do not generalize to longer prediction ranges.
 
-In \cite{WANG2020117197}, Wang et al. proposed a novel approach based on long short term memory (LSTM) network for predicting periodic energy consumption.
+In \cite{WANG2020117197}, Wang et al. proposed a novel approach based on LSTM network for predicting periodic energy consumption.
 They stated that this is novel since general forecasting methods do not concern periodicity.
 Hidden features are extracted by the autocorrelation graph among the real industrial data.
 Experiments using a cooling system under one-step-ahead forecasting are conducted to verify the performance of LSTM.
-It was compared with several traditional forecasting methods, such as the autoregressive moving average model (ARMA), autoregressive fractional integrated moving average model (ARFIMA), and back propagation neural network (BPNN).
-The RMSE of LSTM is 19.7\%, 54.85\%, and 64.59\% lower than BPNN, ARMA, and ARFIMA on the test data.
+It was compared with several traditional forecasting methods, such as the ARMA model, Auto-Regressive Fractional Integrated Moving Average (ARFIMA) model, and back propagation neural network (BPNN).
+The Root Mean Square Error (RMSE) of LSTM is 19.7\%, 54.85\%, and 64.59\% lower than BPNN, ARMA, and ARFIMA on the test data.
 Furthermore, they demonstrated that the proposed algorithm had the highest generalization capability.
 
 In \cite{WANG2020114561}, Wang et al. proposed a stacking model capable of combining the advantages of various basic prediction algorithms and transforming them into meta-features to ensure that the final model can observe datasets from different spatial and structural angles.
 Load data retrieved from two educational buildings in the coastal city of Tianjin, China, is employed for the case study.
 The case study buildings are made of classrooms for students and offices for university staff.
-Experimental results indicated that the stacking method achieves better performance than other tested ML models (Random Forest, Gradient Boosted Decision Tree, Extreme Gradient Boosting, Support Vector Machine, and K-Nearest Neighbor) regarding accuracy, generalization, and robustness.
+Experimental results indicated that the stacking method achieves better performance than other tested ML models (Random Forest, GBDT, Extreme Gradient Boosting (XGBoost), SVM, and KNN) regarding accuracy, generalization, and robustness.
 
-In \cite{SOMU2021110591}, Somu et al. presented kCNN-LSTM, a deep learning framework that operates on the energy consumption data recorded at predefined intervals to provide accurate building energy consumption forecasts.
+In \cite{SOMU2021110591}, Somu et al. presented kCNN-LSTM, a DL framework that operates on the energy consumption data recorded at predefined intervals to provide accurate building energy consumption forecasts.
 kCNN-LSTM employs:
-(i) k means clustering to perform cluster analysis to understand the energy consumption pattern\slash trend;
-(ii) Convolutional Neural Network (CNN) to extract complex features with non-linear interactions that affect energy consumption;
-and (iii) Long Short Term Memory (LSTM) network to handle long-term dependencies through modeling temporal information in the time series data.
-The performance of kCNN-LSTM was compared with the k means variant of the state-of-the-art energy demand forecast models in terms of MSE, RMSE, MAE, and MAPE showing the efficiency of kCNN-LSTM model over other models in providing accurate energy consumption demand forecasting.
+(i) k-means clustering to perform cluster analysis to understand the energy consumption pattern\slash trend;
+(ii) CNN to extract complex features with non-linear interactions that affect energy consumption;
+and (iii) LSTM network to handle long-term dependencies through modeling temporal information in the time series data.
+The performance of kCNN-LSTM was compared with the k-means variant of the state-of-the-art energy demand forecast models in terms of Mean Square Error (MSE), RMSE, Mean Absolute Error (MAE), and MAPE showing the efficiency of kCNN-LSTM model over other models in providing accurate energy consumption demand forecasting.
 
-In \cite{10033079}, an attention-based deep learning model with interpretable insights into temporal dynamics is presented to forecast short-term loads.
-The temporal fusion transformers (TFT) included a sequence-to-sequence model, which processes the historical and future covariates to enhance the forecasting performance.
+In \cite{10033079}, an attention-based DL model with interpretable insights into temporal dynamics is presented to forecast short-term loads.
+The TFT included a sequence-to-sequence model, which processes the historical and future covariates to enhance the forecasting performance.
 Gated Residual Network (GRN) is applied to drop out unnecessary information and improve efficiency.
-The proposed method is tested on anonymized data from a university campus.
-The anomalies and missing data are imputed with the k-nearest neighbor (KNN) method.
+The proposed method is tested on anonymized data from a university campus with a time resolution of 30 minutes.
+The anomalies and missing data (around 8.85\% of the total data) are imputed with the KNN method.
 The testing results demonstrate the effectiveness of the proposed method achieving less than 5\% MAPE.
 This is an interesting work on a TFT model, which should be extended to obtain great performance also with a higher prediction range in order to be applicable to the use case treated in this thesis.
 
-\cite{LI2023108743} presented a probabilistic forecasting method for hourly load time series based on an improved temporal fusion transformer (ITFT) model to achieve more accurate and thorough forecasting results.
+\cite{LI2023108743} presented a probabilistic forecasting method for hourly load time series based on an improved TFT (ITFT) model to achieve more accurate and thorough forecasting results.
 Hourly load time series was reconstructed into multiple day-to-day load time series at different hour points.
-ITFT model replaces the long short term memory (LSTM) with a gated recurrent unit (GRU) to learn long-term dependence more efficiently.
-Quantile constraints and prediction interval (PI) penalty terms were incorporated into the original quantile loss function to prevent quantile crossover and construct more compact prediction intervals (PIs).
-The results show that the proposed method is explanatory and can significantly improve the reliability and compactness of probabilistic load forecasting results compared with other popular methods, such as Quantile regression neural network (QRNN) and temporal convolutional network (TCN).
+ITFT model replaces the LSTM with a GRU to learn long-term dependence more efficiently.
+Quantile constraints and prediction interval (PI) penalty terms were incorporated into the original quantile loss function to prevent quantile crossover and construct more compact PIs.
+The results show that the proposed method is explanatory and can significantly improve the reliability and compactness of probabilistic load forecasting results compared with other popular methods, such as Quantile Regression Neural Network (QRNN) and Temporal Convolutional Network (TCN).
 
 
 \section{Consumption baseline forecasting}
@@ -523,6 +523,8 @@ The results show that the proposed method is explanatory and can significantly i
 \vspace{0.2 cm}
 
 In this section, the techniques for consumption baseline forecasting are presented.
+As demonstrated by most of the following papers analyzed, computing forecasts for a single customer is a more complicated use case compared to energy demand forecast over a customer base.
+Single customer data is more noisy and very few works consider a single habitation, most of them consider commercial buildings, offices, or schools which reduce the level of noise.
 
 The EU research project S3C developed and tested different guidelines and tools, of particular interest is the guideline on how to create a consumption baseline\footnote{ \url{https://www.smartgrid-engagement-toolkit.eu/fileadmin/s3ctoolkit/user/guidelines/GUIDELINE_HOW_TO_CREATE_A_CONSUMPTION_BASELINE.pdf} }.
 The baseline is the reference used to assess the effects of the demand response of a given consumer or set of consumers.
@@ -533,38 +535,38 @@ ii) estimation method,
 and iii) result adjustment.
 They pointed out that the combination of these criteria depends on user consumption, weather dependency (including seasonal behavior), and load behavior and should all together fit the user consumption pattern.
 
-In \cite{DEB2017902}, Deb et al. presented a comparison of different time series forecasting techniques for building energy consumption: ANN, ARIMA, SVM, Case-Based Reasoning (CBR), Fuzzy time series, Grey prediction model, Moving average and exponential smoothing (MA \& ES), K-Nearest Neighbor prediction method (kNN) and Hybrid models.
+In \cite{DEB2017902}, Deb et al. presented a comparison of different time series forecasting techniques for building energy consumption: ANN, ARIMA, SVM, Case-Based Reasoning (CBR), Fuzzy time series, Grey prediction model, Moving average and exponential smoothing (MA \& ES), KNN prediction method and Hybrid models.
 Also, hybrid models are reviewed and analyzed, i.e., the combination of two or more forecasting techniques.
 The various combinations of the hybrid model are found to be the most effective in time series energy forecasting for single buildings.
 
 \cite{AMBER2018886} aimed to compare the prediction capabilities of five different intelligent system techniques in forecasting the electricity consumption of an administration building.
-These five techniques are; Multiple Regression (MR), Genetic Programming (GP), Artificial Neural Network (ANN), Deep Neural Network (DNN), and Support Vector Machine (SVM).
+These five techniques are; Multiple Regression (MR), Genetic Programming (GP), ANN, DNN, and SVM.
 The prediction models are developed based on five years of observed data of five different additional parameters such as solar radiation, temperature, wind speed, humidity, and weekday index.
 The weekday index is demonstrated as an important parameter since makes it possible to differentiate between working and non-working days.
-ANN performs better than all other four techniques with a Mean Absolute Percentage Error (MAPE) of 6\% whereas MR, GP, SVM, and DNN have MAPE of 8.5\%, 8.7\%, 9\%, and 11\%, respectively.
+ANN performs better than all other four techniques with a MAPE of 6\% whereas MR, GP, SVM, and DNN have MAPE of 8.5\%, 8.7\%, 9\%, and 11\%, respectively.
 
 Ahmad et al. in \cite{AHMAD2018301} focused on reviewing data-driven approaches and large-scale building energy predicting-based approaches.
-A thorough review of different techniques is presented in the study, including ANN, SVM, clustering-based, statistical, and machine learning-based approaches.
+A thorough review of different techniques is presented in the study, including ANN, SVM, clustering-based, statistical, and ML-based approaches.
 
 \cite{FAN2019700} investigated the performance of different strategies for multi-step ahead building energy predictions.
 The results of the study demonstrated the potential of recurrent models for short-term building energy predictions.
-This study provided references for developing advanced deep learning models for practical applications.
+This study provided references for developing advanced DL models for practical applications.
 
-\cite{LUSIS2017654} studied how calendar effects, forecasting granularity, and the length of the training set affect the accuracy of a day-ahead load forecast for residential customers.
-They demonstrated that regression trees, neural networks, and support vector regression yielded similar average RMSE results, but also that statistical analysis showed that the regression trees technique is significantly better.
+In \cite{LUSIS2017654}, Lusis et al. studied how calendar effects, forecasting granularity, and the length of the training set affect the accuracy of a day-ahead load forecast for residential customers.
+They demonstrated that regression trees, neural networks, and SVR yielded similar average RMSE results, but also that statistical analysis showed that the regression trees technique is significantly better.
 The use of historical load profiles with daily and weekly seasonality, combined with weather data, leaves the explicit calendar effects with very low predictive power.
 It was also found that one year of historical data is sufficient to develop a load forecast model for residential customers as a further increase in the training dataset has a marginal benefit.
 In the setting studied in the paper, it was shown that forecast errors can be reduced by using a coarser forecast granularity.
 That is expected since aggregating over time will reduce the variability of the data, as also demonstrated in this thesis, good results on hourly forecasts will be almost impossible to achieve and instead by using a daily forecast results will be more acceptable.
 
-In \cite{7463810}, Kim et al. examined a number of different data mining techniques and demonstrated Gradient Tree Boosting (GTB) to be an effective method to build baseline electricity usage.
-They trained GTB on data prior to the introduction of new pricing schemes and applied the known temperature following the introduction of new pricing schemes to predict electricity usage with the expected temperature correction.
-Their experiments and analyses showed that the baseline models generated by GTB capture the core characteristics over the two years with the new pricing schemes.
-In contrast to the majority of regression-based techniques which fail to capture the lag between the peak of daily temperature and the peak of electricity usage, the GTB-generated baselines are able to correctly capture the delay between the temperature peak and the electricity peak.
+In \cite{7463810}, Kim et al. examined a number of different data mining techniques and demonstrated GBDT to be an effective method to build baseline electricity usage.
+They trained GBDT on data prior to the introduction of new pricing schemes and applied the known temperature following the introduction of new pricing schemes to predict electricity usage with the expected temperature correction.
+Their experiments and analyses showed that the baseline models generated by GBDT capture the core characteristics over the two years with the new pricing schemes.
+In contrast to the majority of regression-based techniques which fail to capture the lag between the peak of daily temperature and the peak of electricity usage, the GBDT-generated baselines are able to correctly capture the delay between the temperature peak and the electricity peak.
 Furthermore, subtracting this temperature-adjusted baseline from the observed electricity usage, they found that the resulting values are more amenable to interpretation, which demonstrates that the temperature-adjusted baseline is indeed effective.
 Instead of providing accurate short-term forecasts, their baseline model aims to capture intraday characteristics that persist for years.
 
-In \cite{PLATON201510}, Platon et al. developed predictive models by using ANN and case-based reasoning (CBR) for producing hourly predictions of a building’s electricity consumption.
+In \cite{PLATON201510}, Platon et al. developed predictive models by using ANN and CBR for producing hourly predictions of a building’s electricity consumption.
 CRB is based on the concept that the current trend of the building's electrical use can be approximated using past trends occurring at similar conditions.
 They showed the supremacy of ANN over CBR in doing the predictions.
 
@@ -575,10 +577,10 @@ The case study reveals the greater accuracy of this method compared to average, 
 
 Forecast at the household level is also getting more and more popular in smart building control and demand response program.
 This popularity inspired Dong et al. to develop in \cite{DONG2016341} a hybrid model to address the problem of residential hour and day-ahead load forecasting through the integration of data-driven techniques.
-They evaluated five different machine learning algorithms: artificial neural network (ANN), support vector regression (SVR), least-square support vector machine (LS-SVM), Gaussian process regression (GPR), and Gaussian mixture model (GMM).
+They evaluated five different ML algorithms: ANN, SVR, least-square SVM (LS-SVM), Gaussian process regression (GPR), and Gaussian mixture model (GMM).
 They applied these models to four residential data sets obtained from smart meters.
 A subdivision of air conditioning (AC) consumptions and not-AC was possible and this led to better results with respect to the total consumption.
-The final results showed that the hybrid model led to improvements compared to the other machine learning algorithms for both hour-ahead and 24-h ahead predictions.
+The final results showed that the hybrid model led to improvements compared to the other ML algorithms for both hour-ahead and 24-h ahead predictions.
 
 In \cite{MOCANU201691}, Mocanu et al. investigated two newly developed stochastic models for time series prediction of energy consumption, namely Conditional Restricted Boltzmann Machine (CRBM) and Factored Conditional Restricted Boltzmann Machine (FCRBM).
 The assessment of the two models is made on a benchmark dataset consisting of almost four years of one-minute resolution electric power consumption data collected from an individual residential customer.
@@ -589,27 +591,27 @@ In \cite{ALOBAIDI2018997}, a robust ensemble model was proposed to predict day-a
 The proposed ensemble learning strategy utilized a two-stage resampling plan, which generated diversity-controlled but random resamples that were used to train individual ANN members.
 Experimental results on a case study showed that the proposed ensemble is able to generate better estimates compared to ANN models and the Bagging ensemble.
 
-To counter the high nonlinearity between inputs and outputs of building energy consumption prediction models, in \cite{ZHONG2019403} a novel vector field-based support vector regression method is proposed.
+To counter the high nonlinearity between inputs and outputs of building energy consumption prediction models, in \cite{ZHONG2019403} a novel vector field-based SVR method is proposed.
 Through multi-distortions in the sample data space or high-dimensional feature space mapped by a vector field, the optimal feature space is found, in which the high non-linearity between inputs and outputs is approximated by linearity.
 A large office building in a coastal town in China is used for a case study, and its summer hourly cooling load data are used as energy consumption data.
 The proposed method ensures high accuracy, generalization ability, and robustness for building energy consumption prediction.
 
-\cite{SHAO2020102128} studied and analyzed the energy consumption of hotel buildings by developing a support vector machine energy consumption prediction model.
-The support vector machine model took as input variables the weather parameters and operating parameters of the hotel air-conditioning system.
-They selected as the kernel function the RBF kernel function and optimized the parameters of the kernel for finding the best accuracy for the model predictions.
-The MSE value of the final model prediction in the case study was 2.22\% and R2 was 0.94.
+In \cite{SHAO2020102128}, Shao et al. studied and analyzed the energy consumption of hotel buildings by developing a SVM energy consumption prediction model.
+The SVM model took as input variables the weather parameters and operating parameters of the hotel air-conditioning system.
+They selected as the kernel function the RBF (Radial Basis Function) kernel function and optimized the parameters of the kernel for finding the best accuracy for the model predictions.
+The MSE value of the final model prediction in the case study was 2.22\% and R\textsuperscript{2} (coefficient of determination) was 0.94.
 This use case is different from the standard single-building forecasts since a hotel includes different rooms and aggregates the consumption over them, then it is more influenced by periods of the year where there could be more or fewer customers that require different levels of demand.
 Moreover, in this case, hotel parameters like the air conditioning system are available and help in reducing the overall forecast error.
 
 In \cite{WANG201910}, a probabilistic load forecasting method for individual consumers is proposed to handle the variability and uncertainty of future load profiles.
-Pinball loss-guided long short term memory (LSTM) network is used to model both the long-term and short-term dependencies within the load profiles.
+Pinball loss-guided LSTM network is used to model both the long-term and short-term dependencies within the load profiles.
 Forecasting for both residential and commercial consumers is tested.
-Experimental results over different customers showed that the proposed method had superior performance over traditional methods such as quantile regression neural network, gradient boosting regression tree, and traditional LSTM.
+Experimental results over different customers showed that the proposed method had superior performance over traditional methods such as QRNN, GBDT, and traditional LSTM.
 
-\cite{CAI20191078} aimed to use deep learning-based techniques for day-ahead multi-step load forecasting in commercial buildings.
+\cite{CAI20191078} aimed to use DL-based techniques for day-ahead multi-step load forecasting in commercial buildings.
 The RNN and CNN models have been proposed and formulated under both recursive and direct multi-step manners.
-The performances are compared with the Seasonal ARIMAX model.
-The gated 24-h CNN model, performed in a direct multi-step manner, proves itself to have the best performance, improving the forecasting accuracy by 22.6\% compared to that of the seasonal ARIMAX, demonstrating the supremacy of deep learning models in this kind of use cases.
+The performance are compared with the SARIMA with exogenous inputs (SARIMAX) model.
+The gated 24-h CNN model, performed in a direct multi-step manner, proves itself to have the best performance, improving the forecasting accuracy by 22.6\% compared to that of the SARIMAX, demonstrating the supremacy of DL models in this kind of use cases.
 
 In \cite{KIM201972}, Kim and Cho proposed a CNN-LSTM neural network for extracting spatial and temporal features to effectively predict housing energy consumption.
 This is demonstrated to be an effective architecture since the CNN layer can extract the features between several variables affecting energy consumption, and the LSTM layer is able to model temporal information of irregular trends in time series components.
@@ -618,23 +620,21 @@ It recorded the smallest value of root mean square error compared to the convent
 It managed to predict complex electric energy consumption and obtained the highest performance in all cases of minutely, hourly, daily, and weekly unit resolutions compared to other methods.
 They stated also that having household characteristics such as occupancy and behavior of the residents might have a large influence on predicting electric energy consumption and could improve the performance of the model.
 
-In \cite{SOMU2020114131}, Somu et al. proposed a hybrid model for building energy consumption forecasting using long short term memory networks.
-In particular, they presented eDemand, which is an energy consumption forecasting model which employs long short term memory networks and an improved sine cosine optimization algorithm for accurate and robust building energy consumption forecasting.
+In \cite{SOMU2020114131}, Somu et al. proposed a hybrid model for building energy consumption forecasting using LSTM networks.
+In particular, they presented eDemand, which is an energy consumption forecasting model which employs LSTM networks and an improved sine cosine optimization algorithm for accurate and robust building energy consumption forecasting.
 Live energy consumption data was obtained from an academic building, the Indian Institute of Technology in Bombay, and it is used to forecast short-term, mid-term, and long-term energy consumption.
 The conducted experiments revealed that the proposed model outperforms the state-of-the-art energy consumption forecast models according to different evaluation metrics.
 
-Also, a study on deep reinforcement learning techniques for building energy consumption forecasts was proposed in \cite{LIU2020109675}.
+Also, a study on Deep Reinforcement Learning (DRL) techniques for building energy consumption forecasts was proposed in \cite{LIU2020109675}.
 Very little is known about DRL techniques in forecasting building energy consumption.
 A case study of an office building was presented and three commonly-used DRL techniques to forecast building energy consumption are used: Asynchronous Advantage Actor-Critic (A3C), Deep Deterministic Policy Gradient (DDPG), and Recurrent Deterministic Policy Gradient (RDPG).
 The objective of the paper was to investigate the potential of DRL techniques in building energy consumption predictions.
 A comprehensive comparison between the proposed DRL models and common supervised models was provided.
 Experimental results showed that DDPG outperformed supervised models both in single-step ahead prediction and multi-step ahead prediction.
 RDPG model did not have advantages over DDPG in single-step ahead prediction, yet led to evident accuracy improvement in multi-step ahead prediction.
-A3C led to poor performances both in single-step ahead prediction and multi-step ahead prediction, indicating that the technique is not adequate for forecasting building energy consumption.
+A3C led to poor performance both in single-step ahead prediction and multi-step ahead prediction, indicating that the technique is not adequate for forecasting building energy consumption.
 
-As demonstrated by most of the paper analyzed the forecasts for a single customer is a more complicated use case compared to energy demand forecast over a customer base.
-Single customer data is more noisy and very few works consider a single habitation, most of them consider commercial buildings, offices, or schools which reduce the level of noise.
-Doing a model for every single user is not very scalable (high computational complexity) and a model that is able to use the information about a customer as features and can generalize over a customer base would be the best solution for an energy company.
+Producing a model for every single customer is not very scalable (high computational complexity) and a model that is able to use the information about a customer as features and can generalize over a customer base would be the best solution for an energy company.
 The next few recent works try to use novel and advanced techniques to try out this approach.
 
 A novel deep ensemble learning-based probabilistic load forecasting framework is proposed in \cite{YANG2019116324} to quantify the load uncertainties of individual customers.
@@ -643,21 +643,21 @@ Specifically, customers are clustered into separate groups based on their profil
 This technique led to better feature learning across groups and it was particularly useful to improve the performance of predicting residential demand response and managing home energy in smart grids.
 However, this technique in order to be applicable needs customers’ personal information and a large customer base in order to be effective.
 
-\cite{ZANG2021120682} proposed a novel day-ahead residential load forecasting method based on feature engineering, pooling, and a hybrid deep learning model.
+\cite{ZANG2021120682} proposed a novel day-ahead residential load forecasting method based on feature engineering, pooling, and a hybrid DL model.
 Feature engineering was performed using two-stage preprocessing on data from each user, i.e., first decomposition and then multi-source input dimension reconstruction.
 Subsequently, the pooling operation was adopted to merge data from both the target user and its interconnected users, in a descending order based on mutual information.
-Finally, a hybrid model with two input channels was developed by combining long short term memory (LSTM) with a self-attention mechanism (SAM).
+Finally, a hybrid model with two input channels was developed by combining LSTM with a self-attention mechanism.
 The case studies were conducted on a practical dataset containing multiple residential users.
 The proposed load forecasting method achieved the best performance with a four-user data pool, 49 time steps, and 24 feature dimensions.
 The optimal performance corresponded to 15.33\%, 56.86 kW, and 82.50 kW in terms of MAPE, MAE, and RMSE, respectively.
 The proposed method was demonstrated to be an effective choice for day-ahead residential load forecasting.
 
-\cite{NAZIR2023100888} proposed a daily, weekly, and monthly energy consumption prediction model for single customers by using a Temporal Fusion Transformer (TFT).
+\cite{NAZIR2023100888} proposed a daily, weekly, and monthly energy consumption prediction model for single customers by using a TFT.
 The study used a TFT which considered both primary and valuable data sources, and batch training techniques.
 A data set of 169 customers have been considered in the study and the TFT was tested on data from only one customer for demonstrating the effectiveness of the customer-based predictive model, which has the advantage that does not depend on overall energy consumption.
-The model’s performance has been related to the Long Short Term Memory (LSTM), LSTM interpretable, and Temporal Convolutional Network (TCN) models.
-The overall symmetric mean absolute percentage error (sMAPE) of LSTM, LSTM interpretable, TCN, and proposed TFT remained at 29.78\%, 31.10\%, 36.42\%, and 26.46\%, respectively.
-The sMAPE of the TFT has proved that the model has performed better than the other deep learning models.
+The model’s performance has been related to the LSTM, interpretable LSTM, and TCN models.
+The overall symmetric MAPE (sMAPE) of LSTM, interpretable LSTM, TCN, and proposed TFT remained at 29.78\%, 31.10\%, 36.42\%, and 26.46\%, respectively.
+The sMAPE of the TFT has proved that the model has performed better than the other DL models.
 This is a very smart recent work in which by using time series of also different customers is able to improve the quality of forecasts with respect to other models for a single customer.
 
 
@@ -665,35 +665,40 @@ This is a very smart recent work in which by using time series of also different
 \label{sec:productionsoa}
 \vspace{0.2 cm}
 
-In this section, the techniques for electricity production forecasting are presented.
+Electricity production forecasting is a classic problem in the time series field.
+In particular, recently the importance of renewable energy sources is raised due to the clear effects of climate change.
+Understanding how much energy the systems based on renewable energy sources can produce with respect to their maximum production capacity is crucial.
+However, this is quite difficult to forecast since depends on future natural phenomena.
+There are different studies in the literature that distinguishes between different renewable energy sources, such as photovoltaic (PV), wind, geothermal, biomass, and hydropower.
+In this section, the techniques for PV electricity production forecasting are presented.
 
-PVGIS\footnote{ \url{https://joint-research-centre.ec.europa.eu/pvgis-online-tool_en} } is a tool of the EU-Joint Research Center that provides information about solar radiation and photovoltaic (PV) system performance for any location in Europe and Africa, as well as a large part of Asia and America.
+PVGIS\footnote{ \url{https://joint-research-centre.ec.europa.eu/pvgis-online-tool_en} } is a tool of the EU-Joint Research Center that provides information about solar radiation and PV system performance for any location in Europe and Africa, as well as a large part of Asia and America.
 PVGIS uses high-quality solar radiation data obtained from satellite images, as well as ambient temperature and wind speed from climate reanalysis models.
 It is a free tool that allows specifying the details of a PV plant to obtain its potential generation.
 It is useful to get an indication of the potential generation but it is not accurate as the methods presented in the literature.
 In fact, specific methods can focus on specific plants taking into account historical data from which to extract the specific production performance and consider the most recent weather forecasts available.
 
 \cite{INMAN2013535} reviewed the theory behind the forecasting methodologies, and presented a number of successful applications of solar forecasting methods for both the solar resource and the power output of solar plants at the utility-scale level.
-Some examples of the presented approaches are Regressive methods, Artificial Neural Networks, Numerical Weather Prediction, and hybrid methods incorporating two or more techniques.
+Some examples of the presented approaches are Regressive methods, ANNs, Numerical Weather Prediction (NWP), and hybrid methods incorporating two or more techniques.
 
-Zamo et al. in 2014 presented a pair of articles proposing a benchmark of statistical regression methods for short-term forecasting of photovoltaic electricity production.
+Zamo et al. in 2014 presented a pair of articles proposing a benchmark of statistical regression methods for short-term forecasting of PV electricity production.
 The first one treated deterministic forecast of hourly production \cite{ZAMO2014792}, and the second one probabilistic forecast of daily production \cite{ZAMO2014804}.
-The proposed benchmark designated random forests as the best forecast model for hourly PV production with a short lead time (from 28 to 45 h).
+The proposed benchmark designated Random Forest as the best forecast model for hourly PV production with a short lead time (from 28 to 45 h).
 Their results also suggested that the RMSE can be reduced to about 5.8\% by first forecasting the production for each individual power plant and then summing these forecasts up.
-For probabilistic forecasts of 2 days ahead daily production, QR-based (quantile regression based) forecasts performed significantly better than the climatology, with a CRPS (continuous ranked probability score) lowered by up to 50\%.
+For probabilistic forecasts of 2 days ahead daily production, quantile regression (QR) based forecasts performed significantly better than the climatology, with a CRPS (continuous ranked probability score) lowered by up to 50\%.
 For most power plants, a QR-based forecast performs better than the others.
 But the most accurate forecast may vary from one power plant to another and with the number of forecast quantiles.
 
-\cite{ANTONANZAS201678} presented a review of photovoltaic power forecasting up to 2016.
-Forecasting techniques such as regressive methods, ANN, k-NN, SVM, RF, and hybrid methods are presented.
-Most recent papers used machine learning techniques, due to the ease of modeling without the need of knowing PV plant characteristics, since these approaches are able to learn them from data.
+\cite{ANTONANZAS201678} presented a review of PV power forecasting up to 2016.
+Forecasting techniques such as regressive methods, ANN, KNN, SVM, Random Forest, and hybrid methods are presented.
+Most recent papers used ML techniques, due to the ease of modeling without the need of knowing PV plant characteristics, since these approaches are able to learn them from data.
 Also, spatial and temporal horizons and performance metrics are discussed.
 The forecast horizon where most research has been done is the day ahead.
 The reason is that most of the energy is traded in day-ahead markets when planning and unit commitment takes place.
 They discussed that spatial averaging is very used since it reduces the variability of the solar resource and generates regional forecasts that are more reliable than single-site ones.
 This is caused by the smoothing effect, which cancels errors with opposite signs in different PV plants.
 
-Barbieri et al. in \cite{BARBIERI2017242} found out that ANNs and SVM are appropriate approaches for short-term horizons and numerical weather prediction (NWP) are better suited for longer horizons.
+Barbieri et al. in \cite{BARBIERI2017242} found out that ANNs and SVM are appropriate approaches for short-term horizons and NWP are better suited for longer horizons.
 In fact, while a probabilistic method based on historical data may be valuable for very long-term forecasts, such an approach cannot take into consideration the complex variations of the cloud cover causing short-term sunlight disruptions.
 Only a deterministic atmospheric modeling approach can deal with the stochastic changes of solar radiance during the day.
 Within this type of model, NWP data-based models are well adapted for day-ahead forecasts but suffer from a too coarse temporal resolution.
@@ -708,96 +713,96 @@ However, the range of the observed error was remarkably high due to different we
 For performing good predictions and minimizing errors, the separate sub-model for each weather condition has to perform well.
 
 \cite{SOBRI2018459} classified solar PV forecasting methods into three major categories, that are time-series statistical, physical, and ensemble methods.
-Among the most used methods, there are Artificial Neural Network (ANN) and Support Vector Machine (SVM) thanks to their ability in solving complex and non-linear forecasting models.
+Among the most used methods, there are ANN and SVM thanks to their ability in solving complex and non-linear forecasting models.
 The metrics assessment shows that Artificial Intelligence (AI) models could decrease the error compared to other statistical approaches.
 The ensemble methods have been introduced recently and thanks to their ability to merge linear and non-linear techniques enhanced the accuracy and performance in comparison with individual models.
 The standard metrics that are used for evaluating solar prediction accuracy were presented for specific applications, they allow the selection of the appropriate solar forecasting approaches to ensure better performance.
 
-\cite{DEFREITASVISCONDI201954} presented a literature review on big data models for solar photovoltaic electricity generation forecasts, aiming to evaluate the most applicable and accurate state-of-art techniques to the problem.
+\cite{DEFREITASVISCONDI201954} presented a literature review on big data models for solar PV electricity generation forecasts, aiming to evaluate the most applicable and accurate state-of-the-art techniques to the problem.
 They included also the motivation behind each project proposal, and the characteristics and quality of data used to address the problem, among other issues.
 They affirmed that the prediction of solar electricity generation is currently an ongoing academic research question.
-Machine learning is widely used, and approaches based on neural networks are considered the most accurate.
+ML is widely used, and approaches based on neural networks are considered the most accurate.
 Extreme learning machine (ELM) was also a great addition and it has reduced training time and raised precision.
 
-\cite{AHMAD2018465} investigated the accuracy, stability, and computational cost of random forest (RF) and extra trees (ET) techniques for predicting the hourly PV generation output.
-They compared the performance of the proposed methods with support vector regression (SVR).
+\cite{AHMAD2018465} investigated the accuracy, stability, and computational cost of Random Forest and Extra Trees techniques for predicting the hourly PV generation output.
+They compared the performance of the proposed methods with SVR.
 They proved that all developed models have comparable predictive power and are equally applicable for predicting hourly PV output.
-Despite their comparable predictive power, ET outperformed RF and SVR in terms of computational cost.
-They concluded by affirming that the stability and algorithmic efficiency of ET makes this technique an ideal candidate for wider adoption in PV output forecasting.
+Despite their comparable predictive power, Extra Trees outperformed Random Forest and SVR in terms of computational cost.
+They concluded by affirming that the stability and algorithmic efficiency of Extra Trees makes this technique an ideal candidate for wider adoption in PV output forecasting.
 
 In \cite{AHMED2020109792}, Ahmed et al. reviewed and evaluated contemporary PV solar power forecasting techniques.
-They noticed through correlation analysis that solar irradiance is the most correlated feature with Photovoltaic output and consequently weather classification and cloud motion study are crucial operations for optimal results.
+They noticed through correlation analysis that solar irradiance is the most correlated feature with PV output and consequently weather classification and cloud motion study are crucial operations for optimal results.
 In addition, they stated that the best data-cleaning processes are normalization and wavelet transforms, and that augmentation using generative adversarial networks is recommended for network training and forecasting.
-Furthermore, they analyzed also that the optimization of inputs and network parameters can be done by using genetic algorithms and particle swarm optimization.
-They determined that ensembles of artificial neural networks are the best approach for forecasting short-term photovoltaic power.
+Furthermore, they analyzed also that the optimization of inputs and network parameters can be done by using GAs and particle swarm optimization.
+They determined that ensembles of ANNs are the best approach for forecasting short-term PV power.
 
 \cite{9848724} examined the performance of the LSTM method in Turkey's electricity production estimation and determined the optimization technique that provides the best performance in the LSTM estimation method.
 It was observed that the energy production estimation of LSTM and Adam optimization technique achieved successful results.
 
 In \cite{GELLERT2019546}, Gellert et al. proposed and evaluated a context-based technique to anticipate electricity production and consumption in buildings.
-They focused on a household with photovoltaics and an energy storage system.
+They focused on a household with PVs and an energy storage system.
 They analyze the efficiency of Markov chains, stride predictors, and also their combination into a hybrid predictor in modeling the evolution of electricity production and consumption.
 Experimental results showed that the best predictor is the Markov chain configured with an electric power history of 100 values, a context of one electric power value, and an interval size of 1.
 
-A genetic algorithm-based support vector machine (GASVM) model for short-term power forecasting of residential-scale PV systems is proposed in \cite{VANDEVENTER2019367}.
-The GASVM model classified the historical weather data using an SVM classifier initially and later it is optimized by the genetic algorithm using an ensemble technique.
+A GA-based SVM (GASVM) model for short-term power forecasting of residential-scale PV systems is proposed in \cite{VANDEVENTER2019367}.
+The GASVM model classified the historical weather data using an SVM classifier initially and later it is optimized by the GA using an ensemble technique.
 Experimental results demonstrated that the proposed GASVM model outperformed the conventional SVM model by a difference of about 669.624W in the RMSE value and 98.7648\% of the MAPE error.
 
-In \cite{ZHOU2020117894}, a hybrid model (SDA-GA-ELM) based on extreme learning machine (ELM), genetic algorithm (GA), and customized similar day analysis (SDA) has been developed to predict hourly PV power output.
+In \cite{ZHOU2020117894}, a hybrid model (SDA-GA-ELM) based on ELM, GA, and customized similar day analysis (SDA) has been developed to predict hourly PV power output.
 In the SDA, the Pearson correlation coefficient is employed to measure the similarity between different days based on five meteorological factors, and the data samples similar to those from the target forecast day are selected as the training set of ELM.
 In the ELM, the optimal values of the parameters are searched by the GA to improve the prediction accuracy.
 The results show that the SDA-GA-ELM model has higher accuracy and stability than other tested approaches in day-ahead PV power prediction, such as ELM, SVM, SDA-ELM, and SVM-ELM.
 
 \cite{9248865} presented case studies on forecasting PV power production and electricity demand in Portugal.
-They studied an ensemble of different machine learning methods (SVM, Random Forest, LSTM, and ARIMA) to exploit the growing collection of energy supply and demand records.
+They studied an ensemble of different ML methods (SVM, Random Forest, LSTM, and ARIMA) to exploit the growing collection of energy supply and demand records.
 The ensemble used only electricity data to forecast since only this data is available online for any forecasting horizon.
 The ensemble method was based on offline training and online forecasting, by applying the most recent power measurements to trained models.
-The different machine learning methods performed different non-linear transformations to the same electricity data, thus introducing diversity in the ensemble.
+The different ML methods performed different non-linear transformations to the same electricity data, thus introducing diversity in the ensemble.
 To assess the forecasting performance of the system, they considered two forecasting horizons relevant to the Internal Electricity Market, namely 36 hours ahead, relevant to the single day-ahead coupling, and 2 hours ahead, relevant to the single intraday coupling.
 The forecasting performance using only electricity data is compared with state-of-the-art models and improves the reference accuracy in their case studies.
-Since the ensemble relies only on energy data, the results showed that machine learning methods are useful to exploit energy big data for efficient energy forecasting systems.
+Since the ensemble relies only on energy data, the results showed that ML methods are useful to exploit energy big data for efficient energy forecasting systems.
 As demonstrated by other papers, weather information such as solar irradiance has a high correlation with energy production, and when studying a few plants, instead of all the ones in Portugal, this information has a relevant impact on performance.
 
-A novel hybrid method for deterministic PV power forecasting based on wavelet transform (WT) and deep convolutional neural network (DCNN) is proposed in \cite{WANG2017409}.
+A novel hybrid method for deterministic PV power forecasting based on wavelet transform (WT) and CNN is proposed in \cite{WANG2017409}.
 WT is used to decompose the original signal into different frequency series.
-DCNN is employed to extract the nonlinear features and invariant structures exhibited in each frequency.
-A probabilistic PV power forecasting model that combines the proposed deterministic method and spine quantile regression (QR) is developed to statistically evaluate the probabilistic information in PV power data.
+CNN is employed to extract the nonlinear features and invariant structures exhibited in each frequency.
+A probabilistic PV power forecasting model that combines the proposed deterministic method and spine quantile regression is developed to statistically evaluate the probabilistic information in PV power data.
 Statistical results showed that the average MAPE, RMSE, and MAE of the proposed deterministic model outperformed the compared benchmarks in terms of seasons, forecasting horizons, and PV power locations.
 
-Day-ahead power output time-series forecasting methods are proposed in \cite{GAO2019115838}, in which the ideal weather type and non-ideal weather types have been separately discussed.
-For ideal weather conditions, a forecasting method is proposed based on meteorology data of the next day using long short term memory (LSTM) networks.
+Day-ahead power output time-series forecasting methods are proposed in \cite{GAO2019115838}, in which the ideal weather type (sunny day) and non-ideal weather types (rainy days, windy days, and foggy days) have been separately discussed.
+For ideal weather conditions, a forecasting method is proposed based on meteorology data of the next day using LSTM networks.
 For non-ideal weather conditions, time-series relevance and specific non-ideal weather type characteristic are considered in the LSTM model by introducing adjacent day time-series and typical weather type information.
 Specifically, daily total power, which is obtained by the discrete grey model (DGM), is regarded as input variables and applied to correct power output time-series prediction.
 Prediction performance comparison between proposed methods with traditional algorithms revealed that the RMSE accuracy of forecasting methods based on LSTM networks can reach 4.62\% for ideal weather conditions.
 For non-ideal weather conditions, the dynamic characteristic is effectively described by proposed methods and the proposed methods obtained superior prediction accuracy.
 This is an interesting study on how to treat the problem in two subcases, however,  for real applications, a single network able to adapt to weather conditions by itself is needed.
 
-In \cite{WANG2019113315}, a convolutional neural network, a long short term memory network, and a hybrid model based on convolutional neural network and long short term memory network models were proposed by Wang et al and they are applied to the data of the DKASC college photovoltaic system.
-The results showed that when the input sequence is increased, the accuracy of the model is also improved, and the prediction effect of the hybrid model is the best, followed by that of the convolutional neural network.
-While the long short term memory network had the worst prediction effect, the training time was the shortest.
+In \cite{WANG2019113315}, a CNN, a LSTM network, and a hybrid model based on CNN and LSTM models were proposed by Wang et al and they are applied to the data of the DKASC (Dattajirao Kadam Arts, Science and Commerce) college PV system.
+The results showed that when the input sequence is increased, the accuracy of the model is also improved, and the prediction effect of the hybrid model is the best, followed by that of the CNN.
+While the LSTM network had the worst prediction effect, the training time was the shortest.
 
-In \cite{WANG2019116225}, a hybrid deep learning model (LSTM-Convolutional Network) is proposed and applied to photovoltaic power prediction.
-In the proposed hybrid prediction model, the temporal features of the data are extracted first by the long short term memory network, and then the spatial features of the data are extracted by the convolutional neural network model.
-The results showed that the hybrid prediction model had a better prediction effect than the single prediction models in isolation, and the proposed hybrid model is also better than the Convolutional-LSTM Network (extract the spatial characteristics of data first, and then extract the temporal characteristics of data).
+In \cite{WANG2019116225}, a hybrid DL model (LSTM-CNN) is proposed and applied to PV power prediction.
+In the proposed hybrid prediction model, the temporal features of the data are extracted first by the LSTM network, and then the spatial features of the data are extracted by the CNN model.
+The results showed that the hybrid prediction model had a better prediction effect than the single prediction models in isolation, and the proposed hybrid model is also better than the CNN-LSTM (extract the spatial characteristics of data first, and then extract the temporal characteristics of data).
 
-A hybrid deep learning model combining wavelet packet decomposition (WPD) and long short term memory (LSTM) networks is proposed in \cite{LI2020114216}.
-The hybrid deep learning model is utilized for one-hour-ahead PV power forecasting with five-minute intervals.
+A hybrid DL model combining wavelet packet decomposition (WPD) and LSTM networks is proposed in \cite{LI2020114216}.
+The hybrid DL model is utilized for one-hour-ahead PV power forecasting with five-minute intervals.
 WPD is first used to decompose the original PV power series into sub-series.
 After the decomposition, four independent LSTM networks are developed for the sub-series.
 Finally, the results predicted by each LSTM network are reconstructed and a linear weighting method is employed to obtain the final forecasting results.
-Experimental results show that the proposed hybrid deep learning model exhibits superior performance in both forecasting accuracy and stability with respect to LSTM, RNN, GRU, and MLP.
+Experimental results show that the proposed hybrid DL model exhibits superior performance in both forecasting accuracy and stability with respect to LSTM, RNN, GRU, and MLP.
 
-In \cite{MELLIT2021276}, different kinds of deep learning neural networks (DLNN) for short-term output PV power forecasting have been developed and compared: Long Short Term Memory (LSTM), Bidirectional-LSTM (BiLSTM), Gated Recurrent Unit (GRU), Bidirectional-GRU (BiGRU), One-Dimension Convolutional Neural Network (CNN1D), as well as other hybrid configurations such as CNN1D-LSTM and CNN1D-GRU.
+In \cite{MELLIT2021276}, different kinds of neural networks for short-term output PV power forecasting have been developed and compared: LSTM, Bidirectional-LSTM (BiLSTM), GRU, Bidirectional-GRU (BiGRU), One-Dimension CNN (CNN1D), as well as other hybrid configurations such as CNN1D-LSTM and CNN1D-GRU.
 A database of the PV power produced by the microgrid installed at the University of Trieste (Italy) is used to train and comparatively test the neural networks.
 The performance has been evaluated over four different time horizons, for one-step and multi-step ahead.
-The results show that the investigated DLNNs provide very good accuracy, particularly in the case of a 1-minute time horizon with one-step ahead (correlation coefficient is close to 1), while for the case of multi-step ahead (up to 8 steps ahead) the results are found to be acceptable (correlation coefficient ranges between 96.9\% and 98\%).
-The new advanced deep NN algorithms are able to lead to acceptable accuracy in the case of cloudy days.
+The results show that the investigated neural networks provide very good accuracy, particularly in the case of a 1-minute time horizon with one-step ahead (correlation coefficient is close to 1), while for the case of multi-step ahead (up to 8 steps ahead) the results are found to be acceptable (correlation coefficient ranges between 96.9\% and 98\%).
+The new advanced neural network algorithms are able to lead to acceptable accuracy in the case of cloudy days.
 However, even though the models have great potential for fine time granularity, these time ranges are quite limited and they should be proved to be effective also on longer ranges to be used by PV plant owners.
 
-\cite{en15145232} aimed to predict hourly day-ahead PV power generation by applying the Temporal Fusion Transformer (TFT) model.
+\cite{en15145232} aimed to predict hourly day-ahead PV power generation by applying the TFT model.
 TFT incorporates an interpretable explanation of temporal dynamics and high-performance forecasting over multiple horizons.
 The proposed forecasting model has been trained and tested using data from six different facilities located in Germany and Australia.
-The results have been compared with other algorithms like Auto-Regressive Integrated Moving Average (ARIMA), Long Short Term Memory (LSTM), Multi-Layer Perceptron (MLP), and Extreme Gradient Boosting (XGBoost).
+The results have been compared with other algorithms like ARIMA, LSTM, MLP, and XGBoost.
 The use of TFT has been shown to be more accurate than the rest of the algorithms in forecasting PV generation in the tested different facilities.
 The importance of the decoder and encoder variables has been also calculated, revealing that solar horizontal irradiation and the zenith angle are the key variables for the model.
 This model was proved to be effective also in this task, showing the superiority of the TFTs over standard DL models, even though is quite more complex and requires a larger amount of data to achieve good prediction results.
