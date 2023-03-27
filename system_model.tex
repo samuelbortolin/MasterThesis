@@ -4,7 +4,7 @@
 
 In this chapter, the model of the proposed system is presented.
 In the first section, an in-depth presentation of the system architecture is provided.
-The different components of the system with their functionalities and the interactions among them are described.
+The different components of the system with their functionalities and interactions among them are described.
 Lastly, the three modules focused on the three use cases of interest are treated more in detail in dedicated sections.
 After this chapter, it will be clear what the main parts of the system are and how they cooperate to accomplish the various use cases of interest.
 
@@ -20,7 +20,7 @@ It contains the following components:
   \item API layer: manages the user interactions with the system;
   \item Task manager: coordinates the execution of the tasks;
   \item Data storage task: parses and stores the loaded data;
-  \item ML model interface: handle interactions with the ML models storage where the trained models are stored;
+  \item ML model interface: handles interactions with the ML models storage where the trained models are stored;
   \item Training task: trains new models based on available data;
   \item Forecasting task: forecasts new data using a specified model or the latest model;
   \item Task scheduler: manages periodic scheduled tasks;
@@ -56,12 +56,12 @@ Users can interact with the system via API.
 A user must be authenticated and have an account with an active subscription.
 Then, he can request the following asynchronous operations:
 \begin{itemize}
-  \item Append new data with a create or update logic specifying the type of data, it supports upload of CSV files;
+  \item Append new data with a create or update logic specifying the type of data, it supports the upload of CSV files;
   \item Train new models based on available data for a use case specifying the time granularity (hourly or daily);
   \item Forecast new data for a use case using a specified model or the latest model for a certain time granularity, for a certain starting date and time horizon.
 \end{itemize}
 
-In addition, the task scheduler periodically triggers the performance evaluation task for evaluating the performance of the available models and if needed triggering the re-training for having up-to-date models with respect to the user data that might perform better on future forecasts.
+In addition, the task scheduler periodically triggers the performance evaluation task for evaluating the performance of the available models and if needed triggering the re-training for having up-to-date models with respect to the user data so that they might perform better on future forecasts.
 
 \begin{figure}[H]
 \centering 
@@ -111,48 +111,48 @@ Describe it ...
 \label{fig:schedulerflow}
 \end{figure}
 
-The diagram representing the data loading sequence diagram is presented in figure~\ref{fig:loadingsequence}.
+The sequence diagram representing the data loading procedure is presented in figure~\ref{fig:loadingsequence}.
 Describe it ...
 
 \begin{figure}[H]
 \centering 
 \includegraphics[width=1\textwidth]{images/architecture_data_loading_sequence}
-\caption{Diagram representing the data loading sequence diagram.}
+\caption{Sequence diagram of the data loading procedure.}
 \label{fig:loadingsequence}
 \end{figure}
 
-The diagram representing the training sequence diagram is presented in figure~\ref{fig:trainingsequence}.
+The sequence diagram representing the training procedure is presented in figure~\ref{fig:trainingsequence}.
 Describe it ...
 
 \begin{figure}[H]
 \centering 
 \includegraphics[width=0.8\textwidth]{images/architecture_training_sequence}
-\caption{Diagram representing the training sequence diagram.}
+\caption{Sequence diagram representing the training procedure.}
 \label{fig:trainingsequence}
 \end{figure}
 
-The diagram representing the forecasting sequence diagram is presented in figure~\ref{fig:forecastingsequence}.
+The sequence diagram representing the forecasting procedure is presented in figure~\ref{fig:forecastingsequence}.
 Describe it ...
 
 \begin{figure}[H]
 \centering 
 \includegraphics[width=0.8\textwidth]{images/architecture_forecasting_sequence}
-\caption{Diagram representing the forecasting sequence diagram.}
+\caption{Sequence diagram representing the forecasting procedure.}
 \label{fig:forecastingsequence}
 \end{figure}
 
-The diagram representing the task scheduler sequence diagram is presented in figure~\ref{fig:schedulersequence}.
+The sequence diagram representing the task scheduler procedure is presented in figure~\ref{fig:schedulersequence}.
 Describe it ...
 
 \begin{figure}[H]
 \centering 
 \includegraphics[width=0.6\textwidth]{images/architecture_scheduler_sequence}
-\caption{Diagram representing the task scheduler sequence diagram.}
+\caption{Sequence diagram representing the task scheduler procedure.}
 \label{fig:schedulersequence}
 \end{figure}
 
 
-\section{System common components}
+\section{System's common components}
 \label{sec:components}
 \vspace{0.2 cm}
 
@@ -185,7 +185,7 @@ The system model forecasting schematic representation is presented in figure~\re
 
 Describe the electricity demand forecasting module ...
 
-How the module works, what contains, Models used for the task-specific and then report also in the sections below if they are common, ...
+How the module works, what contains, describe the models used for the task-specific and then report also in the sections below if they are common, ...
 
 \section{Consumption baseline forecasting module}
 \label{sec:baselinemodel}
