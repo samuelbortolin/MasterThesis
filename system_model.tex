@@ -42,15 +42,6 @@ The system interacts with the following external components:
 \label{fig:components}
 \end{figure}
 
-Figure~\ref{fig:interactions} shows the interactions among the components of the architecture.
-
-\begin{figure}[H]
-\centering 
-\includegraphics[width=1\textwidth]{images/architecture_interactions}
-\caption{The interactions of the components of the proposed system.}
-\label{fig:interactions}
-\end{figure}
-
 The use case diagram for the system is presented in figure~\ref{fig:usecase}.
 Users can interact with the system via API.
 A user must be authenticated and have an account with an active subscription.
@@ -70,6 +61,21 @@ In addition, the task scheduler periodically triggers the performance evaluation
 \label{fig:usecase}
 \end{figure}
 
+Figure~\ref{fig:interactions} shows the interactions among the components of the architecture.
+
+\begin{figure}[H]
+\centering 
+\includegraphics[width=1\textwidth]{images/architecture_interactions}
+\caption{The interactions of the components of the proposed system.}
+\label{fig:interactions}
+\end{figure}
+
+
+\vspace{0.1 cm}
+\subsection{Data loading}
+\label{sec:loading}
+\vspace{0.1 cm}
+
 In the following diagrams, the logic inside these functionalities is described.
 The diagram representing the data loading flow is presented in figure~\ref{fig:loadingflow}.
 Describe it ...
@@ -79,36 +85,6 @@ Describe it ...
 \includegraphics[width=1\textwidth]{images/architecture_data_loading_flow}
 \caption{Diagram representing the data loading flow.}
 \label{fig:loadingflow}
-\end{figure}
-
-The diagram representing the training flow is presented in figure~\ref{fig:trainingflow}.
-Describe it ...
-
-\begin{figure}[H]
-\centering 
-\includegraphics[width=0.7\textwidth]{images/architecture_training_flow}
-\caption{Diagram representing the training flow.}
-\label{fig:trainingflow}
-\end{figure}
-
-The diagram representing the forecast flow is presented in figure~\ref{fig:forecastflow}.
-Describe it ...
-
-\begin{figure}[H]
-\centering 
-\includegraphics[width=0.6\textwidth]{images/architecture_forecast_flow}
-\caption{Diagram representing the forecast flow.}
-\label{fig:forecastflow}
-\end{figure}
-
-The diagram representing the task scheduler flow is presented in figure~\ref{fig:schedulerflow}.
-Describe it ...
-
-\begin{figure}[H]
-\centering 
-\includegraphics[width=0.8\textwidth]{images/architecture_scheduler_flow}
-\caption{Diagram representing the task scheduler flow.}
-\label{fig:schedulerflow}
 \end{figure}
 
 The sequence diagram representing the data loading procedure is presented in figure~\ref{fig:loadingsequence}.
@@ -121,6 +97,22 @@ Describe it ...
 \label{fig:loadingsequence}
 \end{figure}
 
+
+\vspace{0.1 cm}
+\subsection{Training}
+\label{sec:loading}
+\vspace{0.1 cm}
+
+The diagram representing the training flow is presented in figure~\ref{fig:trainingflow}.
+Describe it ...
+
+\begin{figure}[H]
+\centering 
+\includegraphics[width=0.7\textwidth]{images/architecture_training_flow}
+\caption{Diagram representing the training flow.}
+\label{fig:trainingflow}
+\end{figure}
+
 The sequence diagram representing the training procedure is presented in figure~\ref{fig:trainingsequence}.
 Describe it ...
 
@@ -131,6 +123,22 @@ Describe it ...
 \label{fig:trainingsequence}
 \end{figure}
 
+
+\vspace{0.1 cm}
+\subsection{Forecasting}
+\label{sec:loading}
+\vspace{0.1 cm}
+
+The diagram representing the forecast flow is presented in figure~\ref{fig:forecastflow}.
+Describe it ...
+
+\begin{figure}[H]
+\centering 
+\includegraphics[width=0.6\textwidth]{images/architecture_forecast_flow}
+\caption{Diagram representing the forecast flow.}
+\label{fig:forecastflow}
+\end{figure}
+
 The sequence diagram representing the forecasting procedure is presented in figure~\ref{fig:forecastingsequence}.
 Describe it ...
 
@@ -139,6 +147,22 @@ Describe it ...
 \includegraphics[width=0.8\textwidth]{images/architecture_forecasting_sequence}
 \caption{Sequence diagram representing the forecasting procedure.}
 \label{fig:forecastingsequence}
+\end{figure}
+
+
+\vspace{0.1 cm}
+\subsection{Scheduler}
+\label{sec:loading}
+\vspace{0.1 cm}
+
+The diagram representing the task scheduler flow is presented in figure~\ref{fig:schedulerflow}.
+Describe it ...
+
+\begin{figure}[H]
+\centering 
+\includegraphics[width=0.8\textwidth]{images/architecture_scheduler_flow}
+\caption{Diagram representing the task scheduler flow.}
+\label{fig:schedulerflow}
 \end{figure}
 
 The sequence diagram representing the task scheduler procedure is presented in figure~\ref{fig:schedulersequence}.
