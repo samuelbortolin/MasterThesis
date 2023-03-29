@@ -31,6 +31,7 @@ The system interacts with the following external components:
 \begin{itemize}
   \item Users DB: used for storing and retrieving user data (possibly more users for the same account);
   \item Data DB: used for storing and retrieving the data;
+  \item Weather Data DB: used for retrieving the weather data;
   \item ML models storage: used for storing and retrieving the trained models;
   \item Forecasts DB: used for storing and retrieving the computed forecasts.
 \end{itemize}
@@ -61,7 +62,8 @@ In addition, the task scheduler periodically triggers the performance evaluation
 \label{fig:usecase}
 \end{figure}
 
-Figure~\ref{fig:interactions} shows the interactions among the components of the architecture.
+Figure~\ref{fig:interactions} shows the interactions among the components of the architecture in order to achieve the use cases.
+In the specific subsections each the logic for each use case is explained with the relative interactions.
 
 \begin{figure}[H]
 \centering 
@@ -76,7 +78,16 @@ Figure~\ref{fig:interactions} shows the interactions among the components of the
 \label{sec:loading}
 \vspace{0.1 cm}
 
-In the following diagrams, the logic inside these functionalities is described.
+The diagram representing the interactions for achieving the data loading use case is presented in figure~\ref{fig:loadinginteractions}.
+Describe it ...
+
+\begin{figure}[H]
+\centering 
+\includegraphics[width=1\textwidth]{images/architecture_data_loading_interactions}
+\caption{The interactions of the components for achieving the data loading use case.}
+\label{fig:loadinginteractions}
+\end{figure}
+
 The diagram representing the data loading flow is presented in figure~\ref{fig:loadingflow}.
 Describe it ...
 
@@ -100,8 +111,18 @@ Describe it ...
 
 \vspace{0.1 cm}
 \subsection{Training}
-\label{sec:loading}
+\label{sec:training}
 \vspace{0.1 cm}
+
+The diagram representing the interactions for achieving the training use case is presented in figure~\ref{fig:traininginteractions}.
+Describe it ...
+
+\begin{figure}[H]
+\centering 
+\includegraphics[width=1\textwidth]{images/architecture_training_interactions}
+\caption{The interactions of the components for achieving the training use case.}
+\label{fig:traininginteractions}
+\end{figure}
 
 The diagram representing the training flow is presented in figure~\ref{fig:trainingflow}.
 Describe it ...
@@ -126,8 +147,18 @@ Describe it ...
 
 \vspace{0.1 cm}
 \subsection{Forecasting}
-\label{sec:loading}
+\label{sec:forecasting}
 \vspace{0.1 cm}
+
+The diagram representing the interactions for achieving the forecasting use case is presented in figure~\ref{fig:forecastinginteractions}.
+Describe it ...
+
+\begin{figure}[H]
+\centering 
+\includegraphics[width=1\textwidth]{images/architecture_forecasting_interactions}
+\caption{The interactions of the components for achieving the forecasting use case.}
+\label{fig:forecastinginteractions}
+\end{figure}
 
 The diagram representing the forecast flow is presented in figure~\ref{fig:forecastflow}.
 Describe it ...
@@ -152,8 +183,18 @@ Describe it ...
 
 \vspace{0.1 cm}
 \subsection{Scheduler}
-\label{sec:loading}
+\label{sec:scheduler}
 \vspace{0.1 cm}
+
+The diagram representing the interactions for achieving the task schduler use case is presented in figure~\ref{fig:schedulerinteractions}.
+Describe it ...
+
+\begin{figure}[H]
+\centering 
+\includegraphics[width=1\textwidth]{images/architecture_scheduler_interactions}
+\caption{The interactions of the components for achieving the task schduler use case.}
+\label{fig:schedulerinteractions}
+\end{figure}
 
 The diagram representing the task scheduler flow is presented in figure~\ref{fig:schedulerflow}.
 Describe it ...
@@ -184,24 +225,6 @@ Describe the system's common components between the various tasks ...
 
 Describe Data Parser/Preprocessing, Enrichment, Model Training Procedure, Prediction, ...
 
-The system model training schematic representation is presented in figure~\ref{fig:modeltraining}.
-
-\begin{figure}[H]
-\centering 
-\includegraphics[width=1\textwidth]{images/system_model_training}
-\caption{The system model training schematic representation.}
-\label{fig:modeltraining}
-\end{figure}
-
-The system model forecasting schematic representation is presented in figure~\ref{fig:modelforecasting}.
-
-\begin{figure}[H]
-\centering 
-\includegraphics[width=0.8\textwidth]{images/system_model_forecasting}
-\caption{The system model forecasting schematic representation.}
-\label{fig:modelforecasting}
-\end{figure}
-
 
 \section{Electricity demand forecasting module}
 \label{sec:demandmodel}
@@ -211,11 +234,48 @@ Describe the electricity demand forecasting module ...
 
 How the module works, what contains, describe the models used for the task-specific and then report also in the sections below if they are common, ...
 
+The system model training schematic representation for electricity demand forecasting is presented in figure~\ref{fig:modeltrainingdemand}.
+
+\begin{figure}[H]
+\centering 
+\includegraphics[width=0.7\textwidth]{images/system_model_training_demand}
+\caption{The system model training schematic representation for electricity demand forecasting.}
+\label{fig:modeltrainingdemand}
+\end{figure}
+
+The system model forecasting schematic representation for electricity demand forecasting is presented in figure~\ref{fig:modelforecastingdemand}.
+
+\begin{figure}[H]
+\centering 
+\includegraphics[width=0.7\textwidth]{images/system_model_forecasting_demand}
+\caption{The system model forecasting schematic representation for electricity demand forecasting.}
+\label{fig:modelforecastingdemand}
+\end{figure}
+
+
 \section{Consumption baseline forecasting module}
 \label{sec:baselinemodel}
 \vspace{0.2 cm}
 
 Describe the consumption baseline forecasting module ...
+
+The system model training schematic representation for consumption baseline forecasting is presented in figure~\ref{fig:modeltrainingbaseline}.
+
+\begin{figure}[H]
+\centering 
+\includegraphics[width=0.7\textwidth]{images/system_model_training_baseline}
+\caption{The system model training schematic representation for consumption baseline forecasting.}
+\label{fig:modeltrainingbaseline}
+\end{figure}
+
+The system model forecasting schematic representation for consumption baseline forecasting is presented in figure~\ref{fig:modelforecastingbaseline}.
+
+\begin{figure}[H]
+\centering 
+\includegraphics[width=0.7\textwidth]{images/system_model_forecasting_baseline}
+\caption{The system model forecasting schematic representation for consumption baseline forecasting.}
+\label{fig:modelforecastingbaseline}
+\end{figure}
 
 
 \section{Electricity production forecasting module}
@@ -223,3 +283,21 @@ Describe the consumption baseline forecasting module ...
 \vspace{0.2 cm}
 
 Describe the electricity production forecasting module ...
+
+The system model training schematic representation for electricity production forecasting is presented in figure~\ref{fig:modeltrainingproduction}.
+
+\begin{figure}[H]
+\centering 
+\includegraphics[width=0.7\textwidth]{images/system_model_training_production}
+\caption{The system model training schematic representation for electricity production forecasting.}
+\label{fig:modeltrainingproduction}
+\end{figure}
+
+The system model forecasting schematic representation for electricity production forecasting is presented in figure~\ref{fig:modelforecastingproduction}.
+
+\begin{figure}[H]
+\centering 
+\includegraphics[width=0.7\textwidth]{images/system_model_forecasting_production}
+\caption{The system model forecasting schematic representation for electricity production forecasting.}
+\label{fig:modelforecastingproduction}
+\end{figure}
