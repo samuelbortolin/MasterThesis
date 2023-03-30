@@ -13,6 +13,29 @@ After this chapter, it will be clear what the main parts of the system are and h
 \label{sec:architecture}
 \vspace{0.2 cm}
 
+% sistema deve fare questo
+
+The use case diagram for the system is presented in figure~\ref{fig:usecase}.
+Users can interact with the system via API.
+A user must be authenticated and have an account with an active subscription.
+Then, he can request the following asynchronous operations:
+\begin{itemize}
+  \item Append new data with a create or update logic specifying the type of data, it supports the upload of CSV files;
+  \item Train new models based on available data for a use case specifying the time granularity (hourly or daily);
+  \item Forecast new data for a use case using a specified model or the latest model for a certain time granularity, for a certain starting date and time horizon.
+\end{itemize}
+
+In addition, the task scheduler periodically triggers the performance evaluation task for evaluating the performance of the available models and if needed triggering the re-training for having up-to-date models with respect to the user data so that they might perform better on future forecasts.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{images/architecture_use_case}
+\caption{The use case diagram for the system.}
+\label{fig:usecase}
+\end{figure}
+
+% per fare questo ho sviluppato questo
+
 The system architecture of the developed system is shown in figure~\ref{fig:components}.
 It contains the following components:
 \begin{itemize}
@@ -37,36 +60,17 @@ The system interacts with the following external components:
 \end{itemize}
 
 \begin{figure}[H]
-\centering 
+\centering
 \includegraphics[width=0.9\textwidth]{images/architecture_components}
 \caption{The architecture of the proposed system.}
 \label{fig:components}
-\end{figure}
-
-The use case diagram for the system is presented in figure~\ref{fig:usecase}.
-Users can interact with the system via API.
-A user must be authenticated and have an account with an active subscription.
-Then, he can request the following asynchronous operations:
-\begin{itemize}
-  \item Append new data with a create or update logic specifying the type of data, it supports the upload of CSV files;
-  \item Train new models based on available data for a use case specifying the time granularity (hourly or daily);
-  \item Forecast new data for a use case using a specified model or the latest model for a certain time granularity, for a certain starting date and time horizon.
-\end{itemize}
-
-In addition, the task scheduler periodically triggers the performance evaluation task for evaluating the performance of the available models and if needed triggering the re-training for having up-to-date models with respect to the user data so that they might perform better on future forecasts.
-
-\begin{figure}[H]
-\centering 
-\includegraphics[width=0.6\textwidth]{images/architecture_use_case}
-\caption{The use case diagram for the system.}
-\label{fig:usecase}
 \end{figure}
 
 Figure~\ref{fig:interactions} shows the interactions among the components of the architecture in order to achieve the use cases.
 In the specific subsections each the logic for each use case is explained with the relative interactions.
 
 \begin{figure}[H]
-\centering 
+\centering
 \includegraphics[width=1\textwidth]{images/architecture_interactions}
 \caption{The interactions of the components of the proposed system.}
 \label{fig:interactions}
@@ -82,7 +86,7 @@ The diagram representing the interactions for achieving the data loading use cas
 Describe it ...
 
 \begin{figure}[H]
-\centering 
+\centering
 \includegraphics[width=1\textwidth]{images/architecture_data_loading_interactions}
 \caption{The interactions of the components for achieving the data loading use case.}
 \label{fig:loadinginteractions}
@@ -92,7 +96,7 @@ The diagram representing the data loading flow is presented in figure~\ref{fig:l
 Describe it ...
 
 \begin{figure}[H]
-\centering 
+\centering
 \includegraphics[width=1\textwidth]{images/architecture_data_loading_flow}
 \caption{Diagram representing the data loading flow.}
 \label{fig:loadingflow}
@@ -102,7 +106,7 @@ The sequence diagram representing the data loading procedure is presented in fig
 Describe it ...
 
 \begin{figure}[H]
-\centering 
+\centering
 \includegraphics[width=1\textwidth]{images/architecture_data_loading_sequence}
 \caption{Sequence diagram of the data loading procedure.}
 \label{fig:loadingsequence}
@@ -110,37 +114,37 @@ Describe it ...
 
 
 \vspace{0.1 cm}
-\subsection{Training}
+\subsection{Model training}
 \label{sec:training}
 \vspace{0.1 cm}
 
-The diagram representing the interactions for achieving the training use case is presented in figure~\ref{fig:traininginteractions}.
+The diagram representing the interactions for achieving the model training use case is presented in figure~\ref{fig:traininginteractions}.
 Describe it ...
 
 \begin{figure}[H]
-\centering 
+\centering
 \includegraphics[width=1\textwidth]{images/architecture_training_interactions}
-\caption{The interactions of the components for achieving the training use case.}
+\caption{The interactions of the components for achieving the model training use case.}
 \label{fig:traininginteractions}
 \end{figure}
 
-The diagram representing the training flow is presented in figure~\ref{fig:trainingflow}.
+The diagram representing the model training flow is presented in figure~\ref{fig:trainingflow}.
 Describe it ...
 
 \begin{figure}[H]
-\centering 
+\centering
 \includegraphics[width=0.7\textwidth]{images/architecture_training_flow}
-\caption{Diagram representing the training flow.}
+\caption{Diagram representing the model training flow.}
 \label{fig:trainingflow}
 \end{figure}
 
-The sequence diagram representing the training procedure is presented in figure~\ref{fig:trainingsequence}.
+The sequence diagram representing the model training procedure is presented in figure~\ref{fig:trainingsequence}.
 Describe it ...
 
 \begin{figure}[H]
-\centering 
+\centering
 \includegraphics[width=0.8\textwidth]{images/architecture_training_sequence}
-\caption{Sequence diagram representing the training procedure.}
+\caption{Sequence diagram representing the model training procedure.}
 \label{fig:trainingsequence}
 \end{figure}
 
@@ -154,7 +158,7 @@ The diagram representing the interactions for achieving the forecasting use case
 Describe it ...
 
 \begin{figure}[H]
-\centering 
+\centering
 \includegraphics[width=1\textwidth]{images/architecture_forecasting_interactions}
 \caption{The interactions of the components for achieving the forecasting use case.}
 \label{fig:forecastinginteractions}
@@ -164,8 +168,8 @@ The diagram representing the forecast flow is presented in figure~\ref{fig:forec
 Describe it ...
 
 \begin{figure}[H]
-\centering 
-\includegraphics[width=0.6\textwidth]{images/architecture_forecast_flow}
+\centering
+\includegraphics[width=0.6\textwidth]{images/architecture_forecasting_flow}
 \caption{Diagram representing the forecast flow.}
 \label{fig:forecastflow}
 \end{figure}
@@ -174,7 +178,7 @@ The sequence diagram representing the forecasting procedure is presented in figu
 Describe it ...
 
 \begin{figure}[H]
-\centering 
+\centering
 \includegraphics[width=0.8\textwidth]{images/architecture_forecasting_sequence}
 \caption{Sequence diagram representing the forecasting procedure.}
 \label{fig:forecastingsequence}
@@ -182,37 +186,39 @@ Describe it ...
 
 
 \vspace{0.1 cm}
-\subsection{Scheduler}
+\subsection{Performance evaluation}
 \label{sec:scheduler}
 \vspace{0.1 cm}
 
-The diagram representing the interactions for achieving the task schduler use case is presented in figure~\ref{fig:schedulerinteractions}.
+% adapt things to new title
+
+The diagram representing the interactions for achieving the performance evaluation use case is presented in figure~\ref{fig:schedulerinteractions}.
 Describe it ...
 
 \begin{figure}[H]
-\centering 
+\centering
 \includegraphics[width=1\textwidth]{images/architecture_scheduler_interactions}
-\caption{The interactions of the components for achieving the task schduler use case.}
+\caption{The interactions of the components for achieving the performance evaluation use case.}
 \label{fig:schedulerinteractions}
 \end{figure}
 
-The diagram representing the task scheduler flow is presented in figure~\ref{fig:schedulerflow}.
+The diagram representing the performance evaluation flow is presented in figure~\ref{fig:schedulerflow}.
 Describe it ...
 
 \begin{figure}[H]
-\centering 
+\centering
 \includegraphics[width=0.8\textwidth]{images/architecture_scheduler_flow}
-\caption{Diagram representing the task scheduler flow.}
+\caption{Diagram representing the performance evaluation flow.}
 \label{fig:schedulerflow}
 \end{figure}
 
-The sequence diagram representing the task scheduler procedure is presented in figure~\ref{fig:schedulersequence}.
+The sequence diagram representing the performance evaluation procedure is presented in figure~\ref{fig:schedulersequence}.
 Describe it ...
 
 \begin{figure}[H]
-\centering 
+\centering
 \includegraphics[width=0.6\textwidth]{images/architecture_scheduler_sequence}
-\caption{Sequence diagram representing the task scheduler procedure.}
+\caption{Sequence diagram representing the performance evaluation procedure.}
 \label{fig:schedulersequence}
 \end{figure}
 
@@ -236,8 +242,10 @@ How the module works, what contains, describe the models used for the task-speci
 
 The system model training schematic representation for electricity demand forecasting is presented in figure~\ref{fig:modeltrainingdemand}.
 
+% descrivere specializzazione della parte sopra
+
 \begin{figure}[H]
-\centering 
+\centering
 \includegraphics[width=0.7\textwidth]{images/system_model_training_demand}
 \caption{The system model training schematic representation for electricity demand forecasting.}
 \label{fig:modeltrainingdemand}
@@ -246,7 +254,7 @@ The system model training schematic representation for electricity demand foreca
 The system model forecasting schematic representation for electricity demand forecasting is presented in figure~\ref{fig:modelforecastingdemand}.
 
 \begin{figure}[H]
-\centering 
+\centering
 \includegraphics[width=0.7\textwidth]{images/system_model_forecasting_demand}
 \caption{The system model forecasting schematic representation for electricity demand forecasting.}
 \label{fig:modelforecastingdemand}
@@ -262,7 +270,7 @@ Describe the consumption baseline forecasting module ...
 The system model training schematic representation for consumption baseline forecasting is presented in figure~\ref{fig:modeltrainingbaseline}.
 
 \begin{figure}[H]
-\centering 
+\centering
 \includegraphics[width=0.7\textwidth]{images/system_model_training_baseline}
 \caption{The system model training schematic representation for consumption baseline forecasting.}
 \label{fig:modeltrainingbaseline}
@@ -271,7 +279,7 @@ The system model training schematic representation for consumption baseline fore
 The system model forecasting schematic representation for consumption baseline forecasting is presented in figure~\ref{fig:modelforecastingbaseline}.
 
 \begin{figure}[H]
-\centering 
+\centering
 \includegraphics[width=0.7\textwidth]{images/system_model_forecasting_baseline}
 \caption{The system model forecasting schematic representation for consumption baseline forecasting.}
 \label{fig:modelforecastingbaseline}
@@ -287,7 +295,7 @@ Describe the electricity production forecasting module ...
 The system model training schematic representation for electricity production forecasting is presented in figure~\ref{fig:modeltrainingproduction}.
 
 \begin{figure}[H]
-\centering 
+\centering
 \includegraphics[width=0.7\textwidth]{images/system_model_training_production}
 \caption{The system model training schematic representation for electricity production forecasting.}
 \label{fig:modeltrainingproduction}
@@ -296,7 +304,7 @@ The system model training schematic representation for electricity production fo
 The system model forecasting schematic representation for electricity production forecasting is presented in figure~\ref{fig:modelforecastingproduction}.
 
 \begin{figure}[H]
-\centering 
+\centering
 \includegraphics[width=0.7\textwidth]{images/system_model_forecasting_production}
 \caption{The system model forecasting schematic representation for electricity production forecasting.}
 \label{fig:modelforecastingproduction}
