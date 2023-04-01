@@ -3,8 +3,8 @@
 \vspace{0.4 cm}
 
 In this chapter, the model of the proposed system is presented.
-In the first section, an in-depth presentation of the system architecture is provided.
-The different components of the system with their functionalities and interactions among them are described.
+In the first section, an in-depth presentation of the designed system architecture is provided.
+The different components of the system with their functionalities and interactions are described.
 Lastly, the modules focused on the three use cases of interest are treated more in detail in dedicated sections.
 After this chapter, it will be clear what the main parts of the system are and how they cooperate to accomplish the various use cases of interest.
 
@@ -13,66 +13,63 @@ After this chapter, it will be clear what the main parts of the system are and h
 \label{sec:architecture}
 \vspace{0.2 cm}
 
-% sistema deve fare questo
-
-The use case diagram for the system is presented in figure~\ref{fig:usecase}.
-Users can interact with the system via API.
-A user must be authenticated and have an account with an active subscription.
-Then, he can request the following asynchronous operations:
+The use case diagram for the proposed system is presented in figure~\ref{fig:usecase}.
+Users can interact with the system via dedicated APIs.
+To be authorized, a user must be authenticated and have an account with an active subscription.
+It is also possible to have more users for the same account.
+It is possible to request the following asynchronous operations:
 \begin{itemize}
-  \item Append new data with a create or update logic specifying the type of data, it supports the upload of CSV files;
-  \item Train new models based on available data for a use case specifying the time granularity (hourly or daily);
-  \item Forecast new data for a use case using a specified model or the latest model for a certain time granularity, for a certain starting date and time horizon.
+  \item Load new data with a create or update logic specifying the type of data. It is supported the upload of CSV files;
+  \item Train new models based on available data for a specific use case specifying the time granularity (hourly or daily). The supported specific use cases for the models that will be used in the dedicated forecast requests are electricity demand forecasting, consumption baseline forecasting, and electricity production forecasting;
+  \item Forecast future data for a specific use case using a specified model or the latest model for a certain time granularity, for a certain starting date and time horizon.
 \end{itemize}
 
-In addition, the task scheduler periodically triggers the performance evaluation task for evaluating the performance of the available models and if needed triggering the re-training for having up-to-date models with respect to the user data so that they might perform better on future forecasts.
+In addition, a task scheduler periodically triggers the performance evaluation of the available models and if needed triggers the models re-training for having up-to-date models with respect to the user data so that they might perform better on future forecasts.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.6\textwidth]{images/architecture_use_case}
-\caption{The use case diagram for the system.}
+\caption{The use case diagram for the proposed system.}
 \label{fig:usecase}
 \end{figure}
 
-% per fare questo ho sviluppato questo
-
-The system architecture of the developed system is shown in figure~\ref{fig:components}.
-It contains the following components:
+For achieving the presented use cases the system architecture shown in figure~\ref{fig:components} was designed.
+It is composed of the following components:
 \begin{itemize}
-  \item Authentication layer: manages authentication and permissions of users;
+  \item Authentication layer: manages the authentication process and permissions of users;
   \item API layer: manages the user interactions with the system;
   \item Task manager: coordinates the execution of the tasks;
-  \item Data storage task: parses and stores the loaded data;
-  \item ML model interface: handles interactions with the ML models storage where the trained models are stored;
-  \item Training task: trains new models based on available data;
-  \item Forecasting task: forecasts new data using a specified model or the latest model;
-  \item Task scheduler: manages periodic scheduled tasks;
-  \item Performance evaluation task: evaluates the performance of the available models and if needed triggers the re-training.
+  \item Data loading task: parses and stores the users' loaded data;
+  \item ML model interface: handles the interactions with the ML models storage where the trained ML models are stored;
+  \item Model training task: trains new models based on available data;
+  \item Forecasting task: forecasts future data using a specified model or the latest model;
+  \item Task scheduler: manages the periodic scheduled tasks;
+  \item Performance evaluation task: evaluates the performance of the available models and if needed triggers the models re-training.
 \end{itemize}
 
 The system interacts with the following external components:
 \begin{itemize}
-  \item Users DB: used for storing and retrieving user data (possibly more users for the same account);
-  \item Data DB: used for storing and retrieving the data;
-  \item Weather Data DB: used for retrieving the weather data;
-  \item ML models storage: used for storing and retrieving the trained models;
-  \item Forecasts DB: used for storing and retrieving the computed forecasts.
+  \item Users DB: used to store and retrieve user data, including account data;
+  \item Data DB: used to store and retrieve the users' loaded data;
+  \item Weather Data DB: used to retrieve the weather data;
+  \item ML models storage: used to store and retrieve the trained models;
+  \item Forecasts DB: used to store and retrieve the computed forecasts.
 \end{itemize}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.9\textwidth]{images/architecture_components}
-\caption{The architecture of the proposed system.}
+\caption{The architecture designed for the proposed system.}
 \label{fig:components}
 \end{figure}
 
-Figure~\ref{fig:interactions} shows the interactions among the components of the architecture for achieving the use cases.
-In the specific subsections, the logic for each use case is explained with the relative interactions.
+Figure~\ref{fig:interactions} shows the interactions among the components of the designed architecture for achieving the presented use cases.
+In the following subsections, the logic for each use case is explained with the relative components' interactions.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{images/architecture_interactions}
-\caption{The interactions of the components of the proposed system.}
+\caption{The interactions among the components in the designed architecture.}
 \label{fig:interactions}
 \end{figure}
 
@@ -82,18 +79,26 @@ In the specific subsections, the logic for each use case is explained with the r
 \label{sec:loading}
 \vspace{0.1 cm}
 
-The diagram representing the interactions for achieving the data loading use case is presented in figure~\ref{fig:loadinginteractions}.
-Describe it ...
+The diagram representing the components' interactions for achieving the data loading use case is presented in figure~\ref{fig:loadinginteractions}.
+
+The user sends the data to the system.
+First, the authentication layer verifies the authentication of the user and checks whether it has a subscription to load the data.
+The endpoint dedicated to data loading takes charge of the user request and provides the task manager with the details for creating a data loading task.
+The identifier of the task is then returned to the user, who can request the status of the data loading request and check the result of the operation.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{images/architecture_data_loading_interactions}
-\caption{The interactions of the components for achieving the data loading use case.}
+\caption{The interactions among the components for achieving the data loading use case.}
 \label{fig:loadinginteractions}
 \end{figure}
 
-The diagram representing the data loading flow is presented in figure~\ref{fig:loadingflow}.
-Describe it ...
+The data loading task starts when the task manager schedules it.
+As shown by the diagram in figure~\ref{fig:loadingflow}, the logic inside this task can be formulated in 2 steps: parse the data and store the data.
+The data parser block transforms the user data in a platform-compatible format and passes it to the data storage block which stores the data inside the data DB.
+If there is no model for the specific use case for which data is loaded, the task manager will also create a model training task to train all the available models on this data.
+This allows the system to be ready for the forecast requests on the loaded data.
+The model training task is described more in detail in the next subsection.
 
 \begin{figure}[H]
 \centering
@@ -102,8 +107,7 @@ Describe it ...
 \label{fig:loadingflow}
 \end{figure}
 
-The sequence diagram representing the data loading procedure is presented in figure~\ref{fig:loadingsequence}.
-Describe it ...
+The sequence diagram representing the complete data loading procedure is presented in figure~\ref{fig:loadingsequence}.
 
 \begin{figure}[H]
 \centering
@@ -118,18 +122,25 @@ Describe it ...
 \label{sec:training}
 \vspace{0.1 cm}
 
-The diagram representing the interactions for achieving the model training use case is presented in figure~\ref{fig:traininginteractions}.
-Describe it ...
+The diagram representing the components' interactions for achieving the model training use case is presented in figure~\ref{fig:traininginteractions}.
+
+The user sends the specification of the model to train to the system.
+First, the authentication layer verifies the authentication of the user and checks whether it has a subscription to request the training of a model.
+The endpoint dedicated to model training takes charge of the user request and provides the task manager with the details for creating a model training task.
+The identifier of the task is then returned to the user, who can request the status of the model training request and get the trained model when completed.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{images/architecture_training_interactions}
-\caption{The interactions of the components for achieving the model training use case.}
+\caption{The interactions among the components for achieving the model training use case.}
 \label{fig:traininginteractions}
 \end{figure}
 
-The diagram representing the model training flow is presented in figure~\ref{fig:trainingflow}.
-Describe it ...
+The model training task starts when the task manager schedules it.
+As shown by the diagram in figure~\ref{fig:trainingflow}, the logic inside this task can be formulated in 2 steps: preprocess the data and train the model.
+The data preprocessing block collects the data for the specific use case for which the model will be trained, aggregates it correctly, cleans it, and enriches it with weather data.
+The models training module takes the preprocessed data and trains the models with the provided specifications.
+The resulting model is then passed to the ML models interface which stores it inside the ML models storage.
 
 \begin{figure}[H]
 \centering
@@ -138,8 +149,7 @@ Describe it ...
 \label{fig:trainingflow}
 \end{figure}
 
-The sequence diagram representing the model training procedure is presented in figure~\ref{fig:trainingsequence}.
-Describe it ...
+The sequence diagram representing the complete model training procedure is presented in figure~\ref{fig:trainingsequence}.
 
 \begin{figure}[H]
 \centering
@@ -154,28 +164,34 @@ Describe it ...
 \label{sec:forecasting}
 \vspace{0.1 cm}
 
-The diagram representing the interactions for achieving the forecasting use case is presented in figure~\ref{fig:forecastinginteractions}.
-Describe it ...
+The diagram representing the components' interactions for achieving the forecasting for a specific use case is presented in figure~\ref{fig:forecastinginteractions}.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{images/architecture_forecasting_interactions}
-\caption{The interactions of the components for achieving the forecasting use case.}
+\caption{The interactions among the components for achieving the forecasting for a specific use case.}
 \label{fig:forecastinginteractions}
 \end{figure}
 
-The diagram representing the forecast flow is presented in figure~\ref{fig:forecastflow}.
-Describe it ...
+The user sends the specification for computing forecasts for a specific use case to the system.
+First, the authentication layer verifies the authentication of the user and checks whether it has a subscription to request the forecasts for a specific use case.
+The endpoint dedicated to forecasting takes charge of the user request and provides the task manager with the details for creating a forecasting task.
+The identifier of the task is then returned to the user, who can request the status of the forecasting request and get the computed forecasts when completed.
+
+The forecasting task starts when the task manager schedules it.
+As shown by the diagram in figure~\ref{fig:forecastflow}, the logic inside this task can be formulated in 2 steps: preprocess the data and forecast future data.
+The data preprocessing block collects the needed data for the specific use case for which the forecasts will be made, aggregates it correctly, cleans it, and enriches it with weather data. In addition to past weather data also weather forecasts are collected to help produce more accurate future data.
+The prediction module takes the preprocessed data and computes the forecasts.
+The computed forecasts are then stored in the forecasts DB.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.6\textwidth]{images/architecture_forecasting_flow}
-\caption{Diagram representing the forecast flow.}
+\caption{Diagram representing the forecasting flow.}
 \label{fig:forecastflow}
 \end{figure}
 
-The sequence diagram representing the forecasting procedure is presented in figure~\ref{fig:forecastingsequence}.
-Describe it ...
+The sequence diagram representing the complete forecasting procedure for a specific use case is presented in figure~\ref{fig:forecastingsequence}.
 
 \begin{figure}[H]
 \centering
@@ -190,15 +206,13 @@ Describe it ...
 \label{sec:scheduler}
 \vspace{0.1 cm}
 
-% adapt things to new title
-
-The diagram representing the interactions for achieving the performance evaluation use case is presented in figure~\ref{fig:schedulerinteractions}.
+The diagram representing the components' interactions for achieving the performance evaluation use case is presented in figure~\ref{fig:schedulerinteractions}.
 Describe it ...
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{images/architecture_scheduler_interactions}
-\caption{The interactions of the components for achieving the performance evaluation use case.}
+\caption{The interactions among the components for achieving the performance evaluation use case.}
 \label{fig:schedulerinteractions}
 \end{figure}
 
@@ -229,7 +243,7 @@ Describe it ...
 
 Describe the system's common components between the various tasks ...
 
-Describe Data Parser/Preprocessing, Enrichment, Model Training Procedure, Prediction, ...
+Describe Data Parser, Data Preprocessing and Enrichment, Model Training, Prediction, Performance evaluation, ...
 
 
 \section{Electricity demand forecasting module}
@@ -242,7 +256,7 @@ How the module works, what contains, describe the models used for the task-speci
 
 The system model training schematic representation for electricity demand forecasting is presented in figure~\ref{fig:modeltrainingdemand}.
 
-% descrivere specializzazione della parte sopra
+% TODO descrivere specializzazione della parte sopra
 
 \begin{figure}[H]
 \centering
