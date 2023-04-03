@@ -239,19 +239,35 @@ The sequence diagram representing the complete performance evaluation procedure 
 \end{figure}
 
 
+% TODO this section makes sense?
+
 \section{System's common components}
 \label{sec:components}
 \vspace{0.2 cm}
 
-Describe the system's common components between the various specific use cases:
+% TODO in case the following modules should be described in detail?
+
+Describe in detail the system's common components between the various specific use cases:
 \begin{itemize}
-  \item Data parser: ... ;
-  \item Data storage: ... ;
-  \item Data preprocessing: (with also the data enrichment) ... ;
-  \item Models training module: ... ;
-  \item Prediction module: ... ;
-  \item Performance evaluation module: ... .
+  \item Authentication layer: manages the authentication process and permissions of users ... ;
+  \item API layer: manages the user interactions with the system ... ;
+  \item Task manager: coordinates the execution of the tasks ... ;
+  \item Data loading task: parses and stores the users' loaded data ... ;
+  \item ML model interface: handles the interactions with the ML models storage where the trained ML models are stored ... ;
+  \item Task scheduler: manages the periodic scheduled tasks ... ;
+  \item Performance evaluation task: evaluates the performance of the available models and if needed triggers the models re-training ... .
 \end{itemize}
+
+% TODO or these components?
+
+% \begin{itemize}
+%   \item Data parser: ... ;
+%   \item Data storage: ... ;
+%   \item Data preprocessing: (with also the data enrichment) ... ;
+%   \item Models training module: ... ;
+%   \item Prediction module: ... ;
+%   \item Performance evaluation module: ... .
+% \end{itemize}
 
 
 \section{Electricity demand forecasting module}
@@ -260,11 +276,12 @@ Describe the system's common components between the various specific use cases:
 
 Describe the electricity demand forecasting module ...
 
-How the module works, what contains, describe the models used for the task-specific and then report also in the sections below if they are common, ...
+How the module works, what contains, describe the models used for the specific use case (and then report also in the sections below if they are common), ...
+
+% TODO describe specialization of what written in the architecture section
 
 The system model training schematic representation for electricity demand forecasting is presented in figure~\ref{fig:modeltrainingdemand}.
-
-% TODO descrivere specializzazione della parte sopra
+Describe in detail …
 
 \begin{figure}[H]
 \centering
@@ -274,6 +291,7 @@ The system model training schematic representation for electricity demand foreca
 \end{figure}
 
 The system model forecasting schematic representation for electricity demand forecasting is presented in figure~\ref{fig:modelforecastingdemand}.
+Describe in detail …
 
 \begin{figure}[H]
 \centering
@@ -290,6 +308,7 @@ The system model forecasting schematic representation for electricity demand for
 Describe the consumption baseline forecasting module ...
 
 The system model training schematic representation for consumption baseline forecasting is presented in figure~\ref{fig:modeltrainingbaseline}.
+Describe in detail …
 
 \begin{figure}[H]
 \centering
@@ -299,6 +318,7 @@ The system model training schematic representation for consumption baseline fore
 \end{figure}
 
 The system model forecasting schematic representation for consumption baseline forecasting is presented in figure~\ref{fig:modelforecastingbaseline}.
+Describe in detail …
 
 \begin{figure}[H]
 \centering
@@ -315,6 +335,7 @@ The system model forecasting schematic representation for consumption baseline f
 Describe the electricity production forecasting module ...
 
 The system model training schematic representation for electricity production forecasting is presented in figure~\ref{fig:modeltrainingproduction}.
+Describe in detail …
 
 \begin{figure}[H]
 \centering
@@ -324,6 +345,7 @@ The system model training schematic representation for electricity production fo
 \end{figure}
 
 The system model forecasting schematic representation for electricity production forecasting is presented in figure~\ref{fig:modelforecastingproduction}.
+Describe in detail …
 
 \begin{figure}[H]
 \centering
