@@ -16,10 +16,9 @@ After this chapter, it will be clear what the main parts of the system are and h
 The use case diagram for the proposed system is presented in figure~\ref{fig:usecase}.
 Users can interact with the system via dedicated APIs.
 To be authorized, a user must be authenticated and have an account with an active subscription.
-It is also possible to have more users for the same account.
-It is possible to request the following asynchronous operations:
+Users can request the following asynchronous operations:
 \begin{itemize}
-  \item Load new data with a create or update logic specifying the type of data. It is supported the upload of CSV files;
+  \item Load new data with a create or update logic specifying the type of data;
   \item Train new models based on available data for a specific use case specifying the time granularity (hourly or daily). The supported specific use cases for the models that will be used in the dedicated forecast requests are electricity demand forecasting, consumption baseline forecasting, and electricity production forecasting;
   \item Forecast future data for a specific use case using a specified model for a certain time granularity, for a certain starting date and time horizon.
 \end{itemize}
@@ -36,7 +35,7 @@ In addition, a task scheduler periodically triggers the performance evaluation o
 For achieving the presented use cases the system architecture shown in figure~\ref{fig:components} was designed.
 It is composed of the following components:
 \begin{itemize}
-  \item Authentication layer: manages the authentication process and permissions of users;
+  \item Authentication layer: manages the authentication process and verifies user permissions;
   \item API layer: manages the user interactions with the system;
   \item Task manager: coordinates the execution of the tasks;
   \item Data loading task: parses and stores the users' loaded data;
@@ -81,11 +80,6 @@ In the following subsections, the logic for each use case is explained with the 
 
 The diagram representing the components' interactions for achieving the data loading use case is presented in figure~\ref{fig:loadinginteractions}.
 
-The user sends the data to the system.
-First, the authentication layer verifies the authentication of the user and checks whether it has a subscription to load the data.
-The endpoint dedicated to data loading takes charge of the user request and provides the task manager with the details for creating a data loading task.
-The identifier of the task is then returned to the user, who can request the status of the data loading request and check the result of the operation when completed.
-
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{images/architecture_data_loading_interactions}
@@ -93,12 +87,17 @@ The identifier of the task is then returned to the user, who can request the sta
 \label{fig:loadinginteractions}
 \end{figure}
 
+The user sends the data to the system, for example uploading CSV files.
+First, the authentication layer verifies the authentication of the user and checks whether it has a subscription to load the data.
+The endpoint dedicated to data loading takes charge of the user request and provides the task manager with the details for creating a data loading task.
+The identifier of the task is then returned to the user, who can request the status of the data loading request and check the result of the operation when completed.
+
 The data loading task starts when the task manager schedules it.
 As shown by the diagram in figure~\ref{fig:loadingflow}, the logic inside this task can be formulated in 2 steps: parse the data and store the data.
-The data parser block transforms the user data in a platform-compatible format and passes it to the data storage block which stores the data inside the data DB.
+The data parser block transforms the user data in a system-compatible format and passes it to the data storage block which stores the data inside the data DB.
 If there is no model for the specific use case for which data is loaded, the task manager will also create a model training task to train all the available models on this data.
 This allows the system to be ready for the forecast requests on the loaded data.
-The model training task is described more in detail in subsection\ref{sec:training}.
+The model training task is described more in detail in subsection~\ref{sec:training}.
 
 \begin{figure}[H]
 \centering
@@ -137,8 +136,8 @@ The identifier of the task is then returned to the user, who can request the sta
 \end{figure}
 
 The model training task starts when the task manager schedules it.
-As shown by the diagram in figure~\ref{fig:trainingflow}, the logic inside this task can be formulated in 2 steps: preprocess the data and train the model.
-The data preprocessing block collects the data for the specific use case for which the model will be trained, aggregates it correctly, cleans it, and enriches it with weather data.
+As shown by the diagram in figure~\ref{fig:trainingflow}, the logic inside this task can be formulated in 2 steps: preprocess the available data and train the model.
+The data preprocessing block collects the available data for the specific use case for which the model will be trained, aggregates it correctly, cleans it, and enriches it with weather data.
 The models training module takes the preprocessed data and trains the model with the provided specifications.
 The resulting model is then passed to the ML models interface which stores it inside the ML models storage.
 
@@ -179,8 +178,8 @@ The endpoint dedicated to forecasting takes charge of the user request and provi
 The identifier of the task is then returned to the user, who can request the status of the forecasting request and get the computed forecasts when completed.
 
 The forecasting task starts when the task manager schedules it.
-As shown by the diagram in figure~\ref{fig:forecastflow}, the logic inside this task can be formulated in 2 steps: preprocess the data and forecast future data.
-The data preprocessing block collects the needed data for the specific use case for which the forecasts will be made, aggregates it correctly, cleans it, and enriches it with weather data. In addition to past weather data also weather forecasts are collected to help produce more accurate future data.
+As shown by the diagram in figure~\ref{fig:forecastflow}, the logic inside this task can be formulated in 2 steps: preprocess the needed data by the model and forecast future data.
+The data preprocessing block collects the needed data by the model for the specific use case for which the forecasts will be made, aggregates it correctly, cleans it, and enriches it with weather data. In addition to past weather data also weather forecasts are collected to help produce more accurate future data.
 The prediction module takes the preprocessed data, requests the specified model, and computes the forecasts.
 The computed forecasts are then stored in the forecasts DB.
 
@@ -213,7 +212,7 @@ As shown by the diagram in figure~\ref{fig:schedulerflow}, the logic inside the 
 The data preprocessing block collects the data for the specific use case for which the model will be trained, aggregates it correctly, cleans it, and enriches it with weather data.
 The performance evaluation module takes the preprocessed data and evaluates the performance of the last available models.
 When performance drops significantly, it triggers the models re-training by creating a model training task for having up-to-date models with respect to the user data so that they might perform better on future forecasts.
-The model training task is described more in detail in subsection\ref{sec:training}.
+The model training task is described more in detail in subsection~\ref{sec:training}.
 
 \begin{figure}[H]
 \centering
@@ -239,35 +238,55 @@ The sequence diagram representing the complete performance evaluation procedure 
 \end{figure}
 
 
-% TODO this section makes sense?
-
 \section{System's common components}
 \label{sec:components}
 \vspace{0.2 cm}
 
-% TODO in case the following modules should be described in detail?
+In this section, the system's common components across the various specific use cases are described in detail.
 
-Describe in detail the system's common components between the various specific use cases:
+The authentication layer manages the user authentication process.
+In particular, for accessing the system the user needs to be authenticated.
+When users interact with the system via dedicated APIs, to be authorized they must provide one valid token and have an account with an active subscription.
+It is also possible to have more users associated with the same account.
+
+The API layer manages the user interactions with the system.
+Many endpoints are available for managing the users' possible operations, such as data loading, model training, and forecasting requests.
+Data loading management endpoints consist of requesting the loading of new data and checking the status of the data loading operations.
+Model training management endpoints consist of requesting the training of new models and checking the status of the model training operations.
+Forecasting requests management endpoints consist of requesting the forecasts of future data and checking the status of the forecasting requests operations.
+
+The task manager coordinates the execution of the different tasks requested by the users.
+Where the possible tasks, as described in the previous section, are the following:
 \begin{itemize}
-  \item Authentication layer: manages the authentication process and permissions of users ... ;
-  \item API layer: manages the user interactions with the system ... ;
-  \item Task manager: coordinates the execution of the tasks ... ;
-  \item Data loading task: parses and stores the users' loaded data ... ;
-  \item ML model interface: handles the interactions with the ML models storage where the trained ML models are stored ... ;
-  \item Task scheduler: manages the periodic scheduled tasks ... ;
-  \item Performance evaluation task: evaluates the performance of the available models and if needed triggers the models re-training ... .
+  \item Data loading task, which parses and stores the users' loaded data on the basis of the type of data;
+  \item Model training task, which trains new models based on available data. The specialization of this task for the specific use cases is described in the dedicated sections;
+  \item Forecasting task, which forecasts future data using a specified model. The specialization of this task for the specific use cases is described in the dedicated sections;
 \end{itemize}
 
-% TODO or these components?
+For data loading task:
+\begin{itemize}
+  \item Data parser: ... ;
+  \item Data storage: ... .
+\end{itemize}
 
-% \begin{itemize}
-%   \item Data parser: ... ;
-%   \item Data storage: ... ;
-%   \item Data preprocessing: (with also the data enrichment) ... ;
-%   \item Models training module: ... ;
-%   \item Prediction module: ... ;
-%   \item Performance evaluation module: ... .
-% \end{itemize}
+Describe the system's common components blocks across the various specific use cases:
+\begin{itemize}
+  \item Data preprocessing: (with also the data enrichment) ... ;
+  \item Models training module: ... . Described more in detail in the specific use cases sections;
+  \item Prediction module: ... . Described more in detail in the specific use cases sections.
+\end{itemize}
+
+The ML model interface handles the interactions with the ML models storage where the trained ML models are stored.
+In particular, this component provides the functionalities to store and retrieve models in the ML models storage,
+This component allows the system to support lots of models for each account and new ones can be added over time.
+A versioning mechanism is also handled in the model storage.
+This component allows the system to provide users with the latest available models and choose the best-performing ones.
+
+The task scheduler manages the periodic scheduled tasks.
+In particular, as described in the previous section, it is present just the performance evaluation task, which evaluates the performance of the available models and if needed triggers the models re-training.
+\begin{itemize}
+  \item Performance evaluation module: ... .
+\end{itemize}
 
 
 \section{Electricity demand forecasting module}
@@ -278,7 +297,7 @@ Describe the electricity demand forecasting module ...
 
 How the module works, what contains, describe the models used for the specific use case (and then report also in the sections below if they are common), ...
 
-% TODO describe specialization of what written in the architecture section
+% TODO: describe the specialization of what is written in the architecture section
 
 The system model training schematic representation for electricity demand forecasting is presented in figure~\ref{fig:modeltrainingdemand}.
 Describe in detail …
