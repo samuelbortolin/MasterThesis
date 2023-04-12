@@ -260,20 +260,20 @@ Where the possible tasks, as described in the previous section, are the followin
 \begin{itemize}
   \item Data loading task, which parses and stores the users' loaded data on the basis of the type of data;
   \item Model training task, which trains new models based on available data. The specialization of this task for the specific use cases is described in the dedicated sections;
-  \item Forecasting task, which forecasts future data using a specified model. The specialization of this task for the specific use cases is described in the dedicated sections;
+  \item Forecasting task, which forecasts future data using a specified model. The specialization of this task for the specific use cases is described in the dedicated sections.
 \end{itemize}
 
-For data loading task:
+For the data loading task, the main blocks are:
 \begin{itemize}
-  \item Data parser: ... ;
-  \item Data storage: ... .
+  \item Data parser, which transforms the input user data in a system-compatible format, the expected information in data depends on the specific use case for which data is loaded;
+  \item Data storage, which stores the parsed data inside the data DB with a create or update logic specifying the type of data.
 \end{itemize}
 
-Describe the system's common components blocks across the various specific use cases:
+The base blocks across the various specific use cases that are then described more in detail in the following sections are the following:
 \begin{itemize}
-  \item Data preprocessing: (with also the data enrichment) ... ;
-  \item Models training module: ... . Described more in detail in the specific use cases sections;
-  \item Prediction module: ... . Described more in detail in the specific use cases sections.
+  \item Data preprocessing, which retrieves the needed data from the data DB, aggregates it correctly, cleans it by filling the gaps by interpolation, and enriches it using the weather information retrieved from the weather DB. For future data forecasts in addition to past weather data also weather forecasts are collected;
+  \item Models training module, which takes the preprocessed data and trains the specified model with the provided specifications;
+  \item Prediction module, which takes the preprocessed data, requests the specified model, and computes the forecasts.
 \end{itemize}
 
 The ML model interface handles the interactions with the ML models storage where the trained ML models are stored.
@@ -284,9 +284,7 @@ This component allows the system to provide users with the latest available mode
 
 The task scheduler manages the periodic scheduled tasks.
 In particular, as described in the previous section, it is present just the performance evaluation task, which evaluates the performance of the available models and if needed triggers the models re-training.
-\begin{itemize}
-  \item Performance evaluation module: ... .
-\end{itemize}
+The main block of this task is the performance evaluation module, which takes the preprocessed data and evaluates the performance of the last available models using specific use case error metrics such as mean absolute percentage error (MAPE) and mean absolute error (MAE).
 
 
 \section{Electricity demand forecasting module}
