@@ -271,7 +271,7 @@ For the data loading task, the main blocks are:
 
 The base blocks across the various specific use cases that are then described more in detail in the following sections are the following:
 \begin{itemize}
-  \item Data preprocessing, which retrieves the needed data from the data DB, aggregates it correctly, cleans it by filling the gaps by interpolation, and enriches it using the weather information retrieved from the weather DB. For future data forecasts in addition to past weather data also weather forecasts are collected;
+  \item Data preprocessing, which retrieves the needed data from the data DB, aggregates it correctly, cleans it by filling the gaps by linear interpolation, and enriches it using the weather information retrieved from the weather DB. For future data forecasts in addition to past weather data also weather forecasts are collected;
   \item Models training module, which takes the preprocessed data and trains the specified model with the provided specifications;
   \item Prediction module, which takes the preprocessed data, requests the specified model, and computes the forecasts.
 \end{itemize}
@@ -296,6 +296,16 @@ Describe the electricity demand forecasting module ...
 How the module works, what contains, describe the models used for the specific use case (and then report also in the sections below if they are common), ...
 
 % TODO: describe the specialization of what is written in the architecture section
+
+The UML data class for electricity demand forecasting is presented in figure~\ref{fig:umldemand}.
+Describe in detail …
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.2\textwidth]{images/demand_prediction_uml}
+\caption{The UML data class for electricity demand forecasting.}
+\label{fig:umldemand}
+\end{figure}
 
 The system model training schematic representation for electricity demand forecasting is presented in figure~\ref{fig:modeltrainingdemand}.
 Describe in detail …
@@ -324,6 +334,16 @@ Describe in detail …
 
 Describe the consumption baseline forecasting module ...
 
+The UML data class for consumption baseline forecasting is presented in figure~\ref{fig:umlbaseline}.
+Describe in detail …
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.2\textwidth]{images/baseline_uml}
+\caption{The UML data class for consumption baseline forecasting.}
+\label{fig:umlbaseline}
+\end{figure}
+
 The system model training schematic representation for consumption baseline forecasting is presented in figure~\ref{fig:modeltrainingbaseline}.
 Describe in detail …
 
@@ -350,6 +370,26 @@ Describe in detail …
 \vspace{0.2 cm}
 
 Describe the electricity production forecasting module ...
+
+The UML data class for a single plant for electricity production forecasting is presented in figure~\ref{fig:umlsingleplant}.
+While the UML data class for the aggregated data over plants is presented in figure~\ref{fig:umlproduction}.
+Describe in detail …
+
+\begin{figure}[H]
+\begin{minipage}[b]{8.5cm}
+\centering
+\includegraphics[width=0.4\textwidth]{images/single_plant_uml}
+\caption{The UML data class for a single plant for electricity production forecasting.}
+\label{fig:umlsingleplant}
+\end{minipage}
+\ \hspace{2mm} \
+\begin{minipage}[b]{8.5cm}
+\centering
+\includegraphics[width=0.4\textwidth]{images/production_prediction_uml}
+\caption{The UML data class for the aggregated data over plants for electricity production forecasting.}
+\label{fig:umlproduction}
+\end{minipage}
+\end{figure}
 
 The system model training schematic representation for electricity production forecasting is presented in figure~\ref{fig:modeltrainingproduction}.
 Describe in detail …
