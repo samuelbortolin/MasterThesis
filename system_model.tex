@@ -271,7 +271,7 @@ For the data loading task, the main blocks are:
 
 The base blocks across the various specific use cases that are then described more in detail in the following sections are the following:
 \begin{itemize}
-  \item Data preprocessing, which retrieves the needed data from the data DB, aggregates it correctly, cleans it by filling the gaps by linear interpolation, and enriches it using the weather information retrieved from the weather DB. For future data forecasts in addition to past weather data also weather forecasts are collected;
+  \item Data preprocessing, which retrieves the needed data from the data DB, aggregates it correctly, cleans it by filling the gaps by using a linear interpolation, and enriches it using the weather information retrieved from the weather DB. For future data forecasts in addition to past weather data also weather forecasts are collected;
   \item Models training module, which takes the preprocessed data and trains the specified model with the provided specifications;
   \item Prediction module, which takes the preprocessed data, requests the specified model, and computes the forecasts.
 \end{itemize}
@@ -291,24 +291,25 @@ The main block of this task is the performance evaluation module, which takes th
 \label{sec:demandmodel}
 \vspace{0.2 cm}
 
-Describe the electricity demand forecasting module ...
+In this section, the electricity demand forecasting module is described.
 
-How the module works, what contains, describe the models used for the specific use case (and then report also in the sections below if they are common), ...
-
-% TODO: describe the specialization of what is written in the architecture section
+The module handles the specialization of data models, training, and forecasts for the electricity demand forecasting use case.
 
 The UML data class for electricity demand forecasting is presented in figure~\ref{fig:umldemand}.
-Describe in detail …
+The considered attributes are the following: the date time of the detection, the active incoming to the clients, and the number of clients.
+The basic data are enhanced with the following weather information: air temperature, apparent temperature, and relative humidity.
+The active incoming for a single customer is calculated by the division of the total active incoming by the number of clients.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.2\textwidth]{images/demand_prediction_uml}
+\includegraphics[width=0.20\textwidth]{images/demand_prediction_uml}
 \caption{The UML data class for electricity demand forecasting.}
 \label{fig:umldemand}
 \end{figure}
 
 The system model training schematic representation for electricity demand forecasting is presented in figure~\ref{fig:modeltrainingdemand}.
-Describe in detail …
+The data preprocessing module takes in input the historical aggregated consumption data and the historical weather data and prepares the data for the training.
+The models training module based on the prepared data trains the set of available models: ARIMA, hist gradient boosting regressor, extreme gradient boosting regressor, prophet, LSTM, GRU, CNN, and TFT.
 
 \begin{figure}[H]
 \centering
@@ -318,7 +319,8 @@ Describe in detail …
 \end{figure}
 
 The system model forecasting schematic representation for electricity demand forecasting is presented in figure~\ref{fig:modelforecastingdemand}.
-Describe in detail …
+The data preprocessing module takes in input the forecast specifications, the historical aggregated consumption data, the historical weather data, and the weather forecasts and prepares the data for the forecasting.
+The prediction module based on the prepared data computes the forecasts based on the trained available models.
 
 \begin{figure}[H]
 \centering
@@ -339,7 +341,7 @@ Describe in detail …
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.2\textwidth]{images/baseline_uml}
+\includegraphics[width=0.20\textwidth]{images/baseline_uml}
 \caption{The UML data class for consumption baseline forecasting.}
 \label{fig:umlbaseline}
 \end{figure}
@@ -378,17 +380,18 @@ Describe in detail …
 \begin{figure}[H]
 \begin{minipage}[b]{8.5cm}
 \centering
-\includegraphics[width=0.4\textwidth]{images/single_plant_uml}
-\caption{The UML data class for a single plant for electricity production forecasting.}
+\includegraphics[width=0.45\textwidth]{images/single_plant_uml}
+\subcaption{}
 \label{fig:umlsingleplant}
 \end{minipage}
 \ \hspace{2mm} \
 \begin{minipage}[b]{8.5cm}
 \centering
-\includegraphics[width=0.4\textwidth]{images/production_prediction_uml}
-\caption{The UML data class for the aggregated data over plants for electricity production forecasting.}
+\includegraphics[width=0.45\textwidth]{images/production_prediction_uml}
+\subcaption{}
 \label{fig:umlproduction}
 \end{minipage}
+\caption{(a) The UML data class for a single plant data and (b) the UML data class for the aggregated data over plants for electricity production forecasting.}
 \end{figure}
 
 The system model training schematic representation for electricity production forecasting is presented in figure~\ref{fig:modeltrainingproduction}.
