@@ -211,6 +211,7 @@ The task scheduler periodically creates and triggers a performance evaluation ta
 As shown by the diagram in figure~\ref{fig:schedulerflow}, the logic inside the performance evaluation task can be formulated in 2 steps: preprocess the data and evaluate the performance.
 The data preprocessing block collects the data for the specific use case for which the model will be trained, aggregates it correctly, cleans it, and enriches it with weather data.
 The performance evaluation module takes the preprocessed data and evaluates the performance of the last available models.
+The performance evaluation procedure with the obtained results is described in chapter~\ref{cha:evaluation}.
 When performance drops significantly, it triggers the models re-training by creating a model training task for having up-to-date models with respect to the user data so that they might perform better on future forecasts.
 The model training task is described more in detail in subsection~\ref{sec:training}.
 
@@ -292,13 +293,12 @@ The main block of this task is the performance evaluation module, which takes th
 \vspace{0.2 cm}
 
 In this section, the electricity demand forecasting module is described.
-
 The module handles the specialization of data models, training, and forecasts for the electricity demand forecasting use case.
 
-The UML data class for electricity demand forecasting is presented in figure~\ref{fig:umldemand}.
-The considered attributes are the following: the date time of the detection, the active incoming to the clients, and the number of clients.
-The basic data are enhanced with the following weather information: air temperature, apparent temperature, and relative humidity.
-The active incoming for a single customer is calculated by the division of the total active incoming by the number of clients.
+The UML (Unified Modeling Language) data class for electricity demand forecasting is represented in figure~\ref{fig:umldemand}.
+The considered attributes are the following: the date and time of the detection, the active incoming to the clients in the past hour, and the number of clients.
+The basic data are enhanced with the following weather information, the reported value is the average of the value in the last hour: air temperature, apparent temperature, and relative humidity.
+The mean active incoming for a single customer is calculated as the division of the total active incoming by the number of clients.
 
 \begin{figure}[H]
 \centering
@@ -307,25 +307,28 @@ The active incoming for a single customer is calculated by the division of the t
 \label{fig:umldemand}
 \end{figure}
 
-The system model training schematic representation for electricity demand forecasting is presented in figure~\ref{fig:modeltrainingdemand}.
-The data preprocessing module takes in input the historical aggregated consumption data and the historical weather data and prepares the data for the training.
-The models training module based on the prepared data trains the set of available models: ARIMA, hist gradient boosting regressor, extreme gradient boosting regressor, prophet, LSTM, GRU, CNN, TFT, and AutoML.
+The schematic representation of the model training procedure for electricity demand forecasting is presented in figure~\ref{fig:modeltrainingdemand}.
+It consists of 2 modules: the data preprocessing module and the models training module.
+The data preprocessing module takes historical aggregated consumption data and historical weather data as input and prepares the data for the model training.
+The models training module based on the prepared data trains the set of available models for electricity demand forecasting: ARIMA, hist gradient boosting regressor, extreme gradient boosting regressor, prophet, LSTM, GRU, CNN, TFT, and the combination of different techniques which is also tested.
+Some baseline approaches which consider repeating past days and weeks, and an AutoML approach are also considered as comparisons.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.7\textwidth]{images/system_model_training_demand}
-\caption{The system model training schematic representation for electricity demand forecasting.}
+\caption{The schematic representation of the model training procedure for electricity demand forecasting.}
 \label{fig:modeltrainingdemand}
 \end{figure}
 
-The system model forecasting schematic representation for electricity demand forecasting is presented in figure~\ref{fig:modelforecastingdemand}.
-The data preprocessing module takes in input the forecast specifications, the historical aggregated consumption data, the historical weather data, and the weather forecasts and prepares the data for the forecasting.
-The prediction module based on the prepared data computes the forecasts based on the trained available models.
+The schematic representation of the forecasting procedure for electricity demand forecasting is presented in figure~\ref{fig:modelforecastingdemand}.
+It consists of 2 modules: the data preprocessing module and the prediction module.
+The data preprocessing module takes forecast specifications, historical aggregated consumption data, historical weather data, and weather forecasts as input and prepares the data for the forecasting.
+The prediction module based on the prepared data computes the aggregated demand forecasts for the trained available models.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.7\textwidth]{images/system_model_forecasting_demand}
-\caption{The system model forecasting schematic representation for electricity demand forecasting.}
+\caption{The schematic representation of the forecasting procedure for electricity demand forecasting.}
 \label{fig:modelforecastingdemand}
 \end{figure}
 
@@ -334,10 +337,13 @@ The prediction module based on the prepared data computes the forecasts based on
 \label{sec:baselinemodel}
 \vspace{0.2 cm}
 
-Describe the consumption baseline forecasting module ...
+In this section, the consumption baseline forecasting module is described.
+The module handles the specialization of data models, training, and forecasts for the consumption baseline forecasting use case.
 
-The UML data class for consumption baseline forecasting is presented in figure~\ref{fig:umlbaseline}.
-Describe in detail …
+The UML data class for consumption baseline forecasting is represented in figure~\ref{fig:umlbaseline}.
+The considered attributes are the following: the date and time of the detection, the CUPS code (Universal Supply Point Code) which identifies the client, and the active incoming to the client in hte past hour.
+In the case of other client information, this might be used to try to improve the performance of the models.
+The basic data are enhanced with the following weather information, the reported value is the average of the value in the last hour: air temperature, apparent temperature, and relative humidity.
 
 \begin{figure}[H]
 \centering
@@ -346,23 +352,28 @@ Describe in detail …
 \label{fig:umlbaseline}
 \end{figure}
 
-The system model training schematic representation for consumption baseline forecasting is presented in figure~\ref{fig:modeltrainingbaseline}.
-Describe in detail …
+The schematic representation of the model training procedure for consumption baseline forecasting is presented in figure~\ref{fig:modeltrainingbaseline}.
+It consists of 2 modules: the data preprocessing module and the models training module.
+The data preprocessing module takes historical single customer consumption data and historical weather data as input and prepares the data for the model training.
+The models training module based on the prepared data trains the set of available models for consumption baseline forecasting: ARIMA, hist gradient boosting regressor, extreme gradient boosting regressor, prophet, LSTM, GRU, CNN, TFT, and the combination of different techniques which is also tested.
+Some baseline approaches which consider repeating past days and weeks, and an AutoML approach are also considered as comparisons.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.7\textwidth]{images/system_model_training_baseline}
-\caption{The system model training schematic representation for consumption baseline forecasting.}
+\caption{The schematic representation of the model training procedure for consumption baseline forecasting.}
 \label{fig:modeltrainingbaseline}
 \end{figure}
 
-The system model forecasting schematic representation for consumption baseline forecasting is presented in figure~\ref{fig:modelforecastingbaseline}.
-Describe in detail …
+The schematic representation of the forecasting procedure for consumption baseline forecasting is presented in figure~\ref{fig:modelforecastingbaseline}.
+It consists of 2 modules: the data preprocessing module and the prediction module.
+The data preprocessing module takes forecast specifications, historical single customer consumption data, historical weather data, and weather forecasts as input and prepares the data for the forecasting.
+The prediction module based on the prepared data computes the single customer consumption baseline forecasts for the trained available models.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.7\textwidth]{images/system_model_forecasting_baseline}
-\caption{The system model forecasting schematic representation for consumption baseline forecasting.}
+\caption{The schematic representation of the forecasting procedure for consumption baseline forecasting.}
 \label{fig:modelforecastingbaseline}
 \end{figure}
 
@@ -371,11 +382,19 @@ Describe in detail …
 \label{sec:productionmodel}
 \vspace{0.2 cm}
 
-Describe the electricity production forecasting module ...
+In this section, the electricity production forecasting module is described.
+The module handles the specialization of data models, training, and forecasts for the electricity production forecasting use case.
 
-The UML data class for a single plant for electricity production forecasting is presented in figure~\ref{fig:umlsingleplant}.
-While the UML data class for the aggregated data over plants is presented in figure~\ref{fig:umlproduction}.
-Describe in detail …
+The UML data class for a single PV plant data for electricity production forecasting is represented in figure~\ref{fig:umlsingleplant}.
+The considered attributes are the following: the date and time of the detection, the id of the asset (intended as the PV plant), the power of the PV plant (intended as its maximum theoretical production power per hour), and the produced energy in the past hour by the PV plant.
+The basic data are enhanced with the following weather information, the reported value is the average of the value in the last hour: air temperature, apparent temperature, relative humidity, wind speed, wind direction, pressure altimeter, visibility, sky coverage, diffuse horizontal irradiance, direct normal irradiance, global horizontal irradiance, solar radiation, UV index, solar elevation angle, and solar azimuth angle.
+The percentage of production is calculated by the division of the produced energy by the power of the PV plant.
+
+While the UML data class for the aggregated data over PV plants for electricity production forecasting is represented in figure~\ref{fig:umlproduction}.
+The considered attributes are the following: the date and time of the detection, the number of PV plants, the total power of the PV plants (intended as the sum of the maximum theoretical production power per hour of all PV plants), and the produced energy in the past hour by the PV plants.
+The basic data are enhanced with the following weather information, the reported value is the average of the value in the last hour: air temperature, apparent temperature, relative humidity, wind speed, wind direction, pressure altimeter, visibility, sky coverage, diffuse horizontal irradiance, direct normal irradiance, global horizontal irradiance, solar radiation, UV index, solar elevation angle, and solar azimuth angle.
+The mean produced energy for a single PV plant is calculated as the division of the total produced energy by the number of PV plants.
+The mean percentage of production is calculated as the division of the total produced energy by the total power of the PV plants.
 
 \begin{figure}[H]
 \begin{minipage}[b]{8.5cm}
@@ -391,25 +410,30 @@ Describe in detail …
 \subcaption{}
 \label{fig:umlproduction}
 \end{minipage}
-\caption{(a) The UML data class for a single plant data and (b) the UML data class for the aggregated data over plants for electricity production forecasting.}
+\caption{\subref{fig:umlsingleplant} The UML data class for a single PV plant data and \subref{fig:umlproduction} the UML data class for the aggregated data over PV plants for electricity production forecasting.}
 \end{figure}
 
-The system model training schematic representation for electricity production forecasting is presented in figure~\ref{fig:modeltrainingproduction}.
-Describe in detail …
+The schematic representation of the model training procedure for electricity production forecasting is presented in figure~\ref{fig:modeltrainingproduction}.
+It consists of 2 modules: the data preprocessing module and the models training module.
+The data preprocessing module takes historical PV plants production data and historical weather data as input and prepares the data for the model training.
+The models training module based on the prepared data trains the set of available models for electricity production forecasting: ARIMA, support vector regressor, hist gradient boosting regressor, extreme gradient boosting regressor, prophet, LSTM, GRU, CNN, TFT, and the combination of different techniques which is also tested.
+Some baseline approaches which consider repeating past days and weeks, and an AutoML approach are also considered as comparisons.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.7\textwidth]{images/system_model_training_production}
-\caption{The system model training schematic representation for electricity production forecasting.}
+\caption{The schematic representation of the model training procedure for electricity production forecasting.}
 \label{fig:modeltrainingproduction}
 \end{figure}
 
-The system model forecasting schematic representation for electricity production forecasting is presented in figure~\ref{fig:modelforecastingproduction}.
-Describe in detail …
+The schematic representation of the model training procedure for electricity production forecasting is presented in figure~\ref{fig:modelforecastingproduction}.
+It consists of 2 modules: the data preprocessing module and the prediction module.
+The data preprocessing module takes forecast specifications, historical PV plants production data, historical weather data, and weather forecasts as input and prepares the data for the forecasting.
+The prediction module based on the prepared data computes the aggregated PV plants production forecasts for the trained available models.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.7\textwidth]{images/system_model_forecasting_production}
-\caption{The system model forecasting schematic representation for electricity production forecasting.}
+\caption{The schematic representation of the model training procedure for electricity production forecasting.}
 \label{fig:modelforecastingproduction}
 \end{figure}
