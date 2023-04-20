@@ -39,7 +39,7 @@ It is composed of the following components:
   \item API layer: manages the user interactions with the system;
   \item Task manager: coordinates the execution of the tasks;
   \item Data loading task: parses and stores the users' loaded data;
-  \item ML model interface: handles the interactions with the ML models storage where the trained ML models are stored;
+  \item ML models interface: handles the interactions with the ML models storage where the trained ML models are stored;
   \item Model training task: trains new models based on available data;
   \item Forecasting task: forecasts future data using a specified model;
   \item Task scheduler: manages the periodic scheduled tasks;
@@ -48,11 +48,11 @@ It is composed of the following components:
 
 The system interacts with the following external components:
 \begin{itemize}
-  \item Users DB: used to store and retrieve user data, including account data;
-  \item Data DB: used to store and retrieve the users' loaded data;
-  \item Weather Data DB: used to retrieve the weather data;
+  \item Users data storage: used to store and retrieve user data, including account data;
+  \item Data storage: used to store and retrieve the users' loaded data;
+  \item Weather data storage: used to retrieve the weather data;
   \item ML models storage: used to store and retrieve the trained models;
-  \item Forecasts DB: used to store and retrieve the computed forecasts.
+  \item Forecasts storage: used to store and retrieve the computed forecasts.
 \end{itemize}
 
 \begin{figure}[H]
@@ -94,7 +94,7 @@ The identifier of the task is then returned to the user, who can request the sta
 
 The data loading task starts when the task manager schedules it.
 As shown by the diagram in figure~\ref{fig:loadingflow}, the logic inside this task can be formulated in 2 steps: parse the data and store the data.
-The data parser block transforms the user data in a system-compatible format and passes it to the data storage block which stores the data inside the data DB.
+The data parser block transforms the user data in a system-compatible format and passes it to the data storage block which stores the data inside the data storage.
 If there is no model for the specific use case for which data is loaded, the task manager will also create a model training task to train all the available models on this data.
 This allows the system to be ready for the forecast requests on the loaded data.
 The model training task is described more in detail in subsection~\ref{sec:training}.
@@ -181,7 +181,7 @@ The forecasting task starts when the task manager schedules it.
 As shown by the diagram in figure~\ref{fig:forecastflow}, the logic inside this task can be formulated in 2 steps: preprocess the needed data by the model and forecast future data.
 The data preprocessing block collects the needed data by the model for the specific use case for which the forecasts will be made, aggregates it correctly, cleans it, and enriches it with weather data. In addition to past weather data also weather forecasts are collected to help produce more accurate future data.
 The prediction module takes the preprocessed data, requests the specified model, and computes the forecasts.
-The computed forecasts are then stored in the forecasts DB.
+The computed forecasts are then stored in the forecasts storage.
 
 \begin{figure}[H]
 \centering
@@ -267,12 +267,12 @@ Where the possible tasks, as described in the previous section, are the followin
 For the data loading task, the main blocks are:
 \begin{itemize}
   \item Data parser, which transforms the input user data in a system-compatible format, the expected information in data depends on the specific use case for which data is loaded;
-  \item Data storage, which stores the parsed data inside the data DB with a create or update logic specifying the type of data.
+  \item Data storage, which stores the parsed data inside the data storage with a create or update logic specifying the type of data.
 \end{itemize}
 
 The base blocks across the various specific use cases that are then described more in detail in the following sections are the following:
 \begin{itemize}
-  \item Data preprocessing, which retrieves the needed data from the data DB, aggregates it correctly, cleans it by filling the gaps by using a linear interpolation, and enriches it using the weather information retrieved from the weather DB. For future data forecasts in addition to past weather data also weather forecasts are collected;
+  \item Data preprocessing, which retrieves the needed data from the data storage, aggregates it correctly, cleans it by filling the gaps by using a linear interpolation, and enriches it using the weather information retrieved from the weather data storage. For future data forecasts in addition to past weather data also weather forecasts are collected;
   \item Models training module, which takes the preprocessed data and trains the specified model with the provided specifications;
   \item Prediction module, which takes the preprocessed data, requests the specified model, and computes the forecasts.
 \end{itemize}
