@@ -297,7 +297,7 @@ The module handles the specialization of data models, training, and forecasts fo
 
 The UML (Unified Modeling Language) data class for electricity demand forecasting is represented in figure~\ref{fig:umldemand}.
 The considered attributes are the following: the date and time of the detection, the active incoming to the clients in the past hour, and the number of clients.
-The basic data are enhanced with the following weather information, the reported value is the average of the value in the last hour: air temperature, apparent temperature, and relative humidity.
+The basic data is enhanced with the following weather information, the reported value is the average of the value in the last hour: air temperature, apparent temperature, and relative humidity.
 The mean active incoming for a single customer is calculated as the division of the total active incoming by the number of clients.
 
 \begin{figure}[H]
@@ -310,7 +310,7 @@ The mean active incoming for a single customer is calculated as the division of 
 The schematic representation of the model training procedure for electricity demand forecasting is presented in figure~\ref{fig:modeltrainingdemand}.
 It consists of 2 modules: the data preprocessing module and the models training module.
 The data preprocessing module takes historical aggregated consumption data and historical weather data as input and prepares the data for the model training.
-The models training module based on the prepared data trains the set of available models for electricity demand forecasting: ARIMA, hist gradient boosting regressor, extreme gradient boosting regressor, prophet, LSTM, GRU, CNN, TFT, and the combination of different techniques which is also tested.
+The models training module based on the prepared data trains the set of available models for electricity demand forecasting: ARIMA, support vector regressor, hist gradient boosting regressor, extreme gradient boosting regressor, prophet, LSTM, GRU, CNN, TFT, and the combination of different techniques which is also tested.
 Some baseline approaches which consider repeating past days and weeks, and an AutoML approach are also considered as comparisons.
 
 \begin{figure}[H]
@@ -343,7 +343,7 @@ The module handles the specialization of data models, training, and forecasts fo
 The UML data class for consumption baseline forecasting is represented in figure~\ref{fig:umlbaseline}.
 The considered attributes are the following: the date and time of the detection, the CUPS code (Universal Supply Point Code) which identifies the client, and the active incoming to the client in hte past hour.
 In the case of other client information, this might be used to try to improve the performance of the models.
-The basic data are enhanced with the following weather information, the reported value is the average of the value in the last hour: air temperature, apparent temperature, and relative humidity.
+The basic data is enhanced with the following weather information, the reported value is the average of the value in the last hour: air temperature, apparent temperature, and relative humidity.
 
 \begin{figure}[H]
 \centering
@@ -355,7 +355,7 @@ The basic data are enhanced with the following weather information, the reported
 The schematic representation of the model training procedure for consumption baseline forecasting is presented in figure~\ref{fig:modeltrainingbaseline}.
 It consists of 2 modules: the data preprocessing module and the models training module.
 The data preprocessing module takes historical single customer consumption data and historical weather data as input and prepares the data for the model training.
-The models training module based on the prepared data trains the set of available models for consumption baseline forecasting: ARIMA, hist gradient boosting regressor, extreme gradient boosting regressor, prophet, LSTM, GRU, CNN, TFT, and the combination of different techniques which is also tested.
+The models training module based on the prepared data trains the set of available models for consumption baseline forecasting: ARIMA, support vector regressor, hist gradient boosting regressor, extreme gradient boosting regressor, prophet, LSTM, GRU, CNN, TFT, and the combination of different techniques which is also tested.
 Some baseline approaches which consider repeating past days and weeks, and an AutoML approach are also considered as comparisons.
 
 \begin{figure}[H]
@@ -387,12 +387,12 @@ The module handles the specialization of data models, training, and forecasts fo
 
 The UML data class for a single PV plant data for electricity production forecasting is represented in figure~\ref{fig:umlsingleplant}.
 The considered attributes are the following: the date and time of the detection, the id of the asset (intended as the PV plant), the power of the PV plant (intended as its maximum theoretical production power per hour), and the produced energy in the past hour by the PV plant.
-The basic data are enhanced with the following weather information, the reported value is the average of the value in the last hour: air temperature, apparent temperature, relative humidity, wind speed, wind direction, pressure altimeter, visibility, sky coverage, diffuse horizontal irradiance, direct normal irradiance, global horizontal irradiance, solar radiation, UV index, solar elevation angle, and solar azimuth angle.
+The basic data is enhanced with the following weather information, the reported value is the average of the value in the last hour: air temperature, apparent temperature, relative humidity, wind speed, wind direction, pressure altimeter, visibility, sky coverage, diffuse horizontal irradiance, direct normal irradiance, global horizontal irradiance, solar radiation, UV index, solar elevation angle, and solar azimuth angle.
 The percentage of production is calculated by the division of the produced energy by the power of the PV plant.
 
 While the UML data class for the aggregated data over PV plants for electricity production forecasting is represented in figure~\ref{fig:umlproduction}.
 The considered attributes are the following: the date and time of the detection, the number of PV plants, the total power of the PV plants (intended as the sum of the maximum theoretical production power per hour of all PV plants), and the produced energy in the past hour by the PV plants.
-The basic data are enhanced with the following weather information, the reported value is the average of the value in the last hour: air temperature, apparent temperature, relative humidity, wind speed, wind direction, pressure altimeter, visibility, sky coverage, diffuse horizontal irradiance, direct normal irradiance, global horizontal irradiance, solar radiation, UV index, solar elevation angle, and solar azimuth angle.
+The basic data is enhanced with the following weather information, the reported value is the average of the value in the last hour: air temperature, apparent temperature, relative humidity, wind speed, wind direction, pressure altimeter, visibility, sky coverage, diffuse horizontal irradiance, direct normal irradiance, global horizontal irradiance, solar radiation, UV index, solar elevation angle, and solar azimuth angle.
 The mean produced energy for a single PV plant is calculated as the division of the total produced energy by the number of PV plants.
 The mean percentage of production is calculated as the division of the total produced energy by the total power of the PV plants.
 
