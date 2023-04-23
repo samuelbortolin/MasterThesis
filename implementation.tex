@@ -4,11 +4,12 @@
 
 This chapter presents which components of the system have been implemented and how.
 Only a subset of the components of the designed architecture in chapter~\ref{cha:system} have been implemented.
-This is because a prototype was developed as a Proof of Concept (PoC) with a focus on key components for validating the core system functionalities for each specific use case, which are the training of models, the forecast of new data, and the evaluation of the performance of the developed models.
-The rest was not implemented since it was not crucial for having a working system, in fact, the overall architecture was designed in order to build a working Software as a Service (SaaS) on top of the implemented core system functionalities.
+This is because a prototype was developed as a Proof of Concept (PoC) with a focus on key components for validating the core system functionalities for each specific use case.
+These are the training of models, the forecast of new data, and the evaluation of the performance of the developed models.
+The remaining components were not implemented since they were not crucial for having a working system, in fact, the overall architecture was designed in order to build a Software as a Service (SaaS) on the implemented core system functionalities.
 
 The first section describes the implementation of the system's common components across the various specific use cases and the others explain the implementation details of the use case-specific modules.
-After this chapter, it will be clear how the system prototype was implemented and ready for validation and testing phases, which are discussed in the next chapter.
+After this chapter, it will be clear how the system prototype was implemented and ready for validation and testing phases, which are discussed in chapter~\ref{cha:evaluation}.
 
 
 \section{System's common components}
@@ -37,51 +38,59 @@ The details about the models and their forecasting process for each specific use
 The performance evaluation task evaluates the performance of the available models for the specific use case.
 The details about the performance evaluation process for each specific use case are reported in chapter~\ref{cha:evaluation}.
 
-The system interacts with the following external components: data storage, weather data storage, ML models storage, and forecasts storage.
-
-The data storage consists of CSV files containing the data for the different use cases, which are loaded using the pandas library\footnote{ \url{https://pandas.pydata.org/} }.
-InfluxDB\footnote{ \url{https://www.influxdata.com/} } was thought of as a possible database in the complete system integration for managing the data.
-
-The weather data storage consists of a JSON file containing the weather data and is manually obtained from the Weatherbit\footnote{ \url{https://www.weatherbit.io/} } APIs.
-InfluxDB was thought of as a possible database in the complete system integration for managing the weather data with an automatic download of weather data using Weatherbit APIs.
-
-The ML models storage consists of pickle files containing the ML models.
-MLflow was thought of as a possible ML model storage in the complete system integration for managing the ML models.
-
-The forecasts storage consists of CSV files containing the forecasts.
-InfluxDB was thought of as a possible database in the complete system integration for managing the forecasts.
-
-\begin{figure}[t]
+\begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{images/implementation_interactions}
 \caption{The interactions among the effectively implemented components of the architecture designed for the proposed system.}
 \label{fig:implementationinteractions}
 \end{figure}
 
+The system interacts with the following external components: data storage, weather data storage, ML models storage, and forecasts storage.
+
+The data storage consists of CSV files containing the data for the different use cases, which are loaded using the pandas library\footnote{ \url{https://pandas.pydata.org/} }.
+InfluxDB\footnote{ \url{https://www.influxdata.com/} } was thought of as a possible database in the complete system integration for managing the data.
+
+The weather data storage consists of a JSON file containing the weather data, which are loaded using the pandas library.
+Weather data is manually obtained from the Weatherbit\footnote{ \url{https://www.weatherbit.io/} } APIs.
+InfluxDB was thought of as a possible database in the complete system integration for managing the weather data with an automatic download of weather data using Weatherbit APIs.
+
+The ML models storage consists of pickle files containing the ML models.
+MLflow was thought of as a possible ML model storage in the complete system integration for managing the ML models.
+
+The forecasts storage consists of CSV files containing the forecasts, which are stored using the pandas library.
+InfluxDB was thought of as a possible database in the complete system integration for managing the forecasts.
+
 
 \section{Electricity demand forecasting models}
 \label{sec:demandimpl}
 \vspace{0.2 cm}
 
-Describe the implementation of the electricity demand forecasting models ...
-\begin{itemize}
-  \item data preprocessing: consists of parsing the aggregated production data over the customers from a CSV file, then basic data is enhanced with the following weather information parsed from JSON file, the reported value is the average of the value in the last hour: air temperature, apparent temperature, and relative humidity. Finally, data is cleaned by filling the gaps by using a linear interpolation;
-  \item models training: describe the training for all the specific models;
-  \item prediction: describe the prediction for all the specific models.
-\end{itemize}
+The implementation of the electricity demand forecasting models relies on the data preprocessing which consists of parsing the aggregated production data over the customers from a CSV file.
+Then, this basic data is enhanced with the air temperature, apparent temperature, and relative humidity parsed from JSON file, in which the reported value is the average of the value in the last hour.
+Finally, data is cleaned by filling the gaps by using a linear interpolation, which was effective since there was just some missing data in the weather information.
+Two possible granularities were considered: hourly, daily.
+Data are already with an hourly granularity, for the daily granularity data are also aggregated over the day summing the consumption of the single hours.
 
 
- - TODO describe what the models take in input for training/forecasting (or maybe in chapter 5) -
+- models training: describe the training for all the specific models;
+prediction: describe the prediction for all the specific models.
++ created features that arrive in input to the models -
 
 
-The developed models are the following: some baseline approaches which consider repeating past days and weeks, an ARIMA model, a hist gradient boosting regressor model, an extreme gradient boosting regressor model, a prophet model, a LSTM model, a GRU model, a CNN model, a combination of the previous techniques, a TFT model, and an AutoML approach.
+The developed models are some baseline approaches which consider repeating past days and weeks, an ARIMA model, a hist gradient boosting regressor model, an extreme gradient boosting regressor model, a prophet model, a LSTM model, a GRU model, a CNN model, a combination of the previous techniques, a TFT model, and an AutoML approach.
 
 The ARIMA model was developed using the pmdarima library\footnote{ \url{http://alkaline-ml.com/pmdarima/} }.
+
 The support vector regressor and hist gradient boosting regressor models were developed using the scikit-learn library\footnote{ \url{https://scikit-learn.org/} };
+
 The extreme gradient boosting regressor model was developed using the XGBoost library\footnote{ \url{https://xgboost.readthedocs.io/} };
+
 The prophet model was developed using the prophet library\footnote{ \url{https://facebook.github.io/prophet/} };
+
 The LSTM, GRU, and CNN models were developed using the keras library\footnote{ \url{https://keras.io/} };
+
 The TFT model was developed using the pytorch-forecasting library\footnote{ \url{https://pytorch-forecasting.readthedocs.io/} };
+
 The AutoML approach was based on Auto-PyTorch library\footnote{ \url{https://automl.github.io/Auto-PyTorch/master/} }.
 
 
