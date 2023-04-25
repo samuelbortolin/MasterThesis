@@ -67,46 +67,46 @@ InfluxDB was thought of as a possible database in the complete system integratio
 
 The electricity demand forecasting models rely on dedicated data preprocessing which consists of parsing the aggregated consumption data over the customers from a CSV file using the pandas library.
 Then, this basic data is enhanced with the air temperature, apparent temperature, and relative humidity parsed from the weather JSON file, in which the reported value is the average of the value in the last hour.
-Finally, data is cleaned by filling the gaps using linear interpolation provided by pandas, which was effective since there was just some missing data in the weather information.
-Two possible granularities were considered: hourly, and daily.
-Data are already with an hourly granularity, for the daily granularity data are also aggregated over the day summing the active incomings of the single hours, and averaging the weather data over the day.
+Finally, data is cleaned up by filling in the gaps using the linear interpolation provided by the pandas library, which proved to be effective since there was just some missing data in the weather information.
+Two possible granularities are considered: hourly and daily.
+The data is with an hourly granularity, so for the daily granularity, data is also aggregated over the day summing the active incomings of the single hours, and averaging the weather data over the day.
 
-The developed models are some baseline approaches that consider repeating past days and weeks, an ARIMA model, a support vector regressor model, a hist gradient boosting regressor model, an extreme gradient boosting regressor model, a prophet model, a LSTM model, a GRU model, a CNN model, a combination of the previous techniques, a TFT model, and an AutoML approach.
+The developed models are some baseline approaches that consider repeating past days and weeks, an ARIMA model, a support vector regressor model, a hist gradient boosting regressor model, an extreme gradient boosting regressor model, a prophet model, a LSTM model, a GRU model, a CNN model, some models derived by the combination of the previous techniques, a TFT model, and an AutoML approach.
 
 The baseline approaches are developed using the NumPy library\footnote{ \url{https://numpy.org/} }.
 In particular, the tile method is used in different ways depending on the considered baseline.
 For the one-day baseline, the last day of the training active incomings is replicated for the days of the test set.
 For the one-week baseline, the last week of the training active incomings is replicated for the weeks of the test set.
 
-The ARIMA model was developed using the pmdarima library\footnote{ \url{http://alkaline-ml.com/pmdarima/} }.
+The ARIMA model is developed using the pmdarima library\footnote{ \url{http://alkaline-ml.com/pmdarima/} }.
 The auto\_arima method is used to automatically discover the optimal order for an ARIMA model to better fit the training active incomings.
 For the prediction, it simply takes in input the length of the test set and computes the predictions.
 
-Support vector regressor and hist gradient boosting regressor models were developed using the scikit-learn library\footnote{ \url{https://scikit-learn.org/} }.
-The extreme gradient boosting regressor model was developed using the XGBoost library\footnote{ \url{https://xgboost.readthedocs.io/} }.
-Support vector regressor, hist gradient boosting regressor, and extreme gradient boosting regressor models take advantage of the following features for the hourly granularity: the hour, the day, the weekday, the month, and the year information of the date, the air temperature, the apparent temperature, and the relative humidity in the considered hour.
+Support vector regressor and hist gradient boosting regressor models are developed using the scikit-learn library\footnote{ \url{https://scikit-learn.org/} }.
+The extreme gradient boosting regressor model is developed using the XGBoost library\footnote{ \url{https://xgboost.readthedocs.io/} }.
+Support vector regressor, hist gradient boosting regressor, and extreme gradient boosting regressor models take advantage of the following features for the hourly granularity: the hour, the day, the weekday, the month, and the year information of the time instant for which to compute the prediction, the air temperature, the apparent temperature, and the relative humidity in the considered hour.
 In addition, the active incomings of the past 24 hours are also used.
-For the daily granularity instead, the hour of the date is not considered as a feature, the weather information is obtained as the overage over the day, and in place of the active incomings of the past 24 hours are used the daily active incomings of the past 14 days.
-For the prediction, one step at a time is predicted using weather forecasts, and the predicted demand data is used as previous information for the next steps.
+For the daily granularity instead, the hour information of the date for which to compute the prediction is not considered as a feature, the weather information is obtained as the average over the day, and in place of the active incomings of the past 24 hours are used the daily active incomings of the past 14 days.
+For the prediction, one time instant at a time is predicted using weather forecasts, and the predicted demand data is used as previous information for the next time instants.
 
-The prophet model was developed using the prophet library\footnote{ \url{https://facebook.github.io/prophet/} }.
-The fit method tasks as input a pandas data frame with just the information related to date time and training active incomings and fits the optimal prophet model.
-For the prediction, it takes as input a pandas data frame with the date times in which to compute the predictions and computes them.
+The prophet model is developed using the prophet library\footnote{ \url{https://facebook.github.io/prophet/} }.
+The fit method tasks as input a pandas data frame with just the information related to the time instants and the training active incomings and fits the optimal prophet model.
+For the prediction, it takes as input a pandas data frame with the time instants for which to compute the predictions and computes them, providing also uncertainty intervals.
 
-LSTM, GRU, and CNN models were developed using the Keras library\footnote{ \url{https://keras.io/} }.
-These models take advantage of the following features for the hourly granularity: the hour, the day, the weekday, the month, and the year information of the date, the air temperature, the apparent temperature, and the relative humidity in the considered hour.
+LSTM, GRU, and CNN models are developed using the Keras library\footnote{ \url{https://keras.io/} }.
+These models take advantage of the following features for the hourly granularity: the hour, the day, the weekday, the month, and the year information of the time instant for which to compute the prediction, the air temperature, the apparent temperature, and the relative humidity in the considered hour.
 In addition, the active incoming of the previous hour is also used.
-Since these models are able to deal with sequences, a look back over the past 3 hours and the same hour over the past 14 days is passed as input to the network with the same features as the date time for which to compute the prediction but with the actual consumption data of the past date times.
-For the daily granularity instead, the hour of the date is not considered as a feature, the weather information is obtained as the overage over the day, and the look back is over the data of the past 14 days.
-For the prediction, one step at a time is predicted using weather forecasts, and the predicted demand data is used as previous information for the next steps.
+Since these models are able to deal with sequences, a look back at the past 3 hours and at the same hour over the past 14 days is considered and passed as input to the models with the same features as the time instant for which to compute the prediction but with the actual consumption data of the past time instants.
+For the daily granularity instead, the hour of the date for which to compute the prediction is not considered as a feature, the weather information is obtained as the average over the day, and the considered look back is at the past 14 days.
+For the prediction, one time instant at a time is predicted using weather forecasts, and the predicted demand data is used as previous information for the next time instants.
 
-The TFT model was developed using the PyTorch Forecasting library\footnote{ \url{https://pytorch-forecasting.readthedocs.io/} }.
-A TimeSeriesDataSet was constructed using the following features for the hourly granularity: a timestamp index, the hour, the day, the weekday, the month, and the year information of the date, the air temperature, the apparent temperature, and the relative humidity in the considered hour.
-For the daily granularity instead, the hour of the date is not considered as a feature, and the weather information is obtained as the overage over the day.
+The TFT model is developed using the PyTorch Forecasting library\footnote{ \url{https://pytorch-forecasting.readthedocs.io/} }.
+A TimeSeriesDataSet is constructed using the following features for the hourly granularity: the time index, the hour, the day, the weekday, the month, and the year information of the time instant for which to compute the prediction, the air temperature, the apparent temperature, and the relative humidity in the considered hour.
+For the daily granularity instead, the hour of the date for which to compute the prediction is not considered as a feature, and the weather information is obtained as the average over the day.
 
-The AutoML approach was based on the TimeSeriesForecastingTask of the Auto-PyTorch library\footnote{ \url{https://automl.github.io/Auto-PyTorch/master/} }.
-The AutoML approach takes advantage of the following features for the hourly granularity: the hour, the day, the weekday, the month, and the year information of the date, the air temperature, the apparent temperature, and the relative humidity in the considered hour.
-For the daily granularity instead, the hour of the date is not considered as a feature, and the weather information is obtained as the overage over the day.
+The AutoML approach is based on the TimeSeriesForecastingTask of the Auto-PyTorch library\footnote{ \url{https://automl.github.io/Auto-PyTorch/master/} }.
+The AutoML approach takes advantage of the following features for the hourly granularity: the hour, the day, the weekday, the month, and the year information of the time instant for which to compute the prediction, the air temperature, the apparent temperature, and the relative humidity in the considered hour.
+For the daily granularity instead, the hour of the date for which to compute the prediction is not considered as a feature, and the weather information is obtained as the average over the day.
 
 
 \section{Consumption baseline forecasting models}
