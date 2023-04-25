@@ -66,7 +66,7 @@ InfluxDB was thought of as a possible database in the complete system integratio
 \vspace{0.2 cm}
 
 The electricity demand forecasting models rely on dedicated data preprocessing which consists of parsing the aggregated consumption data over the customers from a CSV file using the pandas library.
-Then, this basic data is enhanced with the air temperature, apparent temperature, and relative humidity parsed from the weather JSON file, in which the reported value is the average of the value in the last hour.
+Then, this basic data is enhanced with the air temperature, the apparent temperature, and the relative humidity parsed from the weather JSON file, in which the reported value is the average of the value in the last hour.
 Finally, data is cleaned up by filling in the gaps using the linear interpolation provided by the pandas library, which proved to be effective since there was just some missing data in the weather information.
 Two possible granularities are considered: hourly and daily.
 The data is with an hourly granularity, so for the daily granularity, data is also aggregated over the day summing the active incomings of the single hours, and averaging the weather data over the day.
@@ -87,6 +87,8 @@ The extreme gradient boosting regressor model is developed using the XGBoost lib
 Support vector regressor, hist gradient boosting regressor, and extreme gradient boosting regressor models take advantage of the following features for the hourly granularity: the hour, the day, the weekday, the month, and the year information of the time instant for which to compute the prediction, the air temperature, the apparent temperature, and the relative humidity in the considered hour.
 In addition, the active incomings of the past 24 hours are also used.
 For the daily granularity instead, the hour information of the date for which to compute the prediction is not considered as a feature, the weather information is obtained as the average over the day, and in place of the active incomings of the past 24 hours are used the daily active incomings of the past 14 days.
+The training is performed using the fit method on the training data.
+The specific models’ parameters are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
 For the prediction, one time instant at a time is predicted using weather forecasts, and the predicted demand data is used as previous information for the next time instants.
 
 The prophet model is developed using the prophet library\footnote{ \url{https://facebook.github.io/prophet/} }.
@@ -98,66 +100,149 @@ These models take advantage of the following features for the hourly granularity
 In addition, the active incoming of the previous hour is also used.
 Since these models are able to deal with sequences, a look back at the past 3 hours and at the same hour over the past 14 days is considered and passed as input to the models with the same features as the time instant for which to compute the prediction but with the actual consumption data of the past time instants.
 For the daily granularity instead, the hour of the date for which to compute the prediction is not considered as a feature, the weather information is obtained as the average over the day, and the considered look back is at the past 14 days.
+The training is performed using the fit method on the training data.
+The specific models’ architecture and parameters are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
 For the prediction, one time instant at a time is predicted using weather forecasts, and the predicted demand data is used as previous information for the next time instants.
+
+The models derived by the combination of the previous techniques consist of the combination of one-day baseline, one-week baseline, and prophet with possibly one of LSTM, GRU, or CNN.
+Further details of the optimal combinations are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
 
 The TFT model is developed using the PyTorch Forecasting library\footnote{ \url{https://pytorch-forecasting.readthedocs.io/} }.
 A TimeSeriesDataSet is constructed using the following features for the hourly granularity: the time index, the hour, the day, the weekday, the month, and the year information of the time instant for which to compute the prediction, the air temperature, the apparent temperature, and the relative humidity in the considered hour.
 For the daily granularity instead, the hour of the date for which to compute the prediction is not considered as a feature, and the weather information is obtained as the average over the day.
+The training is performed using the fit method of the Trainer object provided by the PyTorch Lightning library\footnote{ \url{https://www.pytorchlightning.ai/index.html} } on the training data.
+The specific models’ parameters are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
+For the prediction, it takes as input a TimeSeriesDataSet with the time instants for which to compute the predictions and computes them.
 
 The AutoML approach is based on the TimeSeriesForecastingTask of the Auto-PyTorch library\footnote{ \url{https://automl.github.io/Auto-PyTorch/master/} }.
 The AutoML approach takes advantage of the following features for the hourly granularity: the hour, the day, the weekday, the month, and the year information of the time instant for which to compute the prediction, the air temperature, the apparent temperature, and the relative humidity in the considered hour.
 For the daily granularity instead, the hour of the date for which to compute the prediction is not considered as a feature, and the weather information is obtained as the average over the day.
+The search method is used to search for the best pipeline configuration for the given training data optimizing the machine learning models and building an ensemble out of them.
+For the prediction, it takes as input a pandas data frame with the time instants for which to compute the predictions and computes them.
 
 
 \section{Consumption baseline forecasting models}
 \label{sec:baselineimpl}
 \vspace{0.2 cm}
 
-Describe the implementation of the consumption baseline forecasting models ...
-\begin{itemize}
-  \item data preprocessing: consists of parsing single customer consumption data from a CSV file, then basic data is enhanced with the following weather information parsed from JSON file, the reported value is the average of the value in the last hour: air temperature, apparent temperature, and relative humidity. Finally, data is cleaned by filling the gaps by using a linear interpolation;
-  \item models training: describe the training for all the specific models;
-  \item prediction: describe the prediction for all the specific models.
-\end{itemize}
+The consumption baseline forecasting models rely on dedicated data preprocessing which consists of parsing single customer consumption data from a CSV file using the pandas library.
+Then, this basic data is enhanced with the air temperature, the apparent temperature, and the relative humidity parsed from the weather JSON file, in which the reported value is the average of the value in the last hour.
+Finally, data is cleaned up by filling in the gaps using the linear interpolation provided by the pandas library, which proved to be effective since there was just some missing data in the weather information.
+Three possible granularities are considered: hourly, daily, and by tariff.
+The data is with an hourly granularity, so for the daily granularity, data is also aggregated over the day summing the active incomings of the single hours, and averaging the weather data over the day.
+The other possible aggregation is by tariff, in fact, the hourly tariff proposed by MIWEnergia is different based on the day and the hour of the day.
+For the considered residential users the possible tariffs are 3:
+\begin{enumerate}
+  \item Working days from 10 AM to 2 PM, and from 6 PM to 10 PM;
+  \item Working days from 8 AM to 10 AM, from 2 PM to 6 PM, and from 10 PM to midnight;
+  \item Saturday, Sunday, National Holidays, and working days from midnight to 8 AM.
+\end{enumerate}
+For the tariff granularity, data is aggregated over the day summing the active incomings of the single hours for each tariff, and averaging the weather data over the tariff ranges.
+Then a model is trained for each tariff.
 
-
- - TODO describe what the models take in input for training/forecasting -
-
-
-The developed models are the following: some baseline approaches which consider repeating past days and weeks, an ARIMA model, a support vector regressor model, a hist gradient boosting regressor model, an extreme gradient boosting regressor model, a prophet model, a LSTM model, a GRU model, a CNN model, a combination of the previous techniques, a TFT model, and an AutoML approach.
+The developed models are some baseline approaches that consider repeating past days and weeks, an ARIMA model, a support vector regressor model, a hist gradient boosting regressor model, an extreme gradient boosting regressor model, a prophet model, a LSTM model, a GRU model, a CNN model, some models derived by the combination of the previous techniques, a TFT model, and an AutoML approach.
 
 The baseline approaches are developed using the NumPy library.
-The ARIMA model was developed using the pmdarima library.
-Support vector regressor and hist gradient boosting regressor models were developed using the scikit-learn library.
-The extreme gradient boosting regressor model was developed using the XGBoost library.
-The prophet model was developed using the prophet library.
-LSTM, GRU, and CNN models were developed using the Keras library.
-The TFT model was developed using the PyTorch Forecasting library.
-The AutoML approach was based on Auto-PyTorch.
+In particular, the tile method is used in different ways depending on the considered baseline.
+For the one-day baseline, the last day of the training active incomings is replicated for the days of the test set.
+For the one-week baseline, the last week of the training active incomings is replicated for the weeks of the test set.
+The same was also done considering the average of the previous 4 weeks and of the previous 12 weeks of the training active incomings.
+
+The ARIMA model is developed using the pmdarima library.
+The auto\_arima method is used to automatically discover the optimal order for an ARIMA model to better fit the training active incomings.
+For the prediction, it simply takes in input the length of the test set and computes the predictions.
+
+Support vector regressor and hist gradient boosting regressor models are developed using the scikit-learn library.
+The extreme gradient boosting regressor model is developed using the XGBoost library.
+Support vector regressor, hist gradient boosting regressor, and extreme gradient boosting regressor models take advantage of the following features for the hourly granularity: the hour, the day, the weekday, the month, and the year information of the time instant for which to compute the prediction, the air temperature, the apparent temperature, and the relative humidity in the considered hour.
+In addition, the active incomings of the past 24 hours are also used.
+For the daily and tariff granularities instead, the hour information of the date for which to compute the prediction is not considered as a feature, the weather information is obtained as the average over the day or tariff ranges, and in place of the active incomings of the past 24 hours are used the daily or tariff active incomings of the past 14 days.
+The training is performed using the fit method on the training data.
+The specific models’ parameters are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
+For the prediction, one time instant at a time is predicted using weather forecasts, and the predicted consumption data is used as previous information for the next time instants.
+
+The prophet model is developed using the prophet library.
+The fit method tasks as input a pandas data frame with just the information related to the time instants and the training active incomings and fits the optimal prophet model.
+For the prediction, it takes as input a pandas data frame with the time instants for which to compute the predictions and computes them, providing also uncertainty intervals.
+
+LSTM, GRU, and CNN models are developed using the Keras library.
+These models take advantage of the following features for the hourly granularity: the hour, the day, the weekday, the month, and the year information of the time instant for which to compute the prediction, the air temperature, the apparent temperature, and the relative humidity in the considered hour.
+In addition, the active incoming of the previous hour is also used.
+Since these models are able to deal with sequences, a look back at the same hour over the past 13 days is considered and passed as input to the models with the same features as the time instant for which to compute the prediction but with the actual consumption data of the past time instants.
+For the daily and tariff granularities instead, the hour of the date for which to compute the prediction is not considered as a feature, the weather information is obtained as the average over the day or tariff ranges, and the considered look back is at the past 13 days.
+The training is performed using the fit method on the training data.
+The specific models’ architecture and parameters are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
+For the prediction, one time instant at a time is predicted using weather forecasts, and the predicted consumption data is used as previous information for the next time instants.
+
+The models derived by the combination of the previous techniques consist of the combination of one-day baseline, one-week baseline, and prophet with possibly one of LSTM, GRU, or CNN.
+Further details of the optimal combinations are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
+
+The TFT model is developed using the PyTorch Forecasting library.
+A TimeSeriesDataSet is constructed using the following features for the hourly granularity: the time index, the hour, the day, the weekday, the month, and the year information of the time instant for which to compute the prediction, the air temperature, the apparent temperature, and the relative humidity in the considered hour.
+For the daily and tariff granularities instead, the hour of the date for which to compute the prediction is not considered as a feature, and the weather information is obtained as the average over the day or tariff ranges.
+The training is performed using the fit method of the Trainer object provided by the PyTorch Lightning library on the training data.
+The specific models’ parameters are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
+For the prediction, it takes as input a TimeSeriesDataSet with the time instants for which to compute the predictions and computes them.
+
+The AutoML approach is based on the TimeSeriesForecastingTask of the Auto-PyTorch library.
+The AutoML approach takes advantage of the following features for the hourly granularity: the hour, the day, the weekday, the month, and the year information of the time instant for which to compute the prediction, the air temperature, the apparent temperature, and the relative humidity in the considered hour.
+For the daily and tariff granularities granularity instead, the hour of the date for which to compute the prediction is not considered as a feature, and the weather information is obtained as the average over the day or tariff ranges.
+The search method is used to search for the best pipeline configuration for the given training data optimizing the machine learning models and building an ensemble out of them.
+For the prediction, it takes as input a pandas data frame with the time instants for which to compute the predictions and computes them.
 
 
 \section{Electricity production forecasting models}
 \label{sec:productionimpl}
 \vspace{0.2 cm}
 
-Describe the implementation of the electricity production forecasting models ...
-\begin{itemize}
-  \item data preprocessing: consists of parsing single PV plant production data from a CSV file, aggregating the single PV plant data to obtain the aggregated production data over the PV plants, then basic data is enhanced with the following weather information parsed from JSON file, the reported value is the average of the value in the last hour: air temperature, apparent temperature, relative humidity, wind speed, wind direction, pressure altimeter, visibility, sky coverage, diffuse horizontal irradiance, direct normal irradiance, global horizontal irradiance, solar radiation, UV index, solar elevation angle, and solar azimuth angle. Finally, data is cleaned by filling the gaps by using a linear interpolation;
-  \item models training: describe the training for all the specific models;
-  \item prediction: describe the prediction for all the specific models.
-\end{itemize}
+The electricity production forecasting models rely on dedicated data preprocessing which consists of parsing single PV plant production data from a CSV file using the pandas library and aggregating the single PV plant data to obtain the aggregated production data over the PV plants.
+Then, this basic data is enhanced with the air temperature, the apparent temperature, the relative humidity, the wind speed, the wind direction, the pressure altimeter, the visibility, the sky coverage, the diffuse horizontal irradiance, the direct normal irradiance, the global horizontal irradiance, the solar radiation, the UV index, the solar elevation angle, and the solar azimuth angle parsed from the weather JSON file, in which the reported value is the average of the value in the last hour.
+Finally, data is cleaned up by filling in the gaps using the linear interpolation provided by the pandas library, which proved to be effective since there was just some missing data in the weather information.
+Only the hourly granularity is considered since PV plants are highly correlated with weather data and the aggregation over the day loses this correlation.
+The data is with an hourly granularity and the target of the predictions is the mean percentage of production, which is calculated as the division of the total produced energy by the total power of the PV plants.
+This allows to have a bounded value from 0 to 100 from which it is possible to obtain the total produced energy simply by multiplying it by the total power of the PV plants.
 
-
- - TODO describe what the models take in input for training/forecasting -
-
-
-The developed models are the following: some baseline approaches which consider repeating past days and weeks, an ARIMA model, a support vector regressor model, a hist gradient boosting regressor model, an extreme gradient boosting regressor model, a prophet model, a LSTM model, a GRU model, a CNN model, a combination of the previous techniques, a TFT model, and an AutoML approach.
+The developed models are some baseline approaches that consider repeating past days and weeks, an ARIMA model, a support vector regressor model, a hist gradient boosting regressor model, an extreme gradient boosting regressor model, a prophet model, a LSTM model, a GRU model, a CNN model, some models derived by the combination of the previous techniques, a TFT model, and an AutoML approach.
 
 The baseline approaches are developed using the NumPy library.
-The ARIMA model was developed using the pmdarima library.
-Support vector regressor and hist gradient boosting regressor models were developed using the scikit-learn library.
-The extreme gradient boosting regressor model was developed using the XGBoost library.
-The prophet model was developed using the prophet library.
-LSTM, GRU, and CNN models were developed using the Keras library.
-The TFT model was developed using the PyTorch Forecasting library.
-The AutoML approach was based on Auto-PyTorch.
+In particular, the tile method is used in different ways depending on the considered baseline.
+For the one-day baseline, the last day of the training mean percentages of production is replicated for the days of the test set.
+For the one-week baseline, the last week of the training mean percentages of production is replicated for the weeks of the test set.
+
+The ARIMA model is developed using the pmdarima library.
+The auto\_arima method is used to automatically discover the optimal order for an ARIMA model to better fit the training mean percentages of production.
+For the prediction, it simply takes in input the length of the test set and computes the predictions.
+
+Support vector regressor and hist gradient boosting regressor models are developed using the scikit-learn library.
+The extreme gradient boosting regressor model is developed using the XGBoost library.
+Support vector regressor, hist gradient boosting regressor, and extreme gradient boosting regressor models take advantage of the following features: the hour, the day, the weekday, the month, and the year information of the time instant for which to compute the prediction, the air temperature, the apparent temperature, the relative humidity, the diffuse horizontal irradiance, the direct normal irradiance, the global horizontal irradiance, the solar radiation, the UV index, the solar elevation angle, and the solar azimuth angle in the considered hour.
+In addition, the mean percentages of production of the past 24 hours are also used.
+The training is performed using the fit method on the training data.
+The specific models’ parameters are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
+For the prediction, one time instant at a time is predicted using weather forecasts, and the predicted production data is used as previous information for the next time instants.
+
+The prophet model is developed using the prophet library.
+The fit method tasks as input a pandas data frame with just the information related to the time instants and the training mean percentages of production and fits the optimal prophet model.
+For the prediction, it takes as input a pandas data frame with the time instants for which to compute the predictions and computes them, providing also uncertainty intervals.
+
+LSTM, GRU, and CNN models are developed using the Keras library.
+These models take advantage of the following features: the hour, the day, the weekday, the month, and the year information of the time instant for which to compute the prediction, the air temperature, the apparent temperature, the relative humidity, the diffuse horizontal irradiance, the direct normal irradiance, the global horizontal irradiance, the solar radiation, the UV index, the solar elevation angle, and the solar azimuth angle in the considered hour.
+In addition, the mean percentage of production of the previous hour is also used.
+Since these models are able to deal with sequences, a look back at the same hour over the past 14 days is considered and passed as input to the models with the same features as the time instant for which to compute the prediction but with the actual production data of the past time instants.
+The training is performed using the fit method on the training data.
+The specific models’ architecture and parameters are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
+For the prediction, one time instant at a time is predicted using weather forecasts, and the predicted production data is used as previous information for the next time instants.
+
+The models derived by the combination of the previous techniques consist of the combination of one-day baseline, one-week baseline, and prophet with possibly one of LSTM, GRU, or CNN.
+Further details of the optimal combinations are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
+
+The TFT model is developed using the PyTorch Forecasting library.
+A TimeSeriesDataSet is constructed using the following features: the time index, the hour, the day, the weekday, the month, and the year information of the time instant for which to compute the prediction, the air temperature, the apparent temperature, the relative humidity, the diffuse horizontal irradiance, the direct normal irradiance, the global horizontal irradiance, the solar radiation, the UV index, the solar elevation angle, and the solar azimuth angle in the considered hour.
+The training is performed using the fit method of the Trainer object provided by the PyTorch Lightning library\footnote{ \url{https://www.pytorchlightning.ai/index.html} } on the training data.
+The specific models’ parameters are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
+For the prediction, it takes as input a TimeSeriesDataSet with the time instants for which to compute the predictions and computes them.
+
+The AutoML approach is based on the TimeSeriesForecastingTask of the Auto-PyTorch library.
+The AutoML approach takes advantage of the following features: the hour, the day, the weekday, the month, and the year information of the time instant for which to compute the prediction, the air temperature, the apparent temperature, the relative humidity, the diffuse horizontal irradiance, the direct normal irradiance, the global horizontal irradiance, the solar radiation, the UV index, the solar elevation angle, and the solar azimuth angle in the considered hour.
+The search method is used to search for the best pipeline configuration for the given training data optimizing the machine learning models and building an ensemble out of them.
+For the prediction, it takes as input a pandas data frame with the time instants for which to compute the predictions and computes them.
