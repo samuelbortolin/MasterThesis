@@ -86,7 +86,7 @@ Support vector regressor and hist gradient boosting regressor models were develo
 The extreme gradient boosting regressor model was developed using the XGBoost library\footnote{ \url{https://xgboost.readthedocs.io/} }.
 Support vector regressor, hist gradient boosting regressor, and extreme gradient boosting regressor models take advantage of the following features for the hourly granularity: the hour, the day, the weekday, the month, and the year information of the date, the air temperature, the apparent temperature, and the relative humidity in the considered hour.
 In addition, the active incomings of the past 24 hours are also used.
-For the daily granularity instead, the hour of the date is not considered as feature, the weather information is obtained as the overage over the day, and in place of the active incomings of the past 24 hours are used the daily active incomings of the past 14 days.
+For the daily granularity instead, the hour of the date is not considered as a feature, the weather information is obtained as the overage over the day, and in place of the active incomings of the past 24 hours are used the daily active incomings of the past 14 days.
 For the prediction, one step at a time is predicted using weather forecasts, and the predicted demand data is used as previous information for the next steps.
 
 The prophet model was developed using the prophet library\footnote{ \url{https://facebook.github.io/prophet/} }.
@@ -97,16 +97,16 @@ LSTM, GRU, and CNN models were developed using the Keras library\footnote{ \url{
 These models take advantage of the following features for the hourly granularity: the hour, the day, the weekday, the month, and the year information of the date, the air temperature, the apparent temperature, and the relative humidity in the considered hour.
 In addition, the active incoming of the previous hour is also used.
 Since these models are able to deal with sequences, a look back over the past 3 hours and the same hour over the past 14 days is passed as input to the network with the same features as the date time for which to compute the prediction but with the actual consumption data of the past date times.
-Instead, for the daily granularity the hour of the date is not considered as feature, the weather information is obtained as the overage over the day, and the look back is over the data of the past 14 days.
+For the daily granularity instead, the hour of the date is not considered as a feature, the weather information is obtained as the overage over the day, and the look back is over the data of the past 14 days.
 For the prediction, one step at a time is predicted using weather forecasts, and the predicted demand data is used as previous information for the next steps.
 
 The TFT model was developed using the PyTorch Forecasting library\footnote{ \url{https://pytorch-forecasting.readthedocs.io/} }.
 A TimeSeriesDataSet was constructed using the following features for the hourly granularity: a timestamp index, the hour, the day, the weekday, the month, and the year information of the date, the air temperature, the apparent temperature, and the relative humidity in the considered hour.
-Instead, for the daily granularity the hour of the date is not considered as feature, the weather information is obtained as the overage over the day.
+For the daily granularity instead, the hour of the date is not considered as a feature, and the weather information is obtained as the overage over the day.
 
 The AutoML approach was based on the TimeSeriesForecastingTask of the Auto-PyTorch library\footnote{ \url{https://automl.github.io/Auto-PyTorch/master/} }.
 The AutoML approach takes advantage of the following features for the hourly granularity: the hour, the day, the weekday, the month, and the year information of the date, the air temperature, the apparent temperature, and the relative humidity in the considered hour.
-Instead, for the daily granularity the hour of the date is not considered as feature, the weather information is obtained as the overage over the day.
+For the daily granularity instead, the hour of the date is not considered as a feature, and the weather information is obtained as the overage over the day.
 
 
 \section{Consumption baseline forecasting models}
