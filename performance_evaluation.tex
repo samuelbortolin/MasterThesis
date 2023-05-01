@@ -3,7 +3,7 @@
 \vspace{0.4 cm}
 
 In this chapter, the proposed system is validated and the performance of the models for the different use cases is evaluated.
-The first section presents the datasets provided by MIWEnergia.
+The first section presents the datasets provided by MIWEnergia\footnote{ \url{https://www.miwenergia.com/} }.
 Subsequently, the adapted evaluation methodology is described.
 Finally, the evaluation of the performance of the models for the different use cases is presented.
 After this chapter, it will be clear how the system has been validated and what the performance achieved by the proposed system is.
@@ -13,85 +13,101 @@ After this chapter, it will be clear how the system has been validated and what 
 \label{sec:datasets}
 \vspace{0.2 cm}
 
-Describe the MIWEnergia\footnote{ \url{https://www.miwenergia.com/} } datasets ...
+In this section, the MIWEnergia datasets are described.
+They provided 3 kinds of datasets: aggregated consumption data from all their customers, consumption data from 4 customers, and production data from 8 PV plants.
 
-Report plots of the data ...
-
-Aggregated consumption data on all customers, whose number is variable (maximum 4253, minimum 1591, mean 2988): from June 2021 to September 2022 (January 2023), hourly aggregated data, 11687 (14617) total entries.
-The graphical representation of the hourly aggregated consumption data is reported in figure~\ref{fig:demanddataplot}. (Include also plot with latest data)
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.6\textwidth]{images/demand/data_plot}
-\caption{The graphical representation of the hourly aggregated consumption data.}
-\label{fig:demanddataplot}
-\end{figure}
-
-
-Consumption data of 4 customers:
-\begin{enumerate}
-  \item from June 2021 to May 2022, hourly aggregated, 8750 total entries (represented in figure~\ref{fig:dataplotcustomer1});
-  \item from September 2021 to May 2022, hourly aggregated, 5855 total entries (represented in figure~\ref{fig:dataplotcustomer2});
-  \item from September 2021 to August 2022, hourly aggregated, 8745 total entries (represented in figure~\ref{fig:dataplotcustomer3}).
-  \item from September 2021 to August 2022, hourly aggregated, 8760 total entries (represented in figure~\ref{fig:dataplotcustomer4});
-\end{enumerate}
-Total: from June 2021 to August 2022, hourly aggregated, 32110 total entries.
+The aggregated consumption data from all their customers, whose number is variable (with a maximum of 4253, a minimum of 1591, a mean of 3235 (2988), and a standard deviation of 779 (855)) consists of hourly aggregated consumption data from June 2021 to September 2022 (January 2023) for a total of 11687 (14617) total entries.
+The graphical representation of the hourly aggregated consumption data is reported in figure~\ref{fig:demanddataplot} (figure~\ref{fig:demanddataplot2}).
 
 \begin{figure}[H]
 \begin{minipage}[b]{8.5cm}
 \centering
-\includegraphics[width=0.9\textwidth]{images/baseline/data_plot_customer1}
+\includegraphics[width=1\textwidth]{images/demand/data_plot}
+\subcaption{}
+\label{fig:demanddataplot}
+\end{minipage}
+\ \hspace{2mm} \
+%  Consifer the latest data? --> relaunch trainings + fine-tuning
+\begin{minipage}[b]{8.5cm}
+\centering
+\includegraphics[width=1\textwidth]{images/demand/data_plot_2}
+\subcaption{}
+\label{fig:demanddataplot2}
+\end{minipage}
+\caption{The graphical representation of the hourly aggregated consumption data.}
+\end{figure}
+
+%  \begin{figure}[H]
+%  \centering
+%  \includegraphics[width=0.55\textwidth]{images/demand/data_plot}
+%  \caption{The graphical representation of the hourly aggregated consumption data.}
+%  \label{fig:demanddataplot}
+%  \end{figure}
+
+The consumption data from 4 customers consists of hourly aggregated consumption data:
+\begin{enumerate}
+  \item from June 2021 to May 2022 for a total of 8750 total entries (represented in figure~\ref{fig:dataplotcustomer1});
+  \item from September 2021 to May 2022 for a total of 5855 total entries (represented in figure~\ref{fig:dataplotcustomer2});
+  \item from September 2021 to August 2022 for a total of 8745 total entries (represented in figure~\ref{fig:dataplotcustomer3});
+  \item from September 2021 to August 2022 for a total of 8760 total entries (represented in figure~\ref{fig:dataplotcustomer4}).
+\end{enumerate}
+The total entries for the 4 customers are 32110 in the overall period from June 2021 to August 2022.
+
+\begin{figure}[H]
+\begin{minipage}[b]{8.5cm}
+\centering
+\includegraphics[width=1\textwidth]{images/baseline/data_plot_customer1}
 \subcaption{First customer.}
 \label{fig:dataplotcustomer1}
 \end{minipage}
 \ \hspace{2mm} \
 \begin{minipage}[b]{8.5cm}
 \centering
-\includegraphics[width=0.9\textwidth]{images/baseline/data_plot_customer2}
+\includegraphics[width=1\textwidth]{images/baseline/data_plot_customer2}
 \subcaption{Second customer.}
 \label{fig:dataplotcustomer2}
 \end{minipage}
 \begin{minipage}[b]{8.5cm}
 \centering
-\includegraphics[width=0.9\textwidth]{images/baseline/data_plot_customer3}
+\includegraphics[width=1\textwidth]{images/baseline/data_plot_customer3}
 \subcaption{Third customer.}
 \label{fig:dataplotcustomer3}
 \end{minipage}
 \ \hspace{2mm} \
 \begin{minipage}[b]{8.5cm}
 \centering
-\includegraphics[width=0.9\textwidth]{images/baseline/data_plot_customer4}
+\includegraphics[width=1\textwidth]{images/baseline/data_plot_customer4}
 \subcaption{Fourth customer.}
 \label{fig:dataplotcustomer4}
 \end{minipage}
 \caption{The graphical representation of the consumption data of the 4 customers.}
 \end{figure}
 
-Production data of 8 plants:
+The production data from 8 PV plants consists of hourly aggregated production data:
 \begin{enumerate}
-  \item from January 2022 to October 2022, hourly aggregated, 7296 total entries;
-  \item from February 2022 to October 2022, hourly aggregated, 6552 total entries;
-  \item from February 2022 to October 2022, hourly aggregated, 6552 total entries;
-  \item from June 2022 to October 2022, hourly aggregated, 3576 total entries;
-  \item from September 2022 to October 2022, hourly aggregated, 1465 total entries;
-  \item from September 2022 to October 2022, hourly aggregated, 1465 total entries;
-  \item from September 2022 to October 2022, hourly aggregated, 1465 total entries;
-  \item from September 2022 to October 2022, hourly aggregated, 1465 total entries.
+  \item from January 2022 to October 2022 for a total of 7296 total entries;
+  \item from February 2022 to October 2022 for a total of 6552 total entries;
+  \item from February 2022 to October 2022 for a total of 6552 total entries;
+  \item from June 2022 to October 2022 for a total of 3576 total entries;
+  \item from September 2022 to October 2022 for a total of 1465 total entries;
+  \item from September 2022 to October 2022 for a total of 1465 total entries;
+  \item from September 2022 to October 2022 for a total of 1465 total entries;
+  \item from September 2022 to October 2022 for a total of 1465 total entries.
 \end{enumerate}
-Total: from January 2022 to October 2022, hourly aggregated, 29836 total entries.
+The total entries for the 8 PV plants are 29836 total entries in the overall period from January 2022 to October 2022.
 The graphical representation of the hourly aggregated total and mean percentage production data are reported respectively in figure~\ref{fig:productiondataplot} and figure~\ref{fig:productiondataplotpercentage}.
 
 \begin{figure}[H]
 \begin{minipage}[b]{8.5cm}
 \centering
-\includegraphics[width=0.9\textwidth]{images/production/data_plot}
+\includegraphics[width=1\textwidth]{images/production/data_plot}
 \subcaption{}
 \label{fig:productiondataplot}
 \end{minipage}
 \ \hspace{2mm} \
 \begin{minipage}[b]{8.5cm}
 \centering
-\includegraphics[width=0.9\textwidth]{images/production/data_plot_percentage}
+\includegraphics[width=1\textwidth]{images/production/data_plot_percentage}
 \subcaption{}
 \label{fig:productiondataplotpercentage}
 \end{minipage}
@@ -103,17 +119,15 @@ The graphical representation of the hourly aggregated total and mean percentage 
 \label{sec:methodology}
 \vspace{0.2 cm}
 
-General description of the evaluation methodology ...
-
-Describe the relevant error metrics:
-
-Mean Absolute Percentage Error (MAPE) is defined as … (it is the most relevant error metric for all the tasks)
-
-Mean Absolute Error (MAE) is defined as … (it is most applicable in Consumption baseline forecasting (where there is a high variability) and Electricity production forecasting (where there are a lot of zeros))
+The evaluation methodology was based on two relevant error metrics:
+\begin{itemize}
+  \item Mean Absolute Percentage Error (MAPE) is defined as $\text{MAE}(y, \hat{y}) = \frac{ \sum_{i=0}^{N - 1} |y_i - \hat{y}_i| }{N}$. It is the most relevant error metric for all the tasks.
+  \item Mean Absolute Error (MAE) is defined as $\text{MAPE}(y, \hat{y}) = \frac{100\%}{N} \sum_{i=0}^{N - 1} \frac{|y_i - \hat{y}_i|}{|y_i|}$. It is the most applicable error metric in consumption baseline forecasting where there is a high variability, and electricity production forecasting where there are a lot of zeros when the sun is not present.
+\end{itemize}
 
 Describe how the test of the performance of the models works ...
 
-Treat the block validation: describe blocked k-fold e hold-out on more periods ...
+Treat the validation: describe the blocked k-fold validation and the hold-out approach repeated in multiple periods ...
 
 
 \section{Electricity demand forecasting}
