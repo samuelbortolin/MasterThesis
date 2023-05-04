@@ -128,7 +128,7 @@ The graphical representation of the hourly aggregated total and mean percentage 
 \caption{The graphical representation of the hourly aggregated \subref{fig:umlsingleplant} total and \subref{fig:umlsingleplant} mean percentage production data.}
 \end{figure}
 
-The same weather data from the same provider and weather station was used for all the tasks, this was done since the customers and the PV plants were in the same area, with a maximum distance of the PV plants of around 100 km.
+The same weather data from the same provider and the same weather station were used for all the tasks, this was done since the customers and the PV plants were in the same area, with a maximum distance of the PV plants of around 100 km.
 
 
 \section{Evaluation methodology}
@@ -177,6 +177,7 @@ Data stats and correlation with weather data ...
 
 Basic data is enhanced with the air temperature, the apparent temperature, the relative humidity, the wind speed, the wind direction, the pressure altimeter, the visibility, the sky coverage, the diffuse horizontal irradiance, the direct normal irradiance, the global horizontal irradiance, the solar radiation, the UV index, the solar elevation angle, and the solar azimuth angle.
 Only the hourly granularity is considered since PV plants are highly correlated with weather data and the aggregation over the day loses this correlation.
+Probably if we were dealing with forecasting the production of each plant in isolation, the weather data at the specific locations of the plants can be used for achieving more accurate results and higher correlations, but since we are aggregating over them and looking for a percentage of production in the hour, the weather data from a location in the middle with respect to them is also acceptable.
 
 Describe the choice of parameters for models ... (list with motivations)
 
