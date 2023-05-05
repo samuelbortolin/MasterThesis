@@ -296,9 +296,9 @@ In this section, the electricity demand forecasting module is described.
 The module handles the specialization of data models, training, and forecasts for the electricity demand forecasting use case.
 
 The UML (Unified Modeling Language) data class for electricity demand forecasting is represented in figure~\ref{fig:umldemand}.
-The considered attributes are the following: the date and time of the detection, the active incoming to the clients in the past hour, and the number of clients.
+The considered attributes are the following: the date and time of the detection, the active incoming to the customers in the past hour, and the number of customers.
 The basic data is enhanced with the following weather information, the reported value is the average of the value in the last hour: air temperature, apparent temperature, and relative humidity.
-The mean active incoming for a single customer is calculated as the division of the total active incoming by the number of clients.
+The mean active incoming per customer is calculated as the division of the total active incoming by the number of customers.
 
 \begin{figure}[H]
 \centering
@@ -341,8 +341,8 @@ In this section, the consumption baseline forecasting module is described.
 The module handles the specialization of data models, training, and forecasts for the consumption baseline forecasting use case.
 
 The UML data class for consumption baseline forecasting is represented in figure~\ref{fig:umlbaseline}.
-The considered attributes are the following: the date and time of the detection, the CUPS code (Universal Supply Point Code) which identifies the client, and the active incoming to the client in the past hour.
-In the case of other client information, this might be used to try to improve the performance of the models.
+The considered attributes are the following: the date and time of the detection, the CUPS code (Universal Supply Point Code) which identifies the customer, and the active incoming to the customer in the past hour.
+In the case of other customer information, this might be used to try to improve the performance of the models.
 The basic data is enhanced with the following weather information, the reported value is the average of the value in the last hour: air temperature, apparent temperature, and relative humidity.
 
 \begin{figure}[H]

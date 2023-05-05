@@ -26,9 +26,9 @@ They provided 3 kinds of datasets: aggregated consumption data from all their cu
 \ \hspace{2mm} \
 \begin{minipage}[b]{8.5cm}
 \centering
-\includegraphics[width=1\textwidth]{images/demand/clients_plot}
+\includegraphics[width=1\textwidth]{images/demand/customers_plot}
 \subcaption{}
-\label{fig:clientsplot}
+\label{fig:customersplot}
 \end{minipage}
 \begin{minipage}[b]{17cm}
 \centering
@@ -36,23 +36,25 @@ They provided 3 kinds of datasets: aggregated consumption data from all their cu
 \subcaption{}
 \label{fig:meandemanddataplot}
 \end{minipage}
-\caption{The graphical representation of the hourly \subref{fig:demanddataplot} aggregated consumption data, \subref{fig:clientsplot} the number of clients, and \subref{fig:meandemanddataplot} the mean consumption data over the clients.}
+\caption{The graphical representation of the hourly \subref{fig:demanddataplot} aggregated consumption over customers, \subref{fig:customersplot} number of customers, and \subref{fig:meandemanddataplot} average consumption per customer.}
 \end{figure}
 
 The aggregated consumption data from all their customers consists of hourly aggregated consumption data from June 2021 to January 2023 for a total of 14617 entries.
 The graphical representation of the hourly aggregated consumption data is reported in figure~\ref{fig:demanddataplot}.
 The number of customers is variable, with a maximum of 4253, a minimum of 1591, a mean of 2988, and a standard deviation of 855.
-The graphical representation of the hourly number of clients is reported in figure~\ref{fig:clientsplot}.
-It was thought to normalize the consumption on the number of customers for studying a kind of mean consumption per user as reported in figure~\ref{fig:meandemanddataplot} and then multiplying by the number of users, but this was not possible since often this value has a high change without reflecting on the consumption data, this information was not used since classified as unreliable.
-Anyway, this mean value suggests the presence of two consumption peaks, one in summer, probably due to air conditioning systems, and the second one in winter, probably due to heating systems.
+The graphical representation of the hourly number of customers is reported in figure~\ref{fig:customersplot}.
+It was thought to normalize the consumption on the basis of the number of customers in order to study the average consumption per user, as illustrated in figure~\ref{fig:meandemanddataplot}, and then multiply by the number of customers.
+However, this was not feasible since often this value changes significantly without reflecting on the consumption data, this information was deemed unreliable and not utilized.
+Despite this limitation, the average consumption per customer still provided valuable insights into consumption patterns.
+Specifically, it suggested the presence of two consumption peaks: one in the summer, likely attributed to air conditioning systems, and a second peak in the winter, likely caused by heating systems.
 
-The consumption data from single customers consists of hourly aggregated consumption data of 4 customers:
+The consumption data from single customers consists of hourly aggregated consumption data of three customers:
 \begin{enumerate}
   \item from June 2021 to August 2022 for a total of 10952 total entries (represented in figure~\ref{fig:dataplotcustomer1});
   \item from September 2021 to May 2022 for a total of 5855 total entries (represented in figure~\ref{fig:dataplotcustomer2});
   \item from September 2021 to August 2022 for a total of 8760 total entries (represented in figure~\ref{fig:dataplotcustomer3}).
 \end{enumerate}
-The total entries for the 3 customers are 25567 in the overall period from June 2021 to August 2022.
+The total entries for the three customers are 25567 in the overall period from June 2021 to August 2022.
 
 \begin{figure}[H]
 \begin{minipage}[b]{8.5cm}
@@ -74,18 +76,20 @@ The total entries for the 3 customers are 25567 in the overall period from June 
 \subcaption{Third customer.}
 \label{fig:dataplotcustomer3}
 \end{minipage}
-\caption{The graphical representation of the consumption data of the 3 customers.}
+\caption{The graphical representation of the consumption data of the three customers.}
 \end{figure}
 
-Just data of 3 customers were provided since consumption data of customers are considered as personal data as stated in the Directive (EU) 2019/944 of the European Parliament\footnote{ \url{https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019L0944} } that deals with common rules for the internal market for electricity.
-So, energy data as personal data would be in accordance with the General Data Protection Regulation (GDPR)\footnote{ \url{https://gdpr-info.eu/} } and explicit consent for processing it is needed.
-So they probably provided data of MIWEnergia internal workers that want to collaborate with the research.
-In fact, some habitations were needed for a technical feasibility study but with data of more customers, it would be better to have more data and take into consideration possible consumption patterns of more customers.
+Only consumption data for three customers were provided, as electricity consumption data of customers is considered personal data as stated in the Directive (EU) 2019/944 of the European Parliament\footnote{ \url{https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019L0944} }, which establishes common rules for the internal market for electricity.
+As such, the data falls under the scope of the General Data Protection Regulation (GDPR)\footnote{ \url{https://gdpr-info.eu/} }, which requires explicit consent for processing personal data.
+Therefore, it is likely that the provided data came from MIWEnergia's internal employees who consented to participate in the research.
+In fact, the provided data were needed for a technical feasibility study.
+However, to identify consumption patterns among a broader population, data from more customers would be required.
 
-From the data plots, it is possible to notice that these customer consumption data series have quite different patterns, for example:
+By analyzing the data plots, it can be observed that the consumption patterns of the three customers are quite distinct.
+For instance:
 \begin{itemize}
-  \item The first customer always remains below 1.5 kWh during the year except in the winter period;
-  \item The second customer has almost the same consumption;
+  \item The first customer's consumption is consistently below 1.5 kWh throughout the year except for the winter season;
+  \item The second customer shows almost the same consumption pattern;
   \item The third customer has a dense series with some gaps with very low consumption in parts of the year, probably due to time periods away from home.
 \end{itemize}
 
@@ -120,18 +124,21 @@ The graphical representation of the hourly aggregated total and mean percentage 
 \caption{The graphical representation of the hourly aggregated \subref{fig:umlsingleplant} total and \subref{fig:umlsingleplant} mean percentage production data.}
 \end{figure}
 
-The same weather data from the same provider and the same weather station were used for all the tasks, this was done since the customers and the PV plants were in the same area, with a maximum distance of the PV plants of around 100 km.
+The same weather data from the same provider and the same weather station were used for all the tasks.
+While it is reasonable to assume that some weather conditions, such as clouds, may vary and affect the consumption and production differently, this approach was taken since the customers and the PV plants were in the same area, with a maximum distance of around 100 km between them, and also because the value of the weather parameters is an average of the values recorded in the past hour.
+Therefore, using the same weather data is deemed appropriate for the analysis at hand, given that it reflects the weather conditions in the area over a broad time frame.
 
 
 \section{Evaluation methodology}
 \label{sec:methodology}
 \vspace{0.2 cm}
 
-The evaluation methodology was based on two relevant error metrics:
-\begin{itemize}
-  \item Mean Absolute Percentage Error (MAPE) is defined as $\text{MAPE}(y, \hat{y}) = \frac{100\%}{N} \sum_{i=0}^{N - 1} \frac{|y_i - \hat{y}_i|}{|y_i|}$. It is the most relevant error metric for all the tasks since it percentage-based error metric that takes into account the magnitude of the errors relative to the actual values.
-  \item Mean Absolute Error (MAE) is defined as $\text{MAE}(y, \hat{y}) = \frac{ \sum_{i=0}^{N - 1} |y_i - \hat{y}_i| }{N}$. It is the most applicable error metric in consumption baseline forecasting where there is a high variability passing from very low to high values, and electricity production forecasting where there are a lot of zeros when the sun is not present.
-\end{itemize}
+The evaluation methodology was based on two relevant error metrics: Mean Absolute Percentage Error (MAPE) and Mean Absolute Error (MAE).
+These are standard and widely used metrics in time series forecasting for different use cases, as reported in many articles and books such as \cite{armstrong2001principles, DEGOOIJER2006443, HYNDMAN2006679}.
+The MAPE is defined as $\text{MAPE}(y, \hat{y}) = \frac{100\%}{N} \sum_{i=0}^{N - 1} \frac{|y_i - \hat{y}_i|}{|y_i|}$.
+It is the most relevant error metric for all the tasks since it percentage-based error metric that takes into account the magnitude of the errors relative to the actual values.
+The MAE is defined as $\text{MAE}(y, \hat{y}) = \frac{ \sum_{i=0}^{N - 1} |y_i - \hat{y}_i| }{N}$.
+It is the most suitable error metric in consumption baseline forecasting where there is a high variability from very low to high values, and electricity production forecasting where there is a significant number of zeros when the sun is not present.
 
 Describe how the test of the performance of the models works ...
 
@@ -152,6 +159,7 @@ Describe the choice of parameters for models ... (list with motivations)
 
 Summary table with results ...
 % TODO where results are the one given by cross validation mean ± std
+% TODO check the consistency of model results in the last period and using cross-validation --> do a table with the differences (+ plot for internal analysis)
 
 
 \section{Electricity production forecasting}
@@ -163,18 +171,28 @@ Analyze the data (descriptive analytics) and the results of the models for the e
 As described in the data preprocessing in chapter~\ref{cha:implementation}, single PV plant production data are aggregated to obtain the aggregated production data over the PV plants.
 The target of the predictions is the mean percentage of production, which is calculated as the division of the total produced energy by the total power of the PV plants.
 This allows to have a bounded value from 0 to 100 from which it is possible to obtain the total produced energy simply by multiplying it by the total power of the PV plants.
-(This was also done since plants are added over time and this was unpredictable, this results in predicting the percentage of production of the PV plants.)
+(This was also done since PV plants are added over time and this was unpredictable, this results in predicting the percentage of production of the PV plants.)
 
 Data stats and correlation with weather data ...
 
 Basic data is enhanced with the air temperature, the apparent temperature, the relative humidity, the wind speed, the wind direction, the pressure altimeter, the visibility, the sky coverage, the diffuse horizontal irradiance, the direct normal irradiance, the global horizontal irradiance, the solar radiation, the UV index, the solar elevation angle, and the solar azimuth angle.
 Only the hourly granularity is considered since PV plants are highly correlated with weather data and the aggregation over the day loses this correlation.
-Probably if we were dealing with forecasting the production of each plant in isolation, the weather data at the specific locations of the plants can be used for achieving more accurate results and higher correlations, but since we are aggregating over them and looking for a percentage of production in the hour, the weather data from a location in the middle with respect to them is also acceptable.
+If we were forecasting the production of each PV plant individually, the weather data at the specific locations of the plants would result in a higher correlation with the production data and likely allow the models to produce more accurate forecasts.
+However, since we are aggregating the production from multiple PV plants and looking for the overall percentage of production in the hour, using the weather data from a location located in the middle of the PV plants is also acceptable.
+In figure~\ref{fig:pvplantsmap}, the locations of the PV plants and of the weather station are reported.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{images/production/pv_plants_map}
+\caption{The map of the city of Murcia with indicated the location of the PV plants with a blue icon and of the revelation station with a lightblue icon. The distances between each PV plant and the weather station are reported in lightblue boxes near the PV plant locations.}
+\label{fig:pvplantsmap}
+\end{figure}
 
 Describe the choice of parameters for models ... (list with motivations)
 
 Summary table with results ...
 % TODO where results are the one given by cross validation mean ± std
+% TODO check the consistency of model results in the last period and using cross-validation --> do a table with the differences (+ plot for internal analysis)
 
 
 \section{Consumption baseline forecasting} 
@@ -194,3 +212,4 @@ Describe the choice of parameters for models ... (list with motivations)
 
 Summary table with results ...
 % TODO where results are the one given by cross validation mean ± std
+% TODO check the consistency of model results in the last period and using cross-validation --> do a table with the differences (+ plot for internal analysis)
