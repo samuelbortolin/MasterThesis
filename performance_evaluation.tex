@@ -104,7 +104,7 @@ The production data from 8 PV plants consists of hourly aggregated production da
   \item from September 2022 to October 2022 for a total of 1465 total entries and it has a nominal power of 45 kW;
   \item from September 2022 to October 2022 for a total of 1465 total entries and it has a nominal power of 100 kW;
 \end{enumerate}
-The total entries for the 8 PV plants are 29836 total entries in the overall period from January 2022 to October 2022.
+The total entries for the 8 PV plants are 29836 total entries in the overall period from January 2022 to October 2022, aggregating over plants the resulting entries are 7296.
 The graphical representation of the hourly aggregated total and mean percentage production data are reported respectively in figure~\ref{fig:productiondataplot} and figure~\ref{fig:productiondataplotpercentage}.
 
 \begin{figure}[H]
@@ -136,12 +136,12 @@ Therefore, using the same weather data is deemed appropriate for the analysis at
 The evaluation methodology was based on two relevant error metrics: Mean Absolute Percentage Error (MAPE) and Mean Absolute Error (MAE).
 These are standard and widely used metrics in time series forecasting for different use cases, as reported in many articles and books such as \cite{armstrong2001principles, DEGOOIJER2006443, HYNDMAN2006679}.
 The MAPE is defined as $\text{MAPE}(y, \hat{y}) = \frac{100\%}{N} \sum_{i=0}^{N - 1} \frac{|y_i - \hat{y}_i|}{|y_i|}$.
-It is the most relevant error metric for all the tasks since it percentage-based error metric that takes into account the magnitude of the errors relative to the actual values.
+It is the most relevant error metric for all the tasks since it is a percentage-based error metric that takes into account the magnitude of the errors relative to the actual values.
 The MAE is defined as $\text{MAE}(y, \hat{y}) = \frac{ \sum_{i=0}^{N - 1} |y_i - \hat{y}_i| }{N}$.
 It is the most suitable error metric in consumption baseline forecasting where there is a high variability from very low to high values, and electricity production forecasting where there is a significant number of zeros when the sun is absent.
 
-For assessing the model performance when dealing with time series data, the traditional cross-validation techniques are not suitable as they assume that the data points are independent and identically distributed (i.i.d), which is not the case in time series data, as also reported in the chapter~\ref{cha:soa} by the following articles \cite{BERGMEIR2012192, Cerqueira2020}.
-In fact, in time series data the order of the observations matters, and there is a temporal dependencies between the observations.
+For assessing the model performance when dealing with time series data, the traditional cross-validation techniques are not suitable as they assume that the data points are independent and identically distributed (i.i.d.), which is not the case in time series data, as also reported in the chapter~\ref{cha:soa} by the following articles \cite{BERGMEIR2012192, Cerqueira2020}.
+In fact, in time series data the order of the observations matters, and there are temporal dependencies between the observations.
 Therefore, a more appropriate technique for evaluating time series models is time series cross-validation.
 The basic idea of time series cross-validation is to split the data into multiple training and test sets, where the training set only includes data from the past and the test set includes data from the future.
 This simulates the real-world scenario where we want to make predictions about the future based on past data.
@@ -157,8 +157,8 @@ In figure~\ref{fig:crossvalidation}, the schematic representation of how the cro
 Another technique, reported in \cite{Cerqueira2020} is the repeated Holdout Out‐of‐sample tested in multiple testing periods with a Monte Carlo simulation using 70\% of the total observations of the time series in each test.
 For each period, a random point is picked from the time series.
 The previous window comprising 60\% of the time series is used for training and the following window of 10\% of the time series is used for testing.
-In the paper was stated that the approach provided the most accurate estimates when the time series are non-stationary.
-However, for having the same evaluation mechanisms on all the models and simulating the fact that the model starts with limited data and then the training amount increase over time to obtain better performance, block validation was used using the TimeSeriesSplit provided by the scikit-learn library.
+In the paper, it was stated that the approach provided the most accurate estimates when the time series are non-stationary.
+However, for having the same evaluation mechanisms on all the models and simulating the fact that the model starts with limited data and then the training amount increases over time to obtain better performance, block validation was used using the TimeSeriesSplit provided by the scikit-learn library.
 Moreover, the considered data are without a strong trend as reported in the dedicated sections of the specific use cases where the data and the model forecasts are analyzed.
 
 In addition to the cross-validation results also the results on the last split using the rest as training are reported.
@@ -169,37 +169,216 @@ This was done because it provides insight on which could be the performance of t
 \label{sec:demandval}
 \vspace{0.2 cm}
 
-Analyze the data (descriptive analytics) and the results of the models for the electricity demand forecasting task (predictive analytics) ...
+The aggregated consumption data over the customers is analyzed to get some descriptive analytics before finding adequate models to forecast the demand.
+The time series decomposition of the hourly aggregated consumption over the customers considering as period of the time series a week is reported in figure~\ref{fig:demanddecomposition}. % TODO describe it ...
 
-Data stats and correlation with weather data ...
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{images/demand/hourly_decomposition_week_period}
+\caption{The time series decomposition of the hourly aggregated consumption over the customers considering as period of the time series a week.}
+\label{fig:demanddecomposition}
+\end{figure}
+
+The auto-correlation of the hourly aggregated consumption over the customers is reported in figure~\ref{fig:demandcorrelation}. % TODO describe it ...
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{images/demand/hourly_correlation_week_range}
+\caption{The auto-correlation of the hourly aggregated consumption over the customers.}
+\label{fig:demandcorrelation}
+\end{figure}
+
+The coefficients given by the Fourier transform for the hourly aggregated consumption over the customers are reported in figure~\ref{fig:demandft}. % TODO describe it ...
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{images/demand/ft_hour_week}
+\caption{The coefficients given by the Fourier transform for the hourly aggregated consumption over the customers.}
+\label{fig:demandft}
+\end{figure}
+
+The daily aggregated consumption over the customers is reported in figure\ref{fig:demanddataplotday}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\textwidth]{images/demand/data_day_aggregated_plot}
+\caption{The daily aggregated consumption over the customers.}
+\label{fig:demanddataplotday}
+\end{figure}
+
+The time series decomposition of the daily aggregated consumption over the customers considering as period of the time series a week is reported in figure~\ref{fig:demanddecompositionday}. % TODO describe it ...
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{images/demand/daily_aggregated_decomposition}
+\caption{The time series decomposition of the daily aggregated consumption over the customers considering as period of the time series a week.}
+\label{fig:demanddecompositionday}
+\end{figure}
+
+The auto-correlation of the daily aggregated consumption over the customers is reported in figure~\ref{fig:demandcorrelationday}. % TODO describe it ...
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{images/demand/daily_aggregated_correlation}
+\caption{The auto-correlation of the daily aggregated consumption over the customers.}
+\label{fig:demandcorrelationday}
+\end{figure}
+
+The coefficients given by the Fourier transform for the daily aggregated consumption over the customers are reported in figure~\ref{fig:demandftday}. % TODO describe it ...
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{images/demand/ft_day}
+\caption{The coefficients given by the Fourier transform for the daily aggregated consumption over the customers.}
+\label{fig:demandftday}
+\end{figure}
 
 Basic data is enhanced with the air temperature, the apparent temperature, and the relative humidity.
+Pearson correlation coefficient was used to study the correlation between the consumption and the weather variables since it represents a measure of the linear relationship between them.
+Spearman's rank correlation coefficient was also used to study the correlation between the consumption and the weather variables since it represents a measure of the monotonic relationship between them.
+The correlation with weather data was computed using the pearsonr and spearmanr methods provided by the scipy library\footnote{ \url{https://scipy.org/} } and results that:
+\begin{itemize}
+  \item the hourly aggregated consumption over the customers with respect to the air temperature has a Pearson correlation coefficient of 0.4480 and a Spearman's rank correlation coefficient of 0.4378;
+  \item the hourly aggregated consumption over the customers with respect to the apparent temperature has a coefficient of 0.4475 and a Spearman's rank correlation coefficient of 0.4368;
+  \item the hourly aggregated consumption over the customers with respect to the relative humidity has a coefficient of -0.2689 and a Spearman's rank correlation coefficient of -0.3173.
+\end{itemize}
+
+The daily correlation with weather data results that:
+\begin{itemize}
+  \item the daily aggregated consumption over the customers with respect to the air temperature has a Pearson correlation coefficient of 0.3957 and a Spearman's rank correlation coefficient of 0.3156;
+  \item the daily aggregated consumption over the customers with respect to the apparent temperature has a coefficient of 0.3883 and a Spearman's rank correlation coefficient of 0.3155;
+  \item the daily aggregated consumption over the customers with respect to the relative humidity has a coefficient of -0.0966 and a Spearman's rank correlation coefficient of -0.1582.
+\end{itemize}
+It can be noticed that both the coefficients decreased meaning that the mean weather data over the day is less correlated to the daily consumption with respect to the hourly granularity considered.
 
 Describe the choice of parameters for models ... (list with motivations)
 
-12 splits were used with a test size of 720 each time.
-Basically starting with 5977 entries and predicting every time 720 entries up to reach the last prediction instant where the model has a training size of 13.897.
+Analyze the forecasts of the models for the electricity demand forecasting task (predictive analytics) ...
+12 splits were used for block validation with a test size of 720 each time.
+Basically starting with 5977 entries and predicting every time 720 entries up to reach the last prediction instant where the model has a training size of 13897.
 
 Summary table with results ...
 % TODO where results are the one given by cross validation mean ± std
 % TODO check the consistency of model results in the last period and using cross-validation --> do a table with the differences (+ plot for internal analysis)
+% TODO then do comparison with forecasts of their provider
 
 
 \section{Electricity production forecasting}
 \label{sec:productionval}
 \vspace{0.2 cm}
 
-Analyze the data (descriptive analytics) and the results of the models for the electricity production forecasting task (predictive analytics) ...
-
 As described in the data preprocessing in chapter~\ref{cha:implementation}, single PV plant production data are aggregated to obtain the aggregated production data over the PV plants.
 The target of the predictions is the mean percentage of production, which is calculated as the division of the total produced energy by the total power of the PV plants.
-This allows to have a bounded value from 0 to 100 from which it is possible to obtain the total produced energy simply by multiplying it by the total power of the PV plants.
-(This was also done since PV plants are added over time and this was unpredictable, this results in predicting the percentage of production of the PV plants.)
+This allows us to have a bounded value from 0 to 100 from which it is possible to obtain the total produced energy simply by multiplying it by the total power of the PV plants.
+This was also done since PV plants are added over time and this was unpredictable, this results in predicting the percentage of production of the PV plants.
+This data is analyzed to get some descriptive analytics before finding adequate models to forecast the production.
+The time series decomposition of the hourly percentage of production considering as period of the time series a day is reported in figure~\ref{fig:productiondecomposition}. % TODO describe it ...
 
-Data stats and correlation with weather data ...
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{images/production/hourly_decomposition}
+\caption{The time series decomposition of the hourly percentage of production considering as period of the time series a day.}
+\label{fig:productiondecomposition}
+\end{figure}
+
+The auto-correlation of the hourly percentage of production is reported in figure~\ref{fig:productioncorrelation}. % TODO describe it ...
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{images/production/hourly_correlation_week_range}
+\caption{The auto-correlation of the hourly percentage of production.}
+\label{fig:productioncorrelation}
+\end{figure}
+
+The coefficients given by the Fourier transform for the hourly percentage of production are reported in figure~\ref{fig:productionft}. % TODO describe it ...
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{images/production/ft_hour_day}
+\caption{The coefficients given by the Fourier transform for the hourly percentage of production.}
+\label{fig:productionft}
+\end{figure}
+
+The daily percentage of production is reported in figure\ref{fig:productiondataplotday}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\textwidth]{images/production/data_day_aggregated_plot}
+\caption{The daily percentage of production.}
+\label{fig:productiondataplotday}
+\end{figure}
+
+The time series decomposition of the daily percentage of production considering as period of the time series a week is reported in figure~\ref{fig:productiondecompositionday}. % TODO describe it ...
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{images/production/daily_aggregated_decomposition}
+\caption{The time series decomposition of the daily percentage of production considering as period of the time series a week.}
+\label{fig:productiondecompositionday}
+\end{figure}
+
+The auto-correlation of the daily percentage of production is reported in figure~\ref{fig:productioncorrelationday}. % TODO describe it ...
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{images/production/daily_aggregated_correlation}
+\caption{The auto-correlation of the daily percentage of production.}
+\label{fig:productioncorrelationday}
+\end{figure}
+
+The coefficients given by the Fourier transform for the daily percentage of production are reported in figure~\ref{fig:productionftday}. % TODO describe it ...
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{images/production/ft_day}
+\caption{The coefficients given by the Fourier transform for the daily percentage of production.}
+\label{fig:productionftday}
+\end{figure}
 
 Basic data is enhanced with the air temperature, the apparent temperature, the relative humidity, the wind speed, the wind direction, the pressure altimeter, the visibility, the sky coverage, the diffuse horizontal irradiance, the direct normal irradiance, the global horizontal irradiance, the solar radiation, the UV index, the solar elevation angle, and the solar azimuth angle.
-Only the hourly granularity is considered since PV plants are highly correlated with weather data and the aggregation over the day loses this correlation.
+Pearson correlation coefficient was used to study the correlation between the production and the weather variables since it represents a measure of the linear relationship between them.
+Spearman's rank correlation coefficient was also used to study the correlation between the production and the weather variables since it represents a measure of the monotonic relationship between them.
+The correlation with weather data was computed using the pearsonr and spearmanr methods provided by the scipy library and results that:
+\begin{itemize}
+  \item the hourly aggregated consumption over the customers with respect to the air temperature has a Pearson correlation coefficient of 0.5621 and a Spearman's rank correlation coefficient of 0.5185;
+  \item the hourly aggregated consumption over the customers with respect to the apparent temperature has a coefficient of 0.5410 and a Spearman's rank correlation coefficient of 0.5032;
+  \item the hourly aggregated consumption over the customers with respect to the relative humidity has a coefficient of -0.6318 and a Spearman's rank correlation coefficient of -0.5969;
+  \item the hourly aggregated consumption over the customers with respect to the wind speed has a coefficient of 0.3105 and a Spearman's rank correlation coefficient of 0.3237;
+  \item the hourly aggregated consumption over the customers with respect to the wind direction has a coefficient of -0.1919 and a Spearman's rank correlation coefficient of -0.2155;
+  \item the hourly aggregated consumption over the customers with respect to the pressure altimeter has a coefficient of -0.2092 and a Spearman's rank correlation coefficient of -0.2645;
+  \item the hourly aggregated consumption over the customers with respect to the visibility has a coefficient of -0.0132 and a Spearman's rank correlation coefficient of 0.0355;
+  \item the hourly aggregated consumption over the customers with respect to the sky coverage has a coefficient of -0.2822 and a Spearman's rank correlation coefficient of -0.2375;
+  \item the hourly aggregated consumption over the customers with respect to the diffuse horizontal irradiance has a coefficient of 0.8559 and a Spearman's rank correlation coefficient of 0.9340;
+  \item the hourly aggregated consumption over the customers with respect to the direct normal irradiance has a coefficient of 0.8399 and a Spearman's rank correlation coefficient of 0.9315;
+  \item the hourly aggregated consumption over the customers with respect to the global horizontal irradiance has a coefficient of 0.8791 and a Spearman's rank correlation coefficient of 0.9357;
+  \item the hourly aggregated consumption over the customers with respect to the solar radiation has a coefficient of 0.9073 and a Spearman's rank correlation coefficient of 0.9472;
+  \item the hourly aggregated consumption over the customers with respect to the UV index has a coefficient of 0.8571 and a Spearman's rank correlation coefficient of 0.9392;
+  \item the hourly aggregated consumption over the customers with respect to the solar elevation angle has a coefficient of 0.8107 and a Spearman's rank correlation coefficient of 0.9057;
+  \item the hourly aggregated consumption over the customers with respect to the solar azimuth angle has a coefficient of 0.0450 and a Spearman's rank correlation coefficient of 0.0465.
+\end{itemize}
+Since the air temperature, the apparent temperature, the relative humidity, the diffuse horizontal irradiance, the direct normal irradiance, the global horizontal irradiance, the solar radiation, the UV index, the solar elevation angle, and the solar azimuth angle have a high correlation while the others are not so high, just these are used in the models.  % TODO probably remove solar azimuth angle?
+
+The daily correlation with weather data results that:
+\begin{itemize}
+  \item the daily aggregated consumption over the customers with respect to the air temperature has a Pearson correlation coefficient of 0.7587 and a Spearman's rank correlation coefficient of 0.7701;
+  \item the daily aggregated consumption over the customers with respect to the apparent temperature has a coefficient of 0.7387 and a Spearman's rank correlation coefficient of 0.7451;
+  \item the daily aggregated consumption over the customers with respect to the relative humidity has a coefficient of -0.7619 and a Spearman's rank correlation coefficient of -0.7501;
+  \item the daily aggregated consumption over the customers with respect to the wind speed has a coefficient of 0.1874 and a Spearman's rank correlation coefficient of 0.3863;
+  \item the daily aggregated consumption over the customers with respect to the wind direction has a coefficient of -0.2384 and a Spearman's rank correlation coefficient of -0.2691;
+  \item the daily aggregated consumption over the customers with respect to the pressure altimeter has a coefficient of -0.2525 and a Spearman's rank correlation coefficient of -0.2585;
+  \item the daily aggregated consumption over the customers with respect to the visibility has a coefficient of 0.2093 and a Spearman's rank correlation coefficient of 0.3096;
+  \item the daily aggregated consumption over the customers with respect to the sky coverage has a coefficient of -0.7081 and a Spearman's rank correlation coefficient of -0.6613;
+  \item the daily aggregated consumption over the customers with respect to the diffuse horizontal irradiance has a coefficient of 0.6281 and a Spearman's rank correlation coefficient of 0.6968;
+  \item the daily aggregated consumption over the customers with respect to the direct normal irradiance has a coefficient of 0.6230 and a Spearman's rank correlation coefficient of 0.6952;
+  \item the daily aggregated consumption over the customers with respect to the global horizontal irradiance has a coefficient of 0.6372 and a Spearman's rank correlation coefficient of 0.7016;
+  \item the daily aggregated consumption over the customers with respect to the solar radiation has a coefficient of 0.7912 and a Spearman's rank correlation coefficient of 0.8031;
+  \item the daily aggregated consumption over the customers with respect to the UV index has a coefficient of 0.8405 and a Spearman's rank correlation coefficient of 0.8693;
+  \item the daily aggregated consumption over the customers with respect to the solar elevation angle has a coefficient of 0.6499 and a Spearman's rank correlation coefficient of 0.7111;
+  \item the daily aggregated consumption over the customers with respect to the solar azimuth angle has a coefficient of -0.0439 and a Spearman's rank correlation coefficient of 0.2738.
+\end{itemize}
+It can be noticed that both the coefficients decreased meaning that the mean weather data over the day is less correlated to the daily consumption with respect to the hourly granularity considered.
+Only the hourly granularity is considered since PV plants are highly correlated with weather data and the aggregation over the day loses part of this correlation.
+
 If we were forecasting the production of each PV plant individually, the weather data at the specific locations of the plants would result in a higher correlation with the production data and likely allow the models to produce more accurate forecasts.
 However, since we are aggregating the production from multiple PV plants and looking for the overall percentage of production in the hour, using the weather data from a location located in the middle of the PV plants is also acceptable.
 In figure~\ref{fig:pvplantsmap}, the locations of the PV plants and of the weather station are reported.
@@ -213,9 +392,14 @@ In figure~\ref{fig:pvplantsmap}, the locations of the PV plants and of the weath
 
 Describe the choice of parameters for models ... (list with motivations)
 
+Analyze the forecasts of the models for the electricity production forecasting task (predictive analytics) ...
+12 splits were used for block validation with a test size of 168 each time.
+Basically starting with 5280 entries and predicting every time 168 entries up to reach the last prediction instant where the model has a training size of 7128.
+
 Summary table with results ...
 % TODO where results are the one given by cross validation mean ± std
 % TODO check the consistency of model results in the last period and using cross-validation --> do a table with the differences (+ plot for internal analysis)
+% TODO then do comparison with forecasts of their provider
 
 
 \section{Consumption baseline forecasting} 
