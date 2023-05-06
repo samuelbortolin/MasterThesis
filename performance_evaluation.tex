@@ -125,7 +125,7 @@ The graphical representation of the hourly aggregated total and mean percentage 
 \end{figure}
 
 The same weather data from the same provider and the same weather station were used for all the tasks.
-While it is reasonable to assume that some weather conditions, such as clouds, may vary and affect the consumption and production differently, this approach was taken since the customers and the PV plants were in the same area, with a maximum distance of around 100 km between them, and also because the value of the weather parameters is an average of the values recorded in the past hour.
+While it is reasonable to assume that some weather conditions, such as clouds, may vary and affect consumption and production differently, this approach was taken since the customers and the PV plants were in the same area, with a maximum distance of around 100 km between them, and also because the value of the weather parameters is an average of the values recorded in the past hour.
 Therefore, using the same weather data is deemed appropriate for the analysis at hand, given that it reflects the weather conditions in the area over a broad time frame.
 
 
@@ -138,11 +138,31 @@ These are standard and widely used metrics in time series forecasting for differ
 The MAPE is defined as $\text{MAPE}(y, \hat{y}) = \frac{100\%}{N} \sum_{i=0}^{N - 1} \frac{|y_i - \hat{y}_i|}{|y_i|}$.
 It is the most relevant error metric for all the tasks since it percentage-based error metric that takes into account the magnitude of the errors relative to the actual values.
 The MAE is defined as $\text{MAE}(y, \hat{y}) = \frac{ \sum_{i=0}^{N - 1} |y_i - \hat{y}_i| }{N}$.
-It is the most suitable error metric in consumption baseline forecasting where there is a high variability from very low to high values, and electricity production forecasting where there is a significant number of zeros when the sun is not present.
+It is the most suitable error metric in consumption baseline forecasting where there is a high variability from very low to high values, and electricity production forecasting where there is a significant number of zeros when the sun is absent.
 
-Describe how the test of the performance of the models works ...
+For assessing the model performance when dealing with time series data, the traditional cross-validation techniques are not suitable as they assume that the data points are independent and identically distributed (i.i.d), which is not the case in time series data, as also reported in the chapter~\ref{cha:soa} by the following articles \cite{BERGMEIR2012192, Cerqueira2020}.
+In fact, in time series data the order of the observations matters, and there is a temporal dependencies between the observations.
+Therefore, a more appropriate technique for evaluating time series models is time series cross-validation.
+The basic idea of time series cross-validation is to split the data into multiple training and test sets, where the training set only includes data from the past and the test set includes data from the future.
+This simulates the real-world scenario where we want to make predictions about the future based on past data.
+In figure~\ref{fig:crossvalidation}, the schematic representation of how the cross-validation was performed is reported, 12 splits were used with a test size depending on the specific use case.
 
-Treat the validation: describe the blocked k-fold validation and the hold-out approach repeated in multiple periods ...
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{images/cross_validation}
+\caption{The schematic representation of the blocked k-fold validation adopted.}
+\label{fig:crossvalidation}
+\end{figure}
+
+Another technique, reported in \cite{Cerqueira2020} is the repeated Holdout Out‐of‐sample tested in multiple testing periods with a Monte Carlo simulation using 70\% of the total observations of the time series in each test.
+For each period, a random point is picked from the time series.
+The previous window comprising 60\% of the time series is used for training and the following window of 10\% of the time series is used for testing.
+In the paper was stated that the approach provided the most accurate estimates when the time series are non-stationary.
+However, for having the same evaluation mechanisms on all the models and simulating the fact that the model starts with limited data and then the training amount increase over time to obtain better performance, block validation was used using the TimeSeriesSplit provided by the scikit-learn library.
+Moreover, the considered data are without a strong trend as reported in the dedicated sections of the specific use cases where the data and the model forecasts are analyzed.
+
+In addition to the cross-validation results also the results on the last split using the rest as training are reported.
+This was done because it provides insight on which could be the performance of the models in forecasting the near future data with the currently available training data.
 
 
 \section{Electricity demand forecasting}
@@ -156,6 +176,9 @@ Data stats and correlation with weather data ...
 Basic data is enhanced with the air temperature, the apparent temperature, and the relative humidity.
 
 Describe the choice of parameters for models ... (list with motivations)
+
+12 splits were used with a test size of 720 each time.
+Basically starting with 5977 entries and predicting every time 720 entries up to reach the last prediction instant where the model has a training size of 13.897.
 
 Summary table with results ...
 % TODO where results are the one given by cross validation mean ± std
