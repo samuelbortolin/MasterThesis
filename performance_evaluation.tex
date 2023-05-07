@@ -394,7 +394,7 @@ Describe the choice of parameters for models ... (list with motivations)
 
 Analyze the forecasts of the models for the electricity production forecasting task (predictive analytics) ...
 12 splits were used for block validation with a test size of 168 each time.
-Basically starting with 5280 entries and predicting every time 168 entries up to reach the last prediction instant where the model has a training size of 7128.
+Basically starting with 5280 entries and predicting every time 168 entries up to reach the last prediction instant where the model has a training size of 7128. % TODO
 
 Summary table with results ...
 % TODO where results are the one given by cross validation mean ± std
@@ -406,16 +406,214 @@ Summary table with results ...
 \label{sec:baselineval}
 \vspace{0.2 cm}
 
-Analyze the data (descriptive analytics) and the results of the models for the consumption baseline forecasting task (predictive analytics) ...
+The consumption data of the three customers are analyzed to get some descriptive analytics before finding adequate models to forecast the consumption baseline of each customer.
+The time series decomposition of the hourly consumption of the three customers considering as period of the time series a week is reported in figure~\ref{fig:decompositioncustomer}. % TODO describe them ...
 
-Data stats and correlation with weather data ...
+\begin{figure}[H]
+\begin{minipage}[b]{8.5cm}
+\centering
+\includegraphics[width=1\textwidth]{images/baseline/hourly_decomposition_week_period_customer1}
+\subcaption{First customer.}
+\label{fig:decompositioncustomer1}
+\end{minipage}
+\ \hspace{2mm} \
+\begin{minipage}[b]{8.5cm}
+\centering
+\includegraphics[width=1\textwidth]{images/baseline/hourly_decomposition_week_period_customer2}
+\subcaption{Second customer.}
+\label{fig:decompositioncustomer2}
+\end{minipage}
+\begin{minipage}[b]{17cm}
+\centering
+\includegraphics[width=0.5\textwidth]{images/baseline/hourly_decomposition_week_period_customer3}
+\subcaption{Third customer.}
+\label{fig:decompositioncustomer3}
+\end{minipage}
+\label{fig:decompositioncustomer}
+\caption{The time series decomposition of the hourly consumption of the three customers considering as period of the time series a week.}
+\end{figure}
+
+The auto-correlation of the hourly consumption of the three customers is reported in figure~\ref{fig:correlationcustomer}. % TODO describe them ...
+
+\begin{figure}[H]
+\begin{minipage}[b]{8.5cm}
+\centering
+\includegraphics[width=1\textwidth]{images/baseline/hourly_correlation_week_range_customer1}
+\subcaption{First customer.}
+\label{fig:correlationcustomer1}
+\end{minipage}
+\ \hspace{2mm} \
+\begin{minipage}[b]{8.5cm}
+\centering
+\includegraphics[width=1\textwidth]{images/baseline/hourly_correlation_week_range_customer2}
+\subcaption{Second customer.}
+\label{fig:correlationcustomer2}
+\end{minipage}
+\begin{minipage}[b]{17cm}
+\centering
+\includegraphics[width=0.5\textwidth]{images/baseline/hourly_correlation_week_range_customer3}
+\subcaption{Third customer.}
+\label{fig:correlationcustomer3}
+\end{minipage}
+\label{fig:correlationcustomer}
+\caption{The auto-correlation of the hourly consumption of the three customers.}
+\end{figure}
+
+The coefficients given by the Fourier transform for the hourly consumption of the three customers are reported in figure~\ref{fig:ftcustomer}. % TODO describe them ...
+
+\begin{figure}[H]
+\begin{minipage}[b]{8.5cm}
+\centering
+\includegraphics[width=1\textwidth]{images/baseline/ft_hour_week_customer1}
+\subcaption{First customer.}
+\label{fig:ftcustomer1}
+\end{minipage}
+\ \hspace{2mm} \
+\begin{minipage}[b]{8.5cm}
+\centering
+\includegraphics[width=1\textwidth]{images/baseline/ft_hour_week_customer2}
+\subcaption{Second customer.}
+\label{fig:ftcustomer2}
+\end{minipage}
+\begin{minipage}[b]{17cm}
+\centering
+\includegraphics[width=0.5\textwidth]{images/baseline/ft_hour_week_customer3}
+\subcaption{Third customer.}
+\label{fig:ftcustomer3}
+\end{minipage}
+\label{fig:ftcustomer}
+\caption{The coefficients given by the Fourier transform of the hourly consumption of the three customers.}
+\end{figure}
+
+The daily consumption of the three customers is reported in figure\ref{fig:dataplotdaycustomer}.
+
+\begin{figure}[H]
+\begin{minipage}[b]{8.5cm}
+\centering
+\includegraphics[width=1\textwidth]{images/baseline/data_day_aggregated_plot_customer1}
+\subcaption{First customer.}
+\label{fig:dataplotdaycustomer1}
+\end{minipage}
+\ \hspace{2mm} \
+\begin{minipage}[b]{8.5cm}
+\centering
+\includegraphics[width=1\textwidth]{images/baseline/data_day_aggregated_plot_customer2}
+\subcaption{Second customer.}
+\label{fig:dataplotdaycustomer2}
+\end{minipage}
+\begin{minipage}[b]{17cm}
+\centering
+\includegraphics[width=0.5\textwidth]{images/baseline/data_day_aggregated_plot_customer3}
+\subcaption{Third customer.}
+\label{fig:dataplotdaycustomer3}
+\end{minipage}
+\label{fig:dataplotdaycustomer}
+\caption{The daily consumption of the three customers.}
+\end{figure}
+
+The time series decomposition of the daily consumption of the three customers considering as period of the time series a week is reported in figure~\ref{fig:decompositiondaycustomer}. % TODO describe them ...
+
+\begin{figure}[H]
+\begin{minipage}[b]{8.5cm}
+\centering
+\includegraphics[width=1\textwidth]{images/baseline/daily_aggregated_decomposition_customer1}
+\subcaption{First customer.}
+\label{fig:decompositiondaycustomer1}
+\end{minipage}
+\ \hspace{2mm} \
+\begin{minipage}[b]{8.5cm}
+\centering
+\includegraphics[width=1\textwidth]{images/baseline/daily_aggregated_decomposition_customer2}
+\subcaption{Second customer.}
+\label{fig:decompositiondaycustomer2}
+\end{minipage}
+\begin{minipage}[b]{17cm}
+\centering
+\includegraphics[width=0.5\textwidth]{images/baseline/daily_aggregated_decomposition_customer3}
+\subcaption{Third customer.}
+\label{fig:decompositiondaycustomer3}
+\end{minipage}
+\label{fig:decompositiondaycustomer}
+\caption{The time series decomposition of the daily consumption of the three customers considering as period of the time series a week.}
+\end{figure}
+
+The auto-correlation of the daily consumption of the three customers is reported in figure~\ref{fig:correlationdaycustomer}. % TODO describe them ...
+
+\begin{figure}[H]
+\begin{minipage}[b]{8.5cm}
+\centering
+\includegraphics[width=1\textwidth]{images/baseline/daily_aggregated_correlation_customer1}
+\subcaption{First customer.}
+\label{fig:correlationdaycustomer1}
+\end{minipage}
+\ \hspace{2mm} \
+\begin{minipage}[b]{8.5cm}
+\centering
+\includegraphics[width=1\textwidth]{images/baseline/daily_aggregated_correlation_customer2}
+\subcaption{Second customer.}
+\label{fig:correlationdaycustomer2}
+\end{minipage}
+\begin{minipage}[b]{17cm}
+\centering
+\includegraphics[width=0.5\textwidth]{images/baseline/daily_aggregated_correlation_customer3}
+\subcaption{Third customer.}
+\label{fig:correlationdaycustomer3}
+\end{minipage}
+\label{fig:correlationdaycustomer}
+\caption{The auto-correlation of the daily consumption of the three customers.}
+\end{figure}
+
+The coefficients given by the Fourier transform for the daily consumption of the three customers are reported in figure~\ref{fig:demandftday}. % TODO describe them ...
+
+\begin{figure}[H]
+\begin{minipage}[b]{8.5cm}
+\centering
+\includegraphics[width=1\textwidth]{images/baseline/ft_day_customer1}
+\subcaption{First customer.}
+\label{fig:ftdaycustomer1}
+\end{minipage}
+\ \hspace{2mm} \
+\begin{minipage}[b]{8.5cm}
+\centering
+\includegraphics[width=1\textwidth]{images/baseline/ft_day_customer2}
+\subcaption{Second customer.}
+\label{fig:ftdaycustomer2}
+\end{minipage}
+\begin{minipage}[b]{17cm}
+\centering
+\includegraphics[width=0.5\textwidth]{images/baseline/ft_day_customer3}
+\subcaption{Third customer.}
+\label{fig:ftdaycustomer3}
+\end{minipage}
+\label{fig:ftdaycustomer}
+\caption{The coefficients given by the Fourier transform of the daily consumption of the three customers.}
+\end{figure}
 
 As can be noticed from the data, there is high variability in consumption and low auto-correlation, this suggests how it is difficult to produce highly accurate results on a single customer level.
 With just the time series of a few users, it is very difficult to learn a well-performing model, having more users it could be possible to learn certain generic trends or standard behaviors.
 
 Basic data is enhanced with the air temperature, the apparent temperature, and the relative humidity.
+Pearson correlation coefficient was used to study the correlation between the consumption and the weather variables since it represents a measure of the linear relationship between them.
+Spearman's rank correlation coefficient was also used to study the correlation between the consumption and the weather variables since it represents a measure of the monotonic relationship between them.
+The correlation with weather data was computed using the pearsonr and spearmanr methods provided by the scipy library and results that:
+\begin{itemize}
+  \item the hourly consumption of the three customers with respect to the air temperature has a Pearson correlation coefficient of -0.2491, 0.0263, and -0.1469 respectively and a Spearman's rank correlation coefficient of -0.2088, 0.1257, and -0.0356 respectively;
+  \item the hourly consumption of the three customers with respect to the apparent temperature has a coefficient of -0.2434, 0.0307, and -0.1494 respectively and a Spearman's rank correlation coefficient of -0.2082, 0.1263, and -0.0366 respectively;
+  \item the hourly consumption of the three customers with respect to the relative humidity has a coefficient of 0.1193, -0.0810, and -0.0753 respectively and a Spearman's rank correlation coefficient of 0.1491, -0.0916, and -0.0814 respectively.
+\end{itemize}
+
+The daily correlation with weather data results that:
+\begin{itemize}
+  \item the daily consumption of the three customers with respect to the air temperature has a Pearson correlation coefficient of -0.5538, -0.2286, and -0.6707 respectively and a Spearman's rank correlation coefficient of -0.5154, -0.2639, and -0.6949 respectively;
+  \item the daily consumption of the three customers with respect to the apparent temperature has a coefficient of -0.5356, -0.2276, and -0.6768 respectively and a Spearman's rank correlation coefficient of -0.5156, -0.2634, and -0.6975 respectively;
+  \item the daily consumption of the three customers with respect to the relative humidity has a coefficient of 0.1241, 0.0100, and 0.1368 respectively and a Spearman's rank correlation coefficient of 0.1381, 0.0409, and 0.2077 respectively.
+\end{itemize}
+It can be noticed that both the coefficients increased meaning that the mean weather data over the day is more correlated to the daily consumption with respect to the hourly granularity considered.
 
 Describe the choice of parameters for models ... (list with motivations)
+
+Analyze the forecasts of the models for the electricity demand forecasting task (predictive analytics) ...
+12 splits were used for block validation with a test size of 168 each time. % TODO
 
 Summary table with results ...
 % TODO where results are the one given by cross validation mean ± std
