@@ -50,9 +50,9 @@ Specifically, it suggested the presence of two consumption peaks: one in the sum
 
 The consumption data from single customers consists of hourly aggregated consumption data of three customers:
 \begin{enumerate}
-  \item from June 2021 to August 2022 for a total of 10952 total entries (represented in figure~\ref{fig:dataplotcustomer1});
-  \item from September 2021 to May 2022 for a total of 5855 total entries (represented in figure~\ref{fig:dataplotcustomer2});
-  \item from September 2021 to August 2022 for a total of 8760 total entries (represented in figure~\ref{fig:dataplotcustomer3}).
+  \item from June 2021 to August 2022 for a total of 10952 total entries and it is represented in figure~\ref{fig:dataplotcustomer1};
+  \item from September 2021 to May 2022 for a total of 5855 total entries and it is represented in figure~\ref{fig:dataplotcustomer2};
+  \item from September 2021 to August 2022 for a total of 8760 total entries and it is represented in figure~\ref{fig:dataplotcustomer3}.
 \end{enumerate}
 The total entries for the three customers are 25567 in the overall period from June 2021 to August 2022.
 
@@ -107,6 +107,10 @@ The production data from 8 PV plants consists of hourly aggregated production da
 The total entries for the 8 PV plants are 29836 total entries in the overall period from January 2022 to October 2022, aggregating over plants the resulting entries are 7296.
 The graphical representation of the hourly aggregated total and mean percentage production data are reported respectively in figure~\ref{fig:productiondataplot} and figure~\ref{fig:productiondataplotpercentage}.
 
+The same weather data from the same provider and the same weather station were used for all the tasks.
+While it is reasonable to assume that some weather conditions, such as clouds, may vary and affect consumption and production differently, this approach was taken since the customers and the PV plants were in the same area, with a maximum distance of around 100 km between them, and also because the value of the weather parameters is an average of the values recorded in the past hour.
+Therefore, using the same weather data is deemed appropriate for the analysis at hand, given that it reflects the weather conditions in the area over a broad time frame.
+
 \begin{figure}[H]
 \begin{minipage}[b]{8.5cm}
 \centering
@@ -124,10 +128,6 @@ The graphical representation of the hourly aggregated total and mean percentage 
 \caption{The graphical representation of the hourly aggregated \subref{fig:umlsingleplant} total and \subref{fig:umlsingleplant} mean percentage production data.}
 \end{figure}
 
-The same weather data from the same provider and the same weather station were used for all the tasks.
-While it is reasonable to assume that some weather conditions, such as clouds, may vary and affect consumption and production differently, this approach was taken since the customers and the PV plants were in the same area, with a maximum distance of around 100 km between them, and also because the value of the weather parameters is an average of the values recorded in the past hour.
-Therefore, using the same weather data is deemed appropriate for the analysis at hand, given that it reflects the weather conditions in the area over a broad time frame.
-
 
 \section{Evaluation methodology}
 \label{sec:methodology}
@@ -140,19 +140,19 @@ It is the most relevant error metric for all the tasks since it is a percentage-
 The MAE is defined as $\text{MAE}(y, \hat{y}) = \frac{ \sum_{i=0}^{N - 1} |y_i - \hat{y}_i| }{N}$.
 It is the most suitable error metric in consumption baseline forecasting where there is a high variability from very low to high values, and electricity production forecasting where there is a significant number of zeros when the sun is absent.
 
-For assessing the model performance when dealing with time series data, the traditional cross-validation techniques are not suitable as they assume that the data points are independent and identically distributed (i.i.d.), which is not the case in time series data, as also reported in the chapter~\ref{cha:soa} by the following articles \cite{BERGMEIR2012192, Cerqueira2020}.
-In fact, in time series data the order of the observations matters, and there are temporal dependencies between the observations.
-Therefore, a more appropriate technique for evaluating time series models is time series cross-validation.
-The basic idea of time series cross-validation is to split the data into multiple training and test sets, where the training set only includes data from the past and the test set includes data from the future.
-This simulates the real-world scenario where we want to make predictions about the future based on past data.
-In figure~\ref{fig:crossvalidation}, the schematic representation of how the cross-validation was performed is reported, 12 splits were used with a test size depending on the specific use case.
-
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{images/cross_validation}
 \caption{The schematic representation of the blocked k-fold validation adopted.}
 \label{fig:crossvalidation}
 \end{figure}
+
+For assessing the model performance when dealing with time series data, the traditional cross-validation techniques are not suitable as they assume that the data points are independent and identically distributed (i.i.d.), which is not the case in time series data, as also reported in the chapter~\ref{cha:soa} by the following articles \cite{BERGMEIR2012192, Cerqueira2020}.
+In fact, in time series data the order of the observations matters, and there are temporal dependencies between the observations.
+Therefore, a more appropriate technique for evaluating time series models is time series cross-validation.
+The basic idea of time series cross-validation is to split the data into multiple training and test sets, where the training set only includes data from the past and the test set includes data from the future.
+This simulates the real-world scenario where we want to make predictions about the future based on past data.
+In figure~\ref{fig:crossvalidation}, the schematic representation of how the cross-validation was performed is reported, 12 splits were used with a test size depending on the specific use case.
 
 Another technique, reported in \cite{Cerqueira2020} is the repeated Holdout Out‐of‐sample tested in multiple testing periods with a Monte Carlo simulation using 70\% of the total observations of the time series in each test.
 For each period, a random point is picked from the time series.
@@ -234,33 +234,34 @@ The coefficients given by the Fourier transform for the daily aggregated consump
 \end{figure}
 
 Basic data is enhanced with the air temperature, the apparent temperature, and the relative humidity.
-Pearson correlation coefficient was used to study the correlation between the consumption and the weather variables since it represents a measure of the linear relationship between them.
-Spearman's rank correlation coefficient was also used to study the correlation between the consumption and the weather variables since it represents a measure of the monotonic relationship between them.
-The correlation with weather data was computed using the pearsonr and spearmanr methods provided by the scipy library\footnote{ \url{https://scipy.org/} } and results that:
+To assess the relationship between these weather variables and the aggregated consumption over the customers, two correlation coefficients were used: Pearson's correlation coefficient and Spearman's rank correlation coefficient.
+Pearson's correlation coefficient measures the strength of the linear relationship between two variables, while Spearman's rank correlation coefficient measures the strength of the monotonic relationship.
+The pearsonr and spearmanr methods of the SciPy library\footnote{ \url{https://scipy.org/} } were used to compute the correlation with weather data.
+The results showed that the hourly aggregated consumption over the customers had:
 \begin{itemize}
-  \item the hourly aggregated consumption over the customers with respect to the air temperature has a Pearson correlation coefficient of 0.4480 and a Spearman's rank correlation coefficient of 0.4378;
-  \item the hourly aggregated consumption over the customers with respect to the apparent temperature has a coefficient of 0.4475 and a Spearman's rank correlation coefficient of 0.4368;
-  \item the hourly aggregated consumption over the customers with respect to the relative humidity has a coefficient of -0.2689 and a Spearman's rank correlation coefficient of -0.3173.
+  \item a Pearson correlation coefficient of 0.4480 and a Spearman's rank correlation coefficient of 0.4378 with respect to the air temperature;
+  \item a Pearson correlation coefficient of 0.4475 and a Spearman's rank correlation coefficient of 0.4368 with respect to the apparent temperature;
+  \item a Pearson correlation coefficient of -0.2689 and a Spearman's rank correlation coefficient of -0.3173 with respect to the relative humidity.
 \end{itemize}
 
-The daily correlation with weather data results that:
+The results showed that the daily aggregated consumption over the customers had:
 \begin{itemize}
-  \item the daily aggregated consumption over the customers with respect to the air temperature has a Pearson correlation coefficient of 0.3957 and a Spearman's rank correlation coefficient of 0.3156;
-  \item the daily aggregated consumption over the customers with respect to the apparent temperature has a coefficient of 0.3883 and a Spearman's rank correlation coefficient of 0.3155;
-  \item the daily aggregated consumption over the customers with respect to the relative humidity has a coefficient of -0.0966 and a Spearman's rank correlation coefficient of -0.1582.
+  \item a Pearson correlation coefficient of 0.3957 and a Spearman's rank correlation coefficient of 0.3156 with respect to the air temperature;
+  \item a Pearson correlation coefficient of 0.3883 and a Spearman's rank correlation coefficient of 0.3155 with respect to the apparent temperature;
+  \item a Pearson correlation coefficient of -0.0966 and a Spearman's rank correlation coefficient of -0.1582 with respect to the relative humidity.
 \end{itemize}
-It can be noticed that both the coefficients decreased meaning that the mean weather data over the day is less correlated to the daily consumption with respect to the hourly granularity considered.
+It can be noticed that both the coefficients decreased considering the daily data meaning that the mean weather data over the day is less correlated to the daily aggregated consumption over the customers, compared to the hourly granularity.
 
 Describe the choice of parameters for models ... (list with motivations)
 
 Analyze the forecasts of the models for the electricity demand forecasting task (predictive analytics) ...
 12 splits were used for block validation with a test size of 720 each time.
-Basically starting with 5977 entries and predicting every time 720 entries up to reach the last prediction instant where the model has a training size of 13897.
+Basically starting with 5977 entries and predicting every time 720 entries until reaching the last prediction instant where the model has a training size of 13897.
 
 Summary table with results ...
-% TODO where results are the one given by cross validation mean ± std
+% TODO where results are the one given by cross-validation mean ± std
 % TODO check the consistency of model results in the last period and using cross-validation --> do a table with the differences (+ plot for internal analysis)
-% TODO then do comparison with forecasts of their provider
+% TODO then add the comparison with forecasts of their provider
 
 
 \section{Electricity production forecasting}
@@ -336,47 +337,48 @@ The coefficients given by the Fourier transform for the daily percentage of prod
 \end{figure}
 
 Basic data is enhanced with the air temperature, the apparent temperature, the relative humidity, the wind speed, the wind direction, the pressure altimeter, the visibility, the sky coverage, the diffuse horizontal irradiance, the direct normal irradiance, the global horizontal irradiance, the solar radiation, the UV index, the solar elevation angle, and the solar azimuth angle.
-Pearson correlation coefficient was used to study the correlation between the production and the weather variables since it represents a measure of the linear relationship between them.
-Spearman's rank correlation coefficient was also used to study the correlation between the production and the weather variables since it represents a measure of the monotonic relationship between them.
-The correlation with weather data was computed using the pearsonr and spearmanr methods provided by the scipy library and results that:
+To assess the relationship between these weather variables and the percentage of production, two correlation coefficients were used: Pearson's correlation coefficient and Spearman's rank correlation coefficient.
+Pearson's correlation coefficient measures the strength of the linear relationship between two variables, while Spearman's rank correlation coefficient measures the strength of the monotonic relationship.
+The pearsonr and spearmanr methods of the SciPy library were used to compute the correlation with weather data.
+The results showed that the hourly percentage of production had:
 \begin{itemize}
-  \item the hourly aggregated consumption over the customers with respect to the air temperature has a Pearson correlation coefficient of 0.5621 and a Spearman's rank correlation coefficient of 0.5185;
-  \item the hourly aggregated consumption over the customers with respect to the apparent temperature has a coefficient of 0.5410 and a Spearman's rank correlation coefficient of 0.5032;
-  \item the hourly aggregated consumption over the customers with respect to the relative humidity has a coefficient of -0.6318 and a Spearman's rank correlation coefficient of -0.5969;
-  \item the hourly aggregated consumption over the customers with respect to the wind speed has a coefficient of 0.3105 and a Spearman's rank correlation coefficient of 0.3237;
-  \item the hourly aggregated consumption over the customers with respect to the wind direction has a coefficient of -0.1919 and a Spearman's rank correlation coefficient of -0.2155;
-  \item the hourly aggregated consumption over the customers with respect to the pressure altimeter has a coefficient of -0.2092 and a Spearman's rank correlation coefficient of -0.2645;
-  \item the hourly aggregated consumption over the customers with respect to the visibility has a coefficient of -0.0132 and a Spearman's rank correlation coefficient of 0.0355;
-  \item the hourly aggregated consumption over the customers with respect to the sky coverage has a coefficient of -0.2822 and a Spearman's rank correlation coefficient of -0.2375;
-  \item the hourly aggregated consumption over the customers with respect to the diffuse horizontal irradiance has a coefficient of 0.8559 and a Spearman's rank correlation coefficient of 0.9340;
-  \item the hourly aggregated consumption over the customers with respect to the direct normal irradiance has a coefficient of 0.8399 and a Spearman's rank correlation coefficient of 0.9315;
-  \item the hourly aggregated consumption over the customers with respect to the global horizontal irradiance has a coefficient of 0.8791 and a Spearman's rank correlation coefficient of 0.9357;
-  \item the hourly aggregated consumption over the customers with respect to the solar radiation has a coefficient of 0.9073 and a Spearman's rank correlation coefficient of 0.9472;
-  \item the hourly aggregated consumption over the customers with respect to the UV index has a coefficient of 0.8571 and a Spearman's rank correlation coefficient of 0.9392;
-  \item the hourly aggregated consumption over the customers with respect to the solar elevation angle has a coefficient of 0.8107 and a Spearman's rank correlation coefficient of 0.9057;
-  \item the hourly aggregated consumption over the customers with respect to the solar azimuth angle has a coefficient of 0.0450 and a Spearman's rank correlation coefficient of 0.0465.
+  \item a Pearson correlation coefficient of 0.5621 and a Spearman's rank correlation coefficient of 0.5185 with respect to the air temperature;
+  \item a Pearson correlation coefficient of 0.5410 and a Spearman's rank correlation coefficient of 0.5032 with respect to the apparent temperature;
+  \item a Pearson correlation coefficient of -0.6318 and a Spearman's rank correlation coefficient of -0.5969 with respect to the relative humidity;
+  \item a Pearson correlation coefficient of 0.3105 and a Spearman's rank correlation coefficient of 0.3237 with respect to the wind speed;
+  \item a Pearson correlation coefficient of -0.1919 and a Spearman's rank correlation coefficient of -0.2155 with respect to the wind direction;
+  \item a Pearson correlation coefficient of -0.2092 and a Spearman's rank correlation coefficient of -0.2645 with respect to the pressure altimeter;
+  \item a Pearson correlation coefficient of -0.0132 and a Spearman's rank correlation coefficient of 0.0355 with respect to the visibility;
+  \item a Pearson correlation coefficient of -0.2822 and a Spearman's rank correlation coefficient of -0.2375 with respect to the sky coverage;
+  \item a Pearson correlation coefficient of 0.8559 and a Spearman's rank correlation coefficient of 0.9340 with respect to the diffuse horizontal irradiance;
+  \item a Pearson correlation coefficient of 0.8399 and a Spearman's rank correlation coefficient of 0.9315 with respect to the direct normal irradiance;
+  \item a Pearson correlation coefficient of 0.8791 and a Spearman's rank correlation coefficient of 0.9357 with respect to the global horizontal irradiance;
+  \item a Pearson correlation coefficient of 0.9073 and a Spearman's rank correlation coefficient of 0.9472 with respect to the solar radiation;
+  \item a Pearson correlation coefficient of 0.8571 and a Spearman's rank correlation coefficient of 0.9392 with respect to the UV index;
+  \item a Pearson correlation coefficient of 0.8107 and a Spearman's rank correlation coefficient of 0.9057 with respect to the solar elevation angle;
+  \item a Pearson correlation coefficient of 0.0450 and a Spearman's rank correlation coefficient of 0.0465 with respect to the solar azimuth angle.
 \end{itemize}
-Since the air temperature, the apparent temperature, the relative humidity, the diffuse horizontal irradiance, the direct normal irradiance, the global horizontal irradiance, the solar radiation, the UV index, the solar elevation angle, and the solar azimuth angle have a high correlation while the others are not so high, just these are used in the models.  % TODO probably remove solar azimuth angle?
+Since the air temperature, the apparent temperature, the relative humidity, the diffuse horizontal irradiance, the direct normal irradiance, the global horizontal irradiance, the solar radiation, the UV index, and the solar elevation angle have a high correlation while the others are not so high, just these are used in the models.  % TODO remove solar azimuth angle also in the implementation chapter
 
-The daily correlation with weather data results that:
+The results showed that the daily percentage of production had:
 \begin{itemize}
-  \item the daily aggregated consumption over the customers with respect to the air temperature has a Pearson correlation coefficient of 0.7587 and a Spearman's rank correlation coefficient of 0.7701;
-  \item the daily aggregated consumption over the customers with respect to the apparent temperature has a coefficient of 0.7387 and a Spearman's rank correlation coefficient of 0.7451;
-  \item the daily aggregated consumption over the customers with respect to the relative humidity has a coefficient of -0.7619 and a Spearman's rank correlation coefficient of -0.7501;
-  \item the daily aggregated consumption over the customers with respect to the wind speed has a coefficient of 0.1874 and a Spearman's rank correlation coefficient of 0.3863;
-  \item the daily aggregated consumption over the customers with respect to the wind direction has a coefficient of -0.2384 and a Spearman's rank correlation coefficient of -0.2691;
-  \item the daily aggregated consumption over the customers with respect to the pressure altimeter has a coefficient of -0.2525 and a Spearman's rank correlation coefficient of -0.2585;
-  \item the daily aggregated consumption over the customers with respect to the visibility has a coefficient of 0.2093 and a Spearman's rank correlation coefficient of 0.3096;
-  \item the daily aggregated consumption over the customers with respect to the sky coverage has a coefficient of -0.7081 and a Spearman's rank correlation coefficient of -0.6613;
-  \item the daily aggregated consumption over the customers with respect to the diffuse horizontal irradiance has a coefficient of 0.6281 and a Spearman's rank correlation coefficient of 0.6968;
-  \item the daily aggregated consumption over the customers with respect to the direct normal irradiance has a coefficient of 0.6230 and a Spearman's rank correlation coefficient of 0.6952;
-  \item the daily aggregated consumption over the customers with respect to the global horizontal irradiance has a coefficient of 0.6372 and a Spearman's rank correlation coefficient of 0.7016;
-  \item the daily aggregated consumption over the customers with respect to the solar radiation has a coefficient of 0.7912 and a Spearman's rank correlation coefficient of 0.8031;
-  \item the daily aggregated consumption over the customers with respect to the UV index has a coefficient of 0.8405 and a Spearman's rank correlation coefficient of 0.8693;
-  \item the daily aggregated consumption over the customers with respect to the solar elevation angle has a coefficient of 0.6499 and a Spearman's rank correlation coefficient of 0.7111;
-  \item the daily aggregated consumption over the customers with respect to the solar azimuth angle has a coefficient of -0.0439 and a Spearman's rank correlation coefficient of 0.2738.
+  \item a Pearson correlation coefficient of 0.7587 and a Spearman's rank correlation coefficient of 0.7701 with respect to the air temperature;
+  \item a Pearson correlation coefficient of 0.7387 and a Spearman's rank correlation coefficient of 0.7451 with respect to the apparent temperature;
+  \item a Pearson correlation coefficient of -0.7619 and a Spearman's rank correlation coefficient of -0.7501 with respect to the relative humidity;
+  \item a Pearson correlation coefficient of 0.1874 and a Spearman's rank correlation coefficient of 0.3863 with respect to the wind speed;
+  \item a Pearson correlation coefficient of -0.2384 and a Spearman's rank correlation coefficient of -0.2691 with respect to the wind direction;
+  \item a Pearson correlation coefficient of -0.2525 and a Spearman's rank correlation coefficient of -0.2585 with respect to the pressure altimeter;
+  \item a Pearson correlation coefficient of 0.2093 and a Spearman's rank correlation coefficient of 0.3096 with respect to the visibility;
+  \item a Pearson correlation coefficient of -0.7081 and a Spearman's rank correlation coefficient of -0.6613 with respect to the sky coverage;
+  \item a Pearson correlation coefficient of 0.6281 and a Spearman's rank correlation coefficient of 0.6968 with respect to the diffuse horizontal irradiance;
+  \item a Pearson correlation coefficient of 0.6230 and a Spearman's rank correlation coefficient of 0.6952 with respect to the direct normal irradiance;
+  \item a Pearson correlation coefficient of 0.6372 and a Spearman's rank correlation coefficient of 0.7016 with respect to the global horizontal irradiance;
+  \item a Pearson correlation coefficient of 0.7912 and a Spearman's rank correlation coefficient of 0.8031 with respect to the solar radiation;
+  \item a Pearson correlation coefficient of 0.8405 and a Spearman's rank correlation coefficient of 0.8693 with respect to the UV index;
+  \item a Pearson correlation coefficient of 0.6499 and a Spearman's rank correlation coefficient of 0.7111 with respect to the solar elevation angle;
+  \item a Pearson correlation coefficient of -0.0439 and a Spearman's rank correlation coefficient of 0.2738 with respect to the solar azimuth angle.
 \end{itemize}
-It can be noticed that both the coefficients decreased meaning that the mean weather data over the day is less correlated to the daily consumption with respect to the hourly granularity considered.
+It can be noticed that both the coefficients decreased meaning that the mean weather data over the day is less correlated to the daily percentage of production, compared to the hourly granularity.
 Only the hourly granularity is considered since PV plants are highly correlated with weather data and the aggregation over the day loses part of this correlation.
 
 If we were forecasting the production of each PV plant individually, the weather data at the specific locations of the plants would result in a higher correlation with the production data and likely allow the models to produce more accurate forecasts.
@@ -394,12 +396,12 @@ Describe the choice of parameters for models ... (list with motivations)
 
 Analyze the forecasts of the models for the electricity production forecasting task (predictive analytics) ...
 12 splits were used for block validation with a test size of 168 each time.
-Basically starting with 5280 entries and predicting every time 168 entries up to reach the last prediction instant where the model has a training size of 7128. % TODO
+Basically starting with 5280 entries and predicting every time 168 entries until reaching the last prediction instant where the model has a training size of 7128. % TODO
 
 Summary table with results ...
-% TODO where results are the one given by cross validation mean ± std
+% TODO where results are the one given by cross-validation mean ± std
 % TODO check the consistency of model results in the last period and using cross-validation --> do a table with the differences (+ plot for internal analysis)
-% TODO then do comparison with forecasts of their provider
+% TODO then add the comparison with forecasts of their provider
 
 
 \section{Consumption baseline forecasting} 
@@ -407,7 +409,7 @@ Summary table with results ...
 \vspace{0.2 cm}
 
 The consumption data of the three customers are analyzed to get some descriptive analytics before finding adequate models to forecast the consumption baseline of each customer.
-The time series decomposition of the hourly consumption of the three customers considering as period of the time series a week is reported in figure~\ref{fig:decompositioncustomer}. % TODO describe them ...
+The time series decompositions of the hourly consumption of the three customers considering as period of the time series a week are reported in figure~\ref{fig:decompositioncustomer1}, figure~\ref{fig:decompositioncustomer2}, and figure~\ref{fig:decompositioncustomer3}. % TODO describe them ...
 
 \begin{figure}[H]
 \begin{minipage}[b]{8.5cm}
@@ -429,11 +431,10 @@ The time series decomposition of the hourly consumption of the three customers c
 \subcaption{Third customer.}
 \label{fig:decompositioncustomer3}
 \end{minipage}
-\label{fig:decompositioncustomer}
-\caption{The time series decomposition of the hourly consumption of the three customers considering as period of the time series a week.}
+\caption{The time series decompositions of the hourly consumption of the three customers considering as period of the time series a week.}
 \end{figure}
 
-The auto-correlation of the hourly consumption of the three customers is reported in figure~\ref{fig:correlationcustomer}. % TODO describe them ...
+The auto-correlations of the hourly consumption of the three customers are reported in figure~\ref{fig:correlationcustomer1}, figure~\ref{fig:correlationcustomer2}, and figure~\ref{fig:correlationcustomer3}. % TODO describe them ...
 
 \begin{figure}[H]
 \begin{minipage}[b]{8.5cm}
@@ -455,11 +456,10 @@ The auto-correlation of the hourly consumption of the three customers is reporte
 \subcaption{Third customer.}
 \label{fig:correlationcustomer3}
 \end{minipage}
-\label{fig:correlationcustomer}
-\caption{The auto-correlation of the hourly consumption of the three customers.}
+\caption{The auto-correlations of the hourly consumption of the three customers.}
 \end{figure}
 
-The coefficients given by the Fourier transform for the hourly consumption of the three customers are reported in figure~\ref{fig:ftcustomer}. % TODO describe them ...
+The coefficients given by the Fourier transform for the hourly consumption of the three customers are reported in figure~\ref{fig:ftcustomer1}, figure~\ref{fig:ftcustomer2}, and figure~\ref{fig:ftcustomer3}. % TODO describe them ...
 
 \begin{figure}[H]
 \begin{minipage}[b]{8.5cm}
@@ -481,11 +481,10 @@ The coefficients given by the Fourier transform for the hourly consumption of th
 \subcaption{Third customer.}
 \label{fig:ftcustomer3}
 \end{minipage}
-\label{fig:ftcustomer}
 \caption{The coefficients given by the Fourier transform of the hourly consumption of the three customers.}
 \end{figure}
 
-The daily consumption of the three customers is reported in figure\ref{fig:dataplotdaycustomer}.
+The daily consumption of the three customers are reported in figure\ref{fig:dataplotdaycustomer1}, figure\ref{fig:dataplotdaycustomer2}, and figure\ref{fig:dataplotdaycustomer3}.
 
 \begin{figure}[H]
 \begin{minipage}[b]{8.5cm}
@@ -507,11 +506,10 @@ The daily consumption of the three customers is reported in figure\ref{fig:datap
 \subcaption{Third customer.}
 \label{fig:dataplotdaycustomer3}
 \end{minipage}
-\label{fig:dataplotdaycustomer}
 \caption{The daily consumption of the three customers.}
 \end{figure}
 
-The time series decomposition of the daily consumption of the three customers considering as period of the time series a week is reported in figure~\ref{fig:decompositiondaycustomer}. % TODO describe them ...
+The time series decompositions of the daily consumption of the three customers considering as period of the time series a week are reported in figure~\ref{fig:decompositiondaycustomer1}, figure~\ref{fig:decompositiondaycustomer2}, and figure~\ref{fig:decompositiondaycustomer3}. % TODO describe them ...
 
 \begin{figure}[H]
 \begin{minipage}[b]{8.5cm}
@@ -534,10 +532,10 @@ The time series decomposition of the daily consumption of the three customers co
 \label{fig:decompositiondaycustomer3}
 \end{minipage}
 \label{fig:decompositiondaycustomer}
-\caption{The time series decomposition of the daily consumption of the three customers considering as period of the time series a week.}
+\caption{The time series decompositions of the daily consumption of the three customers considering as period of the time series a week.}
 \end{figure}
 
-The auto-correlation of the daily consumption of the three customers is reported in figure~\ref{fig:correlationdaycustomer}. % TODO describe them ...
+The auto-correlations of the daily consumption of the three customers are reported in figure~\ref{fig:correlationdaycustomer1},  figure~\ref{fig:correlationdaycustomer2}, and  figure~\ref{fig:correlationdaycustomer3}. % TODO describe them ...
 
 \begin{figure}[H]
 \begin{minipage}[b]{8.5cm}
@@ -559,11 +557,10 @@ The auto-correlation of the daily consumption of the three customers is reported
 \subcaption{Third customer.}
 \label{fig:correlationdaycustomer3}
 \end{minipage}
-\label{fig:correlationdaycustomer}
-\caption{The auto-correlation of the daily consumption of the three customers.}
+\caption{The auto-correlations of the daily consumption of the three customers.}
 \end{figure}
 
-The coefficients given by the Fourier transform for the daily consumption of the three customers are reported in figure~\ref{fig:demandftday}. % TODO describe them ...
+The coefficients given by the Fourier transform for the daily consumption of the three customers are reported in figure~\ref{fig:ftdaycustomer1}, figure~\ref{fig:ftdaycustomer2}, and figure~\ref{fig:ftdaycustomer3}. % TODO describe them ...
 
 \begin{figure}[H]
 \begin{minipage}[b]{8.5cm}
@@ -585,7 +582,6 @@ The coefficients given by the Fourier transform for the daily consumption of the
 \subcaption{Third customer.}
 \label{fig:ftdaycustomer3}
 \end{minipage}
-\label{fig:ftdaycustomer}
 \caption{The coefficients given by the Fourier transform of the daily consumption of the three customers.}
 \end{figure}
 
@@ -593,22 +589,23 @@ As can be noticed from the data, there is high variability in consumption and lo
 With just the time series of a few users, it is very difficult to learn a well-performing model, having more users it could be possible to learn certain generic trends or standard behaviors.
 
 Basic data is enhanced with the air temperature, the apparent temperature, and the relative humidity.
-Pearson correlation coefficient was used to study the correlation between the consumption and the weather variables since it represents a measure of the linear relationship between them.
-Spearman's rank correlation coefficient was also used to study the correlation between the consumption and the weather variables since it represents a measure of the monotonic relationship between them.
-The correlation with weather data was computed using the pearsonr and spearmanr methods provided by the scipy library and results that:
+To assess the relationship between these weather variables and the consumption of the three customers, two correlation coefficients were used: Pearson's correlation coefficient and Spearman's rank correlation coefficient.
+Pearson's correlation coefficient measures the strength of the linear relationship between two variables, while Spearman's rank correlation coefficient measures the strength of the monotonic relationship.
+The pearsonr and spearmanr methods of the SciPy library were used to compute the correlation with weather data.
+The results showed that the hourly consumption of the three customers had:
 \begin{itemize}
-  \item the hourly consumption of the three customers with respect to the air temperature has a Pearson correlation coefficient of -0.2491, 0.0263, and -0.1469 respectively and a Spearman's rank correlation coefficient of -0.2088, 0.1257, and -0.0356 respectively;
-  \item the hourly consumption of the three customers with respect to the apparent temperature has a coefficient of -0.2434, 0.0307, and -0.1494 respectively and a Spearman's rank correlation coefficient of -0.2082, 0.1263, and -0.0366 respectively;
-  \item the hourly consumption of the three customers with respect to the relative humidity has a coefficient of 0.1193, -0.0810, and -0.0753 respectively and a Spearman's rank correlation coefficient of 0.1491, -0.0916, and -0.0814 respectively.
+  \item a Pearson correlation coefficient of -0.2491, 0.0263, and -0.1469 respectively and a Spearman's rank correlation coefficient of -0.2088, 0.1257, and -0.0356 respectively with respect to the air temperature;
+  \item a Pearson correlation coefficient of -0.2434, 0.0307, and -0.1494 respectively and a Spearman's rank correlation coefficient of -0.2082, 0.1263, and -0.0366 respectively with respect to the apparent temperature;
+  \item a Pearson correlation coefficient of 0.1193, -0.0810, and -0.0753 respectively and a Spearman's rank correlation coefficient of 0.1491, -0.0916, and -0.0814 respectively with respect to the relative humidity.
 \end{itemize}
 
-The daily correlation with weather data results that:
+The results showed that the daily consumption of the three customers had:
 \begin{itemize}
-  \item the daily consumption of the three customers with respect to the air temperature has a Pearson correlation coefficient of -0.5538, -0.2286, and -0.6707 respectively and a Spearman's rank correlation coefficient of -0.5154, -0.2639, and -0.6949 respectively;
-  \item the daily consumption of the three customers with respect to the apparent temperature has a coefficient of -0.5356, -0.2276, and -0.6768 respectively and a Spearman's rank correlation coefficient of -0.5156, -0.2634, and -0.6975 respectively;
-  \item the daily consumption of the three customers with respect to the relative humidity has a coefficient of 0.1241, 0.0100, and 0.1368 respectively and a Spearman's rank correlation coefficient of 0.1381, 0.0409, and 0.2077 respectively.
+  \item a Pearson correlation coefficient of -0.5538, -0.2286, and -0.6707 respectively and a Spearman's rank correlation coefficient of -0.5154, -0.2639, and -0.6949 respectively with respect to the air temperature;
+  \item a Pearson correlation coefficient of -0.5356, -0.2276, and -0.6768 respectively and a Spearman's rank correlation coefficient of -0.5156, -0.2634, and -0.6975 respectively with respect to the apparent temperature;
+  \item a Pearson correlation coefficient of 0.1241, 0.0100, and 0.1368 respectively and a Spearman's rank correlation coefficient of 0.1381, 0.0409, and 0.2077 respectively with respect to the relative humidity.
 \end{itemize}
-It can be noticed that both the coefficients increased meaning that the mean weather data over the day is more correlated to the daily consumption with respect to the hourly granularity considered.
+It can be noticed that both the coefficients increased considering the daily data meaning that the mean weather data over the day is more correlated to the daily consumption of the three considered customers, compared to the hourly granularity.
 
 Describe the choice of parameters for models ... (list with motivations)
 
@@ -616,5 +613,5 @@ Analyze the forecasts of the models for the electricity demand forecasting task 
 12 splits were used for block validation with a test size of 168 each time. % TODO
 
 Summary table with results ...
-% TODO where results are the one given by cross validation mean ± std
+% TODO where results are the one given by cross-validation mean ± std
 % TODO check the consistency of model results in the last period and using cross-validation --> do a table with the differences (+ plot for internal analysis)
