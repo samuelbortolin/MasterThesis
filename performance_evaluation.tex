@@ -170,34 +170,40 @@ This was done because it provides insight on which could be the performance of t
 \vspace{0.2 cm}
 
 The aggregated consumption data over the customers is analyzed to get some descriptive analytics before finding adequate models to forecast the demand.
-The time series decomposition of the hourly aggregated consumption over the customers considering as period of the time series a week is reported in figure~\ref{fig:demanddecomposition}. % TODO describe it ...
+The time series decomposition using an additive model of the hourly aggregated consumption over the customers considering as period of the time series a week is reported in figure~\ref{fig:demanddecomposition}.
+It showed a considerable amount of noise, comparable to seasonality in magnitude.
+The trend showed 2 peaks during the summer season, the first being more emphasized since corresponds also to a peak in the number of users.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{images/demand/hourly_decomposition_week_period}
+\includegraphics[width=0.5\textwidth]{images/demand/hourly_decomposition_week_period}
 \caption{The time series decomposition of the hourly aggregated consumption over the customers considering as period of the time series a week.}
 \label{fig:demanddecomposition}
 \end{figure}
 
-The auto-correlation of the hourly aggregated consumption over the customers is reported in figure~\ref{fig:demandcorrelation}. % TODO describe it ...
-
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.6\textwidth]{images/demand/hourly_correlation_week_range}
+\includegraphics[width=0.4\textwidth]{images/demand/hourly_correlation_week_range}
 \caption{The auto-correlation of the hourly aggregated consumption over the customers.}
 \label{fig:demandcorrelation}
 \end{figure}
 
-The coefficients given by the Fourier transform for the hourly aggregated consumption over the customers are reported in figure~\ref{fig:demandft}. % TODO describe it ...
+The auto-correlation of the hourly aggregated consumption over the customers is reported in figure~\ref{fig:demandcorrelation}.
+It shows a high auto-correlation value in the close time lags and also at every 24 hours, with an even greater value at one week distance.
+
+The coefficients given by the Fourier transform for the hourly aggregated consumption over the customers are reported in figure~\ref{fig:demandft}.
+The graphical representation shows 2 main frequencies, one representing the weekly periodicity and one the daily periodicity.
+Other minor peaks are present mostly at multiples of the 1/week frequency.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.7\textwidth]{images/demand/ft_hour_week}
+\includegraphics[width=0.4\textwidth]{images/demand/ft_hour_week}
 \caption{The coefficients given by the Fourier transform for the hourly aggregated consumption over the customers.}
 \label{fig:demandft}
 \end{figure}
 
-The daily aggregated consumption over the customers is reported in figure\ref{fig:demanddataplotday}.
+The daily aggregated consumption over the customers is reported in figure~\ref{fig:demanddataplotday}.
+Aggregating the data on a daily basis, it is possible to more clearly observe the weekly pattern of consumption, which exhibits an increase on weekdays and a decrease on weekends.
 
 \begin{figure}[H]
 \centering
@@ -206,29 +212,32 @@ The daily aggregated consumption over the customers is reported in figure\ref{fi
 \label{fig:demanddataplotday}
 \end{figure}
 
-The time series decomposition of the daily aggregated consumption over the customers considering as period of the time series a week is reported in figure~\ref{fig:demanddecompositionday}. % TODO describe it ...
-
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{images/demand/daily_aggregated_decomposition}
+\includegraphics[width=0.5\textwidth]{images/demand/daily_aggregated_decomposition}
 \caption{The time series decomposition of the daily aggregated consumption over the customers considering as period of the time series a week.}
 \label{fig:demanddecompositionday}
 \end{figure}
 
-The auto-correlation of the daily aggregated consumption over the customers is reported in figure~\ref{fig:demandcorrelationday}. % TODO describe it ...
+Figure~\ref{fig:demanddecompositionday} shows the time series decomposition of the daily aggregated consumption over the customers, using an additive model with a period of one week.
+The decomposition is consistent with the hourly aggregated consumption over the customers.
+
+The auto-correlation of the daily aggregated consumption over the customers is reported in figure~\ref{fig:demandcorrelationday}.
+It shows a high auto-correlation value in the closest time lag, with an even greater value at every week distance.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.6\textwidth]{images/demand/daily_aggregated_correlation}
+\includegraphics[width=0.4\textwidth]{images/demand/daily_aggregated_correlation}
 \caption{The auto-correlation of the daily aggregated consumption over the customers.}
 \label{fig:demandcorrelationday}
 \end{figure}
 
-The coefficients given by the Fourier transform for the daily aggregated consumption over the customers are reported in figure~\ref{fig:demandftday}. % TODO describe it ...
+The coefficients given by the Fourier transform for the daily aggregated consumption over the customers are reported in figure~\ref{fig:demandftday}.
+The graphical representation shows 1 main frequency representing the weekly periodicity and other minor peaks at multiples of the 1/week frequency.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.7\textwidth]{images/demand/ft_day}
+\includegraphics[width=0.4\textwidth]{images/demand/ft_day}
 \caption{The coefficients given by the Fourier transform for the daily aggregated consumption over the customers.}
 \label{fig:demandftday}
 \end{figure}
@@ -273,34 +282,45 @@ The target of the predictions is the mean percentage of production, which is cal
 This allows us to have a bounded value from 0 to 100 from which it is possible to obtain the total produced energy simply by multiplying it by the total power of the PV plants.
 This was also done since PV plants are added over time and this was unpredictable, this results in predicting the percentage of production of the PV plants.
 This data is analyzed to get some descriptive analytics before finding adequate models to forecast the production.
-The time series decomposition of the hourly percentage of production considering as period of the time series a day is reported in figure~\ref{fig:productiondecomposition}. % TODO describe it ...
+The time series decomposition using an additive model of the hourly percentage of production considering as period of the time series a day is reported in figure~\ref{fig:productiondecomposition}.
+It showed a considerable amount of noise, comparable to seasonality and trend in magnitude.
+The trend component exhibits a clear peak during the summer season.
+As expected, the seasonality component appears to have the most significant impact on the time series.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{images/production/hourly_decomposition}
+\includegraphics[width=0.5\textwidth]{images/production/hourly_decomposition}
 \caption{The time series decomposition of the hourly percentage of production considering as period of the time series a day.}
 \label{fig:productiondecomposition}
 \end{figure}
 
-The auto-correlation of the hourly percentage of production is reported in figure~\ref{fig:productioncorrelation}. % TODO describe it ...
+The auto-correlation of the hourly percentage of production is reported in figure~\ref{fig:productioncorrelation}.
+It shows a high auto-correlation value in the closest time lag and also at every 24 hours, with the value slightly decreasing as the lag increases over days.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.6\textwidth]{images/production/hourly_correlation_week_range}
+\includegraphics[width=0.4\textwidth]{images/production/hourly_correlation_week_range}
 \caption{The auto-correlation of the hourly percentage of production.}
 \label{fig:productioncorrelation}
 \end{figure}
 
-The coefficients given by the Fourier transform for the hourly percentage of production are reported in figure~\ref{fig:productionft}. % TODO describe it ...
+The coefficients given by the Fourier transform for the hourly percentage of production are reported in figure~\ref{fig:productionft}.
+The graphical representation clearly shows a main frequency at the daily periodicity.
+Other minor peaks are present mostly at multiples of the 1/day frequency.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.7\textwidth]{images/production/ft_hour_day}
+\includegraphics[width=0.4\textwidth]{images/production/ft_hour_day}
 \caption{The coefficients given by the Fourier transform for the hourly percentage of production.}
 \label{fig:productionft}
 \end{figure}
 
-The daily percentage of production is reported in figure\ref{fig:productiondataplotday}.
+The daily percentage of production is reported in figure~\ref{fig:productiondataplotday}.
+
+The time series decomposition using an additive model of the daily percentage of production considering as period of the time series a week is reported in figure~\ref{fig:productiondecompositionday}.
+It showed a considerable amount of noise, comparable to the trend in magnitude when not in the summer season.
+The trend component exhibits a clear peak during the summer season and appears to be the significant component of the time series.
+In this case, considering a weekly period, the seasonality component appears to not have a significant impact on the time series.
 
 \begin{figure}[H]
 \centering
@@ -309,29 +329,29 @@ The daily percentage of production is reported in figure\ref{fig:productiondatap
 \label{fig:productiondataplotday}
 \end{figure}
 
-The time series decomposition of the daily percentage of production considering as period of the time series a week is reported in figure~\ref{fig:productiondecompositionday}. % TODO describe it ...
-
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{images/production/daily_aggregated_decomposition}
+\includegraphics[width=0.5\textwidth]{images/production/daily_aggregated_decomposition}
 \caption{The time series decomposition of the daily percentage of production considering as period of the time series a week.}
 \label{fig:productiondecompositionday}
 \end{figure}
 
-The auto-correlation of the daily percentage of production is reported in figure~\ref{fig:productioncorrelationday}. % TODO describe it ...
+The auto-correlation of the daily percentage of production is reported in figure~\ref{fig:productioncorrelationday}.
+It shows a high auto-correlation value in the closest time lag and then a slight decrease as the lag increases over days.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.6\textwidth]{images/production/daily_aggregated_correlation}
+\includegraphics[width=0.4\textwidth]{images/production/daily_aggregated_correlation}
 \caption{The auto-correlation of the daily percentage of production.}
 \label{fig:productioncorrelationday}
 \end{figure}
 
-The coefficients given by the Fourier transform for the daily percentage of production are reported in figure~\ref{fig:productionftday}. % TODO describe it ...
+The coefficients given by the Fourier transform for the daily percentage of production are reported in figure~\ref{fig:productionftday}.
+As expected from the time series decomposition, the graphical representation exhibits that there are no main frequencies in the daily percentage of production.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.7\textwidth]{images/production/ft_day}
+\includegraphics[width=0.4\textwidth]{images/production/ft_day}
 \caption{The coefficients given by the Fourier transform for the daily percentage of production.}
 \label{fig:productionftday}
 \end{figure}
@@ -409,7 +429,10 @@ Summary table with results ...
 \vspace{0.2 cm}
 
 The consumption data of the three customers are analyzed to get some descriptive analytics before finding adequate models to forecast the consumption baseline of each customer.
-The time series decompositions of the hourly consumption of the three customers considering as period of the time series a week are reported in figure~\ref{fig:decompositioncustomer1}, figure~\ref{fig:decompositioncustomer2}, and figure~\ref{fig:decompositioncustomer3}. % TODO describe them ...
+The time series decompositions using an additive model of the hourly consumption of the three customers considering as period of the time series a week are reported in figure~\ref{fig:decompositioncustomer1}, figure~\ref{fig:decompositioncustomer2}, and figure~\ref{fig:decompositioncustomer3}.
+All three decompositions show a considerable amount of noise, which is dominant in magnitude compared to the trend and seasonality.
+For all the customers the seasonal component appears to not have a significant impact on the time series, with the exception of the second customer for which it is twice high in magnitude with respect to the others.
+The trend component has a slight impact, for the first customer it is possible to see a peak in the winter, for the second customer it is present a peak in April, and for the third customer has not a clear trend.
 
 \begin{figure}[H]
 \begin{minipage}[b]{8.5cm}
@@ -434,57 +457,63 @@ The time series decompositions of the hourly consumption of the three customers 
 \caption{The time series decompositions of the hourly consumption of the three customers considering as period of the time series a week.}
 \end{figure}
 
-The auto-correlations of the hourly consumption of the three customers are reported in figure~\ref{fig:correlationcustomer1}, figure~\ref{fig:correlationcustomer2}, and figure~\ref{fig:correlationcustomer3}. % TODO describe them ...
+The auto-correlations of the hourly consumption of the three customers are reported in figure~\ref{fig:correlationcustomer1}, figure~\ref{fig:correlationcustomer2}, and figure~\ref{fig:correlationcustomer3}.
+All the customers’ consumptions are not very auto-correlated, it can be shown a maximum of around 0.5 auto-correlation value in the closest time lag and similar at every 24 hours, with a slightly greater value at one week distance.
+
+The coefficients given by the Fourier transform for the hourly consumption of the three customers are reported in figure~\ref{fig:ftcustomer1}, figure~\ref{fig:ftcustomer2}, and figure~\ref{fig:ftcustomer3}.
+The graphical representations show for all the customers a main frequency at the daily periodicity.
+Other minor peaks are present mostly at multiples of the 1/day frequency, in particular for the third customer where the 2/day frequency is almost equal to the 1/day.
 
 \begin{figure}[H]
 \begin{minipage}[b]{8.5cm}
 \centering
-\includegraphics[width=1\textwidth]{images/baseline/hourly_correlation_week_range_customer1}
+\includegraphics[width=0.8\textwidth]{images/baseline/hourly_correlation_week_range_customer1}
 \subcaption{First customer.}
 \label{fig:correlationcustomer1}
 \end{minipage}
 \ \hspace{2mm} \
 \begin{minipage}[b]{8.5cm}
 \centering
-\includegraphics[width=1\textwidth]{images/baseline/hourly_correlation_week_range_customer2}
+\includegraphics[width=0.8\textwidth]{images/baseline/hourly_correlation_week_range_customer2}
 \subcaption{Second customer.}
 \label{fig:correlationcustomer2}
 \end{minipage}
 \begin{minipage}[b]{17cm}
 \centering
-\includegraphics[width=0.5\textwidth]{images/baseline/hourly_correlation_week_range_customer3}
+\includegraphics[width=0.4\textwidth]{images/baseline/hourly_correlation_week_range_customer3}
 \subcaption{Third customer.}
 \label{fig:correlationcustomer3}
 \end{minipage}
 \caption{The auto-correlations of the hourly consumption of the three customers.}
 \end{figure}
 
-The coefficients given by the Fourier transform for the hourly consumption of the three customers are reported in figure~\ref{fig:ftcustomer1}, figure~\ref{fig:ftcustomer2}, and figure~\ref{fig:ftcustomer3}. % TODO describe them ...
-
 \begin{figure}[H]
 \begin{minipage}[b]{8.5cm}
 \centering
-\includegraphics[width=1\textwidth]{images/baseline/ft_hour_week_customer1}
+\includegraphics[width=0.8\textwidth]{images/baseline/ft_hour_week_customer1}
 \subcaption{First customer.}
 \label{fig:ftcustomer1}
 \end{minipage}
 \ \hspace{2mm} \
 \begin{minipage}[b]{8.5cm}
 \centering
-\includegraphics[width=1\textwidth]{images/baseline/ft_hour_week_customer2}
+\includegraphics[width=0.8\textwidth]{images/baseline/ft_hour_week_customer2}
 \subcaption{Second customer.}
 \label{fig:ftcustomer2}
 \end{minipage}
 \begin{minipage}[b]{17cm}
 \centering
-\includegraphics[width=0.5\textwidth]{images/baseline/ft_hour_week_customer3}
+\includegraphics[width=0.4\textwidth]{images/baseline/ft_hour_week_customer3}
 \subcaption{Third customer.}
 \label{fig:ftcustomer3}
 \end{minipage}
 \caption{The coefficients given by the Fourier transform of the hourly consumption of the three customers.}
 \end{figure}
 
-The daily consumption of the three customers are reported in figure\ref{fig:dataplotdaycustomer1}, figure\ref{fig:dataplotdaycustomer2}, and figure\ref{fig:dataplotdaycustomer3}.
+The daily consumption of the three customers are reported in figure~\ref{fig:dataplotdaycustomer1}, figure~\ref{fig:dataplotdaycustomer2}, and figure~\ref{fig:dataplotdaycustomer3}.
+
+The time series decompositions using an additive model of the daily consumption of the three customers considering as period of the time series a week are reported in figure~\ref{fig:decompositiondaycustomer1}, figure~\ref{fig:decompositiondaycustomer2}, and figure~\ref{fig:decompositiondaycustomer3}.
+The decomposition is consistent with the hourly aggregated consumption over the customers.
 
 \begin{figure}[H]
 \begin{minipage}[b]{8.5cm}
@@ -508,8 +537,6 @@ The daily consumption of the three customers are reported in figure\ref{fig:data
 \end{minipage}
 \caption{The daily consumption of the three customers.}
 \end{figure}
-
-The time series decompositions of the daily consumption of the three customers considering as period of the time series a week are reported in figure~\ref{fig:decompositiondaycustomer1}, figure~\ref{fig:decompositiondaycustomer2}, and figure~\ref{fig:decompositiondaycustomer3}. % TODO describe them ...
 
 \begin{figure}[H]
 \begin{minipage}[b]{8.5cm}
@@ -535,50 +562,55 @@ The time series decompositions of the daily consumption of the three customers c
 \caption{The time series decompositions of the daily consumption of the three customers considering as period of the time series a week.}
 \end{figure}
 
-The auto-correlations of the daily consumption of the three customers are reported in figure~\ref{fig:correlationdaycustomer1},  figure~\ref{fig:correlationdaycustomer2}, and  figure~\ref{fig:correlationdaycustomer3}. % TODO describe them ...
+The auto-correlations of the daily consumption of the three customers are reported in figure~\ref{fig:correlationdaycustomer1},  figure~\ref{fig:correlationdaycustomer2}, and  figure~\ref{fig:correlationdaycustomer3}.
+With the daily aggregation, all the customers’ consumptions show are slightly high value with respect to the hourly granularity.
+It can be shown that for the first and third customers, the auto-correlation value is slightly high in the closest time lag and then decreases with the days, with a slightly greater value at one week distance.
+Instead, for the second customer the only relevant values are only at a multiple of 7 days.
+
+The coefficients given by the Fourier transform for the daily consumption of the three customers are reported in figure~\ref{fig:ftdaycustomer1}, figure~\ref{fig:ftdaycustomer2}, and figure~\ref{fig:ftdaycustomer3}.
+The graphical representation exhibits that there are no main frequencies in the daily consumption of the first and third customers.
+Instead, for the second customer there is a small peak at the daily periodicity.
 
 \begin{figure}[H]
 \begin{minipage}[b]{8.5cm}
 \centering
-\includegraphics[width=1\textwidth]{images/baseline/daily_aggregated_correlation_customer1}
+\includegraphics[width=0.8\textwidth]{images/baseline/daily_aggregated_correlation_customer1}
 \subcaption{First customer.}
 \label{fig:correlationdaycustomer1}
 \end{minipage}
 \ \hspace{2mm} \
 \begin{minipage}[b]{8.5cm}
 \centering
-\includegraphics[width=1\textwidth]{images/baseline/daily_aggregated_correlation_customer2}
+\includegraphics[width=0.8\textwidth]{images/baseline/daily_aggregated_correlation_customer2}
 \subcaption{Second customer.}
 \label{fig:correlationdaycustomer2}
 \end{minipage}
 \begin{minipage}[b]{17cm}
 \centering
-\includegraphics[width=0.5\textwidth]{images/baseline/daily_aggregated_correlation_customer3}
+\includegraphics[width=0.4\textwidth]{images/baseline/daily_aggregated_correlation_customer3}
 \subcaption{Third customer.}
 \label{fig:correlationdaycustomer3}
 \end{minipage}
 \caption{The auto-correlations of the daily consumption of the three customers.}
 \end{figure}
 
-The coefficients given by the Fourier transform for the daily consumption of the three customers are reported in figure~\ref{fig:ftdaycustomer1}, figure~\ref{fig:ftdaycustomer2}, and figure~\ref{fig:ftdaycustomer3}. % TODO describe them ...
-
 \begin{figure}[H]
 \begin{minipage}[b]{8.5cm}
 \centering
-\includegraphics[width=1\textwidth]{images/baseline/ft_day_customer1}
+\includegraphics[width=0.8\textwidth]{images/baseline/ft_day_customer1}
 \subcaption{First customer.}
 \label{fig:ftdaycustomer1}
 \end{minipage}
 \ \hspace{2mm} \
 \begin{minipage}[b]{8.5cm}
 \centering
-\includegraphics[width=1\textwidth]{images/baseline/ft_day_customer2}
+\includegraphics[width=0.8\textwidth]{images/baseline/ft_day_customer2}
 \subcaption{Second customer.}
 \label{fig:ftdaycustomer2}
 \end{minipage}
 \begin{minipage}[b]{17cm}
 \centering
-\includegraphics[width=0.5\textwidth]{images/baseline/ft_day_customer3}
+\includegraphics[width=0.4\textwidth]{images/baseline/ft_day_customer3}
 \subcaption{Third customer.}
 \label{fig:ftdaycustomer3}
 \end{minipage}
