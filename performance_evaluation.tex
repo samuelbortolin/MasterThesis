@@ -125,7 +125,7 @@ Therefore, using the same weather data is deemed appropriate for the analysis at
 \subcaption{}
 \label{fig:productiondataplotpercentage}
 \end{minipage}
-\caption{The graphical representation of the hourly aggregated \subref{fig:umlsingleplant} total and \subref{fig:umlsingleplant} mean percentage production data.}
+\caption{The graphical representation of the hourly aggregated \subref{fig:productiondataplot} total and \subref{fig:productiondataplotpercentage} mean percentage production data.}
 \end{figure}
 
 
@@ -143,16 +143,17 @@ It is the most suitable error metric in consumption baseline forecasting where t
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{images/cross_validation}
-\caption{The schematic representation of the blocked k-fold validation adopted.}
+\caption{The schematic representation of the blocked k-fold cross-validation adopted.}
 \label{fig:crossvalidation}
 \end{figure}
 
 For assessing the model performance when dealing with time series data, the traditional cross-validation techniques are not suitable as they assume that the data points are independent and identically distributed (i.i.d.), which is not the case in time series data, as also reported in the chapter~\ref{cha:soa} by the following articles \cite{BERGMEIR2012192, Cerqueira2020}.
 In fact, in time series data the order of the observations matters, and there are temporal dependencies between the observations.
-Therefore, a more appropriate technique for evaluating time series models is time series cross-validation.
-The basic idea of time series cross-validation is to split the data into multiple training and test sets, where the training set only includes data from the past and the test set includes data from the future.
+Therefore, a more appropriate technique for evaluating time series models is blocked k-fold cross-validation.
+The basic idea of blocked k-fold cross-validation is to split the data considering multiple training and test sets, where the training set only includes data from the past and the test set includes data from the future.
 This simulates the real-world scenario where we want to make predictions about the future based on past data.
-In figure~\ref{fig:crossvalidation}, the schematic representation of how the cross-validation was performed is reported, 12 splits were used with a test size depending on the specific use case.
+In figure~\ref{fig:crossvalidation}, the schematic representation of how the blocked k-fold cross-validation was performed is reported, 12 splits were used with a test size depending on the specific use case.
+The training set is increased by adding the previous test elements at every successive evaluation.
 
 Another technique, reported in \cite{Cerqueira2020} is the repeated Holdout Out‐of‐sample tested in multiple testing periods with a Monte Carlo simulation using 70\% of the total observations of the time series in each test.
 For each period, a random point is picked from the time series.
@@ -161,8 +162,22 @@ In the paper, it was stated that the approach provided the most accurate estimat
 However, for having the same evaluation mechanisms on all the models and simulating the fact that the model starts with limited data and then the training amount increases over time to obtain better performance, block validation was used using the TimeSeriesSplit provided by the scikit-learn library.
 Moreover, the considered data are without a strong trend as reported in the dedicated sections of the specific use cases where the data and the model forecasts are analyzed.
 
-In addition to the cross-validation results also the results on the last split using the rest as training are reported.
-This was done because it provides insight on which could be the performance of the models in forecasting the near future data with the currently available training data.
+In addition to the blocked k-fold cross-validation results also the results on the last test split using the rest as training are reported.
+This was done since it provides insight on which could be the performance of the models in forecasting the near future data with the currently available training data.
+A table summarizing the metrics and the evaluation mechanisms adopted is reported in table~\ref{ab:metricstable}.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Metrics} & \textbf{Evaluation mechanisms}\\
+\hline
+MAPE, MAE & blocked k-fold cross-validation, last test split\\
+\hline
+\end{tabular}
+\caption{Table summarizing the metrics and the evaluation mechanisms adopted.}
+\label{tab:metricstable}
+\end{table}
 
 
 \section{Electricity demand forecasting}
@@ -181,15 +196,16 @@ The trend showed 2 peaks during the summer season, the first being more emphasiz
 \label{fig:demanddecomposition}
 \end{figure}
 
+The auto-correlation of the hourly aggregated consumption over the customers is reported in figure~\ref{fig:demandcorrelation}.
+It shows a high auto-correlation value in the close time lags and also at every 24 hours, with an even greater value at one week distance.
+% TODO dire vedendo auto-correlazione quanto ha senso andare indietro
+
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.4\textwidth]{images/demand/hourly_correlation_week_range}
 \caption{The auto-correlation of the hourly aggregated consumption over the customers.}
 \label{fig:demandcorrelation}
 \end{figure}
-
-The auto-correlation of the hourly aggregated consumption over the customers is reported in figure~\ref{fig:demandcorrelation}.
-It shows a high auto-correlation value in the close time lags and also at every 24 hours, with an even greater value at one week distance.
 
 The coefficients given by the Fourier transform for the hourly aggregated consumption over the customers are reported in figure~\ref{fig:demandft}.
 The graphical representation shows 2 main frequencies, one representing the weekly periodicity and one the daily periodicity.
@@ -212,15 +228,15 @@ Aggregating the data on a daily basis, it is possible to more clearly observe th
 \label{fig:demanddataplotday}
 \end{figure}
 
+Figure~\ref{fig:demanddecompositionday} shows the time series decomposition of the daily aggregated consumption over the customers, using an additive model with a period of one week.
+The decomposition is consistent with the hourly aggregated consumption over the customers.
+
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.5\textwidth]{images/demand/daily_aggregated_decomposition}
 \caption{The time series decomposition of the daily aggregated consumption over the customers considering as period of the time series a week.}
 \label{fig:demanddecompositionday}
 \end{figure}
-
-Figure~\ref{fig:demanddecompositionday} shows the time series decomposition of the daily aggregated consumption over the customers, using an additive model with a period of one week.
-The decomposition is consistent with the hourly aggregated consumption over the customers.
 
 The auto-correlation of the daily aggregated consumption over the customers is reported in figure~\ref{fig:demandcorrelationday}.
 It shows a high auto-correlation value in the closest time lag, with an even greater value at every week distance.
@@ -252,6 +268,7 @@ The results showed that the hourly aggregated consumption over the customers had
   \item a Pearson correlation coefficient of 0.4475 and a Spearman's rank correlation coefficient of 0.4368 with respect to the apparent temperature;
   \item a Pearson correlation coefficient of -0.2689 and a Spearman's rank correlation coefficient of -0.3173 with respect to the relative humidity.
 \end{itemize}
+% TODO aggiungere dettagli su correlazione, che ha senso usarli
 
 The results showed that the daily aggregated consumption over the customers had:
 \begin{itemize}
@@ -264,6 +281,7 @@ It can be noticed that both the coefficients decreased considering the daily dat
 Describe the choice of parameters for models ... (list with motivations)
 
 Analyze the forecasts of the models for the electricity demand forecasting task (predictive analytics) ...
+% TODO ancora da ultimare SARIMA o arima su serie equipollente e AutoML su altre granularità
 12 splits were used for block validation with a test size of 720 each time.
 Basically starting with 5977 entries and predicting every time 720 entries until reaching the last prediction instant where the model has a training size of 13897.
 
@@ -271,6 +289,8 @@ Summary table with results ...
 % TODO where results are the one given by cross-validation mean ± std
 % TODO check the consistency of model results in the last period and using cross-validation --> do a table with the differences (+ plot for internal analysis)
 % TODO then add the comparison with forecasts of their provider
+% commentarli (sia il numero che il grafico dell’errore) --> interpretare il dato (perchè è buono?) --> benchmark in letteratura, come va il loro, ecc…
+% [valutare criticamente, aspetto tecnologico scientifico]
 
 
 \section{Electricity production forecasting}
@@ -296,6 +316,7 @@ As expected, the seasonality component appears to have the most significant impa
 
 The auto-correlation of the hourly percentage of production is reported in figure~\ref{fig:productioncorrelation}.
 It shows a high auto-correlation value in the closest time lag and also at every 24 hours, with the value slightly decreasing as the lag increases over days.
+% TODO dire vedendo auto-correlazione quanto ha senso andare indietro
 
 \begin{figure}[H]
 \centering
@@ -379,6 +400,7 @@ The results showed that the hourly percentage of production had:
   \item a Pearson correlation coefficient of 0.0450 and a Spearman's rank correlation coefficient of 0.0465 with respect to the solar azimuth angle.
 \end{itemize}
 Since the air temperature, the apparent temperature, the relative humidity, the diffuse horizontal irradiance, the direct normal irradiance, the global horizontal irradiance, the solar radiation, the UV index, and the solar elevation angle have a high correlation while the others are not so high, just these are used in the models.  % TODO remove solar azimuth angle also in the implementation chapter
+% TODO aggiungere dettagli su correlazione, che ha senso usarli
 
 The results showed that the daily percentage of production had:
 \begin{itemize}
@@ -415,6 +437,7 @@ In figure~\ref{fig:pvplantsmap}, the locations of the PV plants and of the weath
 Describe the choice of parameters for models ... (list with motivations)
 
 Analyze the forecasts of the models for the electricity production forecasting task (predictive analytics) ...
+% TODO ancora da ultimare SARIMA o arima su serie equipollente e AutoML su altre granularità
 12 splits were used for block validation with a test size of 168 each time.
 Basically starting with 5280 entries and predicting every time 168 entries until reaching the last prediction instant where the model has a training size of 7128. % TODO
 
@@ -422,6 +445,8 @@ Summary table with results ...
 % TODO where results are the one given by cross-validation mean ± std
 % TODO check the consistency of model results in the last period and using cross-validation --> do a table with the differences (+ plot for internal analysis)
 % TODO then add the comparison with forecasts of their provider
+% commentarli (sia il numero che il grafico dell’errore) --> interpretare il dato (perchè è buono?) --> benchmark in letteratura, come va il loro, ecc…
+% [valutare criticamente, aspetto tecnologico scientifico]
 
 
 \section{Consumption baseline forecasting} 
@@ -459,6 +484,7 @@ The trend component has a slight impact, for the first customer it is possible t
 
 The auto-correlations of the hourly consumption of the three customers are reported in figure~\ref{fig:correlationcustomer1}, figure~\ref{fig:correlationcustomer2}, and figure~\ref{fig:correlationcustomer3}.
 All the customers’ consumptions are not very auto-correlated, it can be shown a maximum of around 0.5 auto-correlation value in the closest time lag and similar at every 24 hours, with a slightly greater value at one week distance.
+% TODO dire vedendo auto-correlazione quanto ha senso andare indietro
 
 The coefficients given by the Fourier transform for the hourly consumption of the three customers are reported in figure~\ref{fig:ftcustomer1}, figure~\ref{fig:ftcustomer2}, and figure~\ref{fig:ftcustomer3}.
 The graphical representations show for all the customers a main frequency at the daily periodicity.
@@ -630,6 +656,7 @@ The results showed that the hourly consumption of the three customers had:
   \item a Pearson correlation coefficient of -0.2434, 0.0307, and -0.1494 respectively and a Spearman's rank correlation coefficient of -0.2082, 0.1263, and -0.0366 respectively with respect to the apparent temperature;
   \item a Pearson correlation coefficient of 0.1193, -0.0810, and -0.0753 respectively and a Spearman's rank correlation coefficient of 0.1491, -0.0916, and -0.0814 respectively with respect to the relative humidity.
 \end{itemize}
+% TODO aggiungere dettagli su correlazione, che ha senso usarli
 
 The results showed that the daily consumption of the three customers had:
 \begin{itemize}
@@ -642,8 +669,11 @@ It can be noticed that both the coefficients increased considering the daily dat
 Describe the choice of parameters for models ... (list with motivations)
 
 Analyze the forecasts of the models for the electricity demand forecasting task (predictive analytics) ...
+% TODO ancora da ultimare SARIMA o arima su serie equipollente e AutoML su altre granularità
 12 splits were used for block validation with a test size of 168 each time. % TODO
 
 Summary table with results ...
 % TODO where results are the one given by cross-validation mean ± std
 % TODO check the consistency of model results in the last period and using cross-validation --> do a table with the differences (+ plot for internal analysis)
+% commentarli (sia il numero che il grafico dell’errore) --> interpretare il dato (perchè è buono?) --> benchmark in letteratura, ecc…
+% [valutare criticamente, aspetto tecnologico scientifico]
