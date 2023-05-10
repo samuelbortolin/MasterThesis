@@ -164,7 +164,7 @@ Moreover, the considered data are without a strong trend as reported in the dedi
 
 In addition to the blocked k-fold cross-validation results also the results on the last test split using the rest as training are reported.
 This was done since it provides insight on which could be the performance of the models in forecasting the near future data with the currently available training data.
-A table summarizing the metrics and the evaluation mechanisms adopted is reported in table~\ref{ab:metricstable}.
+A table summarizing the metrics and the evaluation mechanisms adopted is reported in table~\ref{tab:metricstable}.
 
 \begin{table}[H]
 \centering
@@ -197,8 +197,9 @@ The trend showed 2 peaks during the summer season, the first being more emphasiz
 \end{figure}
 
 The auto-correlation of the hourly aggregated consumption over the customers is reported in figure~\ref{fig:demandcorrelation}.
-It shows a high auto-correlation value in the close time lags and also at every 24 hours, with an even greater value at one week distance.
-% TODO dire vedendo auto-correlazione quanto ha senso andare indietro
+It shows a high auto-correlation value in the close time lags and also at every 24 hours, along with an even higher value at a one-week distance.
+This indicates that the consumption data from the closest time lags, particularly up to three closest ones, as well as those corresponding to the same hour in the preceding days and even better in the preceding weeks, may be valuable features for predicting a time instant's demand.
+A reasonable balance can be achieved by incorporating the consumption data from the past 14 days.
 
 \begin{figure}[H]
 \centering
@@ -239,7 +240,9 @@ The decomposition is consistent with the hourly aggregated consumption over the 
 \end{figure}
 
 The auto-correlation of the daily aggregated consumption over the customers is reported in figure~\ref{fig:demandcorrelationday}.
-It shows a high auto-correlation value in the closest time lag, with an even greater value at every week distance.
+It shows a high auto-correlation value in the closest time lag, with an even greater value at every week lag.
+This suggests that useful features, since highly correlated, for predicting a time instant's demand may be the closest ones, but also those from the same day of the week in the previous weeks.
+A good trade-off can be achieved by considering the consumption data in the previous 14 days.
 
 \begin{figure}[H]
 \centering
@@ -258,7 +261,7 @@ The graphical representation shows 1 main frequency representing the weekly peri
 \label{fig:demandftday}
 \end{figure}
 
-Basic data is enhanced with the air temperature, the apparent temperature, and the relative humidity.
+Basic data is enhanced with the air temperature, the apparent temperature, and the relative humidity since they are considered the only weather features capable of influencing customers' energy consumption.
 To assess the relationship between these weather variables and the aggregated consumption over the customers, two correlation coefficients were used: Pearson's correlation coefficient and Spearman's rank correlation coefficient.
 Pearson's correlation coefficient measures the strength of the linear relationship between two variables, while Spearman's rank correlation coefficient measures the strength of the monotonic relationship.
 The pearsonr and spearmanr methods of the SciPy library\footnote{ \url{https://scipy.org/} } were used to compute the correlation with weather data.
@@ -268,7 +271,7 @@ The results showed that the hourly aggregated consumption over the customers had
   \item a Pearson correlation coefficient of 0.4475 and a Spearman's rank correlation coefficient of 0.4368 with respect to the apparent temperature;
   \item a Pearson correlation coefficient of -0.2689 and a Spearman's rank correlation coefficient of -0.3173 with respect to the relative humidity.
 \end{itemize}
-% TODO aggiungere dettagli su correlazione, che ha senso usarli
+It can be noticed that both the coefficients indicates a moderate correlation between the weather variables and consumption, this suggests that incorporating weather data into the prediction models could be useful.
 
 The results showed that the daily aggregated consumption over the customers had:
 \begin{itemize}
@@ -316,7 +319,8 @@ As expected, the seasonality component appears to have the most significant impa
 
 The auto-correlation of the hourly percentage of production is reported in figure~\ref{fig:productioncorrelation}.
 It shows a high auto-correlation value in the closest time lag and also at every 24 hours, with the value slightly decreasing as the lag increases over days.
-% TODO dire vedendo auto-correlazione quanto ha senso andare indietro
+This indicates that the production data from the closest time lag and those corresponding to the same hour in the preceding days may be valuable features for predicting a time instant's production.
+A reasonable balance can be achieved by incorporating the production data up to the past 14 days.
 
 \begin{figure}[H]
 \centering
@@ -338,17 +342,17 @@ Other minor peaks are present mostly at multiples of the 1/day frequency.
 
 The daily percentage of production is reported in figure~\ref{fig:productiondataplotday}.
 
-The time series decomposition using an additive model of the daily percentage of production considering as period of the time series a week is reported in figure~\ref{fig:productiondecompositionday}.
-It showed a considerable amount of noise, comparable to the trend in magnitude when not in the summer season.
-The trend component exhibits a clear peak during the summer season and appears to be the significant component of the time series.
-In this case, considering a weekly period, the seasonality component appears to not have a significant impact on the time series.
-
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.5\textwidth]{images/production/data_day_aggregated_plot}
 \caption{The daily percentage of production.}
 \label{fig:productiondataplotday}
 \end{figure}
+
+The time series decomposition using an additive model of the daily percentage of production considering as period of the time series a week is reported in figure~\ref{fig:productiondecompositionday}.
+It showed a considerable amount of noise, comparable to the trend in magnitude when not in the summer season.
+The trend component exhibits a clear peak during the summer season and appears to be the significant component of the time series.
+In this case, considering a weekly period, the seasonality component appears to not have a significant impact on the time series.
 
 \begin{figure}[H]
 \centering
@@ -399,8 +403,8 @@ The results showed that the hourly percentage of production had:
   \item a Pearson correlation coefficient of 0.8107 and a Spearman's rank correlation coefficient of 0.9057 with respect to the solar elevation angle;
   \item a Pearson correlation coefficient of 0.0450 and a Spearman's rank correlation coefficient of 0.0465 with respect to the solar azimuth angle.
 \end{itemize}
-Since the air temperature, the apparent temperature, the relative humidity, the diffuse horizontal irradiance, the direct normal irradiance, the global horizontal irradiance, the solar radiation, the UV index, and the solar elevation angle have a high correlation while the others are not so high, just these are used in the models.  % TODO remove solar azimuth angle also in the implementation chapter
-% TODO aggiungere dettagli su correlazione, che ha senso usarli
+It can be noticed that both the coefficients indicates a moderate to strong correlation between the hourly percentage of production and several weather features, including the air temperature, the apparent temperature, the relative humidity, the diffuse horizontal irradiance, the direct normal irradiance, the global horizontal irradiance, the solar radiation, the UV index, and the solar elevation angle.
+Therefore, these features are chosen to be incorporated in the prediction models, while the other weather features show weaker correlation and are not considered.
 
 The results showed that the daily percentage of production had:
 \begin{itemize}
@@ -483,8 +487,9 @@ The trend component has a slight impact, for the first customer it is possible t
 \end{figure}
 
 The auto-correlations of the hourly consumption of the three customers are reported in figure~\ref{fig:correlationcustomer1}, figure~\ref{fig:correlationcustomer2}, and figure~\ref{fig:correlationcustomer3}.
-All the customers’ consumptions are not very auto-correlated, it can be shown a maximum of around 0.5 auto-correlation value in the closest time lag and similar at every 24 hours, with a slightly greater value at one week distance.
-% TODO dire vedendo auto-correlazione quanto ha senso andare indietro
+All the customers’ consumptions are not very auto-correlated, it can be shown that the maximum auto-correlation value is around 0.5 in the closest time lag and that there is a peak every 24 hours, with a slightly greater value at one week distance.
+This indicates that the consumption data from the closest time lag, as well as those corresponding to the same hour in the preceding days and even better in the preceding weeks, may be valuable features for predicting a time instant's demand.
+A reasonable balance can be achieved by incorporating the consumption data up to the past 14 days.
 
 The coefficients given by the Fourier transform for the hourly consumption of the three customers are reported in figure~\ref{fig:ftcustomer1}, figure~\ref{fig:ftcustomer2}, and figure~\ref{fig:ftcustomer3}.
 The graphical representations show for all the customers a main frequency at the daily periodicity.
@@ -541,6 +546,15 @@ The daily consumption of the three customers are reported in figure~\ref{fig:dat
 The time series decompositions using an additive model of the daily consumption of the three customers considering as period of the time series a week are reported in figure~\ref{fig:decompositiondaycustomer1}, figure~\ref{fig:decompositiondaycustomer2}, and figure~\ref{fig:decompositiondaycustomer3}.
 The decomposition is consistent with the hourly aggregated consumption over the customers.
 
+The auto-correlations of the daily consumption of the three customers are reported in figure~\ref{fig:correlationdaycustomer1},  figure~\ref{fig:correlationdaycustomer2}, and  figure~\ref{fig:correlationdaycustomer3}.
+With the daily aggregation, all the customers’ consumptions show are slightly high value with respect to the hourly granularity.
+It can be shown that for the first and third customers, the auto-correlation value is slightly high in the closest time lag and then decreases with the days, with a slightly greater value at one week distance.
+Instead, for the second customer the only relevant values are only at a multiple of 7 days.
+
+The coefficients given by the Fourier transform for the daily consumption of the three customers are reported in figure~\ref{fig:ftdaycustomer1}, figure~\ref{fig:ftdaycustomer2}, and figure~\ref{fig:ftdaycustomer3}.
+The graphical representation exhibits that there are no main frequencies in the daily consumption of the first and third customers.
+Instead, for the second customer there is a small peak at the daily periodicity.
+
 \begin{figure}[H]
 \begin{minipage}[b]{8.5cm}
 \centering
@@ -563,6 +577,21 @@ The decomposition is consistent with the hourly aggregated consumption over the 
 \end{minipage}
 \caption{The daily consumption of the three customers.}
 \end{figure}
+
+As can be noticed from the data, there is high variability in consumption and low auto-correlation, this suggests how it is difficult to produce highly accurate results on a single customer level.
+With just the time series of a few users, it is very difficult to learn a well-performing model, having more users it could be possible to learn certain generic trends or standard behaviors.
+
+Basic data is enhanced with the air temperature, the apparent temperature, and the relative humidity since they are considered the only weather features capable of influencing customers' energy consumption.
+To assess the relationship between these weather variables and the consumption of the three customers, two correlation coefficients were used: Pearson's correlation coefficient and Spearman's rank correlation coefficient.
+Pearson's correlation coefficient measures the strength of the linear relationship between two variables, while Spearman's rank correlation coefficient measures the strength of the monotonic relationship.
+The pearsonr and spearmanr methods of the SciPy library were used to compute the correlation with weather data.
+The results showed that the hourly consumption of the three customers had:
+\begin{itemize}
+  \item a Pearson correlation coefficient of -0.2491, 0.0263, and -0.1469 respectively and a Spearman's rank correlation coefficient of -0.2088, 0.1257, and -0.0356 respectively with respect to the air temperature;
+  \item a Pearson correlation coefficient of -0.2434, 0.0307, and -0.1494 respectively and a Spearman's rank correlation coefficient of -0.2082, 0.1263, and -0.0366 respectively with respect to the apparent temperature;
+  \item a Pearson correlation coefficient of 0.1193, -0.0810, and -0.0753 respectively and a Spearman's rank correlation coefficient of 0.1491, -0.0916, and -0.0814 respectively with respect to the relative humidity.
+\end{itemize}
+It can be noticed that both the coefficients indicates a weak correlation between the weather variables and the consumption of the three customers, nevertheless it may still be useful to incorporate weather data into the prediction models since also the auto-correlation values are not particularly high.
 
 \begin{figure}[H]
 \begin{minipage}[b]{8.5cm}
@@ -587,15 +616,6 @@ The decomposition is consistent with the hourly aggregated consumption over the 
 \label{fig:decompositiondaycustomer}
 \caption{The time series decompositions of the daily consumption of the three customers considering as period of the time series a week.}
 \end{figure}
-
-The auto-correlations of the daily consumption of the three customers are reported in figure~\ref{fig:correlationdaycustomer1},  figure~\ref{fig:correlationdaycustomer2}, and  figure~\ref{fig:correlationdaycustomer3}.
-With the daily aggregation, all the customers’ consumptions show are slightly high value with respect to the hourly granularity.
-It can be shown that for the first and third customers, the auto-correlation value is slightly high in the closest time lag and then decreases with the days, with a slightly greater value at one week distance.
-Instead, for the second customer the only relevant values are only at a multiple of 7 days.
-
-The coefficients given by the Fourier transform for the daily consumption of the three customers are reported in figure~\ref{fig:ftdaycustomer1}, figure~\ref{fig:ftdaycustomer2}, and figure~\ref{fig:ftdaycustomer3}.
-The graphical representation exhibits that there are no main frequencies in the daily consumption of the first and third customers.
-Instead, for the second customer there is a small peak at the daily periodicity.
 
 \begin{figure}[H]
 \begin{minipage}[b]{8.5cm}
@@ -643,21 +663,6 @@ Instead, for the second customer there is a small peak at the daily periodicity.
 \caption{The coefficients given by the Fourier transform of the daily consumption of the three customers.}
 \end{figure}
 
-As can be noticed from the data, there is high variability in consumption and low auto-correlation, this suggests how it is difficult to produce highly accurate results on a single customer level.
-With just the time series of a few users, it is very difficult to learn a well-performing model, having more users it could be possible to learn certain generic trends or standard behaviors.
-
-Basic data is enhanced with the air temperature, the apparent temperature, and the relative humidity.
-To assess the relationship between these weather variables and the consumption of the three customers, two correlation coefficients were used: Pearson's correlation coefficient and Spearman's rank correlation coefficient.
-Pearson's correlation coefficient measures the strength of the linear relationship between two variables, while Spearman's rank correlation coefficient measures the strength of the monotonic relationship.
-The pearsonr and spearmanr methods of the SciPy library were used to compute the correlation with weather data.
-The results showed that the hourly consumption of the three customers had:
-\begin{itemize}
-  \item a Pearson correlation coefficient of -0.2491, 0.0263, and -0.1469 respectively and a Spearman's rank correlation coefficient of -0.2088, 0.1257, and -0.0356 respectively with respect to the air temperature;
-  \item a Pearson correlation coefficient of -0.2434, 0.0307, and -0.1494 respectively and a Spearman's rank correlation coefficient of -0.2082, 0.1263, and -0.0366 respectively with respect to the apparent temperature;
-  \item a Pearson correlation coefficient of 0.1193, -0.0810, and -0.0753 respectively and a Spearman's rank correlation coefficient of 0.1491, -0.0916, and -0.0814 respectively with respect to the relative humidity.
-\end{itemize}
-% TODO aggiungere dettagli su correlazione, che ha senso usarli
-
 The results showed that the daily consumption of the three customers had:
 \begin{itemize}
   \item a Pearson correlation coefficient of -0.5538, -0.2286, and -0.6707 respectively and a Spearman's rank correlation coefficient of -0.5154, -0.2639, and -0.6949 respectively with respect to the air temperature;
@@ -665,6 +670,8 @@ The results showed that the daily consumption of the three customers had:
   \item a Pearson correlation coefficient of 0.1241, 0.0100, and 0.1368 respectively and a Spearman's rank correlation coefficient of 0.1381, 0.0409, and 0.2077 respectively with respect to the relative humidity.
 \end{itemize}
 It can be noticed that both the coefficients increased considering the daily data meaning that the mean weather data over the day is more correlated to the daily consumption of the three considered customers, compared to the hourly granularity.
+
+% TODO What about tariff aggregation, probably to not include?
 
 Describe the choice of parameters for models ... (list with motivations)
 

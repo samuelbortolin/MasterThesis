@@ -198,7 +198,7 @@ For the prediction, it takes as input a pandas data frame with the time instants
 The electricity production forecasting models rely on dedicated data preprocessing which consists of parsing single PV plant production data from a CSV file using the pandas library and aggregating the single PV plant data to obtain the aggregated production data over the PV plants.
 Then, this basic data is enhanced with the air temperature, the apparent temperature, the relative humidity, the wind speed, the wind direction, the pressure altimeter, the visibility, the sky coverage, the diffuse horizontal irradiance, the direct normal irradiance, the global horizontal irradiance, the solar radiation, the UV index, the solar elevation angle, and the solar azimuth angle parsed from the weather JSON file, in which the reported value is the average of the value in the last hour.
 Finally, data is cleaned up by filling in the gaps using the linear interpolation provided by the pandas library, which proved to be effective since there was just some missing data in the weather information.
-Only the hourly granularity is considered since PV plants are highly correlated with weather data and the aggregation over the day loses this correlation.
+Only the hourly granularity is considered since PV plants are highly correlated with weather data and the aggregation over the day loses part of this correlation.
 The data is with an hourly granularity and the target of the predictions is the mean percentage of production, which is calculated as the division of the total produced energy by the total power of the PV plants.
 This allows to have a bounded value from 0 to 100 from which it is possible to obtain the total produced energy simply by multiplying it by the total power of the PV plants.
 
@@ -215,7 +215,7 @@ For the prediction, it simply takes in input the length of the test set and comp
 
 Support vector regressor and hist gradient boosting regressor models are developed using the scikit-learn library.
 The extreme gradient boosting regressor model is developed using the XGBoost library.
-Support vector regressor, hist gradient boosting regressor, and extreme gradient boosting regressor models take advantage of the following features: the hour, the day, the weekday, the month, and the year information of the time instant for which to compute the prediction, the air temperature, the apparent temperature, the relative humidity, the diffuse horizontal irradiance, the direct normal irradiance, the global horizontal irradiance, the solar radiation, the UV index, the solar elevation angle, and the solar azimuth angle in the considered hour.
+Support vector regressor, hist gradient boosting regressor, and extreme gradient boosting regressor models take advantage of the following features: the hour, the day, the weekday, the month, and the year information of the time instant for which to compute the prediction, the air temperature, the apparent temperature, the relative humidity, the diffuse horizontal irradiance, the direct normal irradiance, the global horizontal irradiance, the solar radiation, the UV index, and the solar elevation angle in the considered hour.
 In addition, the mean percentages of production of the past 24 hours are also used.
 The training is performed using the fit method on the training data.
 The specific models’ parameters are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
@@ -226,9 +226,9 @@ The fit method tasks as input a pandas data frame with just the information rela
 For the prediction, it takes as input a pandas data frame with the time instants for which to compute the predictions and computes them, providing also uncertainty intervals.
 
 LSTM, GRU, and CNN models are developed using the Keras library.
-These models take advantage of the following features: the hour, the day, the weekday, the month, and the year information of the time instant for which to compute the prediction, the air temperature, the apparent temperature, the relative humidity, the diffuse horizontal irradiance, the direct normal irradiance, the global horizontal irradiance, the solar radiation, the UV index, the solar elevation angle, and the solar azimuth angle in the considered hour.
+These models take advantage of the following features: the hour, the day, the weekday, the month, and the year information of the time instant for which to compute the prediction, the air temperature, the apparent temperature, the relative humidity, the diffuse horizontal irradiance, the direct normal irradiance, the global horizontal irradiance, the solar radiation, the UV index, and the solar elevation angle in the considered hour.
 In addition, the mean percentage of production of the previous hour is also used.
-Since these models are able to deal with sequences, a look back at the same hour over the past 14 days is considered and passed as input to the models with the same features as the time instant for which to compute the prediction but with the actual production data of the past time instants.
+Since these models are able to deal with sequences, a look back at the same hour over the past 13 days is considered and passed as input to the models with the same features as the time instant for which to compute the prediction but with the actual production data of the past time instants.
 The training is performed using the fit method on the training data.
 The specific models’ architecture and parameters are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
 For the prediction, one time instant at a time is predicted using weather forecasts, and the predicted production data is used as previous information for the next time instants.
@@ -237,12 +237,12 @@ The models derived by the combination of the previous techniques consist of the 
 Further details of the optimal combinations are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
 
 The TFT model is developed using the PyTorch Forecasting library.
-A TimeSeriesDataSet is constructed using the following features: the time index, the hour, the day, the weekday, the month, and the year information of the time instant for which to compute the prediction, the air temperature, the apparent temperature, the relative humidity, the diffuse horizontal irradiance, the direct normal irradiance, the global horizontal irradiance, the solar radiation, the UV index, the solar elevation angle, and the solar azimuth angle in the considered hour.
+A TimeSeriesDataSet is constructed using the following features: the time index, the hour, the day, the weekday, the month, and the year information of the time instant for which to compute the prediction, the air temperature, the apparent temperature, the relative humidity, the diffuse horizontal irradiance, the direct normal irradiance, the global horizontal irradiance, the solar radiation, the UV index, and the solar elevation angle in the considered hour.
 The training is performed using the fit method of the Trainer object provided by the PyTorch Lightning library\footnote{ \url{https://www.pytorchlightning.ai/index.html} } on the training data.
 The specific models’ parameters are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
 For the prediction, it takes as input a TimeSeriesDataSet with the time instants for which to compute the predictions and computes them.
 
 The AutoML approach is based on the TimeSeriesForecastingTask of the Auto-PyTorch library.
-The AutoML approach takes advantage of the following features: the hour, the day, the weekday, the month, and the year information of the time instant for which to compute the prediction, the air temperature, the apparent temperature, the relative humidity, the diffuse horizontal irradiance, the direct normal irradiance, the global horizontal irradiance, the solar radiation, the UV index, the solar elevation angle, and the solar azimuth angle in the considered hour.
+The AutoML approach takes advantage of the following features: the hour, the day, the weekday, the month, and the year information of the time instant for which to compute the prediction, the air temperature, the apparent temperature, the relative humidity, the diffuse horizontal irradiance, the direct normal irradiance, the global horizontal irradiance, the solar radiation, the UV index, and the solar elevation angle in the considered hour.
 The search method is used to search for the best pipeline configuration for the given training data optimizing the machine learning models and building an ensemble out of them.
 For the prediction, it takes as input a pandas data frame with the time instants for which to compute the predictions and computes them.
