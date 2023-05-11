@@ -50,8 +50,9 @@ The system interacts with the following external components: data storage, weath
 The data storage consists of CSV files containing the data for the different use cases, which are loaded using the pandas library\footnote{ \url{https://pandas.pydata.org/} }.
 InfluxDB\footnote{ \url{https://www.influxdata.com/} } was thought of as a possible database in the complete system integration for managing the data.
 
-The weather data storage consists of a JSON file containing the weather data, which are loaded using the pandas library.
-Weather data is manually obtained from the Weatherbit\footnote{ \url{https://www.weatherbit.io/} } APIs.
+The weather data storage consists of a CSV file and a JSON file containing the weather data, which are loaded using the pandas library.
+Weather data in the CSV file is manually obtained from Iowa Environmental Mesonet\footnote{ \url{https://mesonet.agron.iastate.edu/request/download.phtml} } for the weather station in the Murcia airport, and it was used for customers demand forecasting.
+Weather data in the JSON file is manually obtained from the Weatherbit\footnote{ \url{https://www.weatherbit.io/} } APIs for a weather station near Murcia airport, these were used for PV plants production forecasting since it provides solar energy data.
 InfluxDB was thought of as a possible database in the complete system integration for managing the weather data with an automatic download of weather data using Weatherbit APIs.
 
 The ML models storage consists of pickle files containing the ML models.
@@ -66,7 +67,7 @@ InfluxDB was thought of as a possible database in the complete system integratio
 \vspace{0.2 cm}
 
 The electricity demand forecasting models rely on dedicated data preprocessing which consists of parsing the aggregated consumption data over the customers from a CSV file using the pandas library.
-Then, this basic data is enhanced with the air temperature, the apparent temperature, and the relative humidity parsed from the weather JSON file, in which the reported value is the average of the value in the last hour.
+Then, this basic data is enhanced with the air temperature, the apparent temperature, and the relative humidity parsed from the weather CSV file, in which the reported value is the average of the value in the last hour.
 Finally, data is cleaned up by filling in the gaps using the linear interpolation provided by the pandas library, which proved to be effective since there was just some missing data in the weather information.
 Two possible granularities are considered: hourly and daily.
 The data is with an hourly granularity, so for the daily granularity, data is also aggregated over the day summing the active incomings of the single hours, and averaging the weather data over the day.
@@ -126,7 +127,7 @@ For the prediction, it takes as input a pandas data frame with the time instants
 \vspace{0.2 cm}
 
 The consumption baseline forecasting models rely on dedicated data preprocessing which consists of parsing single customer consumption data from a CSV file using the pandas library.
-Then, this basic data is enhanced with the air temperature, the apparent temperature, and the relative humidity parsed from the weather JSON file, in which the reported value is the average of the value in the last hour.
+Then, this basic data is enhanced with the air temperature, the apparent temperature, and the relative humidity parsed from the weather CSV file, in which the reported value is the average of the value in the last hour.
 Finally, data is cleaned up by filling in the gaps using the linear interpolation provided by the pandas library, which proved to be effective since there was just some missing data in the weather information.
 Three possible granularities are considered: hourly, daily, and by tariff.
 The data is with an hourly granularity, so for the daily granularity, data is also aggregated over the day summing the active incomings of the single hours, and averaging the weather data over the day.

@@ -164,18 +164,25 @@ Moreover, the considered data are without a strong trend as reported in the dedi
 
 In addition to the blocked k-fold cross-validation results also the results on the last test split using the rest as training are reported.
 This was done since it provides insight on which could be the performance of the models in forecasting the near future data with the currently available training data.
-A table summarizing the metrics and the evaluation mechanisms adopted is reported in table~\ref{tab:metricstable}.
+A table summarizing the metrics and the evaluation mechanisms adopted for the use cases is reported in table~\ref{tab:metricstable}.
 
 \begin{table}[H]
 \centering
-\begin{tabular}{|c|c|}
+\begin{tabular}{|c|c|c|}
 \hline
-\textbf{Metrics} & \textbf{Evaluation mechanisms}\\
+\textbf{Use case} & \textbf{Metrics} & \textbf{Evaluation mechanisms}\\
 \hline
-MAPE, MAE & blocked k-fold cross-validation, last test split\\
+Electricity demand & MAPE & blocked k-fold cross-validation\\
+forecasting & & and test on last split\\
+\hline
+Electricity production & MAE & blocked k-fold cross-validation\\
+forecasting & & and test on last split\\
+\hline
+Consumption baseline & MAPE and MAE & blocked k-fold cross-validation\\
+forecasting & & and test on last split\\
 \hline
 \end{tabular}
-\caption{Table summarizing the metrics and the evaluation mechanisms adopted.}
+\caption{Table summarizing the metrics and the evaluation mechanisms adopted for the use cases.}
 \label{tab:metricstable}
 \end{table}
 
@@ -431,13 +438,6 @@ If we were forecasting the production of each PV plant individually, the weather
 However, since we are aggregating the production from multiple PV plants and looking for the overall percentage of production in the hour, using the weather data from a location located in the middle of the PV plants is also acceptable.
 In figure~\ref{fig:pvplantsmap}, the locations of the PV plants and of the weather station are reported.
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.8\textwidth]{images/production/pv_plants_map}
-\caption{The map of the city of Murcia with indicated the location of the PV plants with a blue icon and of the revelation station with a lightblue icon. The distances between each PV plant and the weather station are reported in lightblue boxes near the PV plant locations.}
-\label{fig:pvplantsmap}
-\end{figure}
-
 Describe the choice of parameters for models ... (list with motivations)
 
 Analyze the forecasts of the models for the electricity production forecasting task (predictive analytics) ...
@@ -452,6 +452,13 @@ Summary table with results ...
 % commentarli (sia il numero che il grafico dell’errore) --> interpretare il dato (perchè è buono?) --> benchmark in letteratura, come va il loro, ecc…
 % [valutare criticamente, aspetto tecnologico scientifico]
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{images/production/pv_plants_map}
+\caption{The map of the city of Murcia with indicated the location of the PV plants with a blue icon and of the revelation station with a lightblue icon. The distances between each PV plant and the weather station are reported in lightblue boxes near the PV plant locations.}
+\label{fig:pvplantsmap}
+\end{figure}
+
 
 \section{Consumption baseline forecasting} 
 \label{sec:baselineval}
@@ -461,7 +468,7 @@ The consumption data of the three customers are analyzed to get some descriptive
 The time series decompositions using an additive model of the hourly consumption of the three customers considering as period of the time series a week are reported in figure~\ref{fig:decompositioncustomer1}, figure~\ref{fig:decompositioncustomer2}, and figure~\ref{fig:decompositioncustomer3}.
 All three decompositions show a considerable amount of noise, which is dominant in magnitude compared to the trend and seasonality.
 For all the customers the seasonal component appears to not have a significant impact on the time series, with the exception of the second customer for which it is twice high in magnitude with respect to the others.
-The trend component has a slight impact, for the first customer it is possible to see a peak in the winter, for the second customer it is present a peak in April, and for the third customer has not a clear trend.
+The trend component has a slight impact, for the first customer it is possible to see a peak in the winter, for the second customer it is present a peak in April, and for the third customer there is not a clear trend.
 
 \begin{figure}[H]
 \begin{minipage}[b]{8.5cm}
