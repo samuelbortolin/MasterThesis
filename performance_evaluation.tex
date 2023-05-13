@@ -291,9 +291,9 @@ It can be noticed that both the coefficients decreased considering the daily dat
 Describe the choice of parameters for models ... (list with motivations)
 
 Analyze the forecasts of the models for the electricity demand forecasting task (predictive analytics) ...
-% TODO ancora da ultimare SARIMA o arima su serie equipollente e AutoML su altre granularità
-12 splits were used for block validation with a test size of 720 each time.
-Basically starting with 5977 entries and predicting every time 720 entries until reaching the last prediction instant where the model has a training size of 13897.
+% TODO testare SARIMA e AutoML su altre granularità
+12 splits were used for block validation with a test size of a month each time.
+Basically, for the hourly granularity, starting with 5977 entries and predicting every time 720 entries until reaching the last prediction instant where the model has a training size of 13897.
 
 Summary table with results ...
 % TODO where results are the one given by cross-validation mean ± std
@@ -327,7 +327,7 @@ As expected, the seasonality component appears to have the most significant impa
 The auto-correlation of the hourly percentage of production is reported in figure~\ref{fig:productioncorrelation}.
 It shows a high auto-correlation value in the closest time lag and also at every 24 hours, with the value slightly decreasing as the lag increases over days.
 This indicates that the production data from the closest time lag and those corresponding to the same hour in the preceding days may be valuable features for predicting a time instant's production.
-A reasonable balance can be achieved by incorporating the production data up to the past 14 days.
+A reasonable balance can be achieved by incorporating the production data from the past 14 days.
 
 \begin{figure}[H]
 \centering
@@ -441,9 +441,9 @@ In figure~\ref{fig:pvplantsmap}, the locations of the PV plants and of the weath
 Describe the choice of parameters for models ... (list with motivations)
 
 Analyze the forecasts of the models for the electricity production forecasting task (predictive analytics) ...
-% TODO ancora da ultimare SARIMA o arima su serie equipollente e AutoML su altre granularità
-12 splits were used for block validation with a test size of 168 each time.
-Basically starting with 5280 entries and predicting every time 168 entries until reaching the last prediction instant where the model has a training size of 7128. % TODO
+% TODO testare arima su serie equipollente e AutoML rimuovendo solar azimuth angle
+12 splits were used for block validation with a test size of a week each time.
+Basically starting with 5280 entries and predicting every time 168 entries until reaching the last prediction instant where the model has a training size of 7128.
 
 Summary table with results ...
 % TODO where results are the one given by cross-validation mean ± std
@@ -496,7 +496,7 @@ The trend component has a slight impact, for the first customer it is possible t
 The auto-correlations of the hourly consumption of the three customers are reported in figure~\ref{fig:correlationcustomer1}, figure~\ref{fig:correlationcustomer2}, and figure~\ref{fig:correlationcustomer3}.
 All the customers’ consumptions are not very auto-correlated, it can be shown that the maximum auto-correlation value is around 0.5 in the closest time lag and that there is a peak every 24 hours, with a slightly greater value at one week distance.
 This indicates that the consumption data from the closest time lag, as well as those corresponding to the same hour in the preceding days and even better in the preceding weeks, may be valuable features for predicting a time instant's demand.
-A reasonable balance can be achieved by incorporating the consumption data up to the past 14 days.
+A reasonable balance can be achieved by incorporating the consumption data from the past 14 days.
 
 The coefficients given by the Fourier transform for the hourly consumption of the three customers are reported in figure~\ref{fig:ftcustomer1}, figure~\ref{fig:ftcustomer2}, and figure~\ref{fig:ftcustomer3}.
 The graphical representations show for all the customers a main frequency at the daily periodicity.
@@ -678,13 +678,13 @@ The results showed that the daily consumption of the three customers had:
 \end{itemize}
 It can be noticed that both the coefficients increased considering the daily data meaning that the mean weather data over the day is more correlated to the daily consumption of the three considered customers, compared to the hourly granularity.
 
-% TODO What about tariff aggregation, probably not to include?
+% TODO What about tariff aggregation? probably not to include (maybe just some words)
 
 Describe the choice of parameters for models ... (list with motivations)
 
 Analyze the forecasts of the models for the electricity demand forecasting task (predictive analytics) ...
-% TODO ancora da ultimare SARIMA o arima su serie equipollente e AutoML su altre granularità
-12 splits were used for block validation with a test size of 168 each time. % TODO
+% TODO testare SARIMA e AutoML su altre granularità
+12 splits were used for block validation with a test size of a week each time.
 
 Summary table with results ...
 % TODO where results are the one given by cross-validation mean ± std

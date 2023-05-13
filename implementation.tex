@@ -72,22 +72,22 @@ Finally, data is cleaned up by filling in the gaps using the linear interpolatio
 Two possible granularities are considered: hourly and daily.
 The data is with an hourly granularity, so for the daily granularity, data is also aggregated over the day summing the active incomings of the single hours, and averaging the weather data over the day.
 
-The developed models are some baseline approaches that consider repeating past days and weeks, an ARIMA model, a support vector regressor model, a hist gradient boosting regressor model, an extreme gradient boosting regressor model, a prophet model, a LSTM model, a GRU model, a CNN model, some models derived by the combination of the previous techniques, a TFT model, and an AutoML approach.
+The developed models are some baseline approaches that consider repeating past days and weeks, a SARIMA model for each hour, a support vector regressor model, a hist gradient boosting regressor model, an extreme gradient boosting regressor model, a prophet model, a LSTM model, a GRU model, a CNN model, some models derived by the combination of the previous techniques, a TFT model, and an AutoML approach.
 
 The baseline approaches are developed using the NumPy library\footnote{ \url{https://numpy.org/} }.
 In particular, the tile method is used in different ways depending on the considered baseline.
 For the one-day baseline, the last day of the training active incomings is replicated for the days of the test set.
 For the one-week baseline, the last week of the training active incomings is replicated for the weeks of the test set.
 
-The ARIMA model is developed using the pmdarima library\footnote{ \url{http://alkaline-ml.com/pmdarima/} }.
-The auto\_arima method is used to automatically discover the optimal order for an ARIMA model to better fit the training active incomings.
+The SARIMA model for each hour is developed using the pmdarima library\footnote{ \url{http://alkaline-ml.com/pmdarima/} }.
+The auto\_arima method is used to automatically discover the optimal order for the SARIMA model to better fit the training active incomings for each hour using the week as period for seasonal differencing.
 For the prediction, it simply takes in input the length of the test set and computes the predictions.
 
 Support vector regressor and hist gradient boosting regressor models are developed using the scikit-learn library\footnote{ \url{https://scikit-learn.org/} }.
 The extreme gradient boosting regressor model is developed using the XGBoost library\footnote{ \url{https://xgboost.readthedocs.io/} }.
 Support vector regressor, hist gradient boosting regressor, and extreme gradient boosting regressor models take advantage of the following features for the hourly granularity: the hour, the day, the weekday, the month, and the year information of the time instant for which to compute the prediction, the air temperature, the apparent temperature, and the relative humidity in the considered hour.
-In addition, the active incomings of the past 24 hours are also used.
-For the daily granularity instead, the hour information of the date for which to compute the prediction is not considered as a feature, the weather information is obtained as the average over the day, and in place of the active incomings of the past 24 hours are used the daily active incomings of the past 14 days.
+In addition, the active incomings of the past 24 hours and the ones of the same hour considered in the previous 14 days are also used.
+For the daily granularity instead, the hour information of the date for which to compute the prediction is not considered as a feature, the weather information is obtained as the average over the day, and in place of the active incomings described for the hourly granularity, the daily active incomings of the past 14 days are used.
 The training is performed using the fit method on the training data.
 The specific models’ parameters are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
 For the prediction, one time instant at a time is predicted using weather forecasts, and the predicted demand data is used as previous information for the next time instants.
@@ -141,7 +141,7 @@ For the considered residential users the possible tariffs are 3:
 For the tariff granularity, data is aggregated over the day summing the active incomings of the single hours for each tariff, and averaging the weather data over the tariff ranges.
 Then a model is trained for each tariff.
 
-The developed models are some baseline approaches that consider repeating past days and weeks, an ARIMA model, a support vector regressor model, a hist gradient boosting regressor model, an extreme gradient boosting regressor model, a prophet model, a LSTM model, a GRU model, a CNN model, some models derived by the combination of the previous techniques, a TFT model, and an AutoML approach.
+The developed models are some baseline approaches that consider repeating past days and weeks, a SARIMA model for each hour, a support vector regressor model, a hist gradient boosting regressor model, an extreme gradient boosting regressor model, a prophet model, a LSTM model, a GRU model, a CNN model, some models derived by the combination of the previous techniques, a TFT model, and an AutoML approach.
 
 The baseline approaches are developed using the NumPy library.
 In particular, the tile method is used in different ways depending on the considered baseline.
@@ -149,15 +149,15 @@ For the one-day baseline, the last day of the training active incomings is repli
 For the one-week baseline, the last week of the training active incomings is replicated for the weeks of the test set.
 The same was also done considering the average of the previous 4 weeks and of the previous 12 weeks of the training active incomings.
 
-The ARIMA model is developed using the pmdarima library.
-The auto\_arima method is used to automatically discover the optimal order for an ARIMA model to better fit the training active incomings.
+The SARIMA model for each hour is developed using the pmdarima library.
+The auto\_arima method is used to automatically discover the optimal order for the SARIMA model to better fit the training active incomings for each hour using the week as period for seasonal differencing.
 For the prediction, it simply takes in input the length of the test set and computes the predictions.
 
 Support vector regressor and hist gradient boosting regressor models are developed using the scikit-learn library.
 The extreme gradient boosting regressor model is developed using the XGBoost library.
 Support vector regressor, hist gradient boosting regressor, and extreme gradient boosting regressor models take advantage of the following features for the hourly granularity: the hour, the day, the weekday, the month, and the year information of the time instant for which to compute the prediction, the air temperature, the apparent temperature, and the relative humidity in the considered hour.
-In addition, the active incomings of the past 24 hours are also used.
-For the daily and tariff granularities instead, the hour information of the date for which to compute the prediction is not considered as a feature, the weather information is obtained as the average over the day or tariff ranges, and in place of the active incomings of the past 24 hours are used the daily or tariff active incomings of the past 14 days.
+In addition, the active incomings of the past 24 hours and the ones of the same hour considered in the previous 14 days are also used.
+For the daily and tariff granularities instead, the hour information of the date for which to compute the prediction is not considered as a feature, the weather information is obtained as the average over the day or tariff ranges, and in place of the active incomings described for the hourly granularity, the daily or tariff active incomings of the past 14 days are used.
 The training is performed using the fit method on the training data.
 The specific models’ parameters are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
 For the prediction, one time instant at a time is predicted using weather forecasts, and the predicted consumption data is used as previous information for the next time instants.
@@ -169,8 +169,8 @@ For the prediction, it takes as input a pandas data frame with the time instants
 LSTM, GRU, and CNN models are developed using the Keras library.
 These models take advantage of the following features for the hourly granularity: the hour, the day, the weekday, the month, and the year information of the time instant for which to compute the prediction, the air temperature, the apparent temperature, and the relative humidity in the considered hour.
 In addition, the active incoming of the previous hour is also used.
-Since these models are able to deal with sequences, a look back at the same hour over the past 13 days is considered and passed as input to the models with the same features as the time instant for which to compute the prediction but with the actual consumption data of the past time instants.
-For the daily and tariff granularities instead, the hour of the date for which to compute the prediction is not considered as a feature, the weather information is obtained as the average over the day or tariff ranges, and the considered look back is at the past 13 days.
+Since these models are able to deal with sequences, a look back at the past hour and at the same hour over the past 14 days is considered and passed as input to the models with the same features as the time instant for which to compute the prediction but with the actual consumption data of the past time instants.
+For the daily and tariff granularities instead, the hour of the date for which to compute the prediction is not considered as a feature, the weather information is obtained as the average over the day or tariff ranges, and the considered look back is at the past 14 days.
 The training is performed using the fit method on the training data.
 The specific models’ architecture and parameters are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
 For the prediction, one time instant at a time is predicted using weather forecasts, and the predicted consumption data is used as previous information for the next time instants.
@@ -203,21 +203,21 @@ Only the hourly granularity is considered since PV plants are highly correlated 
 The data is with an hourly granularity and the target of the predictions is the mean percentage of production, which is calculated as the division of the total produced energy by the total power of the PV plants.
 This allows to have a bounded value from 0 to 100 from which it is possible to obtain the total produced energy simply by multiplying it by the total power of the PV plants.
 
-The developed models are some baseline approaches that consider repeating past days and weeks, an ARIMA model, a support vector regressor model, a hist gradient boosting regressor model, an extreme gradient boosting regressor model, a prophet model, a LSTM model, a GRU model, a CNN model, some models derived by the combination of the previous techniques, a TFT model, and an AutoML approach.
+The developed models are some baseline approaches that consider repeating past days and weeks, an ARIMA model for each hour, a support vector regressor model, a hist gradient boosting regressor model, an extreme gradient boosting regressor model, a prophet model, a LSTM model, a GRU model, a CNN model, some models derived by the combination of the previous techniques, a TFT model, and an AutoML approach.
 
 The baseline approaches are developed using the NumPy library.
 In particular, the tile method is used in different ways depending on the considered baseline.
 For the one-day baseline, the last day of the training mean percentages of production is replicated for the days of the test set.
 For the one-week baseline, the last week of the training mean percentages of production is replicated for the weeks of the test set.
 
-The ARIMA model is developed using the pmdarima library.
-The auto\_arima method is used to automatically discover the optimal order for an ARIMA model to better fit the training mean percentages of production.
+The ARIMA model for each hour is developed using the pmdarima library.
+The auto\_arima method is used to automatically discover the optimal order for the ARIMA model to better fit the training mean percentages of production for each hour.
 For the prediction, it simply takes in input the length of the test set and computes the predictions.
 
 Support vector regressor and hist gradient boosting regressor models are developed using the scikit-learn library.
 The extreme gradient boosting regressor model is developed using the XGBoost library.
 Support vector regressor, hist gradient boosting regressor, and extreme gradient boosting regressor models take advantage of the following features: the hour, the day, the weekday, the month, and the year information of the time instant for which to compute the prediction, the air temperature, the apparent temperature, the relative humidity, the diffuse horizontal irradiance, the direct normal irradiance, the global horizontal irradiance, the solar radiation, the UV index, and the solar elevation angle in the considered hour.
-In addition, the mean percentages of production of the past 24 hours are also used.
+In addition, the mean percentages of production of the past 24 hours and the one of the same hour considered in the previous 14 days are also used.
 The training is performed using the fit method on the training data.
 The specific models’ parameters are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
 For the prediction, one time instant at a time is predicted using weather forecasts, and the predicted production data is used as previous information for the next time instants.
@@ -229,7 +229,7 @@ For the prediction, it takes as input a pandas data frame with the time instants
 LSTM, GRU, and CNN models are developed using the Keras library.
 These models take advantage of the following features: the hour, the day, the weekday, the month, and the year information of the time instant for which to compute the prediction, the air temperature, the apparent temperature, the relative humidity, the diffuse horizontal irradiance, the direct normal irradiance, the global horizontal irradiance, the solar radiation, the UV index, and the solar elevation angle in the considered hour.
 In addition, the mean percentage of production of the previous hour is also used.
-Since these models are able to deal with sequences, a look back at the same hour over the past 13 days is considered and passed as input to the models with the same features as the time instant for which to compute the prediction but with the actual production data of the past time instants.
+Since these models are able to deal with sequences, a look back at the past hour and at the same hour over the past 14 days is considered and passed as input to the models with the same features as the time instant for which to compute the prediction but with the actual production data of the past time instants.
 The training is performed using the fit method on the training data.
 The specific models’ architecture and parameters are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
 For the prediction, one time instant at a time is predicted using weather forecasts, and the predicted production data is used as previous information for the next time instants.
