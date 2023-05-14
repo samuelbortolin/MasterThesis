@@ -229,15 +229,23 @@ Other minor peaks are present mostly at multiples of the 1/week frequency.
 The daily aggregated consumption over the customers is reported in figure~\ref{fig:demanddataplotday}.
 Aggregating the data on a daily basis, it is possible to more clearly observe the weekly pattern of consumption, which exhibits an increase on weekdays and a decrease on weekends.
 
+Figure~\ref{fig:demanddecompositionday} shows the time series decomposition of the daily aggregated consumption over the customers, using an additive model with a period of one week.
+The decomposition is consistent with the hourly aggregated consumption over the customers.
+
+The auto-correlation of the daily aggregated consumption over the customers is reported in figure~\ref{fig:demandcorrelationday}.
+It shows a high auto-correlation value in the closest time lag, with an even greater value at every week lag.
+This suggests that useful features, since highly correlated, for predicting a time instant's demand may be the closest ones, but also those from the same day of the week in the previous weeks.
+A good trade-off can be achieved by considering the consumption data in the previous 14 days.
+
+The coefficients given by the Fourier transform for the daily aggregated consumption over the customers are reported in figure~\ref{fig:demandftday}.
+The graphical representation shows 1 main frequency representing the weekly periodicity and other minor peaks at multiples of the 1/week frequency.
+
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.5\textwidth]{images/demand/data_day_aggregated_plot}
 \caption{The daily aggregated consumption over the customers.}
 \label{fig:demanddataplotday}
 \end{figure}
-
-Figure~\ref{fig:demanddecompositionday} shows the time series decomposition of the daily aggregated consumption over the customers, using an additive model with a period of one week.
-The decomposition is consistent with the hourly aggregated consumption over the customers.
 
 \begin{figure}[H]
 \centering
@@ -246,20 +254,12 @@ The decomposition is consistent with the hourly aggregated consumption over the 
 \label{fig:demanddecompositionday}
 \end{figure}
 
-The auto-correlation of the daily aggregated consumption over the customers is reported in figure~\ref{fig:demandcorrelationday}.
-It shows a high auto-correlation value in the closest time lag, with an even greater value at every week lag.
-This suggests that useful features, since highly correlated, for predicting a time instant's demand may be the closest ones, but also those from the same day of the week in the previous weeks.
-A good trade-off can be achieved by considering the consumption data in the previous 14 days.
-
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.4\textwidth]{images/demand/daily_aggregated_correlation}
 \caption{The auto-correlation of the daily aggregated consumption over the customers.}
 \label{fig:demandcorrelationday}
 \end{figure}
-
-The coefficients given by the Fourier transform for the daily aggregated consumption over the customers are reported in figure~\ref{fig:demandftday}.
-The graphical representation shows 1 main frequency representing the weekly periodicity and other minor peaks at multiples of the 1/week frequency.
 
 \begin{figure}[H]
 \centering
@@ -282,11 +282,147 @@ It can be noticed that both the coefficients indicate a moderate correlation bet
 
 The results showed that the daily aggregated consumption over the customers had:
 \begin{itemize}
-  \item a Pearson correlation coefficient of 0.3957 and a Spearman's rank correlation coefficient of 0.3156 with respect to the air temperature;
-  \item a Pearson correlation coefficient of 0.3883 and a Spearman's rank correlation coefficient of 0.3155 with respect to the apparent temperature;
-  \item a Pearson correlation coefficient of -0.0966 and a Spearman's rank correlation coefficient of -0.1582 with respect to the relative humidity.
+  \item a Pearson correlation coefficient of 0.3898 and a Spearman's rank correlation coefficient of 0.3119 with respect to the air temperature;
+  \item a Pearson correlation coefficient of 0.3823 and a Spearman's rank correlation coefficient of 0.3114 with respect to the apparent temperature;
+  \item a Pearson correlation coefficient of -0.0908 and a Spearman's rank correlation coefficient of -0.1547 with respect to the relative humidity.
 \end{itemize}
 It can be noticed that both the coefficients decreased considering the daily data meaning that the mean weather data over the day is less correlated to the daily aggregated consumption over the customers, compared to the hourly granularity.
+
+
+
+The results for hourly aggregation are reported in table~\ref{tab:demandhourlyresults}.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Model} & \textbf{blocked k-fold} & \textbf{test on last split}\\
+ & \textbf{cross-validation MAPE} & \textbf{MAPE}\\
+\hline
+One Day Baseline & 22.86 $\pm$ 7.07 & 20.54\\
+\hline
+One Week Baseline & 12.94 $\pm$ 4.27 & 17.55\\
+\hline
+ARIMA one-month & 29.58 $\pm$ 8.59 & 23.16\\
+\hline
+SVR & 57.78 $\pm$ 20.86 & 30.34\\
+\hline
+HistGradientBoostingRegressor & 5.41 $\pm$ 2.02 & 4.49\\
+\hline
+XGBRegressor & 5.65 $\pm$ 1.82 & 5.66\\
+\hline
+Prophet & 28.71 $\pm$ 7.11 & 31.93\\
+\hline
+LSTM & 35.98 $\pm$ 27.63 & 13.20\\
+\hline
+GRU & 23.14 $\pm$ 13.86 & 30.38\\
+\hline
+CNN & 36.82 $\pm$19.51 & 15.09\\
+\hline
+TFT & 14.52 $\pm$ 3.33 & 14.78\\
+\hline
+\end{tabular}
+\caption{Table summarizing the results for hourly aggregation.}
+\label{tab:demandhourlyresults}
+\end{table}
+
+At forecasting time:
+\begin{itemize}
+  \item One Day Baseline one-week MAPE: 14.77 and one-month MAPE: 20.54
+  \item One Week Baseline one-week MAPE: 10.87 and one-month MAPE: 17.55
+  \item ARIMA one-week MAPE: 20.90 and one-month MAPE: 23.16
+  \item SVR one-week MAPE: 39.58 and one-month MAPE: 35.65
+  \item HistGradientBoostingRegressor one-week MAPE: 17.58 and one-month MAPE: 18.59
+  \item XGBRegressor one-week MAPE: 22.54 and one-month MAPE: 23.84
+  \item Prophet one-week MAPE: 34.00 and one-month MAPE: 31.93
+  \item One Day Baseline + One Week Baseline + Prophet one-week MAPE: 15.21 and one-month MAPE: 21.11
+  \item One Day Baseline + Prophet one-week MAPE: 19.16 and one-month MAPE: 23.89
+  \item One Week Baseline + Prophet one-week MAPE: … and one-month MAPE: …
+  \item LSTM one-week MAPE: 21.30 and one-month MAPE: 38.88
+  \item LSTM + One Day Baseline + One Week Baseline + Prophet one-week MAPE: 12.96 and one-month MAPE: 12.94
+  \item LSTM + One Week Baseline + Prophet one-week MAPE: 14.67 and one-month MAPE: 12.64
+  \item LSTM + One Week Baseline one-week MAPE: 13.52 and one-month MAPE: 18.24
+  \item GRU one-week MAPE: 36.13 and one-month MAPE: 30.38
+  \item GRU + One Day Baseline + One Week Baseline + Prophet one-week MAPE: 13.26 and one-month MAPE: 15.62
+  \item GRU + One Week Baseline + Prophet one-week MAPE: 14.60 and one-month MAPE: 14.77
+  \item GRU + One Week Baseline one-week MAPE: 20.23 and one-month MAPE: 18.84
+  \item CNN one-week MAPE: 21.89 and one-month MAPE: 24.38
+  \item CNN + One Day Baseline + One Week Baseline + Prophet one-week MAPE: 12.43 and one-month MAPE: 13.79
+  \item CNN + One Week Baseline + Prophet one-week MAPE: 14.48 and one-month MAPE: 13.10
+  \item CNN + One Week Baseline one-week MAPE: 13.16 and one-month MAPE: 12.48
+  \item TFT one-week MAPE: … and one-month MAPE: …
+\end{itemize}
+
+Instead, the AutoML approaach obtained one-week MAPE: 17.89 and one-month MAPE: 20.14
+
+
+The results for daily aggregation are reported in table~\ref{tab:demanddailyresults}.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Model} & \textbf{blocked k-fold} & \textbf{test on last split}\\
+ & \textbf{cross-validation MAPE} & \textbf{MAPE}\\
+
+\hline
+One Day Baseline & 25.52 $\pm$ 21.64 & 92.08\\
+\hline
+One Week Baseline & 18.33 $\pm$ 24.55 & 98.38\\
+\hline
+ARIMA one-month & 20.55 $\pm$ 25.22 & 102.37\\
+\hline
+SVR & 59.83 $\pm$ 36.16 & 157.75\\
+\hline
+HistGradientBoostingRegressor & 18.34 $\pm$ 28.51 & 111.67\\
+\hline
+XGBRegressor & 17.80 $\pm$ 27.15 & 116.07\\
+\hline
+Prophet & 25.39 $\pm$ 24.90 & 100.93\\
+\hline
+LSTM & 33.22 $\pm$ 30.71 & 96.94\\
+\hline
+GRU & 22.51 $\pm$ 27.23 & 106.06\\
+\hline
+CNN & 47.47 $\pm$ 42.41 & 93.14\\
+\hline
+TFT & 19.40 $\pm$ 26.11 & 95.95\\
+\hline
+\end{tabular}
+\caption{Table summarizing the results for daily aggregation.}
+\label{tab:demanddailyresults}
+\end{table}
+
+At forecasting time:
+\begin{itemize}
+  \item One Day Baseline one-week MAPE: 17.34 and one-month MAPE: 89.27
+  \item One Week Baseline one-week MAPE: 10.12 and one-month MAPE: 97.68
+  \item ARIMA one-week MAPE: 13.06 and one-month MAPE: 95.30
+  \item SVR one-week MAPE: 59.06 and one-month MAPE: 164.22
+  \item HistGradientBoostingRegressor one-week MAPE: 13.97 and one-month MAPE: 105.70
+  \item XGBRegressor one-week MAPE: 13.81 and one-month MAPE: 113.12
+  \item Prophet one-week MAPE: 16.43 and one-month MAPE: 98.72
+  \item One Day Baseline + One Week Baseline + Prophet one-week MAPE: 11.77 and one-month MAPE: 94.58
+  \item One Day Baseline + Prophet one-week MAPE: 14.38 and one-month MAPE: 93.43
+  \item One Week Baseline + Prophet one-week MAPE: … and one-month MAPE: …
+  \item LSTM one-week MAPE: 16.03 and one-month MAPE: 88.95
+  \item LSTM + One Day Baseline + One Week Baseline + Prophet one-week MAPE: 11.77 and one-month MAPE: 92.91
+  \item LSTM + One Week Baseline + Prophet one-week MAPE: 11.10 and one-month MAPE: 94.39
+  \item LSTM + One Week Baseline one-week MAPE: 13.08 and one-month MAPE: 93.28
+  \item GRU one-week MAPE: 15.79 and one-month MAPE: 93.07
+  \item GRU + One Day Baseline + One Week Baseline + Prophet one-week MAPE: 11.50 and one-month MAPE: 93.83
+  \item GRU + One Week Baseline + Prophet one-week MAPE: 10.75 and one-month MAPE: 95.62
+  \item GRU + One Week Baseline one-week MAPE: 12.54 and one-month MAPE: 95.12
+  \item CNN one-week MAPE: 86.92 and one-month MAPE: 92.83
+  \item CNN + One Day Baseline + One Week Baseline + Prophet one-week MAPE: 26.62 and one-month MAPE: 93.25
+  \item CNN + One Week Baseline + Prophet one-week MAPE: 30.19 and one-month MAPE: 94.69
+  \item CNN + One Week Baseline one-week MAPE: 43.63 and one-month MAPE: 94.15
+  \item TFT one-week MAPE: … and one-month MAPE: …
+\end{itemize}
+
+Instead, the AutoML approaach obtained one-week MAPE: 6377.05 and one-month MAPE: ...
+
+
 
 Describe the choice of parameters for models ... (list with motivations)
 
@@ -437,6 +573,8 @@ Only the hourly granularity is considered since PV plants are highly correlated 
 If we were forecasting the production of each PV plant individually, the weather data at the specific locations of the plants would result in a higher correlation with the production data and likely allow the models to produce more accurate forecasts.
 However, since we are aggregating the production from multiple PV plants and looking for the overall percentage of production in the hour, using the weather data from a location located in the middle of the PV plants is also acceptable.
 In figure~\ref{fig:pvplantsmap}, the locations of the PV plants and of the weather station are reported.
+
+
 
 Describe the choice of parameters for models ... (list with motivations)
 
@@ -679,6 +817,8 @@ The results showed that the daily consumption of the three customers had:
 It can be noticed that both the coefficients increased considering the daily data meaning that the mean weather data over the day is more correlated to the daily consumption of the three considered customers, compared to the hourly granularity.
 
 % TODO What about tariff aggregation? probably not to include (maybe just some words)
+
+
 
 Describe the choice of parameters for models ... (list with motivations)
 
