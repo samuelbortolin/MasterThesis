@@ -80,7 +80,7 @@ For the one-day baseline, the last day of the training active incomings is repli
 For the one-week baseline, the last week of the training active incomings is replicated for the weeks of the test set.
 
 The SARIMA model for each hour is developed using the pmdarima library\footnote{ \url{http://alkaline-ml.com/pmdarima/} }.
-The auto\_arima method is used to automatically discover the optimal order for the SARIMA model to better fit the training active incomings for each hour using the week as period for seasonal differencing.
+The auto\_arima method is used to automatically discover the optimal order for the SARIMA model to better fit the training active incomings for each hour using the week as the period for seasonal differencing.
 For the prediction, it simply takes in input the length of the test set and computes the predictions.
 
 Support vector regressor and hist gradient boosting regressor models are developed using the scikit-learn library\footnote{ \url{https://scikit-learn.org/} }.
@@ -150,7 +150,7 @@ For the one-week baseline, the last week of the training active incomings is rep
 The same was also done considering the average of the previous 4 weeks and of the previous 12 weeks of the training active incomings.
 
 The SARIMA model for each hour is developed using the pmdarima library.
-The auto\_arima method is used to automatically discover the optimal order for the SARIMA model to better fit the training active incomings for each hour using the week as period for seasonal differencing.
+The auto\_arima method is used to automatically discover the optimal order for the SARIMA model to better fit the training active incomings for each hour using the week as the period for seasonal differencing.
 For the prediction, it simply takes in input the length of the test set and computes the predictions.
 
 Support vector regressor and hist gradient boosting regressor models are developed using the scikit-learn library.
