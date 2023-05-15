@@ -303,28 +303,30 @@ One Day Baseline & 22.86 $\pm$ 7.07 & 20.54\\
 \hline
 One Week Baseline & 12.94 $\pm$ 4.27 & 17.55\\
 \hline
-ARIMA one-month & 29.58 $\pm$ 8.59 & 23.16\\
+SARIMA for each hour & 15.44 $\pm$ 4.57 & 18.47\\
 \hline
-SVR & 57.78 $\pm$ 20.86 & 30.34\\
+SVR & 50.09 $\pm$ 20.26 & 24.03\\
 \hline
-HistGradientBoostingRegressor & 5.41 $\pm$ 2.02 & 4.49\\
+HistGradientBoostingRegressor & 5.74 $\pm$ 2.39 & 4.83\\
 \hline
-XGBRegressor & 5.65 $\pm$ 1.82 & 5.66\\
+XGBRegressor & 5.87 $\pm$ 2.62 & 5.09\\
 \hline
-Prophet & 28.71 $\pm$ 7.11 & 31.93\\
+Prophet & 28.70 $\pm$ 7.10 & 31.66\\
 \hline
-LSTM & 35.98 $\pm$ 27.63 & 13.20\\
+LSTM & 34.51 $\pm$ 18.96 & 8.91\\
 \hline
-GRU & 23.14 $\pm$ 13.86 & 30.38\\
+GRU & 30.47 $\pm$ 13.61 & 30.49\\
 \hline
-CNN & 36.82 $\pm$19.51 & 15.09\\
+CNN & 33.01 $\pm$ 16.39 & 30.62\\
 \hline
-TFT & 14.52 $\pm$ 3.33 & 14.78\\
+TFT & 14.52 $\pm$ 3.33 & 12.49\\
 \hline
 \end{tabular}
 \caption{Table summarizing the results for hourly aggregation.}
 \label{tab:demandhourlyresults}
 \end{table}
+
+% TODO to be updated from TFT blocked k-fold cross validation
 
 At forecasting time:
 \begin{itemize}
@@ -353,7 +355,7 @@ At forecasting time:
   \item TFT one-week MAPE: … and one-month MAPE: …
 \end{itemize}
 
-Instead, the AutoML approaach obtained one-week MAPE: 17.89 and one-month MAPE: 20.14
+Instead, the AutoML approaach obtained one-week MAPE: 17.89 and one-month MAPE: 20.14.
 
 
 The results for daily aggregation are reported in table~\ref{tab:demanddailyresults}.
@@ -551,21 +553,21 @@ Therefore, these features are chosen to be incorporated into the prediction mode
 
 The results showed that the daily percentage of production had:
 \begin{itemize}
-  \item a Pearson correlation coefficient of 0.7587 and a Spearman's rank correlation coefficient of 0.7701 with respect to the air temperature;
-  \item a Pearson correlation coefficient of 0.7387 and a Spearman's rank correlation coefficient of 0.7451 with respect to the apparent temperature;
-  \item a Pearson correlation coefficient of -0.7619 and a Spearman's rank correlation coefficient of -0.7501 with respect to the relative humidity;
-  \item a Pearson correlation coefficient of 0.1874 and a Spearman's rank correlation coefficient of 0.3863 with respect to the wind speed;
-  \item a Pearson correlation coefficient of -0.2384 and a Spearman's rank correlation coefficient of -0.2691 with respect to the wind direction;
-  \item a Pearson correlation coefficient of -0.2525 and a Spearman's rank correlation coefficient of -0.2585 with respect to the pressure altimeter;
-  \item a Pearson correlation coefficient of 0.2093 and a Spearman's rank correlation coefficient of 0.3096 with respect to the visibility;
-  \item a Pearson correlation coefficient of -0.7081 and a Spearman's rank correlation coefficient of -0.6613 with respect to the sky coverage;
-  \item a Pearson correlation coefficient of 0.6281 and a Spearman's rank correlation coefficient of 0.6968 with respect to the diffuse horizontal irradiance;
-  \item a Pearson correlation coefficient of 0.6230 and a Spearman's rank correlation coefficient of 0.6952 with respect to the direct normal irradiance;
-  \item a Pearson correlation coefficient of 0.6372 and a Spearman's rank correlation coefficient of 0.7016 with respect to the global horizontal irradiance;
-  \item a Pearson correlation coefficient of 0.7912 and a Spearman's rank correlation coefficient of 0.8031 with respect to the solar radiation;
-  \item a Pearson correlation coefficient of 0.8405 and a Spearman's rank correlation coefficient of 0.8693 with respect to the UV index;
-  \item a Pearson correlation coefficient of 0.6499 and a Spearman's rank correlation coefficient of 0.7111 with respect to the solar elevation angle;
-  \item a Pearson correlation coefficient of -0.0439 and a Spearman's rank correlation coefficient of 0.2738 with respect to the solar azimuth angle.
+  \item a Pearson correlation coefficient of 0.7632 and a Spearman's rank correlation coefficient of 0.7721 with respect to the air temperature;
+  \item a Pearson correlation coefficient of 0.7434 and a Spearman's rank correlation coefficient of 0.7471 with respect to the apparent temperature;
+  \item a Pearson correlation coefficient of -0.7598 and a Spearman's rank correlation coefficient of -0.7474 with respect to the relative humidity;
+  \item a Pearson correlation coefficient of 0.1773 and a Spearman's rank correlation coefficient of 0.3769 with respect to the wind speed;
+  \item a Pearson correlation coefficient of -0.2405 and a Spearman's rank correlation coefficient of -0.2689 with respect to the wind direction;
+  \item a Pearson correlation coefficient of -0.2506 and a Spearman's rank correlation coefficient of -0.2559 with respect to the pressure altimeter;
+  \item a Pearson correlation coefficient of 0.2545 and a Spearman's rank correlation coefficient of 0.3259 with respect to the visibility;
+  \item a Pearson correlation coefficient of -0.7004 and a Spearman's rank correlation coefficient of -0.6542 with respect to the sky coverage;
+  \item a Pearson correlation coefficient of 0.6244 and a Spearman's rank correlation coefficient of 0.6939 with respect to the diffuse horizontal irradiance;
+  \item a Pearson correlation coefficient of 0.6216 and a Spearman's rank correlation coefficient of 0.6923 with respect to the direct normal irradiance;
+  \item a Pearson correlation coefficient of 0.6305 and a Spearman's rank correlation coefficient of 0.6988 with respect to the global horizontal irradiance;
+  \item a Pearson correlation coefficient of 0.7878 and a Spearman's rank correlation coefficient of 0.8013 with respect to the solar radiation;
+  \item a Pearson correlation coefficient of 0.8389 and a Spearman's rank correlation coefficient of 0.8680 with respect to the UV index;
+  \item a Pearson correlation coefficient of 0.6502 and a Spearman's rank correlation coefficient of 0.7079 with respect to the solar elevation angle;
+  \item a Pearson correlation coefficient of 0.1457 and a Spearman's rank correlation coefficient of 0.2813 with respect to the solar azimuth angle.
 \end{itemize}
 It can be noticed that both the coefficients decreased meaning that the mean weather data over the day is less correlated to the daily percentage of production, compared to the hourly granularity.
 Only the hourly granularity is considered since PV plants are highly correlated with weather data and the aggregation over the day loses part of this correlation.
@@ -573,6 +575,66 @@ Only the hourly granularity is considered since PV plants are highly correlated 
 If we were forecasting the production of each PV plant individually, the weather data at the specific locations of the plants would result in a higher correlation with the production data and likely allow the models to produce more accurate forecasts.
 However, since we are aggregating the production from multiple PV plants and looking for the overall percentage of production in the hour, using the weather data from a location located in the middle of the PV plants is also acceptable.
 In figure~\ref{fig:pvplantsmap}, the locations of the PV plants and of the weather station are reported.
+
+
+
+The results for hourly aggregation are reported in table~\ref{tab:productionhourlyresults}.  % TODO to be updated
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Model} & \textbf{blocked k-fold} & \textbf{test on last split}\\
+ & \textbf{cross-validation MAE percentage} & \textbf{MAE percentage}\\
+\hline
+One Day Baseline & 6.81 $\pm$ 3.14 & 4.58\\
+\hline
+ARIMA for each hour & 5.09 $\pm$ 1.35 & 3.64\\
+\hline
+SVR & 5.29 $\pm$ 0.88 & 3.28\\
+\hline
+HistGradientBoostingRegressor & 2.38 $\pm$ 0.41 & 2.29\\
+\hline
+XGBRegressor & 2.60 $\pm$ 0.44 & 2.15\\
+\hline
+Prophet & 7.90 $\pm$ 1.62 & 4.38\\
+\hline
+LSTM & 7.90 $\pm$ 6.07 & 4.61\\
+\hline
+GRU & 3.29 $\pm$ 1.08 & 3.14\\
+\hline
+CNN & 5.27 $\pm$ 1.18 & 3.24\\
+\hline
+TFT & 4.63 $\pm$ 1.19 & 4.57\\
+\hline
+\end{tabular}
+\caption{Table summarizing the results for hourly aggregation.}
+\label{tab:productionhourlyresults}
+\end{table}
+
+
+At forecasting time:
+\begin{itemize}
+  \item One Day Baseline one-week MAPE: 4.58
+  \item ARIMA for each hour one-week MAPE: 3.64
+  \item SVR one-week MAPE: 3.28
+  \item HistGradientBoostingRegressor one-week MAPE: 3.22
+  \item XGBRegressor one-week MAPE: 3.28
+  \item Prophet one-week MAPE: 4.38
+  \item One Day Baseline + Prophet one-week MAPE: 4.38
+  \item LSTM one-week MAPE: 4.61
+  \item LSTM + One Day Baseline + Prophet one-week MAPE: 4.02
+  \item LSTM + One Day Baseline one-week MAPE: 3.98
+  \item GRU one-week MAPE: 7.24
+  \item GRU + One Week Baseline + Prophet one-week MAPE: 4.02
+  \item GRU + One Week Baseline one-week MAPE: 4.37
+  \item CNN one-week MAPE: 4.48
+  \item CNN + One Week Baseline + Prophet one-week MAPE: 3.71
+  \item CNN + One Week Baseline one-week MAPE: 3.76
+  \item TFT one-week MAPE: …
+\end{itemize}
+
+Instead, the AutoML approaach obtained one-week MAPE: 11.50.
 
 
 

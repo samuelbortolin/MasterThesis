@@ -203,12 +203,11 @@ Only the hourly granularity is considered since PV plants are highly correlated 
 The data is with an hourly granularity and the target of the predictions is the mean percentage of production, which is calculated as the division of the total produced energy by the total power of the PV plants.
 This allows to have a bounded value from 0 to 100 from which it is possible to obtain the total produced energy simply by multiplying it by the total power of the PV plants.
 
-The developed models are some baseline approaches that consider repeating past days and weeks, an ARIMA model for each hour, a support vector regressor model, a hist gradient boosting regressor model, an extreme gradient boosting regressor model, a prophet model, a LSTM model, a GRU model, a CNN model, some models derived by the combination of the previous techniques, a TFT model, and an AutoML approach.
+The developed models are a baseline approach that consider repeating past days, an ARIMA model for each hour, a support vector regressor model, a hist gradient boosting regressor model, an extreme gradient boosting regressor model, a prophet model, a LSTM model, a GRU model, a CNN model, some models derived by the combination of the previous techniques, a TFT model, and an AutoML approach.
 
-The baseline approaches are developed using the NumPy library.
+The baseline approach is developed using the NumPy library.
 In particular, the tile method is used in different ways depending on the considered baseline.
 For the one-day baseline, the last day of the training mean percentages of production is replicated for the days of the test set.
-For the one-week baseline, the last week of the training mean percentages of production is replicated for the weeks of the test set.
 
 The ARIMA model for each hour is developed using the pmdarima library.
 The auto\_arima method is used to automatically discover the optimal order for the ARIMA model to better fit the training mean percentages of production for each hour.
