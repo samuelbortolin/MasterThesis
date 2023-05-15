@@ -357,7 +357,6 @@ At forecasting time:
 
 Instead, the AutoML approaach obtained one-week MAPE: 17.89 and one-month MAPE: 20.14.
 
-
 The results for daily aggregation are reported in table~\ref{tab:demanddailyresults}.
 
 \begin{table}[H]
@@ -366,7 +365,6 @@ The results for daily aggregation are reported in table~\ref{tab:demanddailyresu
 \hline
 \textbf{Model} & \textbf{blocked k-fold} & \textbf{test on last split}\\
  & \textbf{cross-validation MAPE} & \textbf{MAPE}\\
-
 \hline
 One Day Baseline & 25.52 $\pm$ 21.64 & 92.08\\
 \hline
@@ -794,9 +792,9 @@ Pearson's correlation coefficient measures the strength of the linear relationsh
 The pearsonr and spearmanr methods of the SciPy library were used to compute the correlation with weather data.
 The results showed that the hourly consumption of the three customers had:
 \begin{itemize}
-  \item a Pearson correlation coefficient of -0.2491, 0.0263, and -0.1469 respectively and a Spearman's rank correlation coefficient of -0.2088, 0.1257, and -0.0356 respectively with respect to the air temperature;
-  \item a Pearson correlation coefficient of -0.2434, 0.0307, and -0.1494 respectively and a Spearman's rank correlation coefficient of -0.2082, 0.1263, and -0.0366 respectively with respect to the apparent temperature;
-  \item a Pearson correlation coefficient of 0.1193, -0.0810, and -0.0753 respectively and a Spearman's rank correlation coefficient of 0.1491, -0.0916, and -0.0814 respectively with respect to the relative humidity.
+  \item a Pearson correlation coefficient of -0.2491, 0.0240, and -0.1338 respectively and a Spearman's rank correlation coefficient of -0.2088, 0.1304, and -0.0196 respectively with respect to the air temperature;
+  \item a Pearson correlation coefficient of -0.2434, 0.0266, and -0.1356 respectively and a Spearman's rank correlation coefficient of -0.2082, 0.1305, and -0.0207 respectively with respect to the apparent temperature;
+  \item a Pearson correlation coefficient of 0.1193, -0.0845, and -0.0985 respectively and a Spearman's rank correlation coefficient of 0.1491, -0.1048, and -0.1123 respectively with respect to the relative humidity.
 \end{itemize}
 It can be noticed that both the coefficients indicate a weak correlation between the weather variables and the consumption of the three customers, nevertheless, it may still be useful to incorporate weather data into the prediction models since also the auto-correlation values are not particularly high.
 
@@ -872,13 +870,103 @@ It can be noticed that both the coefficients indicate a weak correlation between
 
 The results showed that the daily consumption of the three customers had:
 \begin{itemize}
-  \item a Pearson correlation coefficient of -0.5538, -0.2286, and -0.6707 respectively and a Spearman's rank correlation coefficient of -0.5154, -0.2639, and -0.6949 respectively with respect to the air temperature;
-  \item a Pearson correlation coefficient of -0.5356, -0.2276, and -0.6768 respectively and a Spearman's rank correlation coefficient of -0.5156, -0.2634, and -0.6975 respectively with respect to the apparent temperature;
-  \item a Pearson correlation coefficient of 0.1241, 0.0100, and 0.1368 respectively and a Spearman's rank correlation coefficient of 0.1381, 0.0409, and 0.2077 respectively with respect to the relative humidity.
+  \item a Pearson correlation coefficient of -0.5542, -0.2341, and -0.6727 respectively and a Spearman's rank correlation coefficient of -0.5164, -0.2592, and -0.6978 respectively with respect to the air temperature;
+  \item a Pearson correlation coefficient of -0.5361, -0.2329, and -0.6787 respectively and a Spearman's rank correlation coefficient of -0.5166, -0.2584, and -0.7004 respectively with respect to the apparent temperature;
+  \item a Pearson correlation coefficient of 0.1264, 0.0199, and 0.1407 respectively and a Spearman's rank correlation coefficient of 0.1412, 0.0506, and 0.2104 respectively with respect to the relative humidity.
 \end{itemize}
 It can be noticed that both the coefficients increased considering the daily data meaning that the mean weather data over the day is more correlated to the daily consumption of the three considered customers, compared to the hourly granularity.
 
 % TODO What about tariff aggregation? probably not to include (maybe just some words)
+
+
+
+The results for hourly aggregation for the first customer are reported in table~\ref{tab:baselinehourlyresults}.  % TODO to be updated
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+ & \textbf{blocked k-fold} & \textbf{test on last split}\\
+\textbf{Model} & \textbf{cross-validation} & \textbf{MAPE | MAE [kWh]}\\
+ & \textbf{MAPE | MAE [kWh]} & \\
+\hline
+One Day Baseline & 171.37 $\pm$ 148.43 | 0.209 $\pm$ 0.083 & 48.43 | 0.028\\
+\hline
+One Week Baseline & 178.58 $\pm$ 76.74 | 0.226 $\pm$ 0.039 & 322.74 | 0.166\\
+\hline
+4 Week Baseline & ... $\pm$ ... | ... $\pm$ ... & 379.96 | 0.194\\
+\hline
+12 Week Baseline & ... $\pm$ ... | ... $\pm$ ... & 447.37 | 0.228\\
+\hline
+SARIMA for each hour & 455.21 $\pm$ 246.50 | 0.379 $\pm$ 0.123 & 269.33 | 0.152\\
+\hline
+SVR & 108.71 $\pm$ 33.24 | 0.225 $\pm$ 0.056 & 201.16 | 0.121\\
+\hline
+HistGradientBoostingRegressor & 61.85 $\pm$ 16.26 | 0.132 $\pm$ 0.047 & 48.43 | 0.026\\
+\hline
+XGBRegressor & 117.86 $\pm$ 31.29 | 0.157 $\pm$ 0.038 & 120.87 | 0.067\\
+\hline
+Prophet & 215.51 $\pm$ 113.13 | 0.253 $\pm$ 0.025 & 487.29 | 0.258\\
+\hline
+LSTM & 55.79 $\pm$ 8.67 | 0.238 $\pm$ 0.080 & 115.14 | 0.097\\
+\hline
+GRU & 57.66 $\pm$ 9.75 | 0.239 $\pm$ 0.081 & 33.19 | 0.049\\
+\hline
+CNN & 116.90 $\pm$ 33.32 | 0.269 $\pm$ 0.088 & 80.80 | 0.072\\
+\hline
+TFT & 66.53 $\pm$ 14.95 | 0.220 $\pm$ 0.068 & 35.01 | 0.050\\
+\hline
+\end{tabular}
+\caption{Table summarizing the results for hourly aggregation.}
+\label{tab:baselinehourlyresults}
+\end{table}
+
+Instead, the AutoML approaach obtained one-week MAPE: 54.73 and MAE: 0.157 [kWh]. % Actually these are for the third customer
+
+% Not done at forecasting time: not good results in training
+
+The results for daily aggregation for the first customer are reported in table~\ref{tab:baselinedailyresults}.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+ & \textbf{blocked k-fold} & \textbf{test on last split}\\
+\textbf{Model} & \textbf{cross-validation} & \textbf{MAPE | MAE [kWh]}\\
+ & \textbf{MAPE | MAE [kWh]} & \\
+\hline
+One Day Baseline & 63.23 $\pm$ 84.77 | 2.917 $\pm$ 2.111 & 5.86 | 0.140\\
+\hline
+One Week Baseline & 66.31 $\pm$ 50.24 | 3.036 $\pm$ 1.057 & 166.09 | 3.460\\
+\hline
+4 Week Baseline & ... $\pm$ ... | ... $\pm$ ... & 215.05 | 4.491\\
+\hline
+12 Week Baseline & ... $\pm$ ... | ... $\pm$ ... & 228.95 | 4.861\\
+\hline
+SARIMA for each hour & 57.83 $\pm$ 48.13 | 2.577 $\pm$ 1.124 & 155.35 | 3.292\\
+\hline
+SVR & 59.83 $\pm$ 53.79 | 2.677 $\pm$ 1.054 & 205.56 | 4.354\\
+\hline
+HistGradientBoostingRegressor & 45.49 $\pm$ 29.77 | 2.351 $\pm$ 0.752 & 107.34 | 2.241\\
+\hline
+XGBRegressor & 50.24 $\pm$ 32.61 | 2.621 $\pm$ 0.875 & 95.51 | 2.015\\
+\hline
+Prophet & 57.12 $\pm$ 41.00 | 3.050 $\pm$ 1.071 & 164.21 | 3.543\\
+\hline
+LSTM & 50.54 $\pm$ 21.45 | 3.647 $\pm$ 1.709 & 145.45 | 3.077\\
+\hline
+GRU & 38.37 $\pm$ 10.61 | 2.880 $\pm$ 1.340 & 46.48 | 0.957\\
+\hline
+CNN & 56.85 $\pm$ 25.32 | 3.821 $\pm$ 1.645 & 70.08 | 1.497\\
+\hline
+TFT & 60.91 $\pm$ 50.97 | 3.111 $\pm$ 1.413 & 41.35 | 0.873\\
+\hline
+\end{tabular}
+\caption{Table summarizing the results for daily aggregation.}
+\label{tab:baselinedailyresults}
+\end{table}
+
+Instead, the AutoML approaach obtained one-week MAPE: 34.63 and MAE: 1.405 [kWh]. % Actually these are for the third customer
 
 
 
