@@ -141,7 +141,7 @@ For the considered residential users the possible tariffs are 3:
 For the tariff granularity, data is aggregated over the day summing the active incomings of the single hours for each tariff, and averaging the weather data over the tariff ranges.
 Then a model is trained for each tariff.
 
-The developed models are some baseline approaches that consider repeating past days and weeks, a SARIMA model, a support vector regressor model, a hist gradient boosting regressor model, an extreme gradient boosting regressor model, a prophet model, a LSTM model, a GRU model, a CNN model, some models derived by the combination of the previous techniques, a TFT model, and an AutoML approach.
+The developed models are some baseline approaches that consider repeating past days and weeks, a SARIMA model, a support vector regressor model, a hist gradient boosting regressor model, an extreme gradient boosting regressor model, a prophet model, a LSTM model, a GRU model, a CNN model, a TFT model, and an AutoML approach.
 
 The baseline approaches are developed using the NumPy library.
 In particular, the tile method is used in different ways depending on the considered baseline.
@@ -175,9 +175,6 @@ The training is performed using the fit method on the training data for one-step
 The specific models’ architecture and parameters are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
 For the prediction, an recursive strategy is used by forecasting one time instant at a time using weather forecasts, and then uaing the predicted demand data as previous information for the next time instants.
 
-The models derived by the combination of the previous techniques consist of the combination of one-day baseline, one-week baseline, and prophet with possibly one of LSTM, GRU, or CNN.
-Further details of the optimal combinations are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
-
 The TFT model is developed using the PyTorch Forecasting library.
 A TimeSeriesDataSet is constructed using the following features for the hourly granularity: the time index, the hour, the day, the weekday, the month, and the year information of the time instant for which to compute the prediction, the air temperature, the apparent temperature, and the relative humidity in the considered hour.
 For the daily and tariff granularities instead, the hour of the date for which to compute the prediction is not considered as a feature, and the weather information is obtained as the average over the day or tariff ranges.
@@ -203,10 +200,10 @@ Only the hourly granularity is considered since PV plants are highly correlated 
 The data is with an hourly granularity and the target of the predictions is the mean percentage of production, which is calculated as the division of the total produced energy by the total power of the PV plants.
 This allows to have a bounded value from 0 to 100 from which it is possible to obtain the total produced energy simply by multiplying it by the total power of the PV plants.
 
-The developed models are a baseline approach that consider repeating past days, an ARIMA model, a support vector regressor model, a hist gradient boosting regressor model, an extreme gradient boosting regressor model, a prophet model, a LSTM model, a GRU model, a CNN model, some models derived by the combination of the previous techniques, a TFT model, and an AutoML approach.
+The developed models are a baseline approach that considers repeating past days, an ARIMA model, a support vector regressor model, a hist gradient boosting regressor model, an extreme gradient boosting regressor model, a prophet model, a LSTM model, a GRU model, a CNN model, some models derived by the combination of the previous techniques, a TFT model, and an AutoML approach.
 
 The baseline approach is developed using the NumPy library.
-In particular, the tile method is used in different ways depending on the considered baseline.
+In particular, the tile method is used.
 For the one-day baseline, the last day of the training mean percentages of production is replicated for the days of the test set.
 
 The ARIMA model is developed using the pmdarima library.
@@ -233,7 +230,7 @@ The training is performed using the fit method on the training data for one-step
 The specific models’ architecture and parameters are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
 For the prediction, an recursive strategy is used by forecasting one time instant at a time using weather forecasts, and then uaing the predicted production data as previous information for the next time instants.
 
-The models derived by the combination of the previous techniques consist of the combination of one-day baseline, one-week baseline, and prophet with possibly one of LSTM, GRU, or CNN.
+The models derived by the combination of the previous techniques consist of the combination of one-day baseline and prophet with possibly one of LSTM, GRU, or CNN.
 Further details of the optimal combinations are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
 
 The TFT model is developed using the PyTorch Forecasting library.

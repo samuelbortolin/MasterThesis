@@ -307,7 +307,7 @@ It can be noticed that both the coefficients decreased considering the daily dat
 After this data analysis, the specific parameters used in the models can be explained more in detail.
 The baseline approaches are built considering the repetition of past days and weeks since data presents a high correlation with that time instants and could lead to a reasonable baseline performance to achieve.
 The SARIMA model considers the week as the period for seasonal differencing since data presents a high correlation with that time instants and the model can try to take advantage of the weekly seasonality.
-The Support vector regressor model uses a radial basis function kernel with a configuration of the C parameter (regularization parameter of squared l2 penalty) to 1.0 to penalize the complexity of the model, and the epsilon parameter defining the epsilon-tube for no penalty to 0.1 as a trade-off between accuracy and generalization.
+The support vector regressor model uses a radial basis function kernel with a configuration of the C parameter (regularization parameter of squared l2 penalty) to 1.0 to penalize the complexity of the model, and the epsilon parameter defining the epsilon-tube for no penalty to 0.1 as a trade-off between accuracy and generalization.
 The hist gradient boosting regressor model uses as loss the absolute error since this was the supported metric closer to the objective and keeping the default parameters for tree definition.
 The same was also done for the extreme gradient boosting regressor model.
 The Prophet model was built keeping the default parameters for automatically detecting seasonalities and best fitting the training data.
@@ -315,23 +315,24 @@ The Prophet model was built keeping the default parameters for automatically det
 The LSTM model was designed as a 2-layer model with 24 Bidirectional LSTM units in the first layer which use rectified linear unit (ReLU) activation function and sigmoid as recurrent activation function with both dropout and recurrent dropout of 0.02.
 Batch normalization is then applied before entering the second layer composed of 16 Bidirectional LSTM units which use ReLU activation function and sigmoid as recurrent activation function without dropout and recurrent dropout.
 The output of the layer goes inside a dense unit to output the final prediction.
-The model is trained using mean absolute percentage error as loss and Nadam (Adam with Nesterov momentum) as optimizer with a learning rate of 0.005.
+The model is trained using mean absolute percentage error as loss and Nadam (a version of Adam integrating the concept of Nesterov momentum) as optimizer with a learning rate of 0.005.
 
 The GRU model was designed as a 3-layer model with 24 Bidirectional GRU units in the first layer which use ReLU activation function and sigmoid as recurrent activation function with both dropout and recurrent dropout of 0.02.
 Subsequently, the second layer is composed of 16 Bidirectional GRU units which use ReLU activation function and sigmoid as recurrent activation function without dropout and recurrent dropout.
 The output of the second layer goes inside a third dense layer composed of 4 units with ReLU activation function before entering the final dense unit to output the final prediction.
-The model is trained using mean absolute percentage error as loss and Nadam (Adam with Nesterov momentum) as optimizer with a learning rate of 0.005.
+The model is trained using mean absolute percentage error as loss and Nadam as optimizer with a learning rate of 0.005.
 
 The CNN model was designed as a 3-layer model with a first layer composed of 24 1D Convolutional units with a kernel size of 5 which uses ReLU activation function.
 A 1D max polling operation is applied before entering the second layer composed of 16 1D Convolutional units with a kernel size of 3 which use ReLU activation function.
-A 1D max polling operation is applied before entering the third dense layer composed of 4 units with ReLU activation function before entering the final dense unit to output the final prediction.
-The model is trained using mean absolute percentage error as loss and Nadam (Adam with Nesterov momentum) as optimizer with a learning rate of 0.005.
+A 1D max polling operation is applied before the flatting operation and entering the third dense layer composed of 4 units with ReLU activation function.
+The output of the layer goes inside a dense unit to output the final prediction.
+The model is trained using mean absolute percentage error as loss and Nadam as optimizer with a learning rate of 0.005.
 
-The combination of the previous techniques was performed by combining one-day baseline, one-week baseline, and prophet with possibly one of LSTM, GRU, or CNN with the intent of triying to improve the robustness of DL models with some stable baselines and prophet model which internally automatically deals with seasonalities.
+The combination of the previous techniques was performed by combining one-day baseline, one-week baseline, and prophet with possibly one of LSTM, GRU, or CNN with the intent of trying to improve the robustness of DL models with some stable baselines and prophet model which internally automatically deals with seasonalities.
 
 The TFT model was configured with 2 LSTM layers with 16 as hidden size, 4 as attention size, and 8 as hidden continuous size.
 The dropout is set to 0.02.
-The model is trained using mean absolute percentage error as loss and Nadam (Adam with Nesterov momentum) as optimizer with a learning rate of 0.005.
+The model is trained using mean absolute percentage error as loss and Nadam as optimizer with a learning rate of 0.005.
 
 The AutoML approach uses the mean MAPE forecasting as loss and it is launched for 10 hours with a maximum function evaluation time of 2 hours.
 Then the best ensemble of the found models is returned and can be used to forecast.
@@ -447,7 +448,7 @@ Prophet & 33.94 & 31.62\\
 \label{tab:demandhourlyresultsforecast}
 \end{table}
 
-% ottimizzare la combinazione (a trainining e poi vedere a forecasting), maybe LR on the models on a validation set instead of just the mean
+% ottimizzare la combinazione (a training e poi vedere a forecasting), maybe LR on the models on a validation set instead of just the mean
 
 Instead, the AutoML approach obtained a one-week MAPE of 14.68 and a one-month MAPE of 16.96 after a total run of 10 hours.
 
@@ -706,7 +707,37 @@ In figure~\ref{fig:pvplantsmap}, the locations of the PV plants and of the weath
 \label{fig:pvplantsmap}
 \end{figure}
 
-Describe the choice of parameters for models ... (list with motivations)
+After this data analysis, the specific parameters used in the models can be explained more in detail.
+The baseline approach is built considering the repetition of past days since data presents a high correlation with that time instant and could lead to a reasonable baseline performance to achieve.
+A simple ARIMA model considers the single hours without seasonally on the week period like for demand prediction since data does not present a relevant correlation with that time instants.
+The support vector regressor model uses a radial basis function kernel with a configuration of the C parameter (regularization parameter of squared l2 penalty) to 1.0 to penalize the complexity of the model, and the epsilon parameter defining the epsilon-tube for no penalty to 0.1 as a trade-off between accuracy and generalization.
+The hist gradient boosting regressor model uses as loss the absolute error since this was the supported metric closer to the objective and keeping the default parameters for tree definition.
+The same was also done for the extreme gradient boosting regressor model.
+The Prophet model was built keeping the default parameters for automatically detecting seasonalities and best fitting the training data.
+
+The LSTM model was designed as a 2-layer model with 32 Bidirectional LSTM units in the first layer which use ReLU activation function and sigmoid as recurrent activation function with both dropout and recurrent dropout of 0.02.
+The second layer is composed of 16 Bidirectional LSTM units which use ReLU activation function and sigmoid as recurrent activation function without dropout and recurrent dropout.
+The output of the layer goes inside a dense unit to output the final prediction.
+The model is trained using mean absolute error as loss and Nadam as optimizer with a learning rate of 0.005.
+
+The GRU model was designed as a 2-layer model with 32 Bidirectional GRU units in the first layer which use ReLU activation function and sigmoid as recurrent activation function with both dropout and recurrent dropout of 0.02.
+Subsequently, the second layer is composed of 16 Bidirectional GRU units which use ReLU activation function and sigmoid as recurrent activation function without dropout and recurrent dropout.
+The output of the layer goes inside a dense unit to output the final prediction.
+The model is trained using mean absolute error as loss and Nadam as optimizer with a learning rate of 0.005.
+
+The CNN model was designed as a 2-layer model with a first layer composed of 24 1D Convolutional units with a kernel size of 5 which uses ReLU activation function.
+A 1D max polling operation is applied before entering the second layer composed of 16 1D Convolutional units with a kernel size of 3 which use ReLU activation function.
+A 1D max polling operation is applied before the flatting operation and entering the final dense unit to output the final prediction.
+The model is trained using mean absolute error as loss and Nadam as optimizer with a learning rate of 0.005.
+
+The combination of the previous techniques was performed by combining one-day baseline and prophet with possibly one of LSTM, GRU, or CNN with the intent of trying to improve the robustness of DL models with some stable baselines and prophet model which internally automatically deals with seasonalities.
+
+The TFT model was configured with 2 LSTM layers with 16 as hidden size, 4 as attention size, and 8 as hidden continuous size.
+The dropout is set to 0.02.
+The model is trained using mean absolute error as loss and Nadam as optimizer with a learning rate of 0.005.
+
+The AutoML approach uses the mean MAPE forecasting as loss and it is launched for 10 hours with a maximum function evaluation time of 2 hours.
+Then the best ensemble of the found models is returned and can be used to forecast.
 
 12 splits were used for block validation with a test size of a week each time, namely 7 days of data.
 The models start with 5280 entries as training and predict every time 168 entries until reaching the last prediction instant where the model has a training size of 7128.
@@ -1025,7 +1056,35 @@ It can be noticed that both the coefficients increased considering the daily dat
 
 % TODO What about tariff aggregation? probably not to include (maybe just some words)
 
-Describe the choice of parameters for models ... (list with motivations)
+After this data analysis, the specific parameters used in the models can be explained more in detail.
+The baseline approaches are built considering the repetition of past days and weeks since data presents a high correlation with that time instants and could lead to a reasonable baseline performance to achieve.
+The SARIMA model considers the week as the period for seasonal differencing since data presents a high correlation with that time instants and the model can try to take advantage of the weekly seasonality.
+The support vector regressor model uses a radial basis function kernel with a configuration of the C parameter (regularization parameter of squared l2 penalty) to 1.0 to penalize the complexity of the model, and the epsilon parameter defining the epsilon-tube for no penalty to 0.1 as a trade-off between accuracy and generalization.
+The hist gradient boosting regressor model uses as loss the absolute error since this was the supported metric closer to the objective and keeping the default parameters for tree definition.
+The same was also done for the extreme gradient boosting regressor model.
+The Prophet model was built keeping the default parameters for automatically detecting seasonalities and best fitting the training data.
+
+The LSTM model was designed as a 2-layer model with 32 Bidirectional LSTM units in the first layer which use ReLU activation function and sigmoid as recurrent activation function with both dropout and recurrent dropout of 0.02.
+The second layer composed of 16 Bidirectional LSTM units which use ReLU activation function and sigmoid as recurrent activation function without dropout and recurrent dropout.
+The output of the layer goes inside a dense unit to output the final prediction.
+The model is trained using a combination of mean absolute error and mean absolute percentage error as loss and Nadam as optimizer with a learning rate of 0.005.
+
+The GRU model was designed as a 2-layer model with 32 Bidirectional GRU units in the first layer which use ReLU activation function and sigmoid as recurrent activation function with both dropout and recurrent dropout of 0.02.
+Subsequently, the second layer is composed of 16 Bidirectional GRU units which use ReLU activation function and sigmoid as recurrent activation function without dropout and recurrent dropout.
+The output of the layer goes inside a dense unit to output the final prediction.
+The model is trained using a combination of mean absolute error and mean absolute percentage error as loss and Nadam as optimizer with a learning rate of 0.005.
+
+The CNN model was designed as a 2-layer model with a first layer composed of 32 1D Convolutional units with a kernel size of 5 which uses ReLU activation function.
+A 1D max polling operation is applied before entering the second layer composed of 16 1D Convolutional units with a kernel size of 3 which use ReLU activation function.
+A 1D max polling operation is applied before the flatting operation and entering the final dense unit to output the final prediction.
+The model is trained using a combination of mean absolute error and mean absolute percentage error as loss and Nadam as optimizer with a learning rate of 0.005.
+
+The TFT model was configured with 2 LSTM layers with 16 as hidden size, 4 as attention size, and 8 as hidden continuous size.
+The dropout is set to 0.02.
+The model is trained using mean absolute percentage error as loss and Nadam as optimizer with a learning rate of 0.005.
+
+The AutoML approach uses the mean MAPE forecasting as loss and it is launched for 10 hours with a maximum function evaluation time of 2 hours.
+Then the best ensemble of the found models is returned and can be used to forecast.
 
 12 splits were used for block validation with a test size of a week each time, namely 7 days of data.
 For the hourly granularity, the models start with the total number of entries for the customer minus 2016 entries as training and predict every time 168 entries until reaching the last prediction instant where the model has a training size of the total number of entries for the customer minus the last 168 entries.
