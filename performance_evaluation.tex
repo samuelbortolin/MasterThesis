@@ -186,8 +186,8 @@ forecasting & & and test on the last split\\
 \label{tab:metricstable}
 \end{table}
 
-This methodology was used at training time to study the performance over time.
-At forecasting time, the performance on the last time slot was treated with more attention as the most relevant for the energy retailers.
+This evaluation methodology was used at training time to study the performance over time.
+At forecasting time, the performance on the last time slot was treated with more attention as the most relevant for the energy retailers since the most related to the performance on imminent future data.
 The combinations of the models were done just at forecasting time on the last time slot using the average of some approaches for studying whether there could be a beneficial effect on the forecasts and compensation of error between the different approaches.
 The same was also done for the AutoML approach, in fact, it was tested just at forecasting time on the last time slot for comparison to the tested models.
 It was included as a baseline to show how a general-purpose framework can perform in specific use cases compared to specific architectures designed for the task.
@@ -337,6 +337,11 @@ The model is trained using mean absolute percentage error as loss and Nadam as o
 12 splits were used for block validation with a test size of a month each time, namely 30 days of data.
 For the hourly granularity, the models start with 5977 entries as training and predict every time 720 entries until reaching the last prediction instant where the model has a training size of 13897.
 The results for hourly aggregation are reported in table~\ref{tab:demandhourlyresults}.
+Entries are sorted by best MAPE using the last split as the test set.
+The blocked k-fold cross-validation suggests that the one-week baseline has the best MAPE, but looking at the last split this is not confirmed.
+This is probably due to the fact that overall the weekly repetition seems to be quite effective over the year, but there are better approaches that with the increase of training data perform better, this can be the case in GRU and CNN since the results on the last split are quite good compared to the mean MAPE obtained over the splits.
+The TFT approach seems to have pretty much the same MAPE over the considered splits confirming the power of this architecture.
+In contrast, the boosters that have a good blocked k-fold MAPE on the last split do not perform well.
 
 \begin{table}[H]
 \centering
@@ -347,23 +352,23 @@ The results for hourly aggregation are reported in table~\ref{tab:demandhourlyre
 \hline
 TFT & 15.00 $\pm$ 4.31 & 14.76\\
 \hline
+GRU & 30.77 $\pm$ 14.48 & 16.82\\
+\hline
+CNN & 34.64 $\pm$ 15.76 & 17.49\\
+\hline
 One Week Baseline & 12.94 $\pm$ 4.27 & 17.55\\
 \hline
 SARIMA & 15.44 $\pm$ 4.57 & 18.47\\
 \hline
 One Day Baseline & 22.86 $\pm$ 7.07 & 20.54\\
 \hline
-GRU & 30.77 $\pm$ 14.48 & 22.83\\
+LSTM & 34.08 $\pm$ 11.92 & 23.18\\
 \hline
-HistGradientBoostingRegressor & 14.43 $\pm$ 5.45 & 28.49\\
-\hline
-CNN & 34.64 $\pm$ 15.76 & 28.83\\
+HistGradientBoostingRegressor & 14.54 $\pm$ 5.51 & 29.33\\
 \hline
 SVR & 61.80 $\pm$ 22.63 & 29.47\\
 \hline
-Prophet & 28.70 $\pm$ 7.10 & 31.66\\
-\hline
-LSTM & 34.08 $\pm$ 11.92 & 32.51\\
+Prophet & 28.68 $\pm$ 7.07 & 31.62\\
 \hline
 XGBRegressor & 16.88 $\pm$ 8.08 & 37.81\\
 \hline
@@ -372,13 +377,18 @@ XGBRegressor & 16.88 $\pm$ 8.08 & 37.81\\
 \label{tab:demandhourlyresults}
 \end{table}
 
-% TODO sortare per mape e capire quele dei 2, + spiegare differenze ranking, deep dive su lstm o altri modelli with differenze rilevanti
+% TODO sortare per mape e capire quale dei 2, + spiegare differenze ranking, deep dive su lstm o altri modelli with differenze rilevanti
 
-The results for hourly aggregation at forecasting time on the last time slot including also the combinations of different tecnhiques and the AutoML approach are reported in table~\ref{tab:demandhourlyresultsforecast}.
+The results for hourly aggregation at forecasting time on the last time slot including also the combinations of different techniques and the AutoML approach are reported in table~\ref{tab:demandhourlyresultsforecast}.
 The combination of the previous techniques was performed by combining one-day baseline, one-week baseline, and prophet with possibly one of LSTM, GRU, or CNN with the intent of trying to improve the robustness of DL models with some stable baselines and prophet model which internally automatically deals with seasonalities.
 The AutoML approach uses the mean MAPE forecasting as loss and it is launched for 10 hours with a maximum function evaluation time of 2 hours.
 Then the best ensemble of the found models is returned and can be used to forecast.
-In the table is also reported the performance on the one week horizon, namely 7 days of data, from which it is possible to gain more insights on the models forecasts.
+In the table, it is also reported the performance on the one-week horizon, namely 7 days of data, from which it is possible to gain more insights on the models' forecasts.
+Including also combinations and AutoML, there are few observations that can be done.
+The combinations of DL models and the one-week baseline are the most beneficial, reducing of many point percentage the MAPE of the techniques on the one-month time horizon.
+AutoML has great potential and obtains very good results compared to many other models.
+TFT still dominates on the one-month MAPE but not on the one-week one on which the one-week baseline and many combinations but also SARIMA and hist gradient boosting regressor perform better.
+This confirmed that the strength of TFT is to have good performance and preserve it also on larger prediction horizons.
 
 % TODO ha senso ottimizzare la combinazione (a training e poi vedere a forecasting), maybe LR on the models on a validation set instead of just the mean
 
@@ -389,56 +399,56 @@ In the table is also reported the performance on the one week horizon, namely 7 
 \textbf{Model} & \textbf{Forecast on the last split} & \textbf{Forecast on the last split}\\
  & \textbf{one-week MAPE} & \textbf{one-month MAPE}\\
 \hline
-LSTM + One Week Baseline + & 15.35 & 13.97\\
-Prophet & & \\
-\hline
 TFT & 13.71 & 14.76\\
 \hline
-LSTM + One Day Baseline + & 13.70 & 14.91\\
-One Week Baseline + Prophet & & \\
+GRU + One Week Baseline & 11.79 & 14.79\\
 \hline
-CNN + One Week Baseline + & 14.17 & 15.04\\
-Prophet & & \\
+CNN + One Week Baseline & 11.84 & 15.39\\
 \hline
-CNN + One Day Baseline + & 13.00 & 15.87\\
-One Week Baseline + Prophet & & \\
+GRU & 17.25 & 16.82\\
 \hline
 AutoML & 14.68 & 16.96\\
 \hline
+CNN + One Week Baseline + & 15.43 & 17.13\\
+Prophet & & \\
+\hline
+CNN + One Day Baseline + & 13.60 & 17.25\\
+One Week Baseline + Prophet & & \\
+\hline
+GRU + One Day Baseline + & 13.25 & 17.33\\
+One Week Baseline + Prophet & & \\
+\hline
+GRU + One Week Baseline + & 15.63 & 17.37\\
+Prophet & & \\
+\hline
+CNN & 14.59 & 17.49\\
+\hline
 One Week Baseline & 10.87 & 17.55\\
 \hline
-CNN + One Week Baseline & 19.00 & 18.43\\
+LSTM + One Week Baseline + & 13.16 & 17.89\\
+Prophet & & \\
+\hline
+LSTM + One Day Baseline + & 12.58 & 18.10\\
+One Week Baseline + Prophet & & \\
+\hline
+LSTM + One Week Baseline & 14.42 & 18.11\\
 \hline
 SARIMA & 12.28 & 18.47\\
 \hline
-LSTM + One Week Baseline & 20.76 & 19.22\\
-\hline
-GRU + One Week Baseline & 10.95 & 19.67\\
-\hline
 One Day Baseline & 14.78 & 20.54\\
 \hline
-One Day Baseline + & 15.16 & 20.99\\
+One Day Baseline + & 15.15 & 20.97\\
 One Week Baseline + Prophet & & \\
 \hline
-GRU + One Day Baseline + & 14.10 & 21.19\\
-One Week Baseline + Prophet & & \\
+One Week Baseline + Prophet & 19.02 & 22.80\\
 \hline
-GRU + One Week Baseline + & 15.93 & 22.38\\
-Prophet & & \\
+LSTM & 20.94 & 23.18\\
 \hline
-GRU & 13.43 & 22.83\\
-\hline
-One Week Baseline + Prophet & 19.03 & 22.83\\
-\hline
-HistGradientBoostingRegressor & 12.15 & 28.49\\
-\hline
-CNN & 33.22 & 28.83\\
+HistGradientBoostingRegressor & 13.00 & 29.33\\
 \hline
 SVR & 29.06 & 29.47\\
 \hline
-Prophet & 33.95 & 31.66\\
-\hline
-LSTM & 37.67 & 32.51\\
+Prophet & 33.94 & 31.62\\
 \hline
 XGBRegressor & 17.84 & 37.81\\
 \hline
@@ -461,6 +471,10 @@ Analyze the forecasts of the models for the electricity demand forecasting task 
 
 For the daily granularity, the models start with 249 entries as training and predict every time 30 entries until reaching the last prediction instant where the model has a training size of 579.
 The results for daily aggregation are reported in table~\ref{tab:demanddailyresults}.
+In this case TFT is no more the best performing model, probably due to the fact of 24 times less quantity of data due to the daily aggregation.
+Though, it is still a weel performing model on both blocked k-fold cross-validation and last split results.
+LSTM and CNN perform better in terms of last split MAPE but present an high blocked k-fold MAPE, as in the case of the hourly granularity probably that to the increase of data, the results on the last time slots improved in a significant way.
+Also the boosters present very good results on the last time split and also on the blocked k-fold validation showing a consistency over time and good results also with few training data. 
 
 \begin{table}[H]
 \centering
@@ -469,11 +483,11 @@ The results for daily aggregation are reported in table~\ref{tab:demanddailyresu
 \textbf{Model} & \textbf{Blocked k-fold} & \textbf{Test on the last split}\\
  & \textbf{cross-validation MAPE} & \textbf{MAPE}\\
 \hline
+CNN & 50.55 $\pm$ 36.81 & 7.49\\
+\hline
 XGBRegressor & 12.96 $\pm$ 4.36 & 7.65\\
 \hline
 HistGradientBoostingRegressor & 13.02 $\pm$ 5.54 & 9.81\\
-\hline
-CNN & 50.55 $\pm$ 36.81 & 10.55\\
 \hline
 LSTM & 29.60 $\pm$ 13.81 & 14.51\\
 \hline
@@ -487,7 +501,7 @@ GRU & 28.76 $\pm$ 29.26 & 20.47\\
 \hline
 One Day Baseline & 22.80 $\pm$ 8.21 & 21.51\\
 \hline
-Prophet & 19.10 $\pm$ 10.74 & 26.34\\
+Prophet & 19.06 $\pm$ 10.81 & 26.33\\
 \hline
 SVR & 53.63 $\pm$ 22.39 & 39.82\\
 \hline
@@ -496,7 +510,9 @@ SVR & 53.63 $\pm$ 22.39 & 39.82\\
 \label{tab:demanddailyresults}
 \end{table}
 
-The results for daily aggregation at forecasting time on the last time slot including also the combinations of different tecnhiques and the AutoML approach are reported in table~\ref{tab:demanddailyresultsforecast}.
+The results for daily aggregation at forecasting time on the last time slot including also the combinations of different techniques and the AutoML approach are reported in table~\ref{tab:demanddailyresultsforecast}.
+In this case the impact of the combinations is not so evident and does not improve the results in all the cases.
+AutoML presents not very good results being worse than the one-week baseline, this is probably due to the scarcity of training data and the fact of AutoML of trying very complex architects when also simple ones may work well in certain cases.
 
 \begin{table}[H]
 \centering
@@ -505,56 +521,56 @@ The results for daily aggregation at forecasting time on the last time slot incl
 \textbf{Model} & \textbf{Forecast on the last split} & \textbf{Forecast on the last split}\\
  & \textbf{one-week MAPE} & \textbf{one-month MAPE}\\
 \hline
+CNN & 8.36 & 7.49\\
+\hline
 XGBRegressor & 11.78 & 7.65\\
 \hline
 HistGradientBoostingRegressor & 12.42 & 9.81\\
 \hline
-LSTM + One Week Baseline & 11.27 & 12.93\\
+CNN + One Week Baseline & 8.33 & 12.28\\
 \hline
-CNN + One Week Baseline & 10.67 & 14.37\\
+LSTM + One Week Baseline & 11.19 & 12.91\\
 \hline
-LSTM & 18.40 & 14.55\\
+LSTM & 18.21 & 14.51\\
 \hline
 TFT & 12.65 & 14.88\\
 \hline
-CNN & 18.71 & 15.15\\
-\hline
-LSTM + One Week Baseline + & 8.82 & 15.91\\
+LSTM + One Week Baseline + & 8.81 & 15.91\\
 Prophet & & \\
 \hline
-GRU + One Week Baseline & 10.93 & 16.55\\
+CNN + One Week Baseline + & 11.34 & 16.96\\
+Prophet & & \\
 \hline
-LSTM + One Day Baseline + & 9.85 & 17.29\\
+LSTM + One Day Baseline + & 9.82 & 17.29\\
 One Week Baseline + Prophet & & \\
 \hline
-CNN + One Week Baseline + & 9.02 & 17.38\\
-Prophet & & \\
+CNN + One Day Baseline + & 10.88 & 17.88\\
+One Week Baseline + Prophet & & \\
 \hline
 One Week Baseline & 9.63 & 18.40\\
 \hline
-CNN + One Day Baseline + & 10.01 & 18.40\\
-One Week Baseline + Prophet & & \\
-\hline
-GRU + One Week Baseline + & 8.27 & 18.42\\
-Prophet & & \\
-\hline
-GRU & 17.69 & 18.80\\
-\hline
-GRU + One Day Baseline + & 9.45 & 19.18\\
-One Week Baseline + Prophet & & \\
+GRU + One Week Baseline & 9.15 & 19.18\\
 \hline
 SARIMA & 11.23 & 19.63\\
 \hline
+GRU & 10.87 & 20.47\\
+\hline
 AutoML & 10.61 & 20.98\\
+\hline
+GRU + One Day Baseline + & 11.29 & 21.34\\
+One Week Baseline + Prophet & & \\
 \hline
 One Day Baseline & 13.14 & 21.51\\
 \hline
-One Day Baseline + & 11.73 & 21.69\\
+GRU + One Week Baseline + & 11.89 & 21.56\\
+Prophet & & \\
+\hline
+One Day Baseline + & 11.72 & 21.69\\
 One Week Baseline + Prophet & & \\
 \hline
 One Week Baseline + Prophet & 12.83 & 22.21\\
 \hline
-Prophet & 17.36 & 26.34\\
+Prophet & 17.35 & 26.33\\
 \hline
 SVR & 58.09 & 39.82\\
 \hline
@@ -751,13 +767,13 @@ The results for hourly aggregation are reported in table~\ref{tab:productionhour
 \textbf{Model} & \textbf{Blocked k-fold} & \textbf{Test on the last split}\\
  & \textbf{cross-validation MAE percentage} & \textbf{MAE percentage}\\
 \hline
-HistGradientBoostingRegressor & 4.16 $\pm$ 0.99 & 2.98\\
+GRU & 5.70 $\pm$ 1.78 & 2.79\\
 \hline
-GRU & 4.95 $\pm$ 1.11 & 3.12\\
+HistGradientBoostingRegressor & 4.16 $\pm$ 0.99 & 2.98\\
 \hline
 SVR & 5.20 $\pm$ 1.12 & 3.12\\
 \hline
-CNN & 6.49 $\pm$ 1.67 & 3.27\\
+CNN & 5.98 $\pm$ 1.52 & 3.27\\
 \hline
 XGBRegressor & 4.57 $\pm$ 0.97 & 3.42\\
 \hline
@@ -767,7 +783,7 @@ TFT & 4.70 $\pm$ 1.39 & 3.60\\
 \hline
 ARIMA & 5.09 $\pm$ 1.35 & 3.64\\
 \hline
-Prophet & 7.90 $\pm$ 1.62 & 4.37\\
+Prophet & 7.90 $\pm$ 1.62 & 4.38\\
 \hline
 One Day Baseline & 6.81 $\pm$ 3.14 & 4.58\\
 \hline
@@ -776,9 +792,9 @@ One Day Baseline & 6.81 $\pm$ 3.14 & 4.58\\
 \label{tab:productionhourlyresults}
 \end{table}
 
-% TODO sortare per mae e capire quele dei 2, + spiegare differenze ranking, deep dive su lstm o altri modelli with differenze rilevanti
+% TODO sortare per mae e capire quale dei 2, + spiegare differenze ranking, deep dive su lstm o altri modelli with differenze rilevanti
 
-The results for hourly aggregation at forecasting time on the last time slot including also the combinations of different tecnhiques and the AutoML approach are reported in table~\ref{tab:productionhourlyresultsforecast}.
+The results for hourly aggregation at forecasting time on the last time slot including also the combinations of different techniques and the AutoML approach are reported in table~\ref{tab:productionhourlyresultsforecast}.
 The combination of the previous techniques was performed by combining one-day baseline and prophet with possibly one of LSTM, GRU, or CNN with the intent of trying to improve the robustness of DL models with some stable baselines and prophet model which internally automatically deals with seasonalities.
 The AutoML approach uses the mean MAE forecasting as loss and it is launched for 10 hours with a maximum function evaluation time of 2 hours.
 Then the best ensemble of the found models is returned and can be used to forecast.
@@ -792,25 +808,23 @@ Then the best ensemble of the found models is returned and can be used to foreca
 \textbf{Model} & \textbf{Forecast on the last split}\\
  & \textbf{MAE percentage}\\
 \hline
-HistGradientBoostingRegressor & 2.86\\
+GRU & 2.79\\
 \hline
-GRU & 3.12\\
+HistGradientBoostingRegressor & 2.86\\
 \hline
 SVR & 3.12\\
 \hline
 CNN & 3.27\\
 \hline
+XGBRegressor & 3.35\\
+\hline
 LSTM + One Day Baseline & 3.37\\
 \hline
-GRU + One Day Baseline & 3.38\\
-\hline
-XGBRegressor & 3.35\\
+GRU + One Day Baseline & 3.45\\
 \hline
 CNN + One Day Baseline & 3.48\\
 \hline
 LSTM & 3.51\\
-\hline
-GRU + One Day Baseline + Prophet & 3.59\\
 \hline
 TFT & 3.60\\
 \hline
@@ -818,15 +832,17 @@ LSTM + One Day Baseline + Prophet & 3.60\\
 \hline
 ARIMA & 3.64\\
 \hline
-CNN + One Day Baseline + Prophet & 3.66\\
+CNN + One Day Baseline + Prophet & 3.67\\
 \hline
-Prophet & 4.37\\
+GRU + One Day Baseline + Prophet & 3.70\\
 \hline
-One Day Baseline + Prophet & 4.37\\
+One Day Baseline + Prophet & 4.38\\
+\hline
+Prophet & 4.38\\
 \hline
 One Day Baseline & 4.58\\
 \hline
-AutoML & 5.89\\
+AutoML & 5.89\\  % TODO check if improves
 \hline
 \end{tabular}
 \caption{Table summarizing the results for hourly aggregation at forecasting time.}
@@ -1069,7 +1085,9 @@ The results showed that the daily consumption of the three customers had:
 \end{itemize}
 It can be noticed that both the coefficients increased considering the daily data meaning that the mean weather data over the day is more correlated to the daily consumption of the three considered customers, compared to the hourly granularity.
 
-% TODO What about tariff aggregation? probably not to include (maybe just some words)
+As described in chapter~\ref{cha:implementation}, tariff aggregation has also been thought of as a possible aggregation.
+However, after some initial experimental results with this aggregation showing unsatisfactory performance, this aggregation was not further investigated.
+Though, this aggregation can be investigated in a possible future work to understand whether it could be applicable.
 
 After this data analysis, the specific parameters used in the models can be explained more in detail.
 The baseline approaches are built considering the repetition of past days and weeks since data presents a high correlation with that time instants and could lead to a reasonable baseline performance to achieve.
@@ -1080,7 +1098,7 @@ The same was also done for the extreme gradient boosting regressor model.
 The Prophet model was built keeping the default parameters for automatically detecting seasonalities and best fitting the training data.
 
 The LSTM model was designed as a 2-layer model with 32 Bidirectional LSTM units in the first layer which use ReLU activation function and sigmoid as recurrent activation function with both dropout and recurrent dropout of 0.02.
-The second layer composed of 16 Bidirectional LSTM units which use ReLU activation function and sigmoid as recurrent activation function without dropout and recurrent dropout.
+The second layer is composed of 16 Bidirectional LSTM units which use ReLU activation function and sigmoid as recurrent activation function without dropout and recurrent dropout.
 The output of the layer goes inside a dense unit to output the final prediction.
 The model is trained using a combination of mean absolute error and mean absolute percentage error as loss and Nadam as optimizer with a learning rate of 0.005.
 
@@ -1103,6 +1121,7 @@ The model is trained using mean absolute percentage error as loss and Nadam as o
 12 splits were used for block validation with a test size of a week each time, namely 7 days of data.
 For the hourly granularity, the models start with the total number of entries for the customer minus 2016 entries as training and predict every time 168 entries until reaching the last prediction instant where the model has a training size of the total number of entries for the customer minus the last 168 entries.
 The results for hourly aggregation for the second customer are reported in table~\ref{tab:baselinehourlyresults}.
+Only this customer is reported since it presents the best results and the models were optimized for this customer.
 
 % first customer
 % \begin{table}[H]
@@ -1153,15 +1172,15 @@ The results for hourly aggregation for the second customer are reported in table
 \textbf{Model} & \textbf{cross-validation} & \textbf{MAPE | MAE [kWh]}\\
  & \textbf{MAPE | MAE [kWh]} & \\
 \hline
-XGBRegressor & 73.71 $\pm$ 9.54 | 0.275 $\pm$ 0.024 & 60.68 | 0.226\\
-\hline
 TFT & 47.33 $\pm$ 5.57 | 0.287 $\pm$ 0.028 & 44.19 | 0.231\\
 \hline
-HistGradientBoostingRegressor & 53.95 $\pm$ 7.02 | 0.260 $\pm$ 0.023 & 50.32 | 0.233\\
+HistGradientBoostingRegressor & 53.95 $\pm$ 7.02 | 0.260 $\pm$ 0.023 & 50.41 | 0.231\\
 \hline
 SVR & 60.30 $\pm$ 6.81 | 0.278 $\pm$ 0.032 & 60.41 | 0.243\\
 \hline
 SARIMA & 74.17 $\pm$ 10.01 | 0.271 $\pm$ 0.021 & 78.02 | 0.244\\
+\hline
+XGBRegressor & 73.71 $\pm$ 9.54 | 0.275 $\pm$ 0.024 & 68.07 | 0.245\\
 \hline
 Prophet & 83.84 $\pm$ 10.23 | 0.280 $\pm$ 0.020 & 81.92 | 0.249\\
 \hline
@@ -1224,9 +1243,9 @@ CNN & 148.16 $\pm$ 30.05 | 0.510 $\pm$ 0.105 & 70.19 | 0.318\\
 % \label{tab:baselinehourlyresults}
 % \end{table}
 
-% TODO sortare per mape e capire quele dei 2, + spiegare differenze ranking, deep dive su lstm o altri modelli with differenze rilevanti
+% TODO sortare per mae e capire quale dei 2, + spiegare differenze ranking, deep dive su lstm o altri modelli with differenze rilevanti
 
-% Not done at forecasting time: not good results in training, spiegare perchè non sono buoni ... Mettere test set (last split) per far capire andamento
+% Not good results in training, spiegare perchè non sono buoni ... Mettere test set (last split) per far capire andamento
 
 The AutoML approach uses the mean MAPE forecasting as loss and it is launched for 10 hours with a maximum function evaluation time of 2 hours.
 Then the best ensemble of the found models is returned and can be used to forecast.
@@ -1299,27 +1318,27 @@ The results for daily aggregation for the second customer are reported in table~
 \hline
 One Week Baseline & 19.56 $\pm$ 7.45 | 2.343 $\pm$ 0.899 & 14.45 | 1.554\\
 \hline
+CNN & 28.45 $\pm$ 17.47 | 3.320 $\pm$ 1.939 & 13.46 | 1.751\\
+\hline
+SARIMA & 16.38 $\pm$ 4.82 | 1.896 $\pm$ 0.454 & 17.07 | 1.773\\
+\hline
 TFT & 16.67 $\pm$ 6.33 | 2.002 $\pm$ 0.643 & 14.55 | 1.786\\
 \hline
-CNN & 28.45 $\pm$ 17.47 | 3.320 $\pm$ 1.939 & 15.00 | 1.959\\
+HistGradientBoostingRegressor & 15.36 $\pm$ 3.72 | 1.889 $\pm$ 0.355 & 16.80 | 1.877\\
 \hline
 12 Week Baseline & 15.56 $\pm$ 4.43 | 1.861 $\pm$ 0.460 & 19.99 | 2.006\\
 \hline
-SARIMA & 16.38 $\pm$ 4.82 | 1.896 $\pm$ 0.454 & 20.43 | 2.034\\
-\hline
-HistGradientBoostingRegressor & 15.36 $\pm$ 3.72 | 1.889 $\pm$ 0.355 & 19.64 | 2.045\\
-\hline
-XGBRegressor & 17.62 $\pm$ 4.88 | 2.135 $\pm$ 0.558 & 22.68 | 2.379\\
+XGBRegressor & 17.62 $\pm$ 4.88 | 2.135 $\pm$ 0.558 & 21.38 | 2.111\\
 \hline
 One Day Baseline & 20.36 $\pm$ 3.93 | 2.657 $\pm$ 0.551 & 18.95 | 2.432\\
 \hline
 Prophet & 17.36 $\pm$ 5.18 | 1.947 $\pm$ 0.426 & 25.45 | 2.458\\
 \hline
+GRU & 18.68 $\pm$ 3.36 | 2.463 $\pm$ 0.534 & 22.83 | 2.643\\
+\hline
 SVR & 18.10 $\pm$ 3.24 | 2.449 $\pm$ 0.552 & 23.44 | 2.694\\
 \hline
 LSTM & 18.96 $\pm$ 3.52 | 2.500 $\pm$ 0.616 & 28.83 | 3.060\\
-\hline
-GRU & 18.68 $\pm$ 3.36 | 2.463 $\pm$ 0.534 & 30.27 | 3.173\\
 \hline
 \end{tabular}
 \caption{Table summarizing the results for daily aggregation.}
