@@ -305,11 +305,17 @@ The results showed that the daily aggregated consumption over the customers had:
 It can be noticed that both the coefficients decreased considering the daily data meaning that the mean weather data over the day is less correlated to the daily aggregated consumption over the customers, compared to the hourly granularity.
 
 After this data analysis, the specific parameters used in the models can be explained more in detail.
+The parameters for the different models were tested and verified on training data to result in the best-performing models, this was done by trying different values and configurations.
 The baseline approaches are built considering the repetition of past days and weeks since data presents a high correlation with that time instants and could lead to a reasonable baseline performance to achieve.
 The SARIMA model considers the week as the period for seasonal differencing since data presents a high correlation with that time instants and the model can try to take advantage of the weekly seasonality.
 The support vector regressor model uses a radial basis function kernel with a configuration of the C parameter (regularization parameter of squared l2 penalty) to 1.0 to penalize the complexity of the model, and the epsilon parameter defining the epsilon-tube for no penalty to 0.1 as a trade-off between accuracy and generalization.
-The hist gradient boosting regressor model uses as loss the absolute error since this was the supported metric closer to the objective and keeping the default parameters for tree definition.
-The same was also done for the extreme gradient boosting regressor model.
+The hist gradient boosting regressor model uses as loss the absolute error since this was the supported metric closer to our evaluation metric.
+The learning rate was set to 0.1, 100 estimators were used and l2 regularization was not set.
+The parameters for tree definition are 31 as the maximum number of leaves, depth is not constrained, 20 as the minimum number of samples per leaf, and 255 as the maximum number of bins.
+For the extreme gradient boosting regressor model, tree-based models were used and the construction algorithm is automatically chosen by heuristic to choose the fastest method.
+It uses a squared loss since this was the supported metric closer to our evaluation metric.
+The learning rate was set to 0.3, 100 estimators were used and l2 regularization was set with a weight of 1.0.
+The parameters for tree definition are 6 as the maximum depth, and the maximum number of leaves is not constrained.
 The Prophet model was built keeping the default parameters for automatically detecting seasonalities and best fitting the training data.
 
 The LSTM model was designed as a 2-layer model with 24 Bidirectional LSTM units in the first layer which use rectified linear unit (ReLU) activation function and sigmoid as recurrent activation function with both dropout and recurrent dropout of 0.02.
@@ -332,15 +338,17 @@ The TFT model was configured with 2 LSTM layers with 16 as hidden size, 4 as att
 The dropout is set to 0.02.
 The model is trained using mean absolute percentage error as loss and Nadam as optimizer with a learning rate of 0.005.
 
-% TODO: Giustificare un po’ di più i parametri --> provati e verificato che avessero buone performance (provando x valori questo andava meglio)
-
 12 splits were used for block validation with a test size of a month each time, namely 30 days of data.
 For the hourly granularity, the models start with 5977 entries as training and predict every time 720 entries until reaching the last prediction instant where the model has a training size of 13897.
 The results for hourly aggregation are reported in table~\ref{tab:demandhourlyresults}.
 Entries are sorted by best MAPE using the last split as the test set.
 The blocked k-fold cross-validation suggests that the one-week baseline has the best MAPE, but looking at the last split this is not confirmed.
 This is probably due to the fact that overall the weekly repetition seems to be quite effective over the year, but there are better approaches that with the increase of training data perform better, this can be the case in GRU and CNN since the results on the last split are quite good compared to the mean MAPE obtained over the splits.
-The TFT approach seems to have pretty much the same MAPE over the considered splits confirming the power of this architecture.
+This can be explained by the fact that, due to their complexity, these models require more data and in the first splits there was not even a single year of data, so they didn't even have the possibility to infer a possible annual seasonality.
+Results seem also to confirm that not always sophisticated models perform better and some of them are no better than a baseline.
+Models treated in the literature that are performing well in similar tasks can also not be suited for this specific use case.
+Data are a big difference and with a little amount of data for some complex networks is hard to perform well and generalize.
+Instead, the TFT approach seems to have pretty much the same MAPE over the considered splits confirming the power of this architecture despite the limited data
 In contrast, the boosters that have a good blocked k-fold MAPE on the last split do not perform well.
 
 \begin{table}[H]
@@ -377,20 +385,18 @@ XGBRegressor & 16.88 $\pm$ 8.08 & 37.81\\
 \label{tab:demandhourlyresults}
 \end{table}
 
-% TODO sortare per mape e capire quale dei 2, + spiegare differenze ranking, deep dive su lstm o altri modelli with differenze rilevanti
-
 The results for hourly aggregation at forecasting time on the last time slot including also the combinations of different techniques and the AutoML approach are reported in table~\ref{tab:demandhourlyresultsforecast}.
 The combination of the previous techniques was performed by combining one-day baseline, one-week baseline, and prophet with possibly one of LSTM, GRU, or CNN with the intent of trying to improve the robustness of DL models with some stable baselines and prophet model which internally automatically deals with seasonalities.
 The AutoML approach uses the mean MAPE forecasting as loss and it is launched for 10 hours with a maximum function evaluation time of 2 hours.
 Then the best ensemble of the found models is returned and can be used to forecast.
 In the table, it is also reported the performance on the one-week horizon, namely 7 days of data, from which it is possible to gain more insights on the models' forecasts.
-Including also combinations and AutoML, there are few observations that can be done.
+Including also combinations and AutoML, there are a few observations that can be done.
 The combinations of DL models and the one-week baseline are the most beneficial, reducing of many point percentage the MAPE of the techniques on the one-month time horizon.
+This suggests that it can make sense to further investigate the concept of ensemble learning and optimize this combination at training time to possibly have stronger results at forecasting time.
 AutoML has great potential and obtains very good results compared to many other models.
+Potentially providing more total training time it can be further optimized to reach better performance.
 TFT still dominates on the one-month MAPE but not on the one-week one on which the one-week baseline and many combinations but also SARIMA and hist gradient boosting regressor perform better.
 This confirmed that the strength of TFT is to have good performance and preserve it also on larger prediction horizons.
-
-% TODO ha senso ottimizzare la combinazione (a training e poi vedere a forecasting), maybe LR on the models on a validation set instead of just the mean
 
 \begin{table}[H]
 \centering
@@ -457,24 +463,40 @@ XGBRegressor & 17.84 & 37.81\\
 \label{tab:demandhourlyresultsforecast}
 \end{table}
 
-Analyze the forecasts of the models for the electricity demand forecasting task (predictive analytics) ...
+The forecasts produced by the TFT model for the last split in comparison to the actual values are reported in figure~\ref{fig:demandtfthourlyforecasts}.
+It can be noticed that for the first week, it follows very accurately the signal, the second and third weeks are pretty good but it is missing the peaks over the day and the last week is decreasing while the actual values have high peaks.
+The absolute percentage error of forecasts produced by the TFT model for the last split in comparison to the actual values is reported in figure~\ref{fig:demandtfthourlyforecastsmape}.
+It can be shown that except for some peaks, the percentage error stays below 30\%, with most values around 10\%.
+Finally, the scatterplot representing the error of the forecasts produced by the TFT model for the last split in comparison to the actual values is reported in figure~\ref{fig:demandtfthourlyforecastsscatterplot}.
+This scatterplot demonstrates that there is no bias and can be also noticed that when the predicted values are low also the error is limited, while when the prediction is high there are both high positive and negative errors.
 
-% TODO perche alcuni modelli di ml vanno meglio di modelli di dl più sofisticati, magari con meno dati rete piu complessa fa fatica
-% Modelli in letteratura che vanno super bene vado peggio di baseline per esempio
-% Non necessariamente ML va meglio --> training magari non ottimale. dipende molto dai dati
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{images/demand/TFT}
+\caption{The forecasts produced by the temporal fusion transoformer model for the last split in comparison to the actual values.}
+\label{fig:demandtfthourlyforecasts}
+\end{figure}
 
-% TODO mettere grafici di forecast di modelli che vanno bene + scatterplot (per mostrare no bias) 
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{images/demand/TFT_mape}
+\caption{The absolute percentage error of forecasts produced by the temporal fusion transoformer model for the last split in comparison to the actual values.}
+\label{fig:demandtfthourlyforecastsmape}
+\end{figure}
 
-% TODO Descrivere un po’ i risultati (magari con qualche grafico)  --> tirare fuori insight, cosa capisco, cosa si nota, ...
-
-% Discussione su AutoML dopo risultati, parlando di maturità e problematiche, topic molto hot dato che molto potente potenzialmente (ha molto potenziale)
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{images/demand/TFT_error_scatter_plot_predicted}
+\caption{The scatterplot representing the error of the forecasts produced by the temporal fusion transoformer model for the last split in comparison to the actual values.}
+\label{fig:demandtfthourlyforecastsscatterplot}
+\end{figure}
 
 For the daily granularity, the models start with 249 entries as training and predict every time 30 entries until reaching the last prediction instant where the model has a training size of 579.
 The results for daily aggregation are reported in table~\ref{tab:demanddailyresults}.
-In this case TFT is no more the best performing model, probably due to the fact of 24 times less quantity of data due to the daily aggregation.
-Though, it is still a weel performing model on both blocked k-fold cross-validation and last split results.
-LSTM and CNN perform better in terms of last split MAPE but present an high blocked k-fold MAPE, as in the case of the hourly granularity probably that to the increase of data, the results on the last time slots improved in a significant way.
-Also the boosters present very good results on the last time split and also on the blocked k-fold validation showing a consistency over time and good results also with few training data. 
+In this case, TFT is no more the best performing model, probably due to the fact of 24 times less quantity of data due to the daily aggregation.
+Though, it is still a well-performing model on both blocked k-fold cross-validation and last split results.
+LSTM and CNN perform better in terms of the last split MAPE but present a high blocked k-fold MAPE, as in the case of the hourly granularity probably that to the increase of data, the results on the last time slots improved in a significant way.
+Also, the boosters present very good results on the last time split and also on the blocked k-fold validation showing consistency over time and good results also with few training data. 
 
 \begin{table}[H]
 \centering
@@ -511,7 +533,7 @@ SVR & 53.63 $\pm$ 22.39 & 39.82\\
 \end{table}
 
 The results for daily aggregation at forecasting time on the last time slot including also the combinations of different techniques and the AutoML approach are reported in table~\ref{tab:demanddailyresultsforecast}.
-In this case the impact of the combinations is not so evident and does not improve the results in all the cases.
+In this case, the impact of the combinations is not so evident and does not improve the results in all the cases.
 AutoML presents not very good results being worse than the one-week baseline, this is probably due to the scarcity of training data and the fact of AutoML of trying very complex architects when also simple ones may work well in certain cases.
 
 \begin{table}[H]
@@ -579,7 +601,34 @@ SVR & 58.09 & 39.82\\
 \label{tab:demanddailyresultsforecast}
 \end{table}
 
-% TODO check the consistency of model results in the last period and using cross-validation --> do a table with the differences (+ plot for internal analysis)
+The forecasts produced by the CNN model for the last split in comparison to the actual values are reported in figure~\ref{fig:demandcnndailyforecasts}.
+It can be noticed that for the first three weeks, it follows very accurately the signal and the last week is increasing correctly but not enough as the actual values.
+The absolute percentage error of forecasts produced by the CNN model for the last split in comparison to the actual values is reported in figure~\ref{fig:demandcnndailyforecastsmape}.
+It can be shown that except for some peaks, the percentage error stays below 10\%.
+Finally, the scatterplot representing the error of the forecasts produced by the CNN model for the last split in comparison to the actual values is reported in figure~\ref{fig:demandcnndailyforecastsscatterplot}.
+This scatterplot demonstrates that there is no bias even though that seems that when predicting high values it is missing some extra quantity in the forecasts, this is probably true in the specific considered last split and in particular the last week.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{images/demand/CNN_daily_aggregated}
+\caption{The forecasts produced by the convolutional neural network model for the last split in comparison to the actual values.}
+\label{fig:demandcnndailyforecasts}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{images/demand/CNN_daily_aggregated_mape}
+\caption{The absolute percentage error of forecasts produced by the convolutional neural network model for the last split in comparison to the actual values.}
+\label{fig:demandcnndailyforecastsmape}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{images/demand/CNN_error_scatter_plot_predicted_daily_aggregated}
+\caption{The scatterplot representing the error of the forecasts produced by the convolutional neural network model for the last split in comparison to the actual values.}
+\label{fig:demandcnndailyforecastsscatterplot}
+\end{figure}
+
 % TODO then add the comparison with forecasts of their provider
 % commentarli (sia il numero che il grafico dell’errore) --> interpretare il dato (perchè è buono?) --> benchmark in letteratura, come va il loro, ecc…
 % [valutare criticamente, aspetto tecnologico scientifico]
@@ -728,11 +777,17 @@ In figure~\ref{fig:pvplantsmap}, the locations of the PV plants and of the weath
 \end{figure}
 
 After this data analysis, the specific parameters used in the models can be explained more in detail.
+The parameters for the different models were tested and verified on training data to result in the best-performing models, this was done by trying different values and configurations.
 The baseline approach is built considering the repetition of past days since data presents a high correlation with that time instant and could lead to a reasonable baseline performance to achieve.
 A simple ARIMA model considers the single hours without seasonally on the week period like for demand prediction since data does not present a relevant correlation with that time instants.
 The support vector regressor model uses a radial basis function kernel with a configuration of the C parameter (regularization parameter of squared l2 penalty) to 1.0 to penalize the complexity of the model, and the epsilon parameter defining the epsilon-tube for no penalty to 0.1 as a trade-off between accuracy and generalization.
-The hist gradient boosting regressor model uses as loss the absolute error since this was the supported metric closer to the objective and keeping the default parameters for tree definition.
-The same was also done for the extreme gradient boosting regressor model.
+The hist gradient boosting regressor model uses as loss the absolute error since this was the supported metric closer to our evaluation metric.
+The learning rate was set to 0.1, 100 estimators were used and l2 regularization was not set.
+The parameters for tree definition are 31 as the maximum number of leaves, depth is not constrained, 20 as the minimum number of samples per leaf, and 255 as the maximum number of bins.
+For the extreme gradient boosting regressor model, tree-based models were used and the construction algorithm is automatically chosen by heuristic to choose the fastest method.
+It uses a squared loss since this was the supported metric closer to our evaluation metric.
+The learning rate was set to 0.3, 100 estimators were used and l2 regularization was set with a weight of 1.0.
+The parameters for tree definition are 6 as the maximum depth, and the maximum number of leaves is not constrained.
 The Prophet model was built keeping the default parameters for automatically detecting seasonalities and best fitting the training data.
 
 The LSTM model was designed as a 2-layer model with 32 Bidirectional LSTM units in the first layer which use ReLU activation function and sigmoid as recurrent activation function with both dropout and recurrent dropout of 0.02.
@@ -753,8 +808,6 @@ The model is trained using mean absolute error as loss and Nadam as optimizer wi
 The TFT model was configured with 2 LSTM layers with 16 as hidden size, 4 as attention size, and 8 as hidden continuous size.
 The dropout is set to 0.02.
 The model is trained using mean absolute error as loss and Nadam as optimizer with a learning rate of 0.005.
-
-% TODO: Giustificare un po’ di più i parametri --> provati e verificato che avessero buone performance (provando x valori questo andava meglio)
 
 12 splits were used for block validation with a test size of a week each time, namely 7 days of data.
 The models start with 5280 entries as training and predict every time 168 entries until reaching the last prediction instant where the model has a training size of 7128.
@@ -796,7 +849,8 @@ One Day Baseline & 6.81 $\pm$ 3.14 & 4.58\\
 
 The results for hourly aggregation at forecasting time on the last time slot including also the combinations of different techniques and the AutoML approach are reported in table~\ref{tab:productionhourlyresultsforecast}.
 The combination of the previous techniques was performed by combining one-day baseline and prophet with possibly one of LSTM, GRU, or CNN with the intent of trying to improve the robustness of DL models with some stable baselines and prophet model which internally automatically deals with seasonalities.
-The AutoML approach uses the mean MAE forecasting as loss and it is launched for 10 hours with a maximum function evaluation time of 2 hours.
+The AutoML approach uses the mean MAPE forecasting as loss and it is launched for 10 hours with a maximum function evaluation time of 2 hours.
+Also, the mean MAE forecasting was used but provided worse results.
 Then the best ensemble of the found models is returned and can be used to forecast.
 
 % TODO ha senso ottimizzare la combinazione (a training e poi vedere a forecasting), maybe LR on the models on a validation set instead of just the mean
@@ -842,7 +896,7 @@ Prophet & 4.38\\
 \hline
 One Day Baseline & 4.58\\
 \hline
-AutoML & 5.89\\  % TODO check if improves
+AutoML & 5.89\\
 \hline
 \end{tabular}
 \caption{Table summarizing the results for hourly aggregation at forecasting time.}
@@ -860,6 +914,34 @@ Analyze the forecasts of the models for the electricity production forecasting t
 % TODO Descrivere un po’ i risultati (magari con qualche grafico)  --> tirare fuori insight, cosa capisco, cosa si nota, ...
 
 % Discussione su AutoML dopo risultati, parlando di maturità e problematiche, topic molto hot dato che molto potente potenzialmente (ha molto potenziale)
+
+The forecasts produced by the GRU model for the last split in comparison to the actual values are reported in figure~\ref{fig:productiongruhourlyforecasts}.
+It can be noticed that ...
+The absolute error of forecasts produced by the GRU model for the last split in comparison to the actual values is reported in figure~\ref{fig:productiongruhourlyforecastsmae}.
+It can be shown that ...
+Finally, the scatterplot representing the error of the forecasts produced by the GRU model for the last split in comparison to the actual values is reported in figure~\ref{fig:productiongruhourlyforecastsscatterplot}.
+This scatterplot demonstrates that ...
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{images/production/GRU_percentage}
+\caption{The forecasts produced by the gated recurrent unit model for the last split in comparison to the actual values.}
+\label{fig:productiongruhourlyforecasts}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{images/production/GRU_percentage_mae}
+\caption{The absolute error of forecasts produced by the gated recurrent unit model for the last split in comparison to the actual values.}
+\label{fig:productiongruhourlyforecastsmae}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{images/production/GRU_percentage_error_scatter_plot_predicted}
+\caption{The scatterplot representing the error of the forecasts produced by the gated recurrent unit model for the last split in comparison to the actual values.}
+\label{fig:productiongruhourlyforecastsscatterplot}
+\end{figure}
 
 % TODO check the consistency of model results in the last period and using cross-validation --> do a table with the differences (+ plot for internal analysis)
 % TODO then add the comparison with forecasts of their provider
@@ -1086,15 +1168,22 @@ The results showed that the daily consumption of the three customers had:
 It can be noticed that both the coefficients increased considering the daily data meaning that the mean weather data over the day is more correlated to the daily consumption of the three considered customers, compared to the hourly granularity.
 
 As described in chapter~\ref{cha:implementation}, tariff aggregation has also been thought of as a possible aggregation.
+Tariff aggregation assumes that the tariff is a control signal capable of modifying consumption.
 However, after some initial experimental results with this aggregation showing unsatisfactory performance, this aggregation was not further investigated.
-Though, this aggregation can be investigated in a possible future work to understand whether it could be applicable.
+Though, this aggregation can be investigated in a possible future work to understand whether it could be applicable to produce good results.
 
 After this data analysis, the specific parameters used in the models can be explained more in detail.
+The parameters for the different models were tested and verified on training data to result in the best-performing models, this was done by trying different values and configurations.
 The baseline approaches are built considering the repetition of past days and weeks since data presents a high correlation with that time instants and could lead to a reasonable baseline performance to achieve.
 The SARIMA model considers the week as the period for seasonal differencing since data presents a high correlation with that time instants and the model can try to take advantage of the weekly seasonality.
 The support vector regressor model uses a radial basis function kernel with a configuration of the C parameter (regularization parameter of squared l2 penalty) to 1.0 to penalize the complexity of the model, and the epsilon parameter defining the epsilon-tube for no penalty to 0.1 as a trade-off between accuracy and generalization.
-The hist gradient boosting regressor model uses as loss the absolute error since this was the supported metric closer to the objective and keeping the default parameters for tree definition.
-The same was also done for the extreme gradient boosting regressor model.
+The hist gradient boosting regressor model uses as loss the absolute error since this was the supported metric closer to our evaluation metric.
+The learning rate was set to 0.1, 100 estimators were used and l2 regularization was not set.
+The parameters for tree definition are 31 as the maximum number of leaves, depth is not constrained, 20 as the minimum number of samples per leaf, and 255 as the maximum number of bins.
+For the extreme gradient boosting regressor model, tree-based models were used and the construction algorithm is automatically chosen by heuristic to choose the fastest method.
+It uses a squared loss since this was the supported metric closer to our evaluation metric.
+The learning rate was set to 0.3, 100 estimators were used and l2 regularization was set with a weight of 1.0.
+The parameters for tree definition are 6 as the maximum depth, and the maximum number of leaves is not constrained.
 The Prophet model was built keeping the default parameters for automatically detecting seasonalities and best fitting the training data.
 
 The LSTM model was designed as a 2-layer model with 32 Bidirectional LSTM units in the first layer which use ReLU activation function and sigmoid as recurrent activation function with both dropout and recurrent dropout of 0.02.
@@ -1115,8 +1204,6 @@ The model is trained using a combination of mean absolute error and mean absolut
 The TFT model was configured with 2 LSTM layers with 16 as hidden size, 4 as attention size, and 8 as hidden continuous size.
 The dropout is set to 0.02.
 The model is trained using mean absolute percentage error as loss and Nadam as optimizer with a learning rate of 0.005.
-
-% TODO: Giustificare un po’ di più i parametri --> provati e verificato che avessero buone performance (provando x valori questo andava meglio)
 
 12 splits were used for block validation with a test size of a week each time, namely 7 days of data.
 For the hourly granularity, the models start with the total number of entries for the customer minus 2016 entries as training and predict every time 168 entries until reaching the last prediction instant where the model has a training size of the total number of entries for the customer minus the last 168 entries.
@@ -1263,7 +1350,43 @@ Analyze the forecasts of the models for the electricity demand forecasting task 
 
 % Discussione su AutoML dopo risultati, parlando di maturità e problematiche, topic molto hot dato che molto potente potenzialmente (ha molto potenziale)
 
-For the daily granularity, the models start with the total number of entries for the customer minus 84 entries as training and predict every time 30 entries until reaching the last prediction instant where the model has a training size of total number of entries for the customer minus the last 7 entries.
+The forecasts produced by the TFT model for the last split in comparison to the actual values are reported in figure~\ref{fig:baselinetfthourlyforecasts}.
+It can be noticed that ...
+The absolute error of forecasts produced by the TFT model for the last split in comparison to the actual values is reported in figure~\ref{fig:baselinetfthourlyforecastsmae}.
+While the absolute percentage error of forecasts produced by the TFT model for the last split in comparison to the actual values is reported in figure~\ref{fig:baselinetfthourlyforecastsmape}.
+It can be shown that ...
+Finally, the scatterplot representing the error of the forecasts produced by the TFT model for the last split in comparison to the actual values is reported in figure~\ref{fig:baselinetfthourlyforecastsscatterplot}.
+This scatterplot demonstrates that ...
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{images/baseline/TFT}
+\caption{The forecasts produced by the temporal fusion transoformer model for the last split in comparison to the actual values.}
+\label{fig:baselinetfthourlyforecasts}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{images/baseline/TFT_mae}
+\caption{The absolute error of forecasts produced by the temporal fusion transoformer model for the last split in comparison to the actual values.}
+\label{fig:baselinetfthourlyforecastsmae}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{images/baseline/TFT_mape}
+\caption{The absolute percentage error of forecasts produced by the temporal fusion transoformer model for the last split in comparison to the actual values.}
+\label{fig:baselinetfthourlyforecastsmape}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{images/baseline/TFT_error_scatter_plot_predicted}
+\caption{The scatterplot representing the error of the forecasts produced by the temporal fusion transoformer model for the last split in comparison to the actual values.}
+\label{fig:baselinetfthourlyforecastsscatterplot}
+\end{figure}
+
+For the daily granularity, the models start with the total number of entries for the customer minus 84 entries as training and predict every time 30 entries until reaching the last prediction instant where the model has a training size of the total number of entries for the customer minus the last 7 entries.
 The results for daily aggregation for the second customer are reported in table~\ref{tab:baselinedailyresults}.
 
 % first customer
@@ -1386,6 +1509,42 @@ LSTM & 18.96 $\pm$ 3.52 | 2.500 $\pm$ 0.616 & 28.83 | 3.060\\
 % \end{table}
 
 Instead, the AutoML approach obtained a one-week MAPE of 19.88 and a MAE of 2.197 [kWh] after a total run of 10 hours.
+
+The forecasts produced by the four-week baseline for the last split in comparison to the actual values are reported in figure~\ref{fig:baseline4weeksdailyforecasts}.
+It can be noticed that ...
+The absolute error of forecasts produced by the four-week baseline for the last split in comparison to the actual values is reported in figure~\ref{fig:baseline4weeksdailyforecastsmae}.
+While the absolute percentage error of forecasts produced by the four-week baseline for the last split in comparison to the actual values is reported in figure~\ref{fig:baseline4weeksdailyforecastsmape}.
+It can be shown that ...
+Finally, the scatterplot representing the error of the forecasts produced by the four-week baseline for the last split in comparison to the actual values is reported in figure~\ref{fig:baseline4weeksdailyforecastsscatterplot}.
+This scatterplot demonstrates that ...
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{images/baseline/baseline_average_4_weeks_daily_aggregated}
+\caption{The forecasts produced by the four-week baseline for the last split in comparison to the actual values.}
+\label{fig:baseline4weeksdailyforecasts}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{images/baseline/baseline_average_4_weeks_daily_aggregated_mae}
+\caption{The absolute error of forecasts produced by the four-week baseline for the last split in comparison to the actual values.}
+\label{fig:baseline4weeksdailyforecastsmae}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{images/baseline/baseline_average_4_weeks_daily_aggregated_mape}
+\caption{The absolute percentage error of forecasts produced by the four-week baseline for the last split in comparison to the actual values.}
+\label{fig:baseline4weeksdailyforecastsmape}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{images/baseline/baseline_average_4_weeks_error_scatter_plot_predicted_daily_aggregated}
+\caption{The scatterplot representing the error of the forecasts produced by the four-week baseline for the last split in comparison to the actual values.}
+\label{fig:baseline4weeksdailyforecastsscatterplot}
+\end{figure}
 
 % TODO check the consistency of model results in the last period and using cross-validation --> do a table with the differences (+ plot for internal analysis)
 % commentarli (sia il numero che il grafico dell’errore) --> interpretare il dato (perchè è buono?) --> benchmark in letteratura, ecc…
