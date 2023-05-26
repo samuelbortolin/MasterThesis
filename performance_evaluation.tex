@@ -386,7 +386,7 @@ XGBRegressor & 16.88 $\pm$ 8.08 & 37.81\\
 \end{table}
 
 The results for hourly aggregation at forecasting time on the last time slot including also the combinations of different techniques and the AutoML approach are reported in table~\ref{tab:demandhourlyresultsforecast}.
-The combination of the previous techniques was performed by combining one-day baseline, one-week baseline, and prophet with possibly one of LSTM, GRU, or CNN with the intent of trying to improve the robustness of DL models with some stable baselines and prophet model which internally automatically deals with seasonalities.
+The combination of the previous techniques was performed by combining one-day baseline, one-week baseline, and Prophet with possibly one of LSTM, GRU, or CNN with the intent of trying to improve the robustness of DL models with some stable baselines and Prophet model which internally automatically deals with seasonalities, even though for this task it is not performing very well.
 The AutoML approach uses the mean MAPE forecasting as loss and it is launched for 10 hours with a maximum function evaluation time of 2 hours.
 Then the best ensemble of the found models is returned and can be used to forecast.
 In the table, it is also reported the performance on the one-week horizon, namely 7 days of data, from which it is possible to gain more insights on the models' forecasts.
@@ -812,6 +812,13 @@ The model is trained using mean absolute error as loss and Nadam as optimizer wi
 12 splits were used for block validation with a test size of a week each time, namely 7 days of data.
 The models start with 5280 entries as training and predict every time 168 entries until reaching the last prediction instant where the model has a training size of 7128.
 The results for hourly aggregation are reported in table~\ref{tab:productionhourlyresults}.
+Entries are sorted by best MAE using the last split as the test set.
+The blocked k-fold cross-validation suggests that the hist gradient boosting regressor model has the best MAE, but looking at the last split this is not confirmed.
+In fact, the GRU model performs better on the last split, as the other DL models, this seems to confirm what is seen in demand prediction that with the increase of training data, these models perform better.
+It can also be noted that all the models are better than the one-day baseline.
+Prophet presents not very good results compared to the other models and is close to the baseline as results on the last split while considering the blocked k-fold cross-validation is the only model that performs worse than it,
+In this case, the TFT approach does not seem to perform in an optimal way, and its results are close to the ones of LSTM and ARIMA models.
+In contrast, the boosters that have a good blocked k-fold MAPE on the last split do not perform well.
 
 \begin{table}[H]
 \centering
@@ -845,15 +852,11 @@ One Day Baseline & 6.81 $\pm$ 3.14 & 4.58\\
 \label{tab:productionhourlyresults}
 \end{table}
 
-% TODO sortare per mae e capire quale dei 2, + spiegare differenze ranking, deep dive su lstm o altri modelli with differenze rilevanti
-
 The results for hourly aggregation at forecasting time on the last time slot including also the combinations of different techniques and the AutoML approach are reported in table~\ref{tab:productionhourlyresultsforecast}.
-The combination of the previous techniques was performed by combining one-day baseline and prophet with possibly one of LSTM, GRU, or CNN with the intent of trying to improve the robustness of DL models with some stable baselines and prophet model which internally automatically deals with seasonalities.
+The combination of the previous techniques was performed by combining one-day baseline and Prophet with possibly one of LSTM, GRU, or CNN with the intent of trying to improve the robustness of DL models with some stable baselines and Prophet model which internally automatically deals with seasonalities, even though for this task it is not performing very well.
 The AutoML approach uses the mean MAPE forecasting as loss and it is launched for 10 hours with a maximum function evaluation time of 2 hours.
 Also, the mean MAE forecasting was used but provided worse results.
 Then the best ensemble of the found models is returned and can be used to forecast.
-
-% TODO ha senso ottimizzare la combinazione (a training e poi vedere a forecasting), maybe LR on the models on a validation set instead of just the mean
 
 \begin{table}[H]
 \centering
@@ -903,31 +906,19 @@ AutoML & 5.89\\
 \label{tab:productionhourlyresultsforecast}
 \end{table}
 
-Analyze the forecasts of the models for the electricity production forecasting task (predictive analytics) ...
-
-% TODO perche alcuni modelli di ml vanno meglio di modelli di dl più sofisticati, magari con meno dati rete piu complessa fa fatica
-% Modelli in letteratura che vanno super bene vado peggio di baseline per esempio
-% Non necessariamente ML va meglio --> training magari non ottimale. dipende molto dai dati
-
-% TODO mettere grafici di forecast di modelli che vanno bene + scatterplot (per mostrare no bias) 
-
-% TODO Descrivere un po’ i risultati (magari con qualche grafico)  --> tirare fuori insight, cosa capisco, cosa si nota, ...
-
-% Discussione su AutoML dopo risultati, parlando di maturità e problematiche, topic molto hot dato che molto potente potenzialmente (ha molto potenziale)
-
-The forecasts produced by the GRU model for the last split in comparison to the actual values are reported in figure~\ref{fig:productiongruhourlyforecasts}.
-It can be noticed that ...
-The absolute error of forecasts produced by the GRU model for the last split in comparison to the actual values is reported in figure~\ref{fig:productiongruhourlyforecastsmae}.
-It can be shown that ...
-Finally, the scatterplot representing the error of the forecasts produced by the GRU model for the last split in comparison to the actual values is reported in figure~\ref{fig:productiongruhourlyforecastsscatterplot}.
-This scatterplot demonstrates that ...
-
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{images/production/GRU_percentage}
 \caption{The forecasts produced by the gated recurrent unit model for the last split in comparison to the actual values.}
 \label{fig:productiongruhourlyforecasts}
 \end{figure}
+
+Including also combinations and AutoML, there are a few observations that can be done.
+The combinations of DL models and the one-week baseline are the most beneficial, but just in the case of LSTM and the improvement is very marginal.
+Probably in this case since the baseline and prophet are not well-performing models they are not bringing any significant improvement or robustness to the DL models.
+Nonetheless, it might still make sense to further investigate the concept of ensemble learning and optimize this combination at training time to possibly have stronger results at forecasting time.
+In this case, AutoML is not able to achieve very good results compared to many other models.
+It still has great potential as demonstrated in demand prediction and potentially providing more total training time it can be able to reach better performance.
 
 \begin{figure}[H]
 \centering
@@ -943,7 +934,13 @@ This scatterplot demonstrates that ...
 \label{fig:productiongruhourlyforecastsscatterplot}
 \end{figure}
 
-% TODO check the consistency of model results in the last period and using cross-validation --> do a table with the differences (+ plot for internal analysis)
+The forecasts produced by the GRU model for the last split in comparison to the actual values are reported in figure~\ref{fig:productiongruhourlyforecasts}.
+It can be noticed that it follows very accurately the signal for most of the test days, for 2 days it underestimates and for one overestimates the actual data.
+The absolute percentage error of forecasts produced by the GRU model for the last split in comparison to the actual values is reported in figure~\ref{fig:productiongruhourlyforecastsmae}.
+It can be shown that, except for the peak when it overestimates the actual data and some other minor peaks, the error stays below 10\%.
+Finally, the scatterplot representing the error of the forecasts produced by the GRU model for the last split in comparison to the actual values is reported in figure~\ref{fig:productiongruhourlyforecastsscatterplot}.
+This scatterplot demonstrates that there is no bias and can be also noticed that when the predicted values are low also the error is limited, while when the prediction is high there are both high positive and negative errors.
+
 % TODO then add the comparison with forecasts of their provider
 % commentarli (sia il numero che il grafico dell’errore) --> interpretare il dato (perchè è buono?) --> benchmark in letteratura, come va il loro, ecc…
 % [valutare criticamente, aspetto tecnologico scientifico]
@@ -981,15 +978,6 @@ The trend component has a slight impact, for the first customer it is possible t
 \end{minipage}
 \caption{The time series decompositions of the hourly consumption of the three customers considering as period of the time series a week.}
 \end{figure}
-
-The auto-correlations of the hourly consumption of the three customers are reported in figure~\ref{fig:correlationcustomer1}, figure~\ref{fig:correlationcustomer2}, and figure~\ref{fig:correlationcustomer3}.
-All the customers’ consumptions are not very auto-correlated, it can be shown that the maximum auto-correlation value is around 0.5 in the closest time lag and that there is a peak every 24 hours, with a slightly greater value at one week distance.
-This indicates that the consumption data from the closest time lag, as well as those corresponding to the same hour in the preceding days and even better in the preceding weeks, may be valuable features for predicting a time instant's demand.
-A reasonable balance can be achieved by incorporating the consumption data from the past 14 days.
-
-The coefficients given by the Fourier transform for the hourly consumption of the three customers are reported in figure~\ref{fig:ftcustomer1}, figure~\ref{fig:ftcustomer2}, and figure~\ref{fig:ftcustomer3}.
-The graphical representations show for all the customers a main frequency at the daily periodicity.
-Other minor peaks are present mostly at multiples of the 1/day frequency, in particular for the third customer where the 2/day frequency is almost equal to the 1/day.
 
 \begin{figure}[H]
 \begin{minipage}[b]{8.5cm}
@@ -1037,19 +1025,16 @@ Other minor peaks are present mostly at multiples of the 1/day frequency, in par
 \caption{The coefficients given by the Fourier transform of the hourly consumption of the three customers.}
 \end{figure}
 
+The auto-correlations of the hourly consumption of the three customers are reported in figure~\ref{fig:correlationcustomer1}, figure~\ref{fig:correlationcustomer2}, and figure~\ref{fig:correlationcustomer3}.
+All the customers’ consumptions are not very auto-correlated, it can be shown that the maximum auto-correlation value is around 0.5 in the closest time lag and that there is a peak every 24 hours, with a slightly greater value at one week distance.
+This indicates that the consumption data from the closest time lag, as well as those corresponding to the same hour in the preceding days and even better in the preceding weeks, may be valuable features for predicting a time instant's demand.
+A reasonable balance can be achieved by incorporating the consumption data from the past 14 days.
+
+The coefficients given by the Fourier transform for the hourly consumption of the three customers are reported in figure~\ref{fig:ftcustomer1}, figure~\ref{fig:ftcustomer2}, and figure~\ref{fig:ftcustomer3}.
+The graphical representations show for all the customers a main frequency at the daily periodicity.
+Other minor peaks are present mostly at multiples of the 1/day frequency, in particular for the third customer where the 2/day frequency is almost equal to the 1/day.
+
 The daily consumption of the three customers are reported in figure~\ref{fig:dataplotdaycustomer1}, figure~\ref{fig:dataplotdaycustomer2}, and figure~\ref{fig:dataplotdaycustomer3}.
-
-The time series decompositions using an additive model of the daily consumption of the three customers considering as period of the time series a week are reported in figure~\ref{fig:decompositiondaycustomer1}, figure~\ref{fig:decompositiondaycustomer2}, and figure~\ref{fig:decompositiondaycustomer3}.
-The decomposition is consistent with the hourly aggregated consumption over the customers.
-
-The auto-correlations of the daily consumption of the three customers are reported in figure~\ref{fig:correlationdaycustomer1},  figure~\ref{fig:correlationdaycustomer2}, and  figure~\ref{fig:correlationdaycustomer3}.
-With the daily aggregation, all the customers’ consumptions show are slightly high value with respect to the hourly granularity.
-It can be shown that for the first and third customers, the auto-correlation value is slightly high in the closest time lag and then decreases with the days, with a slightly greater value at one week distance.
-Instead, for the second customer the only relevant values are only at a multiple of 7 days.
-
-The coefficients given by the Fourier transform for the daily consumption of the three customers are reported in figure~\ref{fig:ftdaycustomer1}, figure~\ref{fig:ftdaycustomer2}, and figure~\ref{fig:ftdaycustomer3}.
-The graphical representation exhibits that there are no main frequencies in the daily consumption of the first and third customers.
-Instead, for the second customer there is a small peak at the daily periodicity.
 
 \begin{figure}[H]
 \begin{minipage}[b]{8.5cm}
@@ -1074,6 +1059,18 @@ Instead, for the second customer there is a small peak at the daily periodicity.
 \caption{The daily consumption of the three customers.}
 \end{figure}
 
+The time series decompositions using an additive model of the daily consumption of the three customers considering as period of the time series a week are reported in figure~\ref{fig:decompositiondaycustomer1}, figure~\ref{fig:decompositiondaycustomer2}, and figure~\ref{fig:decompositiondaycustomer3}.
+The decomposition is consistent with the hourly aggregated consumption over the customers.
+
+The auto-correlations of the daily consumption of the three customers are reported in figure~\ref{fig:correlationdaycustomer1},  figure~\ref{fig:correlationdaycustomer2}, and  figure~\ref{fig:correlationdaycustomer3}.
+With the daily aggregation, all the customers’ consumptions show are slightly high value with respect to the hourly granularity.
+It can be shown that for the first and third customers, the auto-correlation value is slightly high in the closest time lag and then decreases with the days, with a slightly greater value at one week distance.
+Instead, for the second customer the only relevant values are only at a multiple of 7 days.
+
+The coefficients given by the Fourier transform for the daily consumption of the three customers are reported in figure~\ref{fig:ftdaycustomer1}, figure~\ref{fig:ftdaycustomer2}, and figure~\ref{fig:ftdaycustomer3}.
+The graphical representation exhibits that there are no main frequencies in the daily consumption of the first and third customers.
+Instead, for the second customer there is a small peak at the daily periodicity.
+
 As can be noticed from the data, there is high variability in consumption and low auto-correlation, this suggests how it is difficult to produce highly accurate results on a single customer level.
 With just the time series of a few users, it is very difficult to learn a well-performing model, having more users it could be possible to learn certain generic trends or standard behaviors.
 
@@ -1081,13 +1078,6 @@ Basic data is enhanced with the air temperature, the apparent temperature, and t
 To assess the relationship between these weather variables and the consumption of the three customers, two correlation coefficients were used: Pearson's correlation coefficient and Spearman's rank correlation coefficient.
 Pearson's correlation coefficient measures the strength of the linear relationship between two variables, while Spearman's rank correlation coefficient measures the strength of the monotonic relationship.
 The pearsonr and spearmanr methods of the SciPy library were used to compute the correlation with weather data.
-The results showed that the hourly consumption of the three customers had:
-\begin{itemize}
-  \item a Pearson correlation coefficient of -0.2491, 0.0240, and -0.1338 respectively and a Spearman's rank correlation coefficient of -0.2088, 0.1304, and -0.0196 respectively with respect to the air temperature;
-  \item a Pearson correlation coefficient of -0.2434, 0.0266, and -0.1356 respectively and a Spearman's rank correlation coefficient of -0.2082, 0.1305, and -0.0207 respectively with respect to the apparent temperature;
-  \item a Pearson correlation coefficient of 0.1193, -0.0845, and -0.0985 respectively and a Spearman's rank correlation coefficient of 0.1491, -0.1048, and -0.1123 respectively with respect to the relative humidity.
-\end{itemize}
-It can be noticed that both the coefficients indicate a weak correlation between the weather variables and the consumption of the three customers, nevertheless, it may still be useful to incorporate weather data into the prediction models since also the auto-correlation values are not particularly high.
 
 \begin{figure}[H]
 \begin{minipage}[b]{8.5cm}
@@ -1159,6 +1149,14 @@ It can be noticed that both the coefficients indicate a weak correlation between
 \caption{The coefficients given by the Fourier transform of the daily consumption of the three customers.}
 \end{figure}
 
+The results showed that the hourly consumption of the three customers had:
+\begin{itemize}
+  \item a Pearson correlation coefficient of -0.2491, 0.0240, and -0.1338 respectively and a Spearman's rank correlation coefficient of -0.2088, 0.1304, and -0.0196 respectively with respect to the air temperature;
+  \item a Pearson correlation coefficient of -0.2434, 0.0266, and -0.1356 respectively and a Spearman's rank correlation coefficient of -0.2082, 0.1305, and -0.0207 respectively with respect to the apparent temperature;
+  \item a Pearson correlation coefficient of 0.1193, -0.0845, and -0.0985 respectively and a Spearman's rank correlation coefficient of 0.1491, -0.1048, and -0.1123 respectively with respect to the relative humidity.
+\end{itemize}
+It can be noticed that both the coefficients indicate a weak correlation between the weather variables and the consumption of the three customers, nevertheless, it may still be useful to incorporate weather data into the prediction models since also the auto-correlation values are not particularly high.
+
 The results showed that the daily consumption of the three customers had:
 \begin{itemize}
   \item a Pearson correlation coefficient of -0.5542, -0.2341, and -0.6727 respectively and a Spearman's rank correlation coefficient of -0.5164, -0.2592, and -0.6978 respectively with respect to the air temperature;
@@ -1175,6 +1173,8 @@ Though, this aggregation can be investigated in a possible future work to unders
 After this data analysis, the specific parameters used in the models can be explained more in detail.
 The parameters for the different models were tested and verified on training data to result in the best-performing models, this was done by trying different values and configurations.
 The baseline approaches are built considering the repetition of past days and weeks since data presents a high correlation with that time instants and could lead to a reasonable baseline performance to achieve.
+Instead of just considering the one-day and one-week baselines, for this use case also the four-week and the twelve-week baselines are considered taking an average of the consumption in the specified number of previous weeks.
+This is because averaging the consumption over the previous week may lead to a more robust prediction considering a month and a trimester range,
 The SARIMA model considers the week as the period for seasonal differencing since data presents a high correlation with that time instants and the model can try to take advantage of the weekly seasonality.
 The support vector regressor model uses a radial basis function kernel with a configuration of the C parameter (regularization parameter of squared l2 penalty) to 1.0 to penalize the complexity of the model, and the epsilon parameter defining the epsilon-tube for no penalty to 0.1 as a trade-off between accuracy and generalization.
 The hist gradient boosting regressor model uses as loss the absolute error since this was the supported metric closer to our evaluation metric.
@@ -1204,11 +1204,6 @@ The model is trained using a combination of mean absolute error and mean absolut
 The TFT model was configured with 2 LSTM layers with 16 as hidden size, 4 as attention size, and 8 as hidden continuous size.
 The dropout is set to 0.02.
 The model is trained using mean absolute percentage error as loss and Nadam as optimizer with a learning rate of 0.005.
-
-12 splits were used for block validation with a test size of a week each time, namely 7 days of data.
-For the hourly granularity, the models start with the total number of entries for the customer minus 2016 entries as training and predict every time 168 entries until reaching the last prediction instant where the model has a training size of the total number of entries for the customer minus the last 168 entries.
-The results for hourly aggregation for the second customer are reported in table~\ref{tab:baselinehourlyresults}.
-Only this customer is reported since it presents the best results and the models were optimized for this customer.
 
 % first customer
 % \begin{table}[H]
@@ -1330,33 +1325,25 @@ CNN & 148.16 $\pm$ 30.05 | 0.510 $\pm$ 0.105 & 70.19 | 0.318\\
 % \label{tab:baselinehourlyresults}
 % \end{table}
 
-% TODO sortare per mae e capire quale dei 2, + spiegare differenze ranking, deep dive su lstm o altri modelli with differenze rilevanti
-
-% Not good results in training, spiegare perchè non sono buoni ... Mettere test set (last split) per far capire andamento
+12 splits were used for block validation with a test size of a week each time, namely 7 days of data.
+For the hourly granularity, the models start with the total number of entries for the customer minus 2016 entries as training and predict every time 168 entries until reaching the last prediction instant where the model has a training size of the total number of entries for the customer minus the last 168 entries.
+The results for hourly aggregation for the second customer are reported in table~\ref{tab:baselinehourlyresults}.
+Entries are sorted by best MAE using the last split as the test set.
+Only this customer is reported since it presents the best results and the models were optimized for this customer.
+The blocked k-fold cross-validation suggests that the TFT model has the best MAPE and this is not confirmed on the last split just because there is GRU that performs slightly better in terms of MAPE.
+The not-encouraging thing is that even if it is the best model in terms of MAPE, this value is still close to 50\% indicating that on average the predictions are distant from the actual value by half of this value.
+TFT is also the best approach in terms of MAE on the last split, but not on the basis of the blocked k-fold cross-validation which indicates that the best model is the hist gradient boosting regressor model.
+In general, this data is not well predictable and also the different baselines confirm that having a look at the close history there is no relevant daily or weekly repetition with MAPE and MAE both higher than TFT and hist gradient boosting regressor model.
 
 The AutoML approach uses the mean MAPE forecasting as loss and it is launched for 10 hours with a maximum function evaluation time of 2 hours.
 Then the best ensemble of the found models is returned and can be used to forecast.
-The AutoML approach obtained a one-week MAPE of 61.64 and a MAE of 0.338 [kWh] after a total run of 10 hours.
-
-Analyze the forecasts of the models for the electricity demand forecasting task (predictive analytics) ...
-
-% TODO perche alcuni modelli di ml vanno meglio di modelli di dl più sofisticati, magari con meno dati rete piu complessa fa fatica
-% Modelli in letteratura che vanno super bene vado peggio di baseline per esempio
-% Non necessariamente ML va meglio --> training magari non ottimale. dipende molto dai dati
-
-% TODO mettere grafici di forecast di modelli che vanno bene + scatterplot (per mostrare no bias) 
-
-% TODO Descrivere un po’ i risultati (magari con qualche grafico)  --> tirare fuori insight, cosa capisco, cosa si nota, ...
-
-% Discussione su AutoML dopo risultati, parlando di maturità e problematiche, topic molto hot dato che molto potente potenzialmente (ha molto potenziale)
+This approach obtained a one-week MAPE of 61.64 and a MAE of 0.338 [kWh].
+In this case, AutoML is not able to achieve very good results compared to many other models but this is probably related to the quality of the data.
+It still has great potential as demonstrated in demand prediction and potentially providing more total training time and more data, potentially also of different customers, it can be able to reach better performance.
 
 The forecasts produced by the TFT model for the last split in comparison to the actual values are reported in figure~\ref{fig:baselinetfthourlyforecasts}.
-It can be noticed that ...
-The absolute error of forecasts produced by the TFT model for the last split in comparison to the actual values is reported in figure~\ref{fig:baselinetfthourlyforecastsmae}.
-While the absolute percentage error of forecasts produced by the TFT model for the last split in comparison to the actual values is reported in figure~\ref{fig:baselinetfthourlyforecastsmape}.
-It can be shown that ...
-Finally, the scatterplot representing the error of the forecasts produced by the TFT model for the last split in comparison to the actual values is reported in figure~\ref{fig:baselinetfthourlyforecastsscatterplot}.
-This scatterplot demonstrates that ...
+It can be noticed that it is not able to follow accurately the signal since this is very varying from hour to hour.
+Although, it is able to somehow predict that there is a peak during the day but it is not able to reach the correct quantity.
 
 \begin{figure}[H]
 \centering
@@ -1364,6 +1351,14 @@ This scatterplot demonstrates that ...
 \caption{The forecasts produced by the temporal fusion transoformer model for the last split in comparison to the actual values.}
 \label{fig:baselinetfthourlyforecasts}
 \end{figure}
+
+The absolute error of forecasts produced by the TFT model for the last split in comparison to the actual values is reported in figure~\ref{fig:baselinetfthourlyforecastsmae}.
+While the absolute percentage error of forecasts produced by the TFT model for the last split in comparison to the actual values is reported in figure~\ref{fig:baselinetfthourlyforecastsmape}.
+It can be shown that the entity of the errors is quite high both in terms of absolute error and in terms of absolute percentage error.
+Moreover, the error signal seems to have some periodicity that the TFT model is not able to capture probably due to the high variability of the data.
+Finally, the scatterplot representing the error of the forecasts produced by the TFT model for the last split in comparison to the actual values is reported in figure~\ref{fig:baselinetfthourlyforecastsscatterplot}.
+This scatterplot demonstrates that there is no bias and can be also noticed that the model is conservative and the positive error is contained while the negative ones are up to six times bigger.
+The error can be pretty high also when the predicted values are low.
 
 \begin{figure}[H]
 \centering
@@ -1385,9 +1380,6 @@ This scatterplot demonstrates that ...
 \caption{The scatterplot representing the error of the forecasts produced by the temporal fusion transoformer model for the last split in comparison to the actual values.}
 \label{fig:baselinetfthourlyforecastsscatterplot}
 \end{figure}
-
-For the daily granularity, the models start with the total number of entries for the customer minus 84 entries as training and predict every time 30 entries until reaching the last prediction instant where the model has a training size of the total number of entries for the customer minus the last 7 entries.
-The results for daily aggregation for the second customer are reported in table~\ref{tab:baselinedailyresults}.
 
 % first customer
 % \begin{table}[H]
@@ -1453,15 +1445,15 @@ HistGradientBoostingRegressor & 15.36 $\pm$ 3.72 | 1.889 $\pm$ 0.355 & 16.80 | 1
 \hline
 XGBRegressor & 17.62 $\pm$ 4.88 | 2.135 $\pm$ 0.558 & 21.38 | 2.111\\
 \hline
+GRU & 18.68 $\pm$ 3.36 | 2.463 $\pm$ 0.534 & 17.92 | 2.390\\
+\hline
+LSTM & 18.96 $\pm$ 3.52 | 2.500 $\pm$ 0.616 & 18.41 | 2.432\\
+\hline
 One Day Baseline & 20.36 $\pm$ 3.93 | 2.657 $\pm$ 0.551 & 18.95 | 2.432\\
 \hline
 Prophet & 17.36 $\pm$ 5.18 | 1.947 $\pm$ 0.426 & 25.45 | 2.458\\
 \hline
-GRU & 18.68 $\pm$ 3.36 | 2.463 $\pm$ 0.534 & 22.83 | 2.643\\
-\hline
 SVR & 18.10 $\pm$ 3.24 | 2.449 $\pm$ 0.552 & 23.44 | 2.694\\
-\hline
-LSTM & 18.96 $\pm$ 3.52 | 2.500 $\pm$ 0.616 & 28.83 | 3.060\\
 \hline
 \end{tabular}
 \caption{Table summarizing the results for daily aggregation.}
@@ -1508,15 +1500,14 @@ LSTM & 18.96 $\pm$ 3.52 | 2.500 $\pm$ 0.616 & 28.83 | 3.060\\
 % \label{tab:baselinedailyresults}
 % \end{table}
 
-Instead, the AutoML approach obtained a one-week MAPE of 19.88 and a MAE of 2.197 [kWh] after a total run of 10 hours.
-
-The forecasts produced by the four-week baseline for the last split in comparison to the actual values are reported in figure~\ref{fig:baseline4weeksdailyforecasts}.
-It can be noticed that ...
-The absolute error of forecasts produced by the four-week baseline for the last split in comparison to the actual values is reported in figure~\ref{fig:baseline4weeksdailyforecastsmae}.
-While the absolute percentage error of forecasts produced by the four-week baseline for the last split in comparison to the actual values is reported in figure~\ref{fig:baseline4weeksdailyforecastsmape}.
-It can be shown that ...
-Finally, the scatterplot representing the error of the forecasts produced by the four-week baseline for the last split in comparison to the actual values is reported in figure~\ref{fig:baseline4weeksdailyforecastsscatterplot}.
-This scatterplot demonstrates that ...
+For the daily granularity, the models start with the total number of entries for the customer minus 84 entries as training and predict every time 30 entries until reaching the last prediction instant where the model has a training size of the total number of entries for the customer minus the last 7 entries.
+The results for daily aggregation for the second customer are reported in table~\ref{tab:baselinedailyresults}.
+In this case, TFT is no more the best performing model, probably due to the fact of 24 times less quantity of data due to the daily aggregation.
+Though, it is still a well-performing model on both blocked k-fold cross-validation and last split results.
+The four-week baseline and the one-week baseline models perform better in terms of the last split MAE.
+This gives an indication of how with a little amount of data simple baseline may provide reasonable results and on average they perform better than sophisticated models since sophisticated models are not able to be trained also due to the irregular pattern of this data.
+Looking at the last split MAPE instead the CNN outperforms the other models even though by less than a percentage point.
+Actually, in terms of blocked k-fold validation, it results to be the worse in both MAPE and MAE but on the last split it recovers, probably the increase of data lead to a significant improvement to this model.
 
 \begin{figure}[H]
 \centering
@@ -1532,6 +1523,17 @@ This scatterplot demonstrates that ...
 \label{fig:baseline4weeksdailyforecastsmae}
 \end{figure}
 
+Also, the SARIMA and hist gradient boosting regressor models present good results on the last time split and also on the blocked k-fold validation showing consistency over time and good results also with few training data.
+Instead, the AutoML approach obtained a one-week MAPE of 19.88 and a MAE of 2.197 [kWh].
+As for demand prediction, AutoML presents not very good results probably due to the scarcity of training data and the fact of AutoML of trying very complex architects when also simple ones may work well in certain cases.
+
+The forecasts produced by the four-week baseline for the last split in comparison to the actual values are reported in figure~\ref{fig:baseline4weeksdailyforecasts}.
+It can be noticed that it accurately follows the signal meaning that this baseline can provide a good indication of what will be the daily consumption for this customer.
+The absolute error of forecasts produced by the four-week baseline for the last split in comparison to the actual values is reported in figure~\ref{fig:baseline4weeksdailyforecastsmae}.
+While the absolute percentage error of forecasts produced by the four-week baseline for the last split in comparison to the actual values is reported in figure~\ref{fig:baseline4weeksdailyforecastsmape}.
+It can be seen that the error increases until the third day, then decreases and explodes on the last day both in terms of absolute error and in terms of absolute percentage error.
+This confirms that there is no clear pattern and it really depends on the customer's overall daily consumption, which can be very different also on the same day of the week, although the four-week average does seem to capture some basic information about consumption.
+
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{images/baseline/baseline_average_4_weeks_daily_aggregated_mape}
@@ -1539,13 +1541,5 @@ This scatterplot demonstrates that ...
 \label{fig:baseline4weeksdailyforecastsmape}
 \end{figure}
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=1\textwidth]{images/baseline/baseline_average_4_weeks_error_scatter_plot_predicted_daily_aggregated}
-\caption{The scatterplot representing the error of the forecasts produced by the four-week baseline for the last split in comparison to the actual values.}
-\label{fig:baseline4weeksdailyforecastsscatterplot}
-\end{figure}
-
-% TODO check the consistency of model results in the last period and using cross-validation --> do a table with the differences (+ plot for internal analysis)
 % commentarli (sia il numero che il grafico dell’errore) --> interpretare il dato (perchè è buono?) --> benchmark in letteratura, ecc…
 % [valutare criticamente, aspetto tecnologico scientifico]
