@@ -2,15 +2,47 @@
 \label{cha:conclusions}
 \vspace{0.4 cm}
 
-This chapter reports the conclusions and summary of the work done.
-At the end of the thesis, some ideas for future works are suggested.
+% qual’è il problema, a che risultato sono arrivato e poi miglioramenti futuri
+% what is the problem, what results have I obtained and then which are the possible future improvements
+% qual è il problema, cosa ho fatto, quali sono i risultati, conclusioni (sui risultati e sulla base delle research questions) + then lavori futuri
+% in conclusioni magari anche possibile risparmio che si ottiene rispetto a competitor/SoA → main focus on the combination of demand and production forecasting (baseline as additional potential service in the field of Demand Side Management (DSM) services to increase customer retention)
+% check final report redfox
+
+
+The chapter summarizes the work done and some conclusions are drawn from it.
+At the end of the chapter, some ideas for future work are suggested.
 
 
 \section{Summary}
 \label{sec:summary}
 \vspace{0.2 cm}
 
-Summary of the work done ...
+% Per prima cosa rimettere in luce gli obiettivi prefissati nell'introduzione
+
+The accurate forecasting of customers’ electricity demand is of vital importance for electricity suppliers.
+It allows them to optimize the purchase of the necessary electricity without having to rely solely on the instantaneous electricity market, thereby avoiding potential cost fluctuations.
+Furthermore, by accurately forecasting demand, suppliers can efficiently offer customers the necessary electricity and supply it at a competitive price, ensuring customer satisfaction and loyalty.
+Additionally, forecasting the production of photovoltaic systems becomes crucial in determining the amount of electricity that needs to be purchased.
+Lastly, understanding the consumption habits of individual customers by establishing a reference consumption baseline aids in developing personalized energy solutions and promoting energy efficiency initiatives.
+
+The study addressed the following research questions:
+\begin{enumerate}
+  \item Can the customers' electricity demand be forecasted based on past aggregated consumption data? The findings contribute to understanding the feasibility of utilizing historical data to develop a reliable forecasting model, enabling effective energy management and resource allocation.
+  \item Is it possible to forecast the photovoltaic plants' production based on past aggregated production data? The research examined the potential for accurately predicting PV plants' output using historical production data, facilitating the integration of renewable energy sources and optimizing energy procurement strategies.
+  \item Can a consumption baseline of individual customers be established based on past consumption data? The study explored the possibility of establishing consumption baselines for individual customers, offering insights into personalized energy solutions, energy efficiency, and tailored energy-saving recommendations.
+\end{enumerate}
+By addressing these research questions, this study advances knowledge in forecasting electricity demand, photovoltaic production, and the establishment of consumption baselines. The findings provide practical implications for enhancing energy management strategies, optimizing resource allocation, promoting renewable energy integration, and improving customer-centric energy solutions.
+
+% The summary of the work done should provide an overview of the research methodology and the key steps taken to address the research questions. It can include a brief description of the data collection process, the chosen forecasting techniques or models, and any specific analyses conducted
+
+A forecasting system was designed for addressing these research questions.
+The system architecture was thought in order to be used as a SaaS by energy retailers.
+A prototype was implemented with a focus on key components for validating the core system functionalities for each specific use case.
+In particular, the training of different models, the forecast of new data, and the evaluation of the performance of the developed models were implemented for all the use cases.
+As evaluation methodologies, the blocked k-fold cross-validation and the test on the last split were adopted using as metric either the MAPE or MAE depending on the specific use case.
+In each of the following subsections, a comprehensive analysis of the results obtained for each specific use case is provided.
+
+% Analisi sulla soddisfazione o meno degli obiettivi: mettere in evidenza i risultati che sono stati effettivamente ottenuti con la tesi di laurea
 
 
 \vspace{0.1 cm}
@@ -18,7 +50,11 @@ Summary of the work done ...
 \label{sec:conclusionsdemand}
 \vspace{0.1 cm}
 
+% exploration and analysis of data + studied correlation with weather data + developed models
+
 Summary of the results achieved for electricity demand forecasting ...
+
+% We do consider these results a good indication of the soundness of the proposed approach.
 
 
 \vspace{0.1 cm}
@@ -41,10 +77,28 @@ Summary of the results achieved for consumption baseline forecasting ...
 \label{sec:future}
 \vspace{0.2 cm}
 
-Ideas for future works ...
+% ulteriori possibilità di approfondimento che non ho potuto inserire nella tesi e che magari potrebbero essere trattati in una ricerca futura
 
-% provare a migliorare/pulire dati e usare altre features --> data centric AI
-% ensemble learning fatto bene per le combinazioni di modelli per i vari task
-% investigate tariff aggregation to understand whether it could be applicable
-% improve results on the consumption baseline, maybe trying other models or having more customers find a general models to deal with all of them
-% consumption disaggregation
+In the following, further possibilities for future study that were not included in this thesis but could be addressed in subsequent research are reported.
+MIWenergía acknowledges the limitations of the provided data but expresses satisfaction with the initial results obtained through these solutions, indicating a desire to continue the collaboration.
+Therefore, ideas for future works are presented herein, aiming to expand upon the current research and explore additional avenues of investigation.
+
+\begin{itemize}
+  \item Try to improve/clean data and use other features, using a more data-centric AI approach;
+  \item Find a better way to train and use in prediction DL models;
+  \item Having more data, possible to try deeper and more elaborated architectures;
+  \item Use ensemble learning for finding optimal combinations of models for various use cases;
+  \item Investigate tariff aggregation to understand whether it could be applicable;
+  \item Improve results on the consumption baseline, maybe trying other models or having more customers find a general model to deal with all of them;
+  \item Implement the whole system as a SaaS;
+  \item Single customer consumption disaggregation was also thought to be an interesting use case for MIWenergía, but data with finer aggregated data, such as with a minute granularity is required for this use case. Consumption disaggregation is an interesting application that can provide insights to both MIWenergía and the customers in the future, further testing is required and there is the need of having dedicated devices for collecting data and doing the first round of data collection and ground truth annotation.
+\end{itemize}
+
+% Long-term Evaluation: Explore the long-term performance and sustainability of the developed forecasting models. Assess the accuracy and reliability of the predictions over extended periods, and analyze any potential deviations or biases that may arise over time. This evaluation will provide valuable information on the stability and robustness of the models and their applicability in real-world scenarios.
+% While this study focused on short-term forecasting and establishing consumption baselines, future research could delve into the long-term analysis. Investigating the effects of changing energy policies, technological advancements, and shifting consumer behaviors over an extended period would provide valuable insights into the sustainability and adaptability of energy management strategies.
+
+% Customer Behavior Analysis: A deeper understanding of individual customers' energy consumption habits and the factors influencing their choices is essential for developing effective energy efficiency programs. Future research could employ advanced data analytics techniques to conduct comprehensive customer behavior analysis. This would help identify key drivers of energy consumption, patterns of energy usage, and factors influencing energy-saving behaviors, enabling the design of targeted interventions and personalized energy solutions.
+% Investigate the underlying factors influencing customers' energy consumption habits and their response to energy-saving recommendations. By conducting detailed behavioral analyses, future research can shed light on the psychological, social, and economic drivers that shape customers' energy behaviors and inform the development of targeted energy-saving interventions.
+
+These future research directions have the potential to build upon the initial findings of this thesis and contribute to the ongoing collaboration between MIWenergía and the research community in the field of forecasting customers' electricity demand, optimizing energy procurement, and understanding consumption patterns.
+By exploring these possibilities, further insights can be gained, leading to more accurate forecasting models, improved energy management strategies, and enhanced customer-centric approaches in the electricity sector.

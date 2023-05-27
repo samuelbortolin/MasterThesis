@@ -131,7 +131,7 @@ Then, this basic data is enhanced with the air temperature, the apparent tempera
 Finally, data is cleaned up by filling in the gaps using the linear interpolation provided by the pandas library, which proved to be effective since there was just some missing data in the weather information.
 Three possible granularities are considered: hourly, daily, and by tariff.
 The data is with an hourly granularity, so for the daily granularity, data is also aggregated over the day summing the active incomings of the single hours, and averaging the weather data over the day.
-The other possible aggregation is by tariff, in fact, the hourly tariff proposed by MIWEnergia is different based on the day and the hour of the day.
+The other possible aggregation is by tariff, in fact, the hourly tariff proposed by MIWenergía is different based on the day and the hour of the day.
 For the considered residential users the possible tariffs are 3:
 \begin{enumerate}
   \item Working days from 10 AM to 2 PM, and from 6 PM to 10 PM;
