@@ -2,13 +2,6 @@
 \label{cha:conclusions}
 \vspace{0.4 cm}
 
-% qual’è il problema, a che risultato sono arrivato e poi miglioramenti futuri
-% what is the problem, what results have I obtained and then which are the possible future improvements
-% qual è il problema, cosa ho fatto, quali sono i risultati, conclusioni (sui risultati e sulla base delle research questions) + then lavori futuri
-% in conclusioni magari anche possibile risparmio che si ottiene rispetto a competitor/SoA → main focus on the combination of demand and production forecasting (baseline as additional potential service in the field of Demand Side Management (DSM) services to increase customer retention)
-% check final report redfox
-
-
 The chapter summarizes the work done and some conclusions are drawn from it.
 At the end of the chapter, some ideas for future work are suggested.
 
@@ -17,32 +10,27 @@ At the end of the chapter, some ideas for future work are suggested.
 \label{sec:summary}
 \vspace{0.2 cm}
 
-% Per prima cosa rimettere in luce gli obiettivi prefissati nell'introduzione
-
 The accurate forecasting of customers’ electricity demand is of vital importance for electricity suppliers.
 It allows them to optimize the purchase of the necessary electricity without having to rely solely on the instantaneous electricity market, thereby avoiding potential cost fluctuations.
 Furthermore, by accurately forecasting demand, suppliers can efficiently offer customers the necessary electricity and supply it at a competitive price, ensuring customer satisfaction and loyalty.
-Additionally, forecasting the production of photovoltaic systems becomes crucial in determining the amount of electricity that needs to be purchased.
+Additionally, forecasting the production from their own photovoltaic plants becomes crucial in determining the amount of electricity that needs to be purchased.
 Lastly, understanding the consumption habits of individual customers by establishing a reference consumption baseline aids in developing personalized energy solutions and promoting energy efficiency initiatives.
+This allows the addition of potential new services connected to the field of Demand Side Management (DSM) which aims to increase customer retention.
 
 The study addressed the following research questions:
 \begin{enumerate}
   \item Can the customers' electricity demand be forecasted based on past aggregated consumption data? The findings contribute to understanding the feasibility of utilizing historical data to develop a reliable forecasting model, enabling effective energy management and resource allocation.
-  \item Is it possible to forecast the photovoltaic plants' production based on past aggregated production data? The research examined the potential for accurately predicting PV plants' output using historical production data, facilitating the integration of renewable energy sources and optimizing energy procurement strategies.
+  \item Can the photovoltaic plants' production be forecasted based on past aggregated production data? The research examined the potential for accurately predicting PV plants' output using historical production data, facilitating the integration of renewable energy sources and optimizing energy procurement strategies.
   \item Can a consumption baseline of individual customers be established based on past consumption data? The study explored the possibility of establishing consumption baselines for individual customers, offering insights into personalized energy solutions, energy efficiency, and tailored energy-saving recommendations.
 \end{enumerate}
 By addressing these research questions, this study advances knowledge in forecasting electricity demand, photovoltaic production, and the establishment of consumption baselines. The findings provide practical implications for enhancing energy management strategies, optimizing resource allocation, promoting renewable energy integration, and improving customer-centric energy solutions.
 
-% The summary of the work done should provide an overview of the research methodology and the key steps taken to address the research questions. It can include a brief description of the data collection process, the chosen forecasting techniques or models, and any specific analyses conducted
-
 A forecasting system was designed for addressing these research questions.
-The system architecture was thought in order to be used as a SaaS by energy retailers.
+The system architecture was designed in order to build a Software as a Service (SaaS) capable of satisfying different use cases and being used directly by energy retailers.
 A prototype was implemented with a focus on key components for validating the core system functionalities for each specific use case.
 In particular, the training of different models, the forecast of new data, and the evaluation of the performance of the developed models were implemented for all the use cases.
-As evaluation methodologies, the blocked k-fold cross-validation and the test on the last split were adopted using as metric either the MAPE or MAE depending on the specific use case.
+As evaluation methodologies, the blocked k-fold cross-validation and the test on the last split were adopted using as metrics either the MAPE or MAE depending on the specific use case.
 In each of the following subsections, a comprehensive analysis of the results obtained for each specific use case is provided.
-
-% Analisi sulla soddisfazione o meno degli obiettivi: mettere in evidenza i risultati che sono stati effettivamente ottenuti con la tesi di laurea
 
 
 \vspace{0.1 cm}
@@ -50,11 +38,15 @@ In each of the following subsections, a comprehensive analysis of the results ob
 \label{sec:conclusionsdemand}
 \vspace{0.1 cm}
 
-% exploration and analysis of data + studied correlation with weather data + developed models
-
-Summary of the results achieved for electricity demand forecasting ...
-
-% We do consider these results a good indication of the soundness of the proposed approach.
+For electricity demand forecasting the aggregated consumption data over the customers was used.
+This data was initially explored and analyzed and the correlation with weather data was also studied.
+After this, many different models were developed for producing accurate forecasts on this use case.
+Experimental results suggested that the TFT model was the best-performing model for the hourly granularity with a MAPE of 14.76\% on the test set composed of the last month of data.
+Instead, for the daily granularity, the best-performing model was the CNN model with a MAPE of 7.49\%.
+These results can be considered a good indication of the soundness of the proposed approach.
+For answering whether the customers' electricity demand can be forecasted based on past aggregated consumption data the answer seems to be positive considering the promising results obtained.
+Taking into consideration the forecasts with a daily granularity, energy retailers can gain valuable insights into the expected energy demand for upcoming days and, instead of basing their purchases based on simple baselines or standard statistical methods, they can optimize their purchases saving many percentage points in excess/defect which results in monetary savings for the company.
+When a finer granularity is needed, as in the case of MIWenergía, forecasts results with an hourly granularity can be used and even though these are less accurate, they still offer useful information when considered across the entire period.
 
 
 \vspace{0.1 cm}
@@ -62,7 +54,17 @@ Summary of the results achieved for electricity demand forecasting ...
 \label{sec:conclusionsproduction}
 \vspace{0.1 cm}
 
-Summary of the results achieved for electricity production forecasting ...
+For electricity production forecasting the aggregated production data over the PV plants was used.
+The target of the predictions is the mean percentage of production, which is calculated as the division of the total produced energy by the total power of the PV plants.
+This data was initially explored and analyzed and the correlation with weather data, including solar energy data, was also studied.
+After this, many different models were developed for producing accurate forecasts on this use case.
+Experimental results suggested that the GRU model was the best-performing model for the hourly granularity with a MAE of 2.79\% on the test set composed of the last week of the percentage of production data.
+These results can be considered a good indication of the soundness of the proposed approach.
+For answering whether the photovoltaic plants' production can be forecasted based on past aggregated production data the answer seems to be positive considering the promising results obtained.
+Taking into consideration the forecasts with an hourly granularity, energy retailers can access crucial insights into the expected energy production for upcoming days with higher accuracy compared to relying on simple baselines, standard statistical methods, or estimates just based on weather forecasts.
+Integrating these production forecasts with demand forecasts enables retailers to optimize their purchasing decisions effectively.
+By accurately forecasting production, retailers can avoid unnecessary excess or deficits in energy procurement, leading to substantial cost savings for the company.
+In fact, providing forecasts for both production and demand enables retailers to operate efficiently and maximize their financial returns.
 
 
 \vspace{0.1 cm}
@@ -70,35 +72,57 @@ Summary of the results achieved for electricity production forecasting ...
 \label{sec:conclusionsbaseline}
 \vspace{0.1 cm}
 
-Summary of the results achieved for consumption baseline forecasting ...
+For consumption baseline forecasting the consumption data of three customers was used.
+This data was initially explored and analyzed and the correlation with weather data was also studied.
+After this, many different models were developed for producing accurate forecasts on this use case with a focus on the second customer.
+Experimental results suggested that the TFT model was the best-performing model for the hourly granularity in terms of MAE with 0.231 kWh on the test set composed of the last week of data and it presents a MAPE of 44.19\%.
+The GRU model performed slightly better in terms of MAPE with 42.55\% but with a MAE of 0.257 kWh.
+The value of the MAPE is close to 50\% indicating that on average the predictions are distant from the actual value by half of this value.
+In general, this data is not well predictable and also the different baselines confirmed that having a look at the close history there is no relevant daily or weekly repetition with MAPE and MAE both higher than the TFT model.
+Instead, for the daily granularity, no model is outperforming the four-week baseline in terms of MAE with 1.318 kWh and it presents a MAPE of 14.40\%.
+The CNN model performed slightly better in terms of MAPE with 13.46\% but with a MAE of 1.751 kWh.
+Even though the value of the MAPE with daily granularity is noticeably reduced with respect to the hourly granularity, the results provided an indication of how with a low amount of data a simple baseline may provide reasonable results and on average they perform better than sophisticated models since these models are not able to be trained well due to the low amount and irregular pattern of this data.
+For answering whether a consumption baseline of individual customers can be established based on past consumption data the answer seems to be negative considering the quality of data of the provided customers and the limited amount of historical data.
+More studies should be conducted in this direction for being able to obtain accurate and robust consumption baseline forecasts.
 
 
 \section{Future works}
 \label{sec:future}
 \vspace{0.2 cm}
 
-% ulteriori possibilità di approfondimento che non ho potuto inserire nella tesi e che magari potrebbero essere trattati in una ricerca futura
-
 In the following, further possibilities for future study that were not included in this thesis but could be addressed in subsequent research are reported.
 MIWenergía acknowledges the limitations of the provided data but expresses satisfaction with the initial results obtained through these solutions, indicating a desire to continue the collaboration.
 Therefore, ideas for future works are presented herein, aiming to expand upon the current research and explore additional avenues of investigation.
 
-\begin{itemize}
-  \item Try to improve/clean data and use other features, using a more data-centric AI approach;
-  \item Find a better way to train and use in prediction DL models;
-  \item Having more data, possible to try deeper and more elaborated architectures;
-  \item Use ensemble learning for finding optimal combinations of models for various use cases;
-  \item Investigate tariff aggregation to understand whether it could be applicable;
-  \item Improve results on the consumption baseline, maybe trying other models or having more customers find a general model to deal with all of them;
-  \item Implement the whole system as a SaaS;
-  \item Single customer consumption disaggregation was also thought to be an interesting use case for MIWenergía, but data with finer aggregated data, such as with a minute granularity is required for this use case. Consumption disaggregation is an interesting application that can provide insights to both MIWenergía and the customers in the future, further testing is required and there is the need of having dedicated devices for collecting data and doing the first round of data collection and ground truth annotation.
-\end{itemize}
+The first future work is to perform a long-term evaluation to explore the long-term performance and sustainability of the developed forecasting models.
+It would be beneficial to assess the accuracy and reliability of the predictions over extended time periods and analyze any potential deviations or biases that may arise over time.
+This evaluation will provide valuable insights into the stability and robustness of the models and their applicability in real-world scenarios.
 
-% Long-term Evaluation: Explore the long-term performance and sustainability of the developed forecasting models. Assess the accuracy and reliability of the predictions over extended periods, and analyze any potential deviations or biases that may arise over time. This evaluation will provide valuable information on the stability and robustness of the models and their applicability in real-world scenarios.
-% While this study focused on short-term forecasting and establishing consumption baselines, future research could delve into the long-term analysis. Investigating the effects of changing energy policies, technological advancements, and shifting consumer behaviors over an extended period would provide valuable insights into the sustainability and adaptability of energy management strategies.
+Another critical point is related to data improvement and availability.
+Future research could focus on improving and cleaning the available data while exploring the use of additional features.
+Employing a more data-centric AI approach coupled with the increase of available data could allow for exploring more sophisticated and deeper architectures for the treated use cases.
+Furthermore, investigating alternative ways to train and use the models can contribute to enhancing their performance and efficiency.
 
-% Customer Behavior Analysis: A deeper understanding of individual customers' energy consumption habits and the factors influencing their choices is essential for developing effective energy efficiency programs. Future research could employ advanced data analytics techniques to conduct comprehensive customer behavior analysis. This would help identify key drivers of energy consumption, patterns of energy usage, and factors influencing energy-saving behaviors, enabling the design of targeted interventions and personalized energy solutions.
-% Investigate the underlying factors influencing customers' energy consumption habits and their response to energy-saving recommendations. By conducting detailed behavioral analyses, future research can shed light on the psychological, social, and economic drivers that shape customers' energy behaviors and inform the development of targeted energy-saving interventions.
+An interesting future work can be of extending the concept of model combination adopted in demand and production forecasting use cases and considering the use of ensemble learning techniques could be valuable for finding optimal combinations of models for various use cases.
+Ensemble methods can harness the strengths of multiple models to improve overall forecasting accuracy and reliability.
+By combining the predictions of multiple models, for example using a weighted average, ensemble learning approaches can mitigate the weaknesses of individual models and enhance the overall forecasting performance.
+Based on this concept, with the continuous advancement of AutoML, this technology can be used to obtain stronger ensembles letting it find good models providing many days as available training time.
+
+Future research should focus on improving the accuracy and reliability of the consumption baseline, which serves as a reference for individual customers' energy consumption.
+A deeper understanding of individual customers' energy consumption habits and the factors influencing their choices can be helpful in this objective.
+Exploring alternative models and techniques, as well as incorporating additional data sources, could enhance the precision of baseline forecasts.
+One possibility, having more customers available with more historical data, may also be to find a general model for dealing with all customers.
+Furthermore, investigating tariff granularity can be a good future direction to understand whether it could be applicable to produce good results for this use case.
+
+Another future direction to offer scalability, flexibility, and accessibility for MIWenergía and potentially other energy retailers, is to implement the entire system as a SaaS solution with the architecture proposed in chapter~\ref{cha:system}.
+This would allow for easier deployment, maintenance, and continuous improvement of the developed forecasting models.
+Moreover, the presented architecture would be able to support additional use cases other than the ones discussed in this thesis.
+
+Consumption disaggregation on a single customer level was also thought to be an interesting use case for MIWenergía.
+It consists of estimating individual appliances' energy consumption from individual customers' energy consumption data.
+This would be an interesting application to explore in the near future which could provide valuable insights to both MIWenergía and its customers and facilitate more targeted energy-saving strategies.
+However, this use case requires dedicated devices for collecting finer aggregated data with a minute-level granularity.
+Moreover, a first round of data collection and ground truth annotation is required for developing dedicated models for this use case.
 
 These future research directions have the potential to build upon the initial findings of this thesis and contribute to the ongoing collaboration between MIWenergía and the research community in the field of forecasting customers' electricity demand, optimizing energy procurement, and understanding consumption patterns.
 By exploring these possibilities, further insights can be gained, leading to more accurate forecasting models, improved energy management strategies, and enhanced customer-centric approaches in the electricity sector.

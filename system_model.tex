@@ -5,6 +5,7 @@
 In this chapter, the model of the proposed system is presented.
 In the first section, an in-depth presentation of the designed system architecture is provided.
 The different components of the system with their functionalities and interactions are described.
+Tthe overall architecture was designed in order to build a Software as a Service (SaaS) capable of satisfying different use cases and being used directly by energy retailers.
 Lastly, the modules focused on the three use cases of interest are treated more in detail in dedicated sections.
 After this chapter, it will be clear what the main parts of the system are and how they cooperate to accomplish the various use cases of interest.
 
@@ -139,6 +140,7 @@ The model training task starts when the task manager schedules it.
 As shown by the diagram in figure~\ref{fig:trainingflow}, the logic inside this task can be formulated in 2 steps: preprocess the available data and train the model.
 The data preprocessing block collects the available data for the specific use case for which the model will be trained, aggregates it correctly, cleans it, and enriches it with weather data.
 The models training module takes the preprocessed data and trains the model with the provided specifications.
+It was thought of as an extendable framework on which it is possible to support different models and possibly integrate new ones over time.
 The resulting model is then passed to the ML models interface which stores it inside the ML models storage.
 
 \begin{figure}[H]

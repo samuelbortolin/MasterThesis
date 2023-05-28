@@ -4,7 +4,7 @@
 
 In this chapter, the proposed system is validated and the performance of the models for the different use cases is evaluated.
 The first section presents the datasets provided by MIWenergía\footnote{ \url{https://www.miwenergia.com/} }.
-Subsequently, the adapted evaluation methodology is described.
+Subsequently, the adopted evaluation methodology is described.
 Finally, the evaluation of the performance of the models for the different use cases is presented.
 After this chapter, it will be clear how the system has been validated and what the performance achieved by the proposed system is.
 
@@ -340,14 +340,14 @@ The model is trained using mean absolute percentage error as loss and Nadam as o
 
 12 splits were used for block validation with a test size of a month each time, namely 30 days of data.
 For the hourly granularity, the models start with 5977 entries as training and predict every time 720 entries until reaching the last prediction instant where the model has a training size of 13897.
-The results for hourly aggregation are reported in table~\ref{tab:demandhourlyresults}.
+The results for hourly granularity are reported in table~\ref{tab:demandhourlyresults}.
 Entries are sorted by best MAPE using the last split as the test set.
 The blocked k-fold cross-validation suggests that the one-week baseline has the best MAPE, but looking at the last split this is not confirmed.
 This is probably due to the fact that overall the weekly repetition seems to be quite effective over the year, but there are better approaches that with the increase of training data perform better, this can be the case in GRU and CNN since the results on the last split are quite good compared to the mean MAPE obtained over the splits.
 This can be explained by the fact that, due to their complexity, these models require more data and in the first splits there was not even a single year of data, so they didn't even have the possibility to infer a possible annual seasonality.
 Results seem also to confirm that not always sophisticated models perform better and some of them are no better than a baseline.
 Models treated in the literature that are performing well in similar tasks can also not be suited for this specific use case.
-Data is a big difference and with a little amount of data for some complex networks is hard to perform well and generalize.
+Data makes a big difference and with a low amount of data, it is difficult for some complex networks to perform well and generalize.
 Instead, the TFT approach seems to have pretty much the same MAPE over the considered splits confirming the power of this architecture despite the limited data
 In contrast, the boosters that have a good blocked k-fold MAPE on the last split do not perform well.
 
@@ -381,11 +381,11 @@ Prophet & 28.68 $\pm$ 7.07 & 31.62\\
 XGBRegressor & 16.88 $\pm$ 8.08 & 37.81\\
 \hline
 \end{tabular}
-\caption{Table summarizing the results for hourly aggregation.}
+\caption{Table summarizing the results for hourly granularity.}
 \label{tab:demandhourlyresults}
 \end{table}
 
-The results for hourly aggregation at forecasting time on the last time slot including also the combinations of different techniques and the AutoML approach are reported in table~\ref{tab:demandhourlyresultsforecast}.
+The results for hourly granularity at forecasting time on the last time slot including also the combinations of different techniques and the AutoML approach are reported in table~\ref{tab:demandhourlyresultsforecast}.
 The combination of the previous techniques was performed by combining one-day baseline, one-week baseline, and Prophet with possibly one of LSTM, GRU, or CNN with the intent of trying to improve the robustness of DL models with some stable baselines and Prophet model which internally automatically deals with seasonalities, even though for this task it is not performing very well.
 The AutoML approach uses the mean MAPE forecasting as loss and it is launched for 10 hours with a maximum function evaluation time of 2 hours.
 Then the best ensemble of the found models is returned and can be used to forecast.
@@ -459,7 +459,7 @@ Prophet & 33.94 & 31.62\\
 XGBRegressor & 17.84 & 37.81\\
 \hline
 \end{tabular}
-\caption{Table summarizing the results for hourly aggregation at forecasting time.}
+\caption{Table summarizing the results for hourly granularity at forecasting time.}
 \label{tab:demandhourlyresultsforecast}
 \end{table}
 
@@ -492,8 +492,8 @@ This scatter plot demonstrates that there is no bias and can be also noticed tha
 \end{figure}
 
 For the daily granularity, the models start with 249 entries as training and predict every time 30 entries until reaching the last prediction instant where the model has a training size of 579.
-The results for daily aggregation are reported in table~\ref{tab:demanddailyresults}.
-In this case, TFT is no longer the best-performing model, probably due to the fact of 24 times less quantity of data due to the daily aggregation.
+The results for daily granularity are reported in table~\ref{tab:demanddailyresults}.
+In this case, TFT is no longer the best-performing model, probably due to the fact of 24 times less quantity of data due to the daily granularity.
 Though, it is still a well-performing model on both blocked k-fold cross-validation and last split results.
 LSTM and CNN perform better in terms of the last split MAPE but present a high blocked k-fold MAPE, as in the case of the hourly granularity probably that to the increase of data, the results on the last time slots improved in a significant way.
 Also, the boosters present very good results on the last time split and also on the blocked k-fold validation showing consistency over time and good results also with few training data. 
@@ -528,13 +528,15 @@ Prophet & 19.06 $\pm$ 10.81 & 26.33\\
 SVR & 53.63 $\pm$ 22.39 & 39.82\\
 \hline
 \end{tabular}
-\caption{Table summarizing the results for daily aggregation.}
+\caption{Table summarizing the results for daily granularity.}
 \label{tab:demanddailyresults}
 \end{table}
 
-The results for daily aggregation at forecasting time on the last time slot including also the combinations of different techniques and the AutoML approach are reported in table~\ref{tab:demanddailyresultsforecast}.
+The results for daily granularity at forecasting time on the last time slot including also the combinations of different techniques and the AutoML approach are reported in table~\ref{tab:demanddailyresultsforecast}.
 In this case, the impact of the combinations is not so evident and does not improve the results in all the cases.
 AutoML presents not very good results being worse than the one-week baseline, this is probably due to the scarcity of training data and the fact of AutoML of trying very complex architectures when also simple ones may work well in certain cases.
+It can also be noticed that surprisingly for some of the best-performing models the MAPE on the first week of data is higher than the one on the whole month of data.
+This probably can be explained by the fact that the first week of the last split has a less regular pattern due to the Christmas holidays compared to the following ones.
 
 \begin{table}[H]
 \centering
@@ -597,7 +599,7 @@ Prophet & 17.35 & 26.33\\
 SVR & 58.09 & 39.82\\
 \hline
 \end{tabular}
-\caption{Table summarizing the results for hourly aggregation at forecasting time.}
+\caption{Table summarizing the results for hourly granularity at forecasting time.}
 \label{tab:demanddailyresultsforecast}
 \end{table}
 
@@ -606,7 +608,7 @@ It can be noticed that for the first three weeks, it follows the signal very acc
 The absolute percentage error of forecasts produced by the CNN model for the last split in comparison to the actual values is reported in figure~\ref{fig:demandcnndailyforecastsmape}.
 It can be shown that except for some peaks, the percentage error stays below 10\%.
 Finally, the scatter plot representing the error of the forecasts produced by the CNN model for the last split in comparison to the actual values is reported in figure~\ref{fig:demandcnndailyforecastsscatterplot}.
-This scatter plot demonstrates that there is no bias even though that seems that when predicting high values it is missing some extra quantity in the forecasts, this is probably true in the specific considered last split and in particular the last week.
+This scatter plot demonstrates that there is no bias even though it seems that when predicting high values it is missing some extra quantity in the forecasts, this is probably true in the specific considered last split and in particular the last week.
 
 \begin{figure}[H]
 \centering
@@ -781,7 +783,7 @@ The parameters for the different models were tested and verified on training dat
 The baseline approach is built considering the repetition of past days since data presents a high correlation with that time instant and could lead to a reasonable baseline performance to achieve.
 A simple ARIMA model considers the single hours without seasonally on the week period like for demand prediction since data does not present a relevant correlation with that time instants.
 The support vector regressor model uses a radial basis function kernel with a configuration of the C parameter (regularization parameter of squared l2 penalty) to 1.0 to penalize the complexity of the model, and the epsilon parameter defining the epsilon-tube for no penalty to 0.1 as a trade-off between accuracy and generalization.
-The hist gradient boosting regressor model uses as loss the absolute error since this was the supported metric closer to our evaluation metric.
+The hist gradient boosting regressor model uses as loss the absolute error.
 The learning rate was set to 0.1, 100 estimators were used and l2 regularization was not set.
 The parameters for tree definition are 31 as the maximum number of leaves, depth is not constrained, 20 as the minimum number of samples per leaf, and 255 as the maximum number of bins.
 For the extreme gradient boosting regressor model, tree-based models were used and the construction algorithm is automatically chosen by heuristic to choose the fastest method.
@@ -811,7 +813,7 @@ The model is trained using mean absolute error as loss and Nadam as optimizer wi
 
 12 splits were used for block validation with a test size of a week each time, namely 7 days of data.
 The models start with 5280 entries as training and predict every time 168 entries until reaching the last prediction instant where the model has a training size of 7128.
-The results for hourly aggregation are reported in table~\ref{tab:productionhourlyresults}.
+The results for hourly granularity are reported in table~\ref{tab:productionhourlyresults}.
 Entries are sorted by best MAE using the last split as the test set.
 The blocked k-fold cross-validation suggests that the hist gradient boosting regressor model has the best MAE, but looking at the last split this is not confirmed.
 In fact, the GRU model performs better on the last split, as the other DL models, this seems to confirm what is seen in demand prediction that with the increase of training data, these models perform better.
@@ -847,11 +849,11 @@ Prophet & 7.90 $\pm$ 1.62 & 4.38\\
 One Day Baseline & 6.81 $\pm$ 3.14 & 4.58\\
 \hline
 \end{tabular}
-\caption{Table summarizing the results for hourly aggregation.}
+\caption{Table summarizing the results for hourly granularity.}
 \label{tab:productionhourlyresults}
 \end{table}
 
-The results for hourly aggregation at forecasting time on the last time slot including also the combinations of different techniques and the AutoML approach are reported in table~\ref{tab:productionhourlyresultsforecast}.
+The results for hourly granularity at forecasting time on the last time slot including also the combinations of different techniques and the AutoML approach are reported in table~\ref{tab:productionhourlyresultsforecast}.
 The combination of the previous techniques was performed by combining one-day baseline and Prophet with possibly one of LSTM, GRU, or CNN with the intent of trying to improve the robustness of DL models with some stable baselines and Prophet model which internally automatically deals with seasonalities, even though for this task it is not performing very well.
 The AutoML approach uses the mean MAPE forecasting as loss and it is launched for 10 hours with a maximum function evaluation time of 2 hours.
 Also, the mean MAE forecasting was used but provided worse results.
@@ -901,7 +903,7 @@ One Day Baseline & 4.58\\
 AutoML & 5.89\\
 \hline
 \end{tabular}
-\caption{Table summarizing the results for hourly aggregation at forecasting time.}
+\caption{Table summarizing the results for hourly granularity at forecasting time.}
 \label{tab:productionhourlyresultsforecast}
 \end{table}
 
@@ -935,7 +937,7 @@ It still has great potential as demonstrated in demand prediction and potentiall
 
 The forecasts produced by the GRU model for the last split in comparison to the actual values are reported in figure~\ref{fig:productiongruhourlyforecasts}.
 It can be noticed that it follows very accurately the signal for most of the test days, for 2 days it underestimates and for one overestimates the actual data.
-The absolute percentage error of forecasts produced by the GRU model for the last split in comparison to the actual values is reported in figure~\ref{fig:productiongruhourlyforecastsmae}.
+The absolute error of forecasts produced by the GRU model for the last split in comparison to the actual values is reported in figure~\ref{fig:productiongruhourlyforecastsmae}.
 It can be shown that, except for the peak when it overestimates the actual data and some other minor peaks, the error stays below 10\%.
 Finally, the scatter plot representing the error of the forecasts produced by the GRU model for the last split in comparison to the actual values is reported in figure~\ref{fig:productiongruhourlyforecastsscatterplot}.
 This scatter plot demonstrates that there is no bias and can be also noticed that when the predicted values are low also the error is limited, while when the prediction is high there are both high positive and negative errors.
@@ -1062,7 +1064,7 @@ The time series decompositions using an additive model of the daily consumption 
 The decomposition is consistent with the hourly aggregated consumption over the customers.
 
 The auto-correlations of the daily consumption of the three customers are reported in figure~\ref{fig:correlationdaycustomer1},  figure~\ref{fig:correlationdaycustomer2}, and  figure~\ref{fig:correlationdaycustomer3}.
-With the daily aggregation, all the customers’ consumptions show a slightly high value with respect to the hourly granularity.
+With the daily granularity, all the customers’ consumptions show a slightly high value with respect to the hourly granularity.
 It can be shown that for the first and third customers, the auto-correlation value is slightly high in the closest time lag and then decreases with the days, with a slightly greater value at one week distance.
 Instead, for the second customer the only relevant values are only at a multiple of 7 days.
 
@@ -1164,10 +1166,10 @@ The results showed that the daily consumption of the three customers had:
 \end{itemize}
 It can be noticed that both the coefficients increased considering the daily data meaning that the mean weather data over the day is more correlated to the daily consumption of the three considered customers, compared to the hourly granularity.
 
-As described in chapter~\ref{cha:implementation}, tariff aggregation has also been thought of as a possible aggregation.
-Tariff aggregation assumes that the tariff is a control signal capable of modifying consumption.
-However, after some initial experimental results with this aggregation showing unsatisfactory performance, this aggregation was not further investigated.
-Though, this aggregation can be investigated in a possible future work to understand whether it could be applicable to produce good results.
+As described in chapter~\ref{cha:implementation}, tariff granularity has also been thought of as a possible granularity.
+Tariff granularity assumes that the tariff is a control signal capable of modifying consumption.
+However, after some initial experimental results with this granularity showing unsatisfactory performance, this granularity was not further investigated.
+Though, this granularity can be investigated in a possible future work to understand whether it could be applicable to produce good results.
 
 After this data analysis, the specific parameters used in the models can be explained more in detail.
 The parameters for the different models were tested and verified on training data to result in the best-performing models, this was done by trying different values and configurations.
@@ -1176,7 +1178,7 @@ Instead of just considering the one-day and one-week baselines, for this use cas
 This is because averaging the consumption over the previous week may lead to a more robust prediction considering a month and a trimester range,
 The SARIMA model considers the week as the period for seasonal differencing since data presents a high correlation with that time instants and the model can try to take advantage of the weekly seasonality.
 The support vector regressor model uses a radial basis function kernel with a configuration of the C parameter (regularization parameter of squared l2 penalty) to 1.0 to penalize the complexity of the model, and the epsilon parameter defining the epsilon-tube for no penalty to 0.1 as a trade-off between accuracy and generalization.
-The hist gradient boosting regressor model uses as loss the absolute error since this was the supported metric closer to our evaluation metric.
+The hist gradient boosting regressor model uses as loss the absolute error.
 The learning rate was set to 0.1, 100 estimators were used and l2 regularization was not set.
 The parameters for tree definition are 31 as the maximum number of leaves, depth is not constrained, 20 as the minimum number of samples per leaf, and 255 as the maximum number of bins.
 For the extreme gradient boosting regressor model, tree-based models were used and the construction algorithm is automatically chosen by heuristic to choose the fastest method.
@@ -1240,7 +1242,7 @@ The model is trained using mean absolute percentage error as loss and Nadam as o
 % Prophet & 215.51 $\pm$ 113.13 | 0.253 $\pm$ 0.025 & 487.29 | 0.258\\
 % \hline
 % \end{tabular}
-% \caption{Table summarizing the results for hourly aggregation.}
+% \caption{Table summarizing the results for hourly granularity.}
 % \label{tab:baselinehourlyresults}
 % \end{table}
 
@@ -1280,7 +1282,7 @@ One Day Baseline & 75.80 $\pm$ 13.96 | 0.318 $\pm$ 0.035 & 71.25 | 0.292\\
 CNN & 148.16 $\pm$ 30.05 | 0.510 $\pm$ 0.105 & 70.19 | 0.318\\
 \hline
 \end{tabular}
-\caption{Table summarizing the results for hourly aggregation.}
+\caption{Table summarizing the results for hourly granularity.}
 \label{tab:baselinehourlyresults}
 \end{table}
 
@@ -1320,13 +1322,13 @@ CNN & 148.16 $\pm$ 30.05 | 0.510 $\pm$ 0.105 & 70.19 | 0.318\\
 % CNN & 1749.85 $\pm$ 2806.48 | 2.035 $\pm$ 3.380 & 546.16 | 0.665\\  % TODO relaunch
 % \hline
 % \end{tabular}
-% \caption{Table summarizing the results for hourly aggregation.}
+% \caption{Table summarizing the results for hourly granularity.}
 % \label{tab:baselinehourlyresults}
 % \end{table}
 
 12 splits were used for block validation with a test size of a week each time, namely 7 days of data.
 For the hourly granularity, the models start with the total number of entries for the customer minus 2016 entries as training and predict every time 168 entries until reaching the last prediction instant where the model has a training size of the total number of entries for the customer minus the last 168 entries.
-The results for hourly aggregation for the second customer are reported in table~\ref{tab:baselinehourlyresults}.
+The results for hourly granularity for the second customer are reported in table~\ref{tab:baselinehourlyresults}.
 Entries are sorted by best MAE using the last split as the test set.
 Only this customer is reported since it presents the best results and the models were optimized for this customer.
 The blocked k-fold cross-validation suggests that the TFT model has the best MAPE and this is not confirmed on the last split just because there is GRU that performs slightly better in terms of MAPE.
@@ -1336,7 +1338,7 @@ In general, this data is not well predictable and also the different baselines c
 
 The AutoML approach uses the mean MAPE forecasting as loss and it is launched for 10 hours with a maximum function evaluation time of 2 hours.
 Then the best ensemble of the found models is returned and can be used to forecast.
-This approach obtained a one-week MAPE of 61.64 and a MAE of 0.338 [kWh].
+This approach obtained a one-week MAPE of 61.64\% and a MAE of 0.338 kWh.
 In this case, AutoML is not able to achieve very good results compared to many other models but this is probably related to the quality of the data.
 It still has great potential as demonstrated in demand prediction and potentially providing more total training time and more data, potentially also of different customers, it can be able to reach better performance.
 
@@ -1416,7 +1418,7 @@ The error can be pretty high also when the predicted values are low.
 % 12 Week Baseline & 64.66 $\pm$ 61.13 | 2.832 $\pm$ 1.158 & 233.05 | 4.945\\
 % \hline
 % \end{tabular}
-% \caption{Table summarizing the results for daily aggregation.}
+% \caption{Table summarizing the results for daily granularity.}
 % \label{tab:baselinedailyresults}
 % \end{table}
 
@@ -1455,7 +1457,7 @@ Prophet & 17.36 $\pm$ 5.18 | 1.947 $\pm$ 0.426 & 25.45 | 2.458\\
 SVR & 18.10 $\pm$ 3.24 | 2.449 $\pm$ 0.552 & 23.44 | 2.694\\
 \hline
 \end{tabular}
-\caption{Table summarizing the results for daily aggregation.}
+\caption{Table summarizing the results for daily granularity.}
 \label{tab:baselinedailyresults}
 \end{table}
 
@@ -1495,16 +1497,16 @@ SVR & 18.10 $\pm$ 3.24 | 2.449 $\pm$ 0.552 & 23.44 | 2.694\\
 % SVR & 199.33 $\pm$ 179.16 | 6.763 $\pm$ 2.162 & 158.47 | 6.146\\
 % \hline
 % \end{tabular}
-% \caption{Table summarizing the results for daily aggregation.}
+% \caption{Table summarizing the results for daily granularity.}
 % \label{tab:baselinedailyresults}
 % \end{table}
 
 For the daily granularity, the models start with the total number of entries for the customer minus 84 entries as training and predict every time 30 entries until reaching the last prediction instant where the model has a training size of the total number of entries for the customer minus the last 7 entries.
-The results for daily aggregation for the second customer are reported in table~\ref{tab:baselinedailyresults}.
-In this case, TFT is no longer the best performing model, probably due to the fact of 24 times less quantity of data due to the daily aggregation.
+The results for daily granularity for the second customer are reported in table~\ref{tab:baselinedailyresults}.
+In this case, TFT is no longer the best-performing model, probably due to the fact of 24 times less quantity of data due to the daily granularity.
 Though, it is still a well-performing model on both blocked k-fold cross-validation and last split results.
 The four-week baseline and the one-week baseline models perform better in terms of the last split MAE.
-This gives an indication of how with a little amount of data a simple baseline may provide reasonable results and on average they perform better than sophisticated models since sophisticated models are not able to be trained also due to the irregular pattern of this data.
+This gives an indication of how with a low amount of data a simple baseline may provide reasonable results and on average they perform better than sophisticated models since these models are not able to be trained well due to the low amount and irregular pattern of this data.
 Looking at the last split MAPE instead the CNN outperforms the other models even though by less than a percentage point.
 Actually, in terms of blocked k-fold validation, it results to be the worst in both MAPE and MAE but on the last split it recovers, probably the increase of data lead to a significant improvement to this model.
 
@@ -1523,7 +1525,7 @@ Actually, in terms of blocked k-fold validation, it results to be the worst in b
 \end{figure}
 
 Also, the SARIMA and hist gradient boosting regressor models present good results on the last time split and also on the blocked k-fold validation showing consistency over time and good results also with few training data.
-Instead, the AutoML approach obtained a one-week MAPE of 19.88 and a MAE of 2.197 [kWh].
+Instead, the AutoML approach obtained a one-week MAPE of 19.88\% and a MAE of 2.197 kWh.
 As for demand prediction, AutoML presents not very good results probably due to the scarcity of training data and the fact of AutoML of trying very complex architectures when also simple ones may work well in certain cases.
 
 The forecasts produced by the four-week baseline for the last split in comparison to the actual values are reported in figure~\ref{fig:baseline4weeksdailyforecasts}.
