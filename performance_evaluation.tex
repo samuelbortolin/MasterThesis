@@ -392,7 +392,7 @@ Then the best ensemble of the found models is returned and can be used to foreca
 In the table, it is also reported the performance on the one-week horizon, namely 7 days of data, from which it is possible to gain more insights on the models' forecasts.
 Including also combinations and AutoML, there are a few observations that can be done.
 The combinations of DL models and the one-week baseline are the most beneficial, reducing by many points the MAPE of the techniques on the one-month time horizon.
-This suggests that it can make sense to further investigate the concept of ensemble learning and optimize this combination at training time to possibly have stronger results at forecasting time.
+This suggests that it can make sense to investigate the concept of ensemble learning further and optimize this combination at training time to possibly have stronger results at forecasting time.
 AutoML has great potential and obtains very good results compared to many other models.
 Potentially providing more total training time it can be further optimized to reach better performance.
 TFT still dominates on the one-month MAPE but not on the one-week one on which the one-week baseline and many combinations but also SARIMA and hist gradient boosting regressor perform better.
@@ -493,7 +493,7 @@ This scatter plot demonstrates that there is no bias and can be also noticed tha
 
 For the daily granularity, the models start with 249 entries as training and predict every time 30 entries until reaching the last prediction instant where the model has a training size of 579.
 The results for daily aggregation are reported in table~\ref{tab:demanddailyresults}.
-In this case, TFT is no longer the best performing model, probably due to the fact of 24 times less quantity of data due to the daily aggregation.
+In this case, TFT is no longer the best-performing model, probably due to the fact of 24 times less quantity of data due to the daily aggregation.
 Though, it is still a well-performing model on both blocked k-fold cross-validation and last split results.
 LSTM and CNN perform better in terms of the last split MAPE but present a high blocked k-fold MAPE, as in the case of the hourly granularity probably that to the increase of data, the results on the last time slots improved in a significant way.
 Also, the boosters present very good results on the last time split and also on the blocked k-fold validation showing consistency over time and good results also with few training data. 
@@ -915,7 +915,7 @@ AutoML & 5.89\\
 Including also combinations and AutoML, there are a few observations that can be done.
 The combinations of DL models and the one-week baseline are the most beneficial, but just in the case of LSTM there is an improvement and it is very marginal.
 Probably in this case since the baseline and prophet are not well-performing models they are not bringing any significant improvement or robustness to the DL models.
-Nonetheless, it might still make sense to further investigate the concept of ensemble learning and optimize this combination at training time to possibly have stronger results at forecasting time.
+Nonetheless, it might still make sense to investigate the concept of ensemble learning further and optimize this combination at training time to possibly have stronger results at forecasting time.
 In this case, AutoML is not able to achieve very good results compared to many other models.
 It still has great potential as demonstrated in demand prediction and potentially providing more total training time it can be able to reach better performance.
 
