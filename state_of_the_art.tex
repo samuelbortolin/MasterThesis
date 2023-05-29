@@ -6,7 +6,8 @@ In this chapter, the current state of the art is analyzed in the context of elec
 In the first section, a brief introduction to the proposed standards for electricity data representation is presented.
 Subsequently, various technologies presented in the literature for time series forecasting are discussed.
 In particular, several implementations and use cases are presented.
-Also, an in-depth discussion on two hot topics, Transformers and Automated Machine Learning (AutoML), is treated in dedicated subsections.
+Additionally, an extensive analysis is conducted on two prominent subjects in the research community: Transformers and Automated Machine Learning (AutoML).
+These topics are thoroughly explored in dedicated subsections.
 Furthermore, the three use cases of interest, electricity demand forecasting, consumption baseline forecasting, and electricity production forecasting, are treated more in detail in dedicated sections.
 At the end of this chapter, it will be clear the context around which the proposed system is developed.
 
@@ -16,93 +17,93 @@ At the end of this chapter, it will be clear the context around which the propos
 \vspace{0.2 cm}
 
 In this section, a discussion of electricity data representation and proposed standards is presented.
+Data issues and frameworks for handling this kind of data are also discussed.
 
-In \cite{CHEN201798},  Chen et al. studied the data quality of electricity consumption data in a smart grid environment.
-The definition and classification of data quality issues are explained.
-The data quality issues related to electricity consumption are classified into three types: noisy data, incomplete data, and outlier data.
-These three types of data quality issues are discussed.
-The paper introduced the causes of electricity consumption outlier data and provided a review of the possible detection methods.
-This is a relevant study since most industrial studies in this field use real-world data that presents these issues.
-
-The Green Button Data\footnote{ \url{https://www.greenbuttondata.org/} } is an industry initiative in response to the 2012 White House call-to-action to provide customers easy and secure access to their energy usage information in a both consumer-friendly and computer-friendly format.
-This data may include electricity, natural gas, and water usage.
-Customers using this service are able to securely download their own detailed energy usage in a standard format with a simple click.
-They may choose to upload their own data to a third-party application or automate the secure transfer of their own energy usage data to authorized third parties, based on affirmative customer consent and control.
-It is a very nice initiative in the U.S.and services like UtilityAPI are compatible with the Green Button standard providing support for APIs and XML schemas\footnote{ \url{https://utilityapi.com/docs/greenbutton} }.
+One of the most popular standards for energy data is the Green Button Data\footnote{ \url{https://www.greenbuttondata.org/} }, which is an industry initiative in response to the 2012 White House call-to-action to provide customers easy and secure access to their energy usage information in a both consumer-friendly and computer-friendly format.
+The data supported is not limited to electricity but may also include natural gas, and water usage.
+Customers using this service are able to securely and easily download their own detailed energy usage in a standard format.
+This possibility allows customers to choose to upload their own energy data to a third-party application or automate the secure transfer to authorized third parties, based on affirmative customer consent and control.
+It is a very powerful initiative in the U.S. that enables a variety of new services.
+Services like UtilityAPI are compatible with the Green Button standard providing support for APIs and XML schemas\footnote{ \url{https://utilityapi.com/docs/greenbutton} }.
 
 \cite{Nguyen2019} provided a case study and explained the lessons learned through the roll-out of Green Button electricity, natural gas, and water data-access initiative, in order to make readily available energy and water consumption data for consumers and third-party companies, that can assist customers while ensuring security and privacy of their data.
 This paper presented a case study using the Green Button standard and the steps taken to ensure data security and privacy while enabling access to those consumption data by the consumer and third parties.
 Data security and privacy were achieved through the use of the Green Button standard and subsequent implementation by the Green Button Alliance of a compliance-testing program.
 Considerations and solutions were needed for data in transit, data at rest, and the authorization mechanisms for allowing unregulated third-party companies to interface directly with utilities on behalf of the consumer while ensuring the consumer maintains complete control of what is to be shared and the ability to revoke that sharing at any time.
 
-\cite{8577770} presented a big-data-based framework for dealing with electricity consumption behavior.
-It conducted an analysis of the current state-of-the-art methodologies for the extraction of electro-information.
-They also analyzed in-depth data for pattern identification, relational analysis, and actions to perform on electricity usage.
+In \cite{CHEN201798},  Chen et al. studied the quality of electricity consumption data in a smart grid environment.
+They defined and classified which are common data quality issues that may arise in this field.
+In particular, the data quality issues related to electricity consumption are classified into three types: noisy data, incomplete data, and outlier data.
+These three types of data quality issues are discussed.
+The paper introduced the causes of electricity consumption outlier data and provided a review of the possible detection methods.
+This is a relevant study since most industrial studies in this field use real-world data that presents these issues.
 
-\cite{WILCOX2019250} proposed a novel broker-client system architecture for big data analytics: Smart Meter Analytics Scaled by Hadoop (SMASH).
-They demonstrated that SMASH is able to perform data storage, query, analysis, and visualization tasks on large data sets at a 20 TB scale.
-Experimental results suggested that SMASH is able to provide a competitive and easily operable platform to manage big energy data and visualize knowledge, with the potential to provide support to data-intensive decision-making.
+\cite{8577770} presented a big-data-based framework for dealing with electricity consumption behavior.
+It conducted an analysis of the current state-of-the-art methodologies for the extraction of electro-information and it presented the drawbacks of existing modeling strategies for power consumption behavior.
+The paper proposed a way of integrating multiple-dimensional information into electricity consumption data, such as weather, holiday, and economic level.
+It dealt also with issues such as anonymization, abnormal detections, and meter failures.
+The final objective was to conduct an in-depth study for pattern identification, relational analysis, and understanding of the possible actions to perform based on electricity usage.
 
 
 \section{Time series forecasting}
 \label{sec:timeseries}
 \vspace{0.2 cm}
 
-In this section, a brief introduction to forecasting competitions, the use of cross-validation for time series predictor evaluation, and techniques for time series forecasting are presented.
-
+In this section, a brief introduction to forecasting competitions, the use of cross-validation for the evaluation of time series forecasting methods, and techniques for time series forecasting is presented.
 Time series forecasting is a classic and well-studied topic.
-The classical approaches, based on statistical methods such as Auto-Regressive Integrated Moving Average (ARIMA), have been joined in recent years by standard Machine Learning (ML) methods and recently also by Deep Learning (DL) methods with the use of neural networks and transformers.
+The classical approaches, which are based on statistical methods such as Auto-Regressive Integrated Moving Average (ARIMA), have been joined in recent years by standard Machine Learning (ML) methods and recently also by Deep Learning (DL) methods with the use of neural networks and transformers.
 
-Forecasting competitions were proposed to promote the development of new solutions and novel techniques.
-A brief review was proposed in \cite{HYNDMAN20207}.
+A brief review of forecasting competitions was presented in \cite{HYNDMAN20207}.
+These competitions were proposed to promote the development of new solutions and novel techniques in this field.
+Over time, these competitions have gained significant attention, resulting in a growing interest in time series forecasting and ultimately fostering the development of fascinating and impactful solutions.
 The first and most influential forecasting competitions were, and currently are, the M-competitions\footnote{ \url{https://en.wikipedia.org/wiki/Makridakis_Competitions} }.
-These competitions promoted the application of the most recent statistical such as ARIMA, ML such as Support Vector Regression (SVR), and DL such as Long Short-Term Memory (LSTM) approaches developed over time to be applied to the forecasting field.
-Issues like the statistical significance of the results, cheating using part of the test sets, and reproducibility of the results were addressed over the competitions.
-Also, other competitions were open such as Sante Fe competitions, the KDD cup, Neural network competitions, Kaggle time series competitions, and Global energy forecasting competitions.
+These competitions promoted the application of the most recent statistical approaches such as ARIMA, ML approaches such as Support Vector Regression (SVR), and DL approaches such as Long Short-Term Memory (LSTM) networks developed over time to be applied to the forecasting field.
+Issues like the statistical significance of the results, cheating using part of the test sets for training, and reproducibility of the results were addressed over the competitions.
+Also, other competitions were held such as Sante Fe competitions, the KDD cup, Neural network competitions, Kaggle time series competitions, and Global energy forecasting competitions.
 
-\cite{SPILIOTIS202037} discussed whether forecasting competition data are representative of reality.
-This is a very important point since the performance of new forecasting methods are typically evaluated by exploiting data from past forecasting competitions.
+\cite{SPILIOTIS202037} presented an interesting discussion on whether forecasting competition data are representative of reality.
+This is a very important point since the performance of new forecasting methods is typically evaluated by relying on data from past forecasting competitions.
 However, due to their many limitations, these datasets might not be indicative.
 Since obtaining a complete picture of the real world is impossible in practice, the paper proposed to use the M4 competition data as an indication of the real world.
 This is reasonable since this data set is composed of many series from the business world.
-The properties of this dataset representative of reality are then compared with past datasets, showing that many popular benchmarks may deviate from reality.
-The main differences observed were referred to the abnormality of the data, in fact, reality data are relatively more skewed series with outliers, as well as their limited randomness\slash trend.
+The properties of this dataset were compared with past datasets, showing that many popular benchmarks may deviate from reality.
+The main differences observed were referred to the abnormality of the data, in fact, data from the real world presents relatively more skewed series with outliers, as well as their limited randomness\slash trend.
 
-In \cite{BERGMEIR2012192}, Bergmeir and Benítez presented a study on the use of cross-validation for time series predictor evaluation.
+In \cite{BERGMEIR2012192}, Bergmeir and Benítez presented a study on the use of cross-validation for time series forecasting methods evaluation.
 They aimed to combine the evaluation of traditional forecasting procedures, on the one hand, and the evaluation of ML techniques on the other hand.
 In fact, in traditional forecasting, a part from the end of each time series is reserved for testing, and to use the rest is used for training.
-Instead, when evaluating ML and other regression methods, often cross-validation is used in the evaluation process without paying much attention to the fact that there are theoretical problems with respect to temporal evolutionary effects and dependencies within the data that invalidate the fundamental assumptions of cross-validation.
+Instead, when evaluating ML and other regression methods, often cross-validation is used in the evaluation process without paying much attention to the fact that there are theoretical problems with respect to temporal evolutionary effects and dependencies within the data that invalidate the fundamental assumptions of cross-validation, such as to have i.i.d. (independent and identically distributed) data.
 They suggested that the use of a blocked form of cross-validation for time series evaluation should be the standard procedure, thus using all available information and circumventing the theoretical problems.
-They also affirmed that the use of cross-validation techniques, together with an adequate control for stationarity, led to a more robust model selection.
+They also affirmed that the use of cross-validation techniques, together with adequate control for stationarity, led to a more robust model selection.
 
-In \cite{Cerqueira2020}, Cerqueira et al. studied the application of performance estimation methods to time series forecasting tasks.
-The dependency among observations in time series raises some caveats about the most appropriate way to estimate performance in this type of data, in fact, cross-validation cannot be applied since requires i.i.d. (independent and identically distributed) data.
+In \cite{Cerqueira2020}, Cerqueira et al. studied the application of performance estimation methods to time series forecasting.
+They stated that the dependency among observations in time series raises some caveats about the most appropriate way to estimate models’ performance since cross-validation cannot be applied to this type of data.
 Results of a comparative study of different performance estimation methods showed noticeable differences among them.
 In particular, their empirical experiments suggested that blocked cross-validation can be applied to stationary time series.
-However, when the time series are non-stationary, the most accurate estimates were produced by out-of-sample methods, particularly the holdout approach repeated in multiple testing periods.
+However, when the time series are non-stationary, the most accurate performance estimation methods were out-of-sample methods and in particular the holdout approach repeated in multiple testing periods showed the most accurate estimates.
 
-The following are relevant studies in the time series forecasting context.
+Subsequently, relevant studies within the context of time series forecasting are outlined, beginning with classical approaches and culminating in contemporary state-of-the-art approaches.
 
-\cite{DEGOOIJER2006443} is a paper published in 2006 that review the research into time series forecasting made from 1982 to 2005.
-Many relevant methods were presented such as exponential smoothing, ARIMA, state space and structural models and the Kalman filter, regime-switching models, functional-coefficient models, neural networks, and many others also involving the combination of approaches.
+\cite{DEGOOIJER2006443} is a paper published in 2006 and it reviewed the research into time series forecasting made from 1982 to 2005.
+Many relevant methods were presented such as exponential smoothing, ARIMA, state space models, structural models, Kalman filter, regime-switching models, functional-coefficient models, neural networks, and many others also involving the combination of approaches.
 There were also a lot of relevant studies that presented theoretical concepts such as Seasonality, Forecast evaluation and accuracy measures, and Prediction intervals and densities.
-They concluded by saying that enormous progress has been made in many areas, but they found out that there were a large number of topics that need further development such as multivariate time series forecasting, forecasting methods based on nonlinear models, model selection procedures, robust statistical methods, and improved forecast intervals.
+The paper is concluded by saying that enormous progress has been made in many areas, but that there were a large number of topics that need further development such as multivariate time series forecasting, forecasting methods based on nonlinear models, model selection procedures, robust statistical methods, and improved forecast intervals.
 
-In \cite{Nesreen2010}, Nesreen et al. presented a large-scale comparison study for the major ML models for time series forecasting.
-The models considered were MLP, Bayesian neural networks, radial basis functions, Generalized Regression Neural Networks (GRNN), K-Nearest Neighbor (KNN) regression, Classification and Regression Trees (CART), SVR, and Gaussian processes.
+In \cite{Nesreen2010}, Nesreen et al. presented a large-scale comparison study for the major ML models adopted for time series forecasting.
+The models considered were Multi-Layer Perceptron (MLP), Bayesian neural networks, radial basis functions, Generalized Regression Neural Networks (GRNN), K-Nearest Neighbor (KNN) regression, Classification and Regression Trees (CART), SVR, and Gaussian processes.
 The study revealed significant differences between the different methods and proclaimed as the best two methods on the monthly M3 time series competition data the MLP and the Gaussian process regression.
 
 \cite{BENTAIEB20127067} proposed a review and a comparison of different strategies for multi-step ahead time series forecasting based on the NN5 forecasting competition.
 They also considered the effects of deseasonalization, input variable selection, and combination on the strategies.
 From experimental results, they figured out that:
-(i) Multiple-Output strategies are the best-performing approaches,
-(ii) deseasonalization leads to uniformly improved forecast accuracy,
-and (iii) input selection is more effective when performed in conjunction with deseasonalization.
+(i) Multiple-Output strategies were the best-performing approaches,
+(ii) deseasonalization led to uniformly improved forecast accuracy,
+and (iii) input selection was more effective when performed in conjunction with deseasonalization.
 
 In \cite{TEALAB2018334}, Tealab studied the advances in time series forecasting models using Artificial Neural Network (ANN) methodologies.
-They took into consideration the papers published from 2006 to 2016.
-From the analysis of the papers, they concluded that, although there are many studies that presented the application of neural network models, few of them proposed new neural network models for forecasting.
-They found out that these many studies had a similar hybrid methodology that consisted in adjusting a linear time series model, and subsequently using the residuals as the input variables of an ANN model.
+He took into consideration the papers published from 2006 to 2016.
+From the analysis of the papers, he concluded that, although there are many studies that presented the application of neural network models, few of them proposed new neural network models for forecasting.
+He found out that these many studies had a similar hybrid methodology that consisted in adjusting a linear time series model, and subsequently using the residuals as the input variables of an ANN model.
 
 \cite{Athiyarath2020} proposed a comparative study and analysis of various time series forecasting techniques such as linear regression model, ARIMA, LSTM, and many others.
 In particular, it explored their limitations and utility for different types of time-series data across different domains.
@@ -110,61 +111,67 @@ In particular, it explored their limitations and utility for different types of 
 \cite{SEZER2020106181} provided a comprehensive literature review of DL studies with a focus on financial time series forecasting implementation.
 They categorized the studies according to their intended forecasting implementation areas and grouped them based on their DL model choices, such as Convolutional Neural Networks (CNNs), Deep Belief Networks (DBNs), and LSTM.
 
-In \cite{HEWAMALAGE2021388}, Hewamalage et al. presented an extensive empirical study and an open-source software framework of existing Recurrent Neural Network (RNN) architectures for forecasting.
-They concluded that RNNs are capable of modeling seasonality directly if the series in the dataset possess homogeneous seasonal patterns; otherwise, they recommend a deseasonalization step.
-Comparisons against exponential smoothing and ARIMA demonstrated that (semi-) automatic RNN models are not perfect, but they were competitive alternatives in many situations.
+In \cite{HEWAMALAGE2021388}, Hewamalage et al. presented an empirical study resulting in an open-source software framework for time series forecasting using Recurrent Neural Network (RNN) architectures.
+They concluded that RNN architectures were capable of directly modeling seasonality when the time series presented homogeneous seasonal patterns.
+If this is not the case, they recommend a deseasonalization step for achieving better results.
+They also provided some comparisons against exponential smoothing and ARIMA demonstrating that RNN models even were not perfect they were good alternatives.
 
-In \cite{Lim2021}, Lim and Zohren analyzed the main architecture used in both one-step-ahead and multi-horizon time-series forecasting.
+In \cite{Lim2021}, Lim and Zohren analyzed the main architecture used in both one-step-ahead and multi-horizon time series forecasting.
 They described how temporal information is incorporated into predictions by each of the models, such as CNNs, RNNs, and networks with attention mechanisms.
 They highlighted also the recent developments in hybrid DL models, which combine statistical models with neural network components to improve performance.
 
 \cite{Masini2023} presented the recent ML advances for time series forecasting.
-They started analyzing the linear methods, paying more attention to penalized regressions and ensembles of models.
+They started by analyzing the linear methods, paying more attention to penalized regressions and ensembles of models.
 They continued presenting nonlinear methods, including tree-based methods, such as Random Forest and Gradient-Boosted Decision Trees (GBDT), and shallow and deep neural networks, in their feed-forward and recurrent versions.
 Finally, they also consider ensemble and hybrid models by combining different alternatives.
 
-\cite{ZHANG2003159} presented a hybrid methodology that combines ARIMA and ANN models.
-This was innovative in 2003 and was done in order to take advantage of the unique strengths of ARIMA and ANN models in linear and nonlinear modeling.
-The experimental results indicated that the combined model can be an effective way to improve the forecasting accuracy achieved by both models used separately.
+These reviews have aided in understanding the most commonly utilized methods in time series forecasting and identifying potentially effective solutions for general use cases.
+Furthermore, specific studies that present distinct methodologies are carefully examined and analyzed.
 
-\cite{CAO2003321} proposed using multiple Support Vector Machines (SVMs) for time series forecasting.
-The multiple SVMs that best fit the regions partitioned by a self-organizing feature map are constructed by finding the most appropriate kernel function and the optimal free parameters of SVMs.
-Simulation results showed that the proposed multiple SVMs achieve significant improvement in the generalization performance in comparison with the single SVMs models.
-In addition, the multiple SVMs also converge faster and use fewer support vectors.
+\cite{ZHANG2003159} presented a hybrid model combining ARIMA and ANN models.
+This was an innovative study of 2003 and was done to take advantage of both strengths of the ARIMA and the ANN models in linear and nonlinear modeling respectively.
+The experimental results indicated that the combination was an effective way to improve the forecasting accuracy achieved by both models used separately.
+
+\cite{CAO2003321} proposed to use an approach including multiple Support Vector Machines (SVMs) for time series forecasting.
+The multiple SVMs that best fit the regions partitioned by a self-organizing feature map were constructed by finding the most appropriate kernel function and the optimal parameters of the different SVMs.
+Simulation results showed that the proposed multiple SVMs approach achieved significant improvement in the generalization performance in comparison with the single SVMs models.
+In addition, it was shown that the multiple SVMs were also able to converge faster and use fewer support vectors.
 
 \cite{6210391} attempted to develop an automatic ANN modeling scheme for Time-Series Forecasting.
 This scheme was based on the GRNN, a special type of neural network.
 By taking advantage of several GRNN properties (i.e., a single design parameter and fast learning) and by incorporating several design strategies (e.g., fusing multiple GRNNs), they were able to make the proposed modeling scheme to be effective for modeling large-scale business time series.
 
-\cite{Oliveira2015} described a new type of ensembles improving the predictive performance with respect to existing ensembles for time series forecasting.
+\cite{Oliveira2015} described a new type of ensemble improving the predictive performance with respect to existing ensembles for time series forecasting.
 In particular, they proposed a new form of diversity generation that explores some specific properties of time series prediction tasks.
-Their experiments confirmed that the proposed method for generating diversity is able to improve the performance of the equivalent ensembles with standard diversity generation procedures.
+Their experiments confirmed that the proposed method for generating diversity was able to improve the performance of the equivalent ensembles with standard diversity generation procedures.
 
-In \cite{Sean2017}, Sean and Letham proposed Prophet, a modular regression model with interpretable parameters that can be intuitively adjusted by analysts with domain knowledge about the time series.
-They also described a component for measuring and tracking forecast accuracy and flagging forecasts that should be checked manually to help analysts make incremental improvements.
-This is a crucial component that allows analysts to identify when adjustments need to be made to the model or when an entirely different model may be appropriate.
+In the study conducted by Sean and Letham \cite{Sean2017}, they introduced Prophet, a modular regression model that offers interpretable parameters.
+One of the notable advantages of Prophet is its flexibility in parameter adjustment based on domain knowledge, allowing for intuitive customization on the basis of the characteristics of the time series being analyzed.
+Additionally, the researchers also outlined a crucial component that measures and tracks forecast accuracy.
+This feature serves to flag forecasts that should be manually reviewed, allowing incremental improvements in the forecasting process.
+This capability is vital as it helps in identifying when adjustments are required for the existing model or when an entirely different model may be more suitable for accurate predictions.
 
 In \cite{Borovykh2017}, Borovykh et al. presented a method for conditional time series forecasting based on an adaptation of the recent deep convolutional WaveNet architecture.
 The proposed method took advantage of dilated convolutions for considering a broad history horizon when forecasting.
-Conditioning was performed by applying multiple convolutional filters in parallel to separate time series which allowed fast processing of data and the exploitation of the correlation structure between the multivariate time series.
-Experimental results showed that the proposed network was well-suited for regression-type problems and was able to effectively learn dependencies in and between the series without the need for long historical time series and tends to outperform linear and recurrent models.
-
-In \cite{LI2019104785}, an evolutionary attention learning approach was introduced to LSTM for multivariate time series prediction.
-In particular, an evolutionary computation-inspired competitive random search method was proposed to configure in an optimal way the parameters in the attention layer.
-Experimental results illustrated that the proposed model can achieve competitive prediction performance compared with other baseline methods.
+The conditioning process in the study involved the application of multiple parallel convolutional filters to individual time series.
+This approach facilitated efficient data processing and allowed the exploitation of the correlation structures present among the multivariate time series.
+Through experimental evaluations, it was demonstrated that the proposed network was particularly suitable for regression-type problems.
+Notably, the network exhibited the capability to effectively learn dependencies within and between the time series, even in cases where extensive historical time series data was not available.
+Moreover, the performance of the network surpassed that of linear and recurrent models, highlighting its superior predictive capabilities.
 
 \cite{DEOSANTOSJUNIOR201972} proposed a hybrid system that searches for a suitable function to combine the forecasts of linear and nonlinear models.
 The proposed system performed linear and nonlinear modeling of the time series and a data-driven combination that searches for the most suitable function, between linear and nonlinear formalisms, and also the number of models that maximizes the performance of the combination.
-As the linear model, the ARIMA model is used and as nonlinear models, Multi-Layer Perceptron (MLP) and SVR were used.
-Experimental results showed that the proposed hybrid system attains superior performance when compared with single and hybrid models in the literature.
+As a linear model, the ARIMA model is used and as nonlinear models, MLP and SVR were used.
+Experimental results showed that the proposed hybrid system attains superior performance when compared to both single and hybrid models previously reported in the literature.
 
-In \cite{SHEN2020302}, Shen et al. proposed a novel time series forecasting model, named SeriesNet, which can fully learn features of time series data in different interval lengths.
+In \cite{SHEN2020302}, Shen et al. proposed SeriesNet, which is a novel time series forecasting model able to learn features of time series data in different interval lengths.
 It is composed of a LSTM network and a dilated causal convolution network.
 The fact that the proposed model could learn multi-range and multi-level features from time series data led to a higher predictive accuracy compared to those models using fixed time intervals.
 
 \cite{SMYL202075} presented the winning submission of the M4 forecasting competition.
-The submission used a dynamic computational graph neural network system that enabled a standard exponential smoothing model to be mixed with advanced LSTM networks into a common framework.
-The result was a hybrid and hierarchical forecasting method able to perform better than all the other submitted models.
+The winning approach employed a dynamic computational graph neural network system, which combined a standard exponential smoothing model with advanced LSTM networks within a unified framework.
+This novel hybrid and hierarchical forecasting method demonstrated superior performance compared to all other models submitted in the competition.
+The successful integration of these techniques resulted in enhanced forecasting capabilities, showcasing the effectiveness of the proposed approach in surpassing existing methodologies.
 
 In the context of building better pricing modeling and forecasting frameworks to meet difficulties, \cite{en16031371} proposed to combine seasonal and trend decomposition utilizing LOESS (locally estimated scatterplot smoothing) and Prophet methodologies to perform a more accurate and resilient time series analysis of Italian electricity spot prices.
 The proposed method could assist in enhancing projections and providing a better understanding of the variables driving the data.
@@ -179,61 +186,60 @@ Experimental results showed that the combination of approaches improved the fore
 In this subsection, an overview of attention-based and transformer approaches is presented, with a focus on time series forecasting applications.
 
 \cite{NIU202148} provided an overview of the state-of-the-art attention models proposed.
-To provide a general understanding of attention mechanisms, they defined a unified model suitable for most attention structures.
 They classified existing attention models according to the following criteria: the softness of attention, forms of input features, input representation, and output representation.
 They also summarized the network architectures used in conjunction with the attention mechanism and described some applications where attention mechanisms are used to improve performance.
-Finally, we discuss the interpretability that attention mechanisms provide to the DL models, but also the challenges and prospects of attention models.
+Finally, they discussed the interpretability that attention mechanisms provide to the DL models, but also the challenges and prospects of attention models.
 
 \cite{9586824} presented a review of the developed attention mechanism with a focus on the neural machine translation task.
 They covered the most adopted attention models and their variants, such as self-attention, soft attention, hard attention, local attention, global attention, additive attention, and multiplicative attention.
 
-\cite{9892274} analyzed that attention mechanisms have raised significant interest in the research community since they promise relevant improvements in the performance of neural network architectures.
+\cite{9892274} analyzed that attention mechanisms have raised significant interest in the research community since they promised relevant improvements in the performance of neural network architectures.
 In particular, since self-attention was proposed, it has been widely used in transformer-like architectures and has led to significant breakthroughs in many applications.
 In the work, Pedro and Oliveira performed an objective comparison of a number of different attention mechanisms for the classification of samples in the Skin Cancer MNIST dataset.
 The results showed that attention modules only sometimes improved the performance of CNN architectures, but also that this improvement was not consistent in different settings.
 On the other hand, the results obtained with self-attention mechanisms showed consistent and significant improvements, leading to the best results even in architectures with a reduced number of parameters.
 
-In \cite{Shih2019}, Shih et al. analyzed that the standard attention mechanisms in multivariate time series forecasting only review the information at each previous time step and select relevant information to help generate the outputs.
-For this reason, they failed to capture temporal patterns across multiple time steps.
-In the study, they proposed a set of filters to extract time-invariant temporal patterns and then a novel attention mechanism to select relevant time series and use frequency domain information for multivariate time series forecasting.
-Finally, they applied the proposed approach to many real-world tasks demonstrating that it was able to achieve state-of-the-art performance in most of them.
+The study presented in \cite{LI2019104785} introduced an evolutionary attention learning approach for enhancing LSTM models in multivariate time series prediction tasks.
+The researchers proposed a competitive random search method inspired by evolutionary computation to optimize the configuration of parameters within the attention layer.
+Experimental results demonstrated that the proposed model achieved competitive prediction performance when compared to other baseline methods.
+This highlights the effectiveness of the evolutionary attention learning approach in improving the predictive capabilities of LSTM models for multivariate time series forecasting.
+
+In \cite{Shih2019}, Shih et al. analyzed that the standard attention mechanisms in multivariate time series forecasting reviewed just the information at each previous time step from which to select relevant information to generate the outputs.
+For this reason, these mechanisms were unable to effectively capture temporal patterns across multiple time steps.
+In the study, they proposed a set of filters designed to extract time-invariant temporal patterns.
+Additionally, they developed a novel attention mechanism that not only selects relevant time series but also utilizes frequency domain information for multivariate time series forecasting.
+Finally, they applied the proposed approach to many real-world tas
 
 In \cite{DU2020269}, Du et al. proposed a novel temporal attention encoder-decoder model to successfully deal with multivariate time series forecasting.
-They developed an end-to-end DL structure that integrates the traditional idea of the encoder-decoder learning structure and a temporal attention mechanism for jointly learning long-term temporal dependency and hidden non-linear correlation features of multivariate temporal data.
+They developed an end-to-end DL structure that combined the classical encoder-decoder learning structure with a temporal attention mechanism.
+This integrated approach enabled the simultaneous learning of long-term temporal dependency and hidden non-linear correlation features within multivariate temporal data.
 Experimental results on five multivariate time series datasets showed that the proposed model had the best forecasting performance compared with baseline models, such as SVR, RNN, CNN, LSTM, and Gated Recurrent Unit (GRU).
 
 \cite{HEIDARI2020626} aimed to predict the energy use of solar-assisted water heating systems using a novel ML approach.
 They proposed to use a LSTM network enhanced by an attention mechanism and the decomposition of input data into sub-layers.
 They compared the performance of the proposed approach with a feed-forward neural network, a LSTM network, and an Attention-based LSTM neural network.
-Experimental results showed that the proposed model had superior performance over the conventional models in this task.
+The experimental results showed that the proposed model outperformed conventional models in this task.
 
 Liu et al. analyzed that the current attention-based recurrent neural networks can effectively represent and learn the dynamic spatiotemporal relationships between exogenous series and target series, but they only perform well in one-step time prediction and short-term time prediction.
 In \cite{LIU2020113082}, they proposed dual-stage two-phase-based RNN (DSTP-RNN) for long-term time series prediction.
-The DSTP-based structure enhanced the spatial correlations between exogenous series.
-The first phase produces violent but decentralized response weights, while the second phase leads to stationary and concentrated response weights.
-Then, they employed multiple head attention on target series to boost the long-term dependency.
-Experimental results demonstrated that the proposed model can be successfully used to develop systems for a wide range of applications, with performance superior to nine baseline methods on four datasets in the fields of energy, finance, environment, and medicine.
+The DSTP-based structure was designed to enhance spatial correlations between exogenous series.
+The first phase of the model generated violent but decentralized response weights, while the second phase led to stationary and concentrated response weights.
+Multiple head attention was then employed on the target series to amplify the long-term dependencies.
+Experimental results showcased the effectiveness of the proposed model across a range of applications, outperforming nine baseline methods on four datasets from the domains of energy, finance, environment, and medicine.
+These findings suggest that the DSTP-RNN model holds promise for developing accurate and robust prediction systems in diverse fields.
 
 Qi et al. analyzed that with the development of attention mechanisms, the frequency and time attention information of audio can be fully exploited, and the amplitude properties of audio can also be better integrated with a good fusion module.
 In \cite{10019616}, they improved existing frequency-temporal attention by extracting the attention information with the frequency-temporal attention and performing an additive fusion of features.
 Then, they applied attentional feature fusion based on multi-scale channel attention, and finally, temporal dependencies are learned through a self-attention module.
 Experimental results on four datasets demonstrated that the proposed model outperformed existing state-of-the-art models.
+These findings highlight the effectiveness of the proposed approach in leveraging attention mechanisms and feature fusion for improved audio analysis and prediction tasks.
 
-In the context of Aspect-Based Sentiment Analysis, Feng et al. argued that the original attention mechanism is not the ideal configuration, as most of the time only a small portion of terms are strongly related to the sentiment polarity of an aspect or entity.
-In fact, standard attention mechanisms apply the complete computed attention weights and do not place any restrictions on the attention assignment.
-In \cite{9676694}, they proposed a masked attention mechanism with two different approaches to generate the mask.
-The first approach was done by setting an attention weight threshold that is determined by the maximum of all weights and keeping only attention scores above the threshold.
-The second approach was done by selecting the top inputs with the highest weights.
-Both approaches removed the lower score parts that were assumed to be less relevant to the aspect of focus.
-By ignoring part of the input that is claimed irrelevant, a large proportion of input noise is removed, keeping the downstream model more focused and reducing calculation cost.
-Experiments showed significant improvements over state-of-the-art models with full attention, demonstrating the effectiveness of the masked attention mechanism.
+In \cite{Vaswani2017}, Vaswani et al. proposed the Transformer architecture, based solely on attention mechanisms and fully connected feed-forward networks, with the addition of layer normalization and residual connections.
+Experimental results on machine translation tasks showed that this groundbreaking model was superior in quality achieving better results than existing methods being more parallelizable and requiring significantly less time to train.
+Moreover, they also showed that the Transformer is able to generalize to other tasks like English constituency parsing.
 
-In \cite{Vaswani2017}, Vaswani et al. proposed the Transformer architecture, based solely on attention mechanisms and fully connected feed-forward networks, plus layer normalization and residual connections.
-Experimental results on machine translation tasks showed that this groundbreaking model was superior in quality achieving better results than existing methods while being more parallelizable and requiring significantly less time to train.
-Moreover, they also showed that the Transformer is able to generalize to other tasks like English constituency parsing both with large and limited training data.
-
-In \cite{Wu2020}, Wu et al. presented a new approach to time series forecasting by developing a novel method that employs Transformer-based ML models to forecast time series data.
-The approach leveraged self-attention mechanisms to learn complex patterns and dynamics from time series data.
+In \cite{Wu2020}, Wu et al. presented a new approach to time series forecasting by developing a novel method that employs Transformer-based models to forecast time series data.
+The approach leveraged self-attention mechanisms to effectively capture and understand complex patterns and dynamics from time series data.
 They created a generic framework that can be applied to univariate and multivariate time series data, as well as time series embeddings.
 The influenza-like illness (ILI) forecasting was used as a case study.
 They showed the effectiveness of the proposed approach and that the produced forecasting results are favorably comparable to the state-of-the-art.
@@ -243,36 +249,38 @@ To address these issues, Zhou et al. designed an efficient transformer-based mod
 It had some distinctive characteristics, such as a ProbSparse self-attention mechanism, which achieves O(L log L) in time complexity and memory usage, the self-attention distilling highlights dominating attention by halving cascading layer input, the generative style decoder predicts the long time-series sequences in one forward operation rather than a step-by-step way.
 Extensive experiments on four large-scale datasets demonstrated that Informer significantly outperformed existing methods and provided a new solution to the LSTF problem.
 
-\cite{Grigsby2021} analyzed the state-of-the-art models for Multivariate Time Series Forecasting.
-The sequence-to-sequence models rely on attention between timesteps, which allows for temporal learning but fails to consider distinct spatial relationships between variables.
+\cite{Grigsby2021} analyzed the state-of-the-art models for multivariate time series forecasting.
+They discussed that sequence-to-sequence models rely on attention between timesteps, which allows for temporal learning but fails to consider distinct spatial relationships between variables.
 In contrast, graph neural network methods explicitly model variable relationships, however, often rely on predefined graphs and perform separate spatial and temporal updates without establishing direct connections between each variable at every timestep.
 The study addressed the presented problems by using a Transformer and translating the multi-variate forecasting task into a spatiotemporal sequence formulation so that each Transformer input represented the value of a single variable at a given time.
-Using this formulation, Long-Range Transformers can then jointly learn interactions between space, time, and value information.
+Using this formulation, they were able to let Long-Range Transformers jointly learn interactions between space, time, and value information.
 The proposed method, called Spacetimeformer, achieved competitive results on benchmarks of different domains while learning fully-connected spatiotemporal relationships purely from data.
 
-In \cite{LIM20211748}, Lim et al. introduced the Temporal Fusion Transformer (TFT): a novel attention-based architecture that combines high-performance multi-horizon forecasting with interpretable insights into temporal dynamics.
+In \cite{LIM20211748}, Lim et al. introduced the Temporal Fusion Transformer (TFT), a novel attention-based architecture able to combine high-performance multi-horizon forecasting with interpretable insights into temporal dynamics.
 The presented TFT relied on recurrent layers for local processing and on interpretable self-attention layers for long-term dependencies.
 It was able to select relevant features and suppress unnecessary components through a series of gating layers.
 Experimental results on a variety of real-world datasets demonstrated significant performance improvements over existing benchmarks and they also highlighted some practical interpretability use cases enabled by the TFT architecture.
-
 TFT architecture was a breakthrough in time series forecasting and achieved state-of-the-art performance in several tasks.
 Hereafter, some studies using this architecture are presented.
 
 In \cite{9745215}, the TFT was applied to forecast the trajectory of future vital signs based on time-varying measurements of past vital signs.
-This is quite important since the deterioration of a patient’s condition is usually preceded by several hours of abnormal physiology as indicated by the patient’s vital signs.
+This application holds significant importance since the deterioration of a patient’s condition is usually preceded by several hours of abnormal physiology as indicated by the patient’s vital signs.
 The model was developed using the Songklanagarind critical care dataset, which includes vital sign measurements from 140 patients.
 Experimental results showed that TFT was able to capture the temporal dynamics of vital signs and can potentially be used to detect irregular patterns in vital sign time series.
+This suggests that TFT has the potential to assist in the early detection of abnormal physiological patterns and contribute to improved patient care and monitoring in critical care settings.
 
 In \cite{ZHANG2022329}, a TFT was adopted to predict freeway speed with prediction horizons from 5 to 150 minutes.
-A traffic speed data set was used to train and test the prediction model for demonstrating the advantage provided by TFT.
-The TFT prediction performance was compared with several classic traffic speed prediction methods, and the results revealed that the TFT performed better than the other classic models when the prediction horizon is longer than 30 minutes.
+A traffic speed data set was employed to train and evaluate the TFT prediction model, showcasing the advantages offered by this approach.
+The TFT prediction performance was compared with several classic traffic speed prediction methods, and the results revealed that the TFT outperformed the other classic models when the prediction horizon is longer than 30 minutes.
 Moreover, the TFT is also more stable when the prediction horizon is 60 minutes or longer.
+These findings highlight the effectiveness of TFT in accurately predicting freeway speed and its superiority over traditional methods, especially being stable also for longer prediction horizons.
 
-\cite{WU2022123990} used a novel forecasting approach for interpretable wind speed prediction by incorporating variational mode decomposition, a TFT model, and an evolutionary algorithm.
-In the proposed approach, variational mode decomposition was employed to break down the raw wind speed sequence into a set of intrinsic mode functions.
+\cite{WU2022123990} used a novel forecasting approach for interpretable wind speed prediction by incorporating variational mode decomposition (VMD), a TFT model, and an evolutionary algorithm.
+In the proposed approach, VMD was employed to break down the raw wind speed sequence into a set of intrinsic mode functions.
 Adaptive differential evolution was then used for optimizing several parameters of a TFT allowing it to achieve satisfactory forecasting performance.
 Empirical studies using real-world wind speed data sets demonstrated that the proposed model outperformed other comparable models in nearly all performance metrics.
 Moreover, TFT allowed gaining information about the importance ranking of the decomposed wind speed sub-sequences, meteorological data, and attention analysis of different step lengths.
+These findings underscore the effectiveness and interpretability of the proposed approach in wind speed prediction tasks.
 
 
 \vspace{0.1 cm}
@@ -483,11 +491,11 @@ It is found that:
 and (iii) the formulated methods are found to be robust against weather forecasting errors.
 This study gives useful insights about the quantity and granularity of data needed for a short-term prediction range, these are great findings but do not generalize to longer prediction ranges.
 
-In \cite{WANG2020117197}, Wang et al. proposed a novel approach based on LSTM network for predicting periodic energy consumption.
+In \cite{WANG2020117197}, Wang et al. proposed a novel approach based on a LSTM network for predicting periodic energy consumption.
 They stated that this is novel since general forecasting methods do not concern periodicity.
 Hidden features are extracted by the autocorrelation graph among the real industrial data.
 Experiments using a cooling system under one-step-ahead forecasting are conducted to verify the performance of LSTM.
-It was compared with several traditional forecasting methods, such as the ARMA model, Auto-Regressive Fractional Integrated Moving Average (ARFIMA) model, and back propagation neural network (BPNN).
+It was compared with several traditional forecasting methods, such as the ARMA model, the Auto-Regressive Fractional Integrated Moving Average (ARFIMA) model, and the backpropagation neural network (BPNN).
 The Root Mean Square Error (RMSE) of LSTM is 19.7\%, 54.85\%, and 64.59\% lower than BPNN, ARMA, and ARFIMA on the test data.
 Furthermore, they demonstrated that the proposed algorithm had the highest generalization capability.
 
@@ -505,7 +513,7 @@ The performance of kCNN-LSTM was compared with the k-means variant of the state-
 
 In \cite{10033079}, an attention-based DL model with interpretable insights into temporal dynamics is presented to forecast short-term loads.
 The TFT included a sequence-to-sequence model, which processes the historical and future covariates to enhance the forecasting performance.
-Gated Residual Network (GRN) is applied to drop out unnecessary information and improve efficiency.
+A Gated Residual Network (GRN) is applied to drop out unnecessary information and improve efficiency.
 The proposed method is tested on anonymized data from a university campus with a time resolution of 30 minutes.
 The anomalies and missing data (around 8.85\% of the total data) are imputed with the KNN method.
 The testing results demonstrate the effectiveness of the proposed method achieving less than 5\% MAPE.
