@@ -37,6 +37,7 @@
 \usepackage[english]{babel}
 \usepackage{chngcntr}
 \counterwithout{footnote}{chapter}
+\interfootnotelinepenalty=10000
 \usepackage{subcaption}
 \captionsetup{subrefformat=parens}
 
@@ -137,7 +138,7 @@
 
       \input{state_of_the_art}
       \newpage
-      % \afterpage{\null\thispagestyle{empty}\clearpage}
+      \afterpage{\null\thispagestyle{empty}\clearpage}
 
       \input{system_model}
       \newpage

@@ -155,9 +155,9 @@ This simulates the real-world scenario where we want to make predictions about t
 In figure~\ref{fig:crossvalidation}, the schematic representation of how the blocked k-fold cross-validation was performed is reported, 12 splits were used with a test size depending on the specific use case.
 The training set is increased by adding the previous test elements at every successive evaluation.
 
-Another technique, reported in \cite{Cerqueira2020} is the repeated Holdout Out‐of‐sample tested in multiple testing periods with a Monte Carlo simulation using 70\% of the total observations of the time series in each test.
-For each period, a random point is picked from the time series.
-The previous window comprising 60\% of the time series is used for training and the following window of 10\% of the time series is used for testing.
+Another technique, reported in \cite{Cerqueira2020} is the repeated holdout approach repeated in multiple testing periods using a Monte Carlo simulation.
+This approach involved using 70\% of the total observations of the time series in each test.
+For each period, a random point from the time series was selected, and a training window comprising 60\% of the time series before the selected point was used for training, while a testing window of 10\% of the time series after the selected point was used for evaluation.
 In the paper, it was stated that the approach provided the most accurate estimates when the time series are non-stationary.
 However, for having the same evaluation mechanisms on all the models and simulating the fact that the model starts with limited data and then the training amount increases over time to obtain better performance, block validation was used using the TimeSeriesSplit provided by the scikit-learn library.
 Moreover, the considered data are without a strong trend as reported in the dedicated sections of the specific use cases where the data and the model forecasts are analyzed.
