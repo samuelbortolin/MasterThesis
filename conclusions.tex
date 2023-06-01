@@ -2,14 +2,6 @@
 \label{cha:conclusions}
 \vspace{0.4 cm}
 
-The chapter summarizes the work done and some conclusions are drawn from it.
-At the end of the chapter, some ideas for future work are suggested.
-
-
-\section{Summary}
-\label{sec:summary}
-\vspace{0.2 cm}
-
 The accurate forecasting of customers’ electricity demand is of vital importance for electricity suppliers.
 It allows them to optimize the purchase of the necessary electricity without having to rely solely on the instantaneous electricity market, thereby avoiding potential cost fluctuations.
 Furthermore, by accurately forecasting demand, suppliers can efficiently offer customers the necessary electricity and supply it at a competitive price, ensuring customer satisfaction and loyalty.
@@ -31,13 +23,6 @@ The system architecture was designed in order to build a SaaS solution capable o
 A prototype was implemented with a focus on key components for validating the core system functionalities for each specific use case.
 In particular, the training of different models, the forecast of new data, and the evaluation of the performance of the developed models were implemented for all the use cases.
 As evaluation methodologies, the blocked k-fold cross-validation and the test on the last split were adopted using as metrics either the MAPE or MAE depending on the specific use case.
-In each of the following subsections, a comprehensive analysis of the results obtained for each specific use case is provided.
-
-
-\vspace{0.1 cm}
-\subsection{Electricity demand forecasting}
-\label{sec:conclusionsdemand}
-\vspace{0.1 cm}
 
 For electricity demand forecasting the aggregated consumption data over the customers was used.
 This data was initially explored and analyzed and the correlation with weather data was also studied.
@@ -48,12 +33,6 @@ These results can be considered a good indication of the soundness of the propos
 For answering whether the customers' electricity demand can be forecasted based on past aggregated consumption data the answer seems to be positive considering the promising results obtained.
 Taking into consideration the forecasts with a daily granularity, energy retailers can gain valuable insights into the expected energy demand for upcoming days and, instead of basing their purchases based on simple baselines or standard statistical methods, they can optimize their purchases saving many percentage points in excess/defect which results in monetary savings for the company.
 When a finer granularity is needed, as in the case of MIWenergía, forecasts results with an hourly granularity can be used and even though these are less accurate, they still offer useful information when considered across the entire period.
-
-
-\vspace{0.1 cm}
-\subsection{Electricity production forecasting}
-\label{sec:conclusionsproduction}
-\vspace{0.1 cm}
 
 For electricity production forecasting the aggregated production data over the PV plants was used.
 The target of the predictions is the mean percentage of production, which is calculated as the division of the total produced energy by the total power of the PV plants.
@@ -67,12 +46,6 @@ Integrating these production forecasts with demand forecasts enables retailers t
 By accurately forecasting production, retailers can avoid unnecessary excess or deficits in energy procurement, leading to substantial cost savings for the company.
 In fact, providing forecasts for both production and demand enables retailers to operate efficiently and maximize their financial returns.
 
-
-\vspace{0.1 cm}
-\subsection{Consumption baseline forecasting}
-\label{sec:conclusionsbaseline}
-\vspace{0.1 cm}
-
 For consumption baseline forecasting the consumption data of three customers was used.
 This data was initially explored and analyzed and the correlation with weather data was also studied.
 After this, many different models were developed for producing accurate forecasts on this use case with a focus on the second customer.
@@ -85,11 +58,6 @@ The CNN model performed slightly better in terms of MAPE with 13.46\% but with a
 Even though the value of the MAPE with daily granularity is noticeably reduced with respect to the hourly granularity, the results provided an indication of how with a low amount of data a simple baseline may provide reasonable results and on average they perform better than sophisticated models since these models are not able to be trained well due to the low amount and irregular pattern of this data.
 For answering whether a consumption baseline of individual customers can be established based on past consumption data the answer seems to be negative considering the quality of data of the provided customers and the limited amount of historical data.
 More studies should be conducted in this direction for being able to obtain accurate and robust consumption baseline forecasts.
-
-
-\section{Future works}
-\label{sec:future}
-\vspace{0.2 cm}
 
 In the following, further possibilities for future study that were not included in this thesis but could be addressed in subsequent research are reported.
 MIWenergía acknowledges the limitations of the provided data but expresses satisfaction with the initial results obtained through these solutions, indicating a desire to continue the collaboration.
