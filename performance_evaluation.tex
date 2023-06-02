@@ -133,7 +133,7 @@ Therefore, using the same weather data is deemed appropriate for the analysis at
 \label{sec:methodology}
 \vspace{0.2 cm}
 
-The evaluation methodology was based on two relevant error metrics: Mean Absolute Percentage Error (MAPE) and Mean Absolute Error (MAE).
+The evaluation methodology was based on two relevant error metrics: MAPE and MAE.
 These are standard and widely used metrics in time series forecasting for different use cases, as reported in many articles and books such as \cite{armstrong2001principles, DEGOOIJER2006443, HYNDMAN2006679}.
 The MAPE is defined as $\text{MAPE}(y, \hat{y}) = \frac{100\%}{N} \sum_{i=0}^{N - 1} \frac{|y_i - \hat{y}_i|}{|y_i|}$.
 It is the most relevant error metric for all the tasks since it is a percentage-based error metric that takes into account the magnitude of the errors relative to the actual values.
@@ -321,22 +321,22 @@ The Prophet model was built keeping the default parameters for automatically det
 The LSTM model was designed as a 2-layer model with 24 Bidirectional LSTM units in the first layer which use rectified linear unit (ReLU) activation function and sigmoid as recurrent activation function with both dropout and recurrent dropout of 0.02.
 Batch normalization is then applied before entering the second layer composed of 16 Bidirectional LSTM units which use ReLU activation function and sigmoid as recurrent activation function without dropout and recurrent dropout.
 The output of the layer goes inside a dense unit to output the final prediction.
-The model is trained using mean absolute percentage error as loss and Nadam (a version of Adam integrating the concept of Nesterov momentum) as optimizer with a learning rate of 0.005.
+The model is trained using MAPE as loss and Nadam (a version of Adam integrating the concept of Nesterov momentum) as optimizer with a learning rate of 0.005.
 
 The GRU model was designed as a 3-layer model with 24 Bidirectional GRU units in the first layer which use ReLU activation function and sigmoid as recurrent activation function with both dropout and recurrent dropout of 0.02.
 Subsequently, the second layer is composed of 16 Bidirectional GRU units which use ReLU activation function and sigmoid as recurrent activation function without dropout and recurrent dropout.
 The output of the second layer goes inside a third dense layer composed of 4 units with ReLU activation function before entering the final dense unit to output the final prediction.
-The model is trained using mean absolute percentage error as loss and Nadam as optimizer with a learning rate of 0.005.
+The model is trained using MAPE as loss and Nadam as optimizer with a learning rate of 0.005.
 
 The CNN model was designed as a 3-layer model with a first layer composed of 24 1D Convolutional units with a kernel size of 5 which uses ReLU activation function.
 A 1D max polling operation is applied before entering the second layer composed of 16 1D Convolutional units with a kernel size of 3 which use ReLU activation function.
 A 1D max polling operation is applied before the flattening operation and entering the third dense layer composed of 4 units with ReLU activation function.
 The output of the layer goes inside a dense unit to output the final prediction.
-The model is trained using mean absolute percentage error as loss and Nadam as optimizer with a learning rate of 0.005.
+The model is trained using MAPE as loss and Nadam as optimizer with a learning rate of 0.005.
 
 The TFT model was configured with 2 LSTM layers with 16 as hidden size, 4 as attention size, and 8 as hidden continuous size.
 The dropout is set to 0.02.
-The model is trained using mean absolute percentage error as loss and Nadam as optimizer with a learning rate of 0.005.
+The model is trained using MAPE as loss and Nadam as optimizer with a learning rate of 0.005.
 
 12 splits were used for block validation with a test size of a month each time, namely 30 days of data.
 For the hourly granularity, the models start with 5977 entries as training and predict every time 720 entries until reaching the last prediction instant where the model has a training size of 13897.
@@ -473,21 +473,21 @@ This scatter plot demonstrates that there is no bias and can be also noticed tha
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{images/demand/TFT}
-\caption{The forecasts produced by the temporal fusion transoformer model for the last split in comparison to the actual values.}
+\caption{The forecasts produced by the TFT model for the last split in comparison to the actual values.}
 \label{fig:demandtfthourlyforecasts}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{images/demand/TFT_mape}
-\caption{The absolute percentage error of forecasts produced by the temporal fusion transoformer model for the last split in comparison to the actual values.}
+\caption{The absolute percentage error of forecasts produced by the TFT model for the last split in comparison to the actual values.}
 \label{fig:demandtfthourlyforecastsmape}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{images/demand/TFT_error_scatter_plot_predicted}
-\caption{The scatter plot representing the error of the forecasts produced by the temporal fusion transoformer model for the last split in comparison to the actual values.}
+\caption{The scatter plot representing the error of the forecasts produced by the TFT model for the last split in comparison to the actual values.}
 \label{fig:demandtfthourlyforecastsscatterplot}
 \end{figure}
 
@@ -613,21 +613,21 @@ This scatter plot demonstrates that there is no bias even though it seems that w
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{images/demand/CNN_daily_aggregated}
-\caption{The forecasts produced by the convolutional neural network model for the last split in comparison to the actual values.}
+\caption{The forecasts produced by the CNN model for the last split in comparison to the actual values.}
 \label{fig:demandcnndailyforecasts}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{images/demand/CNN_daily_aggregated_mape}
-\caption{The absolute percentage error of forecasts produced by the convolutional neural network model for the last split in comparison to the actual values.}
+\caption{The absolute percentage error of forecasts produced by the CNN model for the last split in comparison to the actual values.}
 \label{fig:demandcnndailyforecastsmape}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{images/demand/CNN_error_scatter_plot_predicted_daily_aggregated}
-\caption{The scatter plot representing the error of the forecasts produced by the convolutional neural network model for the last split in comparison to the actual values.}
+\caption{The scatter plot representing the error of the forecasts produced by the CNN model for the last split in comparison to the actual values.}
 \label{fig:demandcnndailyforecastsscatterplot}
 \end{figure}
 
@@ -795,21 +795,21 @@ The Prophet model was built keeping the default parameters for automatically det
 The LSTM model was designed as a 2-layer model with 32 Bidirectional LSTM units in the first layer which use ReLU activation function and sigmoid as recurrent activation function with both dropout and recurrent dropout of 0.02.
 The second layer is composed of 16 Bidirectional LSTM units which use ReLU activation function and sigmoid as recurrent activation function without dropout and recurrent dropout.
 The output of the layer goes inside a dense unit to output the final prediction.
-The model is trained using mean absolute error as loss and Nadam as optimizer with a learning rate of 0.005.
+The model is trained using MAE as loss and Nadam as optimizer with a learning rate of 0.005.
 
 The GRU model was designed as a 2-layer model with 32 Bidirectional GRU units in the first layer which use ReLU activation function and sigmoid as recurrent activation function with both dropout and recurrent dropout of 0.02.
 Subsequently, the second layer is composed of 16 Bidirectional GRU units which use ReLU activation function and sigmoid as recurrent activation function without dropout and recurrent dropout.
 The output of the layer goes inside a dense unit to output the final prediction.
-The model is trained using mean absolute error as loss and Nadam as optimizer with a learning rate of 0.005.
+The model is trained using MAE as loss and Nadam as optimizer with a learning rate of 0.005.
 
 The CNN model was designed as a 2-layer model with a first layer composed of 24 1D Convolutional units with a kernel size of 5 which uses ReLU activation function.
 A 1D max polling operation is applied before entering the second layer composed of 16 1D Convolutional units with a kernel size of 3 which use ReLU activation function.
 A 1D max polling operation is applied before the flattening operation and entering the final dense unit to output the final prediction.
-The model is trained using mean absolute error as loss and Nadam as optimizer with a learning rate of 0.005.
+The model is trained using MAE as loss and Nadam as optimizer with a learning rate of 0.005.
 
 The TFT model was configured with 2 LSTM layers with 16 as hidden size, 4 as attention size, and 8 as hidden continuous size.
 The dropout is set to 0.02.
-The model is trained using mean absolute error as loss and Nadam as optimizer with a learning rate of 0.005.
+The model is trained using MAE as loss and Nadam as optimizer with a learning rate of 0.005.
 
 12 splits were used for block validation with a test size of a week each time, namely 7 days of data.
 The models start with 5280 entries as training and predict every time 168 entries until reaching the last prediction instant where the model has a training size of 7128.
@@ -910,7 +910,7 @@ AutoML & 5.89\\
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{images/production/GRU_percentage}
-\caption{The forecasts produced by the gated recurrent unit model for the last split in comparison to the actual values.}
+\caption{The forecasts produced by the GRU model for the last split in comparison to the actual values.}
 \label{fig:productiongruhourlyforecasts}
 \end{figure}
 
@@ -924,14 +924,14 @@ It still has great potential as demonstrated in demand prediction and potentiall
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{images/production/GRU_percentage_mae}
-\caption{The absolute error of forecasts produced by the gated recurrent unit model for the last split in comparison to the actual values.}
+\caption{The absolute error of forecasts produced by the GRU model for the last split in comparison to the actual values.}
 \label{fig:productiongruhourlyforecastsmae}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{images/production/GRU_percentage_error_scatter_plot_predicted}
-\caption{The scatter plot representing the error of the forecasts produced by the gated recurrent unit model for the last split in comparison to the actual values.}
+\caption{The scatter plot representing the error of the forecasts produced by the GRU model for the last split in comparison to the actual values.}
 \label{fig:productiongruhourlyforecastsscatterplot}
 \end{figure}
 
@@ -1190,21 +1190,21 @@ The Prophet model was built keeping the default parameters for automatically det
 The LSTM model was designed as a 2-layer model with 32 Bidirectional LSTM units in the first layer which use ReLU activation function and sigmoid as recurrent activation function with both dropout and recurrent dropout of 0.02.
 The second layer is composed of 16 Bidirectional LSTM units which use ReLU activation function and sigmoid as recurrent activation function without dropout and recurrent dropout.
 The output of the layer goes inside a dense unit to output the final prediction.
-The model is trained using a combination of mean absolute error and mean absolute percentage error as loss and Nadam as optimizer with a learning rate of 0.005.
+The model is trained using a combination of MAE and MAPE as loss and Nadam as optimizer with a learning rate of 0.005.
 
 The GRU model was designed as a 2-layer model with 32 Bidirectional GRU units in the first layer which use ReLU activation function and sigmoid as recurrent activation function with both dropout and recurrent dropout of 0.02.
 Subsequently, the second layer is composed of 16 Bidirectional GRU units which use ReLU activation function and sigmoid as recurrent activation function without dropout and recurrent dropout.
 The output of the layer goes inside a dense unit to output the final prediction.
-The model is trained using a combination of mean absolute error and mean absolute percentage error as loss and Nadam as optimizer with a learning rate of 0.005.
+The model is trained using a combination of MAE and MAPE as loss and Nadam as optimizer with a learning rate of 0.005.
 
 The CNN model was designed as a 2-layer model with a first layer composed of 32 1D Convolutional units with a kernel size of 5 which uses ReLU activation function.
 A 1D max polling operation is applied before entering the second layer composed of 16 1D Convolutional units with a kernel size of 3 which use ReLU activation function.
 A 1D max polling operation is applied before the flattening operation and entering the final dense unit to output the final prediction.
-The model is trained using a combination of mean absolute error and mean absolute percentage error as loss and Nadam as optimizer with a learning rate of 0.005.
+The model is trained using a combination of MAE and MAPE as loss and Nadam as optimizer with a learning rate of 0.005.
 
 The TFT model was configured with 2 LSTM layers with 16 as hidden size, 4 as attention size, and 8 as hidden continuous size.
 The dropout is set to 0.02.
-The model is trained using mean absolute percentage error as loss and Nadam as optimizer with a learning rate of 0.005.
+The model is trained using MAPE as loss and Nadam as optimizer with a learning rate of 0.005.
 
 % first customer
 % \begin{table}[H]
@@ -1349,7 +1349,7 @@ Although, it is able to somehow predict that there is a peak during the day but 
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{images/baseline/TFT}
-\caption{The forecasts produced by the temporal fusion transoformer model for the last split in comparison to the actual values.}
+\caption{The forecasts produced by the TFT model for the last split in comparison to the actual values.}
 \label{fig:baselinetfthourlyforecasts}
 \end{figure}
 
@@ -1364,21 +1364,21 @@ The error can be pretty high also when the predicted values are low.
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{images/baseline/TFT_mae}
-\caption{The absolute error of forecasts produced by the temporal fusion transoformer model for the last split in comparison to the actual values.}
+\caption{The absolute error of forecasts produced by the TFT model for the last split in comparison to the actual values.}
 \label{fig:baselinetfthourlyforecastsmae}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{images/baseline/TFT_mape}
-\caption{The absolute percentage error of forecasts produced by the temporal fusion transoformer model for the last split in comparison to the actual values.}
+\caption{The absolute percentage error of forecasts produced by the TFT model for the last split in comparison to the actual values.}
 \label{fig:baselinetfthourlyforecastsmape}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{images/baseline/TFT_error_scatter_plot_predicted}
-\caption{The scatter plot representing the error of the forecasts produced by the temporal fusion transoformer model for the last split in comparison to the actual values.}
+\caption{The scatter plot representing the error of the forecasts produced by the TFT model for the last split in comparison to the actual values.}
 \label{fig:baselinetfthourlyforecastsscatterplot}
 \end{figure}
 
