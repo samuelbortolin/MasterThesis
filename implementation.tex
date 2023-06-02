@@ -89,7 +89,7 @@ Support vector regressor, hist gradient boosting regressor, and extreme gradient
 In addition, the active incomings of the past 24 hours and the ones of the same hour considered in the previous 14 days are also used.
 For the daily granularity instead, the hour information of the date for which to compute the prediction is not considered as a feature, the weather information is obtained as the average over the day, and in place of the active incomings described for the hourly granularity, the daily active incomings of the past 14 days are used.
 The training is performed using the fit method on the training data for one-step ahead forecasting.
-The specific models’ parameters are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
+The specific models' parameters are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
 For the prediction, an recursive strategy is used by forecasting one time instant at a time using weather forecasts, and then uaing the predicted demand data as previous information for the next time instants.
 
 The prophet model is developed using the prophet library\footnote{ \url{https://facebook.github.io/prophet/} }.
@@ -102,7 +102,7 @@ In addition, the active incoming of the previous hour is also used.
 Since these models are able to deal with sequences, a look back at the past 3 hours and at the same hour over the past 14 days is considered and passed as input to the models with the same features as the time instant for which to compute the prediction but with the actual consumption data of the past time instants.
 For the daily granularity instead, the hour of the date for which to compute the prediction is not considered as a feature, the weather information is obtained as the average over the day, and the considered look back is at the past 14 days.
 The training is performed using the fit method on the training data for one-step ahead forecasting.
-The specific models’ architecture and parameters are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
+The specific models' architecture and parameters are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
 For the prediction, an recursive strategy is used by forecasting one time instant at a time using weather forecasts, and then uaing the predicted demand data as previous information for the next time instants.
 
 The models derived by the combination of the previous techniques consist of the combination of one-day baseline, one-week baseline, and prophet with possibly one of LSTM, GRU, or CNN.
@@ -112,7 +112,7 @@ The TFT model is developed using the PyTorch Forecasting library\footnote{ \url{
 A TimeSeriesDataSet is constructed using the following features for the hourly granularity: the time index, the hour, the day, the weekday, the month, and the year information of the time instant for which to compute the prediction, the air temperature, the apparent temperature, and the relative humidity in the considered hour.
 For the daily granularity instead, the hour of the date for which to compute the prediction is not considered as a feature, and the weather information is obtained as the average over the day.
 The training is performed using the fit method of the Trainer object provided by the PyTorch Lightning library\footnote{ \url{https://www.pytorchlightning.ai/index.html} } on the training data.
-The specific models’ parameters are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
+The specific models' parameters are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
 For the prediction, it takes as input a TimeSeriesDataSet with the time instants for which to compute the predictions and computes them.
 
 The AutoML approach is based on the TimeSeriesForecastingTask of the Auto-PyTorch library\footnote{ \url{https://automl.github.io/Auto-PyTorch/master/} }.
@@ -131,7 +131,7 @@ Then, this basic data is enhanced with the air temperature, the apparent tempera
 Finally, data is cleaned up by filling in the gaps using the linear interpolation provided by the pandas library, which proved to be effective since there was just some missing data in the weather information.
 Three possible granularities are considered: hourly, daily, and by tariff.
 The data is with an hourly granularity, so for the daily granularity, data is also aggregated over the day summing the active incomings of the single hours, and averaging the weather data over the day.
-The other possible granularity consists in aggregating the data by tariff, in fact, the hourly tariff proposed by MIWenergía is different based on the day and the hour of the day.
+The other possible granularity co'nsists in aggregating the data by tariff, in fact, the hourly tariff proposed by MIWenergía is different based on the day and the hour of the day.
 For the considered residential users the possible tariffs are 3:
 \begin{enumerate}
   \item Working days from 10 AM to 2 PM, and from 6 PM to 10 PM;
@@ -158,7 +158,7 @@ Support vector regressor, hist gradient boosting regressor, and extreme gradient
 In addition, the active incomings of the past 24 hours and the ones of the same hour considered in the previous 14 days are also used.
 For the daily and tariff granularities instead, the hour information of the date for which to compute the prediction is not considered as a feature, the weather information is obtained as the average over the day or tariff ranges, and in place of the active incomings described for the hourly granularity, the daily or tariff active incomings of the past 14 days are used.
 The training is performed using the fit method on the training data for one-step ahead forecasting.
-The specific models’ parameters are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
+The specific models' parameters are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
 For the prediction, an recursive strategy is used by forecasting one time instant at a time using weather forecasts, and then uaing the predicted demand data as previous information for the next time instants.
 
 The prophet model is developed using the prophet library.
@@ -171,14 +171,14 @@ In addition, the active incoming of the previous hour is also used.
 Since these models are able to deal with sequences, a look back at the past hour and at the same hour over the past 14 days is considered and passed as input to the models with the same features as the time instant for which to compute the prediction but with the actual consumption data of the past time instants.
 For the daily and tariff granularities instead, the hour of the date for which to compute the prediction is not considered as a feature, the weather information is obtained as the average over the day or tariff ranges, and the considered look back is at the past 14 days.
 The training is performed using the fit method on the training data for one-step ahead forecasting.
-The specific models’ architecture and parameters are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
+The specific models' architecture and parameters are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
 For the prediction, an recursive strategy is used by forecasting one time instant at a time using weather forecasts, and then uaing the predicted demand data as previous information for the next time instants.
 
 The TFT model is developed using the PyTorch Forecasting library.
 A TimeSeriesDataSet is constructed using the following features for the hourly granularity: the time index, the hour, the day, the weekday, the month, and the year information of the time instant for which to compute the prediction, the air temperature, the apparent temperature, and the relative humidity in the considered hour.
 For the daily and tariff granularities instead, the hour of the date for which to compute the prediction is not considered as a feature, and the weather information is obtained as the average over the day or tariff ranges.
 The training is performed using the fit method of the Trainer object provided by the PyTorch Lightning library on the training data.
-The specific models’ parameters are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
+The specific models' parameters are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
 For the prediction, it takes as input a TimeSeriesDataSet with the time instants for which to compute the predictions and computes them.
 
 The AutoML approach is based on the TimeSeriesForecastingTask of the Auto-PyTorch library.
@@ -214,7 +214,7 @@ The extreme gradient boosting regressor model is developed using the XGBoost lib
 Support vector regressor, hist gradient boosting regressor, and extreme gradient boosting regressor models take advantage of the following features: the hour, the day, the weekday, the month, and the year information of the time instant for which to compute the prediction, the air temperature, the apparent temperature, the relative humidity, the diffuse horizontal irradiance, the direct normal irradiance, the global horizontal irradiance, the solar radiation, the UV index, and the solar elevation angle in the considered hour.
 In addition, the mean percentages of production of the past 24 hours and the one of the same hour considered in the previous 14 days are also used.
 The training is performed using the fit method on the training data for one-step ahead forecasting.
-The specific models’ parameters are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
+The specific models' parameters are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
 For the prediction, an recursive strategy is used by forecasting one time instant at a time using weather forecasts, and then uaing the predicted production data as previous information for the next time instants.
 
 The prophet model is developed using the prophet library.
@@ -226,7 +226,7 @@ These models take advantage of the following features: the hour, the day, the we
 In addition, the mean percentage of production of the previous hour is also used.
 Since these models are able to deal with sequences, a look back at the past hour and at the same hour over the past 14 days is considered and passed as input to the models with the same features as the time instant for which to compute the prediction but with the actual production data of the past time instants.
 The training is performed using the fit method on the training data for one-step ahead forecasting.
-The specific models’ architecture and parameters are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
+The specific models' architecture and parameters are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
 For the prediction, an recursive strategy is used by forecasting one time instant at a time using weather forecasts, and then uaing the predicted production data as previous information for the next time instants.
 
 The models derived by the combination of the previous techniques consist of the combination of one-day baseline and prophet with possibly one of LSTM, GRU, or CNN.
@@ -235,7 +235,7 @@ Further details of the optimal combinations are discussed in the dedicated secti
 The TFT model is developed using the PyTorch Forecasting library.
 A TimeSeriesDataSet is constructed using the following features: the time index, the hour, the day, the weekday, the month, and the year information of the time instant for which to compute the prediction, the air temperature, the apparent temperature, the relative humidity, the diffuse horizontal irradiance, the direct normal irradiance, the global horizontal irradiance, the solar radiation, the UV index, and the solar elevation angle in the considered hour.
 The training is performed using the fit method of the Trainer object provided by the PyTorch Lightning library\footnote{ \url{https://www.pytorchlightning.ai/index.html} } on the training data.
-The specific models’ parameters are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
+The specific models' parameters are discussed in the dedicated section of chapter~\ref{cha:evaluation}.
 For the prediction, it takes as input a TimeSeriesDataSet with the time instants for which to compute the predictions and computes them.
 
 The AutoML approach is based on the TimeSeriesForecastingTask of the Auto-PyTorch library.
