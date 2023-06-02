@@ -395,7 +395,7 @@ Including also combinations and AutoML, there are a few observations that can be
 The combinations of DL models and the one-week baseline are the most beneficial, reducing by many points the MAPE of the techniques on the one-month time horizon.
 This suggests that it can make sense to investigate the concept of ensemble learning further and optimize this combination at training time to possibly have stronger results at forecasting time.
 AutoML has great potential and obtains very good results compared to many other models.
-Potentially providing more total training time it can be further optimized to reach better performance.
+Potentially providing more total training time the search process might lead to further optimized models able to reach better performance.
 TFT still dominates on the one-month MAPE but not on the one-week one on which the one-week baseline and many combinations but also SARIMA and hist gradient boosting regressor perform better.
 This confirmed that the strength of TFT is to have good performance and preserve it also on larger prediction horizons.
 
@@ -1339,7 +1339,7 @@ Only this customer is reported since it presents the best results and the models
 The blocked k-fold cross-validation suggests that the TFT model has the best MAPE and this is not confirmed on the last split just because there is GRU that performs slightly better in terms of MAPE.
 The not-encouraging thing is that even if it is the best model in terms of MAPE, this value is still close to 50\% indicating that on average the predictions are distant from the actual value by half of this value.
 TFT is also the best approach in terms of MAE on the last split, but not on the basis of the blocked k-fold cross-validation which indicates that the best model is the hist gradient boosting regressor model.
-In general, this data is not well predictable and also the different baselines confirm that having a look at the close history there is no relevant daily or weekly repetition with MAPE and MAE both higher than TFT and hist gradient boosting regressor model.
+In general, this data is not well predictable since it presents a high variability and also the different baselines confirm that having a look at the close history there is no relevant daily or weekly repetition with MAPE and MAE both higher than TFT and hist gradient boosting regressor model.
 
 The AutoML approach uses the mean MAPE forecasting as loss and it is launched for 10 hours with a maximum function evaluation time of 2 hours.
 Then the best ensemble of the found models is returned and can be used to forecast.
