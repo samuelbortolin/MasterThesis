@@ -11,12 +11,16 @@ Additionally, forecasting the production from their own photovoltaic (PV) plants
 Lastly, understanding the consumption habits of individual customers by establishing a reference consumption baseline aids in developing personalized energy solutions and promoting energy efficiency initiatives.
 This allows the integration of potential new services within the realm of Demand Side Management aiming to increase customer retention.
 
-The thesis addressed the problems of forecasting customers' electricity demand based on past aggregated consumption data, PV plants' production based on past aggregated production data, and consumption baselines of individual customers based on past consumption data.
-These problems were addressed by designing a forecasting system.
+The thesis addresses the problems of forecasting customers' electricity demand, PV plants' production, and consumption baselines of individual customers.
+It aims to answer to three research questions:
+(i) whether it is possible to forecast customers' electricity demand based on past aggregated consumption data and weather historical data,
+(ii) whether it is possible to forecast PV plants' production based on past aggregated production data and weather historical data,
+and (iii) whether it is possible to forecast consumption baselines of individual customers based on past consumption data and weather historical data.
+These research questions were addressed by designing a forecasting system.
 In particular, a novel system architecture was designed in order to build a Software as a Service solution capable of satisfying different use cases and being used directly by energy retailers.
-A prototype was implemented with a focus on key components for validating the core system functionalities for each specific use case.
-In particular, the training of different models, the forecasting of new data, and the evaluation of the performance of the developed models were implemented for all the use cases.
-As evaluation methodologies, the blocked k-fold cross-validation and the test on the last split were adopted using as metrics either the Mean Absolute Percentage Error (MAPE) or Mean Absolute Error (MAE) depending on the specific use case.
+A prototype was implemented with a focus on key components for validating the core system functionalities for each discussed problem.
+In particular, the training of different models, the forecasting of new data, and the evaluation of the performance of the developed models were implemented for all the discussed problems.
+As evaluation methodologies, the blocked k-fold cross-validation and the test on the last split were adopted using as metrics either the Mean Absolute Percentage Error (MAPE) or Mean Absolute Error (MAE) depending on the specific problem.
 MIWenergía datasets were adopted for the training and validation of the models.
 
 For electricity demand forecasting, after an in-depth analysis of aggregated consumption data over the customers, many different models were developed for producing accurate forecasts, including statistical, machine learning (ML), deep learning (DL), and Automated Machine Learning (AutoML) techniques.
@@ -24,19 +28,19 @@ Experimental results suggested that the Temporal Fusion Transformer (TFT) model 
 Instead, for the daily granularity, the best-performing model was the Convolutional Neural Network (CNN) model with a MAPE of 7.49\%.
 Taking into consideration these forecasts, energy retailers can gain valuable insights into the expected energy demand for upcoming days and can optimize their purchases.
 
-For electricity production forecasting, after an in-depth analysis of the mean percentage production data aggregated over the PV plants, many different models were developed for producing accurate forecasts, including statistical, ML, DL, and AutoML techniques.
+For electricity production forecasting, after an in-depth analysis of the mean percentage of production data aggregated over the PV plants, many different models were developed for producing accurate forecasts, including statistical, ML, DL, and AutoML techniques.
 Experimental results suggested that the Gated Recurrent Unit (GRU) model was the best-performing model for the hourly granularity with a MAE normalized on PV plants' nominal power of 2.79\% on the test set composed of the last week of the percentage of production data.
 Taking into consideration these forecasts, energy retailers can access crucial insights into the expected energy production for upcoming days, and integrating them with demand forecasts enables retailers to optimize their purchasing decisions effectively.
 
 For consumption baseline forecasting, after an in-depth analysis of the consumption data of three customers, many different models were developed for producing accurate forecasts, including statistical, ML, DL, and AutoML techniques.
-Experimental results suggested that the TFT model was the best-performing model for the hourly granularity in terms of MAE with 0.231 kWh on the test set composed of the last week of data and it presents a MAPE of 44.19\%.
+Experimental results suggested that the TFT model was the best-performing model for the hourly granularity in terms of MAE with 0.231 kWh on the test set composed of the last week of data and it presented a MAPE of 44.19\%.
 The GRU model performed slightly better in terms of MAPE with 42.55\% but with a MAE of 0.257 kWh.
 This suggested that this data is not well predictable and also the different baselines confirmed that having a look at the close history there is no relevant daily or weekly repetition with MAPE and MAE both higher than the TFT model.
-Instead, for the daily granularity, no model is outperforming the four-week baseline in terms of MAE with 1.318 kWh and it presents a MAPE of 14.40\%.
+Instead, for the daily granularity, no model was outperforming the four-week baseline in terms of MAE with 1.318 kWh and it presented a MAPE of 14.40\%.
 The CNN model performed slightly better in terms of MAPE with 13.46\% but with a MAE of 1.751 kWh.
 Results provided an indication of how with a low amount of data a simple baseline may provide reasonable results and on average they perform better than sophisticated models since these models are not able to be trained well due to the low amount and irregular pattern of this data.
 
-Experimental results confirmed that the prototype was able to obtain valuable forecasts for electricity demand and production.
-Instead, consumption baseline forecasts were not valuable due to the low amount and irregular pattern of the data.
-More studies should be conducted in this direction for being able to obtain accurate and robust consumption baseline forecasts having more historical data and data of more customers.
+Experimental results confirmed that the implemented prototype is able to obtain valuable forecasts for electricity demand and production.
+Instead, consumption baseline forecasts are not so valuable due to the low amount and irregular pattern of the data.
+More studies should be conducted in this direction for being able to obtain accurate and robust consumption baseline forecasts having available more historical data and data of more customers.
 Other ideas for future works are also presented, aiming to expand upon the current research and explore additional avenues of investigation.
