@@ -348,7 +348,7 @@ This can be explained by the fact that, due to their complexity, these models re
 Results seem also to confirm that not always sophisticated models perform better and some of them are no better than a baseline.
 Models treated in the literature that are performing well in similar tasks can also not be suited for this specific use case.
 Data makes a big difference and with a low amount of data, it is difficult for some complex networks to perform well and generalize.
-Instead, the TFT approach seems to have pretty much the same MAPE over the considered splits confirming the power of this architecture despite the limited data
+Instead, the TFT approach seems to have pretty much the same MAPE over the considered splits confirming the potential of this architecture despite the limited data.
 In contrast, the boosters that have a good blocked k-fold MAPE on the last split do not perform well.
 
 \begin{table}[H]
@@ -402,7 +402,7 @@ This confirmed that the strength of TFT is to have good performance and preserve
 \centering
 \begin{tabular}{|c|c|c|}
 \hline
-\textbf{Model} & \textbf{Forecast on the last split} & \textbf{Forecast on the last split}\\
+\textbf{Model} & \textbf{Test on the last split} & \textbf{Test on the last split}\\
  & \textbf{one-week MAPE} & \textbf{one-month MAPE}\\
 \hline
 TFT & 13.71 & 14.76\\
@@ -542,7 +542,7 @@ This probably can be explained by the fact that the first week of the last split
 \centering
 \begin{tabular}{|c|c|c|}
 \hline
-\textbf{Model} & \textbf{Forecast on the last split} & \textbf{Forecast on the last split}\\
+\textbf{Model} & \textbf{Test on the last split} & \textbf{Test on the last split}\\
  & \textbf{one-week MAPE} & \textbf{one-month MAPE}\\
 \hline
 CNN & 8.36 & 7.49\\
@@ -641,8 +641,8 @@ This scatter plot demonstrates that there is no bias even though it seems that w
 \vspace{0.2 cm}
 
 As described in the data preprocessing in chapter~\ref{cha:implementation}, single PV plant production data are aggregated to obtain the aggregated production data over the PV plants.
-The target of the predictions is the mean percentage of production, which is calculated as the division of the total produced energy by the total power of the PV plants.
-This allows us to have a bounded value from 0 to 100 from which it is possible to obtain the total produced energy simply by multiplying it by the total power of the PV plants.
+The target of the predictions is the mean percentage of production, which is calculated as the division of the total produced energy by the total nominal power of the PV plants.
+This allows us to have a bounded value from 0 to 100 from which it is possible to obtain the total produced energy simply by multiplying it by the total nominal power of the PV plants.
 This was also done since PV plants are added over time and this was unpredictable, this results in predicting the percentage of production of the PV plants.
 This data is analyzed to get some descriptive analytics before finding adequate models to forecast the production.
 The time series decomposition using an additive model of the hourly percentage of production considering as period of the time series a day is reported in figure~\ref{fig:productiondecomposition}.
@@ -814,7 +814,7 @@ The model is trained using MAE as loss and Nadam as optimizer with a learning ra
 12 splits were used for block validation with a test size of a week each time, namely 7 days of data.
 The models start with 5280 entries as training and predict every time 168 entries until reaching the last prediction instant where the model has a training size of 7128.
 The results for hourly granularity are reported in table~\ref{tab:productionhourlyresults}.
-Entries are sorted by best MAE using the last split as the test set.
+Entries are sorted by best MAE normalized on PV plants' nominal power using the last split as the test set.
 The blocked k-fold cross-validation suggests that the hist gradient boosting regressor model has the best MAE, but looking at the last split this is not confirmed.
 In fact, the GRU model performs better on the last split, as the other DL models, this seems to confirm what is seen in demand prediction that with the increase of training data, these models perform better.
 It can also be noted that all the models are better than the one-day baseline.
@@ -825,8 +825,9 @@ In this case, the TFT approach does not seem to perform in an optimal way, and i
 \centering
 \begin{tabular}{|c|c|c|}
 \hline
-\textbf{Model} & \textbf{Blocked k-fold} & \textbf{Test on the last split}\\
- & \textbf{cross-validation MAE percentage} & \textbf{MAE percentage}\\
+ & \textbf{Blocked k-fold cross-validation} & \textbf{Test on the last split}\\
+\textbf{Model} & \textbf{MAE normalized on PV} & \textbf{MAE normalized on PV}\\
+ & \textbf{plants' nominal power} & \textbf{plants' nominal power}\\
 \hline
 GRU & 5.70 $\pm$ 1.78 & 2.79\\
 \hline
@@ -863,8 +864,9 @@ Then the best ensemble of the found models is returned and can be used to foreca
 \centering
 \begin{tabular}{|c|c|c|}
 \hline
-\textbf{Model} & \textbf{Forecast on the last split}\\
- & \textbf{MAE percentage}\\
+ & \textbf{Test on the last split}\\
+\textbf{Model} & \textbf{MAE normalized on PV}\\
+ & \textbf{plants' nominal power}\\
 \hline
 GRU & 2.79\\
 \hline

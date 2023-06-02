@@ -388,15 +388,15 @@ In this section, the electricity production forecasting module is described.
 The module handles the specialization of data models, training, and forecasts for the electricity production forecasting use case.
 
 The UML data class for a single PV plant data for electricity production forecasting is represented in figure~\ref{fig:umlsingleplant}.
-The considered attributes are the following: the date and time of the detection, the id of the asset (intended as the PV plant), the power of the PV plant (intended as its maximum theoretical production power per hour), and the produced energy in the past hour by the PV plant.
+The considered attributes are the following: the date and time of the detection, the id of the asset (intended as the PV plant identifier), the nominal power of the PV plant (intended as its maximum theoretical production power per hour), and the produced energy in the past hour by the PV plant.
 The basic data is enhanced with the following weather information, the reported value is the average of the value in the last hour: air temperature, apparent temperature, relative humidity, wind speed, wind direction, pressure altimeter, visibility, sky coverage, diffuse horizontal irradiance, direct normal irradiance, global horizontal irradiance, solar radiation, UV index, solar elevation angle, and solar azimuth angle.
-The percentage of production is calculated by the division of the produced energy by the power of the PV plant.
+The percentage of production is calculated by the division of the produced energy by the nominal power of the PV plant.
 
 While the UML data class for the aggregated data over PV plants for electricity production forecasting is represented in figure~\ref{fig:umlproduction}.
-The considered attributes are the following: the date and time of the detection, the number of PV plants, the total power of the PV plants (intended as the sum of the maximum theoretical production power per hour of all PV plants), and the produced energy in the past hour by the PV plants.
+The considered attributes are the following: the date and time of the detection, the number of PV plants, the total nominal power of the PV plants (intended as the sum of the maximum theoretical production power per hour of all PV plants), and the produced energy in the past hour by the PV plants.
 The basic data is enhanced with the following weather information, the reported value is the average of the value in the last hour: air temperature, apparent temperature, relative humidity, wind speed, wind direction, pressure altimeter, visibility, sky coverage, diffuse horizontal irradiance, direct normal irradiance, global horizontal irradiance, solar radiation, UV index, solar elevation angle, and solar azimuth angle.
 The mean produced energy for a single PV plant is calculated as the division of the total produced energy by the number of PV plants.
-The mean percentage of production is calculated as the division of the total produced energy by the total power of the PV plants.
+The mean percentage of production is calculated as the division of the total produced energy by the total nominal power of the PV plants.
 
 \begin{figure}[H]
 \begin{minipage}[b]{8.5cm}

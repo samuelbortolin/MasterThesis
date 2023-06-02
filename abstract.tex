@@ -4,28 +4,18 @@
 \addcontentsline{toc}{chapter}{Abstract} % add to index
 \vspace{0.4 cm}
 
-% The abstract is a short summary of the work describing the target, the subject of the thesis, the methodology 
-% and the techniques, the data collection and elaboration, the explanation of the reached results and the conclusion.
-% The abstract of the dissertation must have a maximum length of 3 pages and must include the following information: 
-% \begin{itemize}
-%   \item context and motivation
-%   \item short summary of the main problem you have dealt with
-%   \item developed and / or used techniques
-%   \item reached results, the personal contribution of the student has to be highlighted
-% \end{itemize}
-
 The accurate forecasting of customers' electricity demand is of vital importance for electricity suppliers.
 It allows them to optimize the purchase of the necessary electricity without having to rely solely on the instantaneous electricity market, thereby avoiding potential cost fluctuations.
 Furthermore, by accurately forecasting demand, suppliers can efficiently offer customers the necessary electricity and supply it at a competitive price, ensuring customer satisfaction and loyalty.
 Additionally, forecasting the production from their own photovoltaic (PV) plants becomes crucial in determining the amount of electricity that needs to be purchased.
 Lastly, understanding the consumption habits of individual customers by establishing a reference consumption baseline aids in developing personalized energy solutions and promoting energy efficiency initiatives.
-This allows the addition of potential new services connected to the field of Demand Side Management which aims to increase customer retention.
+This allows the integration of potential new services within the realm of Demand Side Management aiming to increase customer retention.
 
-The thesis addressed the problems of forecasting customers' electricity demand based on past aggregated consumption data, forecasting PV plants' production based on past aggregated production data, and forecasting the consumption baseline of individual customers based on past consumption data.
+The thesis addressed the problems of forecasting customers' electricity demand based on past aggregated consumption data, PV plants' production based on past aggregated production data, and consumption baselines of individual customers based on past consumption data.
 These problems were addressed by designing a forecasting system.
 In particular, a novel system architecture was designed in order to build a Software as a Service solution capable of satisfying different use cases and being used directly by energy retailers.
 A prototype was implemented with a focus on key components for validating the core system functionalities for each specific use case.
-In particular, the training of different models, the forecast of new data, and the evaluation of the performance of the developed models were implemented for all the use cases.
+In particular, the training of different models, the forecasting of new data, and the evaluation of the performance of the developed models were implemented for all the use cases.
 As evaluation methodologies, the blocked k-fold cross-validation and the test on the last split were adopted using as metrics either the Mean Absolute Percentage Error (MAPE) or Mean Absolute Error (MAE) depending on the specific use case.
 MIWenergía datasets were adopted for the training and validation of the models.
 
@@ -35,7 +25,7 @@ Instead, for the daily granularity, the best-performing model was the Convolutio
 Taking into consideration these forecasts, energy retailers can gain valuable insights into the expected energy demand for upcoming days and can optimize their purchases.
 
 For electricity production forecasting, after an in-depth analysis of the mean percentage production data aggregated over the PV plants, many different models were developed for producing accurate forecasts, including statistical, ML, DL, and AutoML techniques.
-Experimental results suggested that the Gated Recurrent Unit (GRU) model was the best-performing model for the hourly granularity with a MAE of 2.79\% on the test set composed of the last week of the percentage of production data.
+Experimental results suggested that the Gated Recurrent Unit (GRU) model was the best-performing model for the hourly granularity with a MAE normalized on PV plants' nominal power of 2.79\% on the test set composed of the last week of the percentage of production data.
 Taking into consideration these forecasts, energy retailers can access crucial insights into the expected energy production for upcoming days, and integrating them with demand forecasts enables retailers to optimize their purchasing decisions effectively.
 
 For consumption baseline forecasting, after an in-depth analysis of the consumption data of three customers, many different models were developed for producing accurate forecasts, including statistical, ML, DL, and AutoML techniques.
@@ -48,5 +38,5 @@ Results provided an indication of how with a low amount of data a simple baselin
 
 Experimental results confirmed that the prototype was able to obtain valuable forecasts for electricity demand and production.
 Instead, consumption baseline forecasts were not valuable due to the low amount and irregular pattern of the data.
-More studies should be conducted in this direction for being able to obtain accurate and robust consumption baseline forecasts.
+More studies should be conducted in this direction for being able to obtain accurate and robust consumption baseline forecasts having more historical data and data of more customers.
 Other ideas for future works are also presented, aiming to expand upon the current research and explore additional avenues of investigation.

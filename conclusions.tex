@@ -5,24 +5,25 @@
 The accurate forecasting of customers' electricity demand is of vital importance for electricity suppliers.
 It allows them to optimize the purchase of the necessary electricity without having to rely solely on the instantaneous electricity market, thereby avoiding potential cost fluctuations.
 Furthermore, by accurately forecasting demand, suppliers can efficiently offer customers the necessary electricity and supply it at a competitive price, ensuring customer satisfaction and loyalty.
-Additionally, forecasting the production from their own photovoltaic plants becomes crucial in determining the amount of electricity that needs to be purchased.
+Additionally, forecasting the production from their own PV plants becomes crucial in determining the amount of electricity that needs to be purchased.
 Lastly, understanding the consumption habits of individual customers by establishing a reference consumption baseline aids in developing personalized energy solutions and promoting energy efficiency initiatives.
-This allows the addition of potential new services connected to the field of Demand Side Management which aims to increase customer retention.
+This allows the integration of potential new services within the realm of Demand Side Management aiming to increase customer retention.
 
-The study addressed the following research questions:
+The thesis addressed the following research questions:
 \begin{enumerate}
-  \item Can the customers' electricity demand be forecasted based on past aggregated consumption data? The findings contribute to understanding the feasibility of utilizing historical data to develop a reliable forecasting model, enabling effective energy management and resource allocation.
-  \item Can the photovoltaic plants' production be forecasted based on past aggregated production data? The research examined the potential for accurately predicting PV plants' output using historical production data, facilitating the integration of renewable energy sources and optimizing energy procurement strategies.
-  \item Can a consumption baseline of individual customers be established based on past consumption data? The study explored the possibility of establishing consumption baselines for individual customers, offering insights into personalized energy solutions, energy efficiency, and tailored energy-saving recommendations.
+  \item Can the customers' electricity demand be forecasted based on past aggregated consumption data and historical weather data? The findings contribute to understanding the feasibility of utilizing historical consumption data and historical weather data to develop a reliable forecasting model, enabling effective energy management and resource allocation.
+  \item Can the PV plants' production be forecasted based on past aggregated production data and historical weather data? The research examined the potential for accurately predicting PV plants' output using historical production data and historical weather data, facilitating the integration of renewable energy sources and optimizing energy procurement strategies.
+  \item Can a consumption baseline of individual customers be established based on past consumption data and historical weather data? The study explored the possibility of establishing consumption baselines for individual customers utilizing historical consumption data and historical weather data, offering insights into personalized energy solutions, energy efficiency, and tailored energy-saving recommendations.
 \end{enumerate}
-By addressing these research questions, this study advances knowledge in forecasting electricity demand, photovoltaic production, and the establishment of consumption baselines.
+By addressing these research questions, this study advances knowledge in forecasting electricity demand, PV plants' production, and consumption baselines.
 The findings provide practical implications for enhancing energy management strategies, optimizing resource allocation, promoting renewable energy integration, and improving customer-centric energy solutions.
 
 A forecasting system was designed for addressing these research questions.
-The system architecture was designed in order to build a SaaS solution capable of satisfying different use cases and being used directly by energy retailers.
+A novel system architecture was designed in order to build a SaaS solution capable of satisfying different use cases and being used directly by energy retailers.
 A prototype was implemented with a focus on key components for validating the core system functionalities for each specific use case.
-In particular, the training of different models, the forecast of new data, and the evaluation of the performance of the developed models were implemented for all the use cases.
+In particular, the training of different models, the forecasting of new data, and the evaluation of the performance of the developed models were implemented for all the use cases.
 As evaluation methodologies, the blocked k-fold cross-validation and the test on the last split were adopted using as metrics either the MAPE or MAE depending on the specific use case.
+MIWenergía datasets were adopted for the training and validation of the models.
 
 For electricity demand forecasting the aggregated consumption data over the customers was used.
 This data was initially explored and analyzed and the correlation with weather data was also studied.
@@ -35,12 +36,12 @@ Taking into consideration the forecasts with a daily granularity, energy retaile
 When a finer granularity is needed, as in the case of MIWenergía, forecasts results with an hourly granularity can be used and even though these are less accurate, they still offer useful information when considered across the entire period.
 
 For electricity production forecasting the aggregated production data over the PV plants was used.
-The target of the predictions is the mean percentage of production, which is calculated as the division of the total produced energy by the total power of the PV plants.
+The target of the predictions is the mean percentage of production, which is calculated as the division of the total produced energy by the nominal power of the PV plants.
 This data was initially explored and analyzed and the correlation with weather data, including solar energy data, was also studied.
 After this, many different models were developed for producing accurate forecasts on this use case.
-Experimental results suggested that the GRU model was the best-performing model for the hourly granularity with a MAE of 2.79\% on the test set composed of the last week of the percentage of production data.
+Experimental results suggested that the GRU model was the best-performing model for the hourly granularity with a MAE normalized on PV plants' nominal power of 2.79\% on the test set composed of the last week of the percentage of production data.
 These results can be considered a good indication of the soundness of the proposed approach.
-For answering whether the photovoltaic plants' production can be forecasted based on past aggregated production data the answer seems to be positive considering the promising results obtained.
+For answering whether the PV plants' production can be forecasted based on past aggregated production data the answer seems to be positive considering the promising results obtained.
 Taking into consideration the forecasts with an hourly granularity, energy retailers can access crucial insights into the expected energy production for upcoming days with higher accuracy compared to relying on simple baselines, standard statistical methods, or estimates just based on weather forecasts.
 Integrating these production forecasts with demand forecasts enables retailers to optimize their purchasing decisions effectively.
 By accurately forecasting production, retailers can avoid unnecessary excess or deficits in energy procurement, leading to substantial cost savings for the company.
@@ -57,7 +58,7 @@ Instead, for the daily granularity, no model is outperforming the four-week base
 The CNN model performed slightly better in terms of MAPE with 13.46\% but with a MAE of 1.751 kWh.
 Even though the value of the MAPE with daily granularity is noticeably reduced with respect to the hourly granularity, the results provided an indication of how with a low amount of data a simple baseline may provide reasonable results and on average they perform better than sophisticated models since these models are not able to be trained well due to the low amount and irregular pattern of this data.
 For answering whether a consumption baseline of individual customers can be established based on past consumption data the answer seems to be negative considering the quality of data of the provided customers and the limited amount of historical data.
-More studies should be conducted in this direction for being able to obtain accurate and robust consumption baseline forecasts.
+More studies should be conducted in this direction for being able to obtain accurate and robust consumption baseline forecasts having more historical data and data of more customers.
 
 In the following, further possibilities for future study that were not included in this thesis but could be addressed in subsequent research are reported.
 MIWenergía acknowledges the limitations of the provided data but expresses satisfaction with the initial results obtained through these solutions, indicating a desire to continue the collaboration.
