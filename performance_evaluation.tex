@@ -393,7 +393,7 @@ Then the best ensemble of the found models is returned and can be used to foreca
 In the table, it is also reported the performance on the one-week horizon, namely 7 days of data, from which it is possible to gain more insights on the models' forecasts.
 Including also combinations and AutoML, there are a few observations that can be done.
 The combinations of DL models and the one-week baseline are the most beneficial, reducing by many points the MAPE of the techniques on the one-month time horizon.
-This suggests that it can make sense to investigate the concept of ensemble learning further and optimize this combination at training time to possibly have stronger results at forecasting time.
+This suggests that it can make sense to investigate the concept of ensemble learning further and optimize this combination at training time to possibly have more robust results at forecasting time.
 AutoML has great potential and obtains very good results compared to many other models.
 Potentially providing more total training time the search process might lead to further optimized models able to reach better performance.
 TFT still dominates on the one-month MAPE but not on the one-week one on which the one-week baseline and many combinations but also SARIMA and hist gradient boosting regressor perform better.
@@ -935,7 +935,7 @@ AutoML & 5.89\\
 Including also combinations and AutoML, there are a few observations that can be done.
 The combinations of DL models and the one-week baseline are the most beneficial, but just in the case of LSTM there is an improvement and it is very marginal.
 Probably in this case since the baseline and prophet are not well-performing models they are not bringing any significant improvement or robustness to the DL models.
-Nonetheless, it might still make sense to investigate the concept of ensemble learning further and optimize this combination at training time to possibly have stronger results at forecasting time.
+Nonetheless, it might still make sense to investigate the concept of ensemble learning further and optimize this combination at training time to possibly have more robust results at forecasting time.
 In this case, AutoML is not able to achieve very good results compared to many other models.
 It still has great potential as demonstrated in demand prediction and potentially providing more total training time it can be able to reach better performance.
 

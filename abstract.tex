@@ -6,7 +6,7 @@
 
 The accurate forecasting of customers' electricity demand is of vital importance for electricity suppliers.
 It allows them to optimize the purchase of the necessary electricity without having to rely solely on the instantaneous electricity market, thereby avoiding potential cost fluctuations.
-Furthermore, by accurately forecasting demand, suppliers can efficiently offer customers the necessary electricity and supply it at a competitive price, ensuring customer satisfaction and loyalty.
+Furthermore, by accurately forecasting demand, electricity suppliers can efficiently offer customers the necessary electricity and supply it at a competitive price, ensuring customer satisfaction and loyalty.
 Additionally, forecasting the production from their own photovoltaic (PV) plants becomes crucial in determining the amount of electricity that needs to be purchased.
 Lastly, understanding the consumption habits of individual customers by establishing a reference consumption baseline aids in developing personalized energy solutions and promoting energy efficiency initiatives.
 This allows the integration of potential new services within the realm of Demand Side Management aiming to increase customer retention.
@@ -17,7 +17,7 @@ It aims to answer three research questions:
 (ii) whether it is possible to forecast PV plants' production based on past aggregated production data over the PV plants and weather historical data, including solar energy data,
 and (iii) whether it is possible to forecast consumption baselines of individual customers based on past consumption data of individual customers and weather historical data.
 These research questions were addressed by designing a forecasting system.
-In particular, a novel system architecture was designed in order to build a Software as a Service solution capable of satisfying different use cases and being used directly by energy retailers.
+In particular, a novel system architecture was designed in order to build a Software as a Service solution capable of satisfying different use cases and being used directly by electricity suppliers.
 A prototype was implemented with a focus on key components for validating the core system functionalities for each discussed problem.
 In particular, the training of different models, the forecasting of new data, and the evaluation of the performance of the developed models were implemented for all the discussed problems.
 As evaluation methodologies, the blocked k-fold cross-validation and the test on the last split were adopted using as metrics either the Mean Absolute Percentage Error (MAPE) or Mean Absolute Error (MAE) depending on the specific problem.
@@ -26,11 +26,11 @@ MIWenergía datasets were adopted for the training and validation of the models.
 For electricity demand forecasting, after an in-depth analysis of aggregated consumption data over the customers, many different models were developed for producing accurate forecasts, including statistical, machine learning (ML), deep learning (DL), and Automated Machine Learning (AutoML) techniques.
 Experimental results suggested that the Temporal Fusion Transformer (TFT) model was the best-performing model for the hourly granularity with a MAPE of 14.76\% on the test set composed of the last month of data.
 Instead, for the daily granularity, the best-performing model was the Convolutional Neural Network (CNN) model with a MAPE of 7.49\%.
-Taking into consideration these forecasts, energy retailers can gain valuable insights into the expected energy demand for upcoming days and can optimize their purchases.
+Taking into consideration these forecasts, electricity suppliers can gain valuable insights into the expected energy demand for upcoming days and can optimize their purchases.
 
 For electricity production forecasting, after an in-depth analysis of the mean percentage of production data aggregated over the PV plants, many different models were developed for producing accurate forecasts, including statistical, ML, DL, and AutoML techniques.
 Experimental results suggested that the Gated Recurrent Unit (GRU) model was the best-performing model for the hourly granularity with a MAE normalized on PV plants' nominal power of 2.79\% on the test set composed of the last week of the percentage of production data.
-Taking into consideration these forecasts, energy retailers can access crucial insights into the expected energy production for upcoming days, and integrating them with demand forecasts enables retailers to optimize their purchasing decisions effectively.
+Taking into consideration these forecasts, electricity suppliers can access crucial insights into the expected energy production for upcoming days, and integrating them with demand forecasts enables electricity suppliers to optimize their purchasing decisions effectively.
 
 For consumption baseline forecasting, after an in-depth analysis of the consumption data of three customers, many different models were developed for producing accurate forecasts, including statistical, ML, DL, and AutoML techniques.
 Experimental results suggested that the TFT model was the best-performing model for the hourly granularity in terms of MAE with 0.231 kWh on the test set composed of the last week of data and it presented a MAPE of 44.19\%.
@@ -43,4 +43,4 @@ Results provided an indication of how with a low amount of data a simple baselin
 Experimental results confirmed that the implemented prototype is able to obtain valuable forecasts for electricity demand and production.
 Instead, consumption baseline forecasts are not so valuable due to the low amount and irregular pattern of the data.
 More studies should be conducted in this direction for being able to obtain accurate and robust consumption baseline forecasts having available more historical data and data of more customers.
-Other ideas for future works are also presented, aiming to expand upon the current research and explore additional avenues of investigation.
+Further possibilities for future studies are also presented, with the aim of expanding upon the current research and exploring additional avenues of investigation.

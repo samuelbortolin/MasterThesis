@@ -4,7 +4,7 @@
 
 The accurate forecasting of customers' electricity demand is of vital importance for electricity suppliers.
 It allows them to optimize the purchase of the necessary electricity without having to rely solely on the instantaneous electricity market, thereby avoiding potential cost fluctuations.
-Furthermore, by accurately forecasting demand, suppliers can efficiently offer customers the necessary electricity and supply it at a competitive price, ensuring customer satisfaction and loyalty.
+Furthermore, by accurately forecasting demand, electricity suppliers can efficiently offer customers the necessary electricity and supply it at a competitive price, ensuring customer satisfaction and loyalty.
 Additionally, forecasting the production from their own PV plants becomes crucial in determining the amount of electricity that needs to be purchased.
 Lastly, understanding the consumption habits of individual customers by establishing a reference consumption baseline aids in developing personalized energy solutions and promoting energy efficiency initiatives.
 This allows the integration of potential new services within the realm of Demand Side Management aiming to increase customer retention.
@@ -21,12 +21,12 @@ The findings provide practical implications for enhancing energy management stra
 The main results of the thesis can be summarized as follows:
 \begin{itemize}
   \item A forecasting system was designed for addressing these research questions.
-  \item A comprehensive analysis of the aggregated consumption data was conducted and different models were developed and compared. Experimental results demonstrated that the electricity demand can be accurately forecasted with a MAPE of 14.76\% for the hourly granularity and a MAPE of 7.49\% for the daily granularity.
+  \item A comprehensive analysis of the aggregated consumption data over the customers was conducted and different models were developed and compared. Experimental results demonstrated that the electricity demand can be accurately forecasted with a MAPE of 14.76\% for the hourly granularity and a MAPE of 7.49\% for the daily granularity.
   \item A comprehensive analysis of the aggregated production data over the PV plants was conducted and different models were developed and compared. Experimental results demonstrated that the electricity production can be accurately forecasted with a MAE normalized on PV plants' nominal power of 2.79\% for the hourly granularity.
   \item A comprehensive analysis of the consumption data of three customers was conducted and different models were developed and compared. Experimental results showed that the consumption baseline cannot be accurately forecasted considering the quality of data of the provided customers and the limited amount of historical data.
 \end{itemize}
 
-For the forecasting system, a novel system architecture was designed in order to build a SaaS solution capable of satisfying different use cases and being used directly by energy retailers.
+For the forecasting system, a novel system architecture was designed in order to build a SaaS solution capable of satisfying different use cases and being used directly by electricity suppliers.
 A prototype was implemented with a focus on key components for validating the core system functionalities for each specific use case.
 In particular, the training of different models, the forecasting of new data, and the evaluation of the performance of the developed models were implemented for all the use cases.
 As evaluation methodologies, the blocked k-fold cross-validation and the test on the last split were adopted using as metrics either the MAPE or MAE depending on the specific use case.
@@ -37,8 +37,8 @@ This data was initially explored and analyzed and the correlation with weather d
 After this, many different models were developed for producing accurate forecasts on this use case.
 Experimental results suggested that the TFT model was the best-performing model for the hourly granularity with a MAPE of 14.76\% on the test set composed of the last month of data.
 Instead, for the daily granularity, the best-performing model was the CNN model with a MAPE of 7.49\%.
-These promising results can be considered a good indication of the soundness of the proposed approach and demonstrated that the customers' electricity demand can be forecasted based on past aggregated consumption data and historical weather data.
-Taking into consideration the forecasts with a daily granularity, energy retailers can gain valuable insights into the expected energy demand for upcoming days and, instead of basing their purchases based on simple baselines or standard statistical methods, they can optimize their purchases saving many percentage points in excess/defect which results in monetary savings for the company.
+These promising results can be considered a good indication of the soundness of the proposed approach and demonstrated that the customers' electricity demand can be forecasted based on past aggregated consumption data over the customers and historical weather data.
+Taking into consideration the forecasts with a daily granularity, electricity suppliers can gain valuable insights into the expected electricity demand for upcoming days and, instead of basing their purchases on simple baselines or standard statistical methods, they can optimize their purchases saving many percentage points in excess/defect which results in monetary savings for the company.
 When a finer granularity is needed, as in the case of MIWenergía, forecasts results with an hourly granularity can be used and even though these are less accurate, they still offer useful information when considered across the entire period.
 
 For electricity production forecasting, the aggregated production data over the PV plants was used.
@@ -47,10 +47,10 @@ This data was initially explored and analyzed and the correlation with weather d
 After this, many different models were developed for producing accurate forecasts on this use case.
 Experimental results suggested that the GRU model was the best-performing model for the hourly granularity with a MAE normalized on PV plants' nominal power of 2.79\% on the test set composed of the last week of the percentage of production data.
 These promising results can be considered a good indication of the soundness of the proposed approach and demonstrated that the PV plants' production can be forecasted based on past aggregated production data over the PV plants and historical weather data, including solar energy data.
-Taking into consideration the forecasts with an hourly granularity, energy retailers can access crucial insights into the expected energy production for upcoming days with higher accuracy compared to relying on simple baselines, standard statistical methods, or estimates just based on weather forecasts.
-Integrating these production forecasts with demand forecasts enables retailers to optimize their purchasing decisions effectively.
-By accurately forecasting production, retailers can avoid unnecessary excess or deficits in energy procurement, leading to substantial cost savings for the company.
-In fact, providing forecasts for both production and demand enables retailers to operate efficiently and maximize their financial returns.
+Taking into consideration the forecasts with an hourly granularity, electricity suppliers can access crucial insights into the expected energy production for upcoming days with higher accuracy compared to relying on simple baselines, standard statistical methods, or estimates just based on weather forecasts.
+Integrating these production forecasts with demand forecasts enables electricity suppliers to optimize their purchasing decisions effectively.
+By accurately forecasting production, electricity suppliers can avoid unnecessary excess or deficits in energy procurement, leading to substantial cost savings for the company.
+In fact, providing forecasts for both production and demand enables electricity suppliers to operate efficiently and maximize their financial returns.
 
 For consumption baseline forecasting, the consumption data of three customers was used.
 This data was initially explored and analyzed and the correlation with weather data was also studied.
@@ -65,19 +65,18 @@ Even though the value of the MAPE considering the daily granularity is noticeabl
 For answering whether a consumption baseline of individual customers can be established based on past consumption data the answer seems to be negative considering the quality of data of the provided customers and the limited amount of historical data.
 More studies should be conducted in this direction for being able to obtain accurate and robust consumption baseline forecasts having available more historical data and data of more customers.
 
-Among the developed models also AutoML approaches were included as a baseline to show how a general-purpose framework can perform in specific use cases compared to specific architectures designed for the task.
+Among the developed models also AutoML approaches were included as baselines to show how a general-purpose framework can perform in specific use cases compared to specific architectures designed for that use case.
 This approach obtained reasonable results for electricity demand forecasting with 10 hours of total training time but it was not able to excel, and in the case of electricity production forecasting and consumption baseline forecasting was not able to achieve competitive results.
-However, this technology has great potential and with more total training time and powerful GPUs, it probably can be further optimized to reach better performance and excel in the considered use cases.
-Potentially providing more total training time the search process might lead to further optimized models able to reach better performance and excel in the considered use cases.
+However, this technology has great potential and with more total training time and powerful GPUs, the search process might lead to further optimized models able to reach better performance and excel in the considered use cases.
 
-In the following, further possibilities for future study that were not included in this thesis but could be addressed in subsequent research are reported.
-MIWenergía acknowledges the limitations of the provided data but expresses satisfaction with the initial results obtained through these solutions, indicating a desire to continue the collaboration.
-Therefore, ideas for future works are presented herein, aiming to expand upon the current research and explore additional avenues of investigation.
+In the following, further possibilities for future studies that were not included in this thesis but could be addressed in subsequent research are reported.
+MIWenergía acknowledges the limitations of the provided data and expresses satisfaction with the initial results obtained through these solutions, indicating a desire to continue the collaboration.
+Therefore, ideas for future works are presented, with the aim of expanding upon the current research and exploring additional avenues of investigation.
 
-An interesting future work can be of extending the concept of model combination adopted in demand and production forecasting use cases and considering the use of ensemble learning techniques could be valuable for finding optimal combinations of models for various use cases.
+An interesting future work can be of extending the concept of model combination adopted in electricity demand and production forecasting use cases and considering the use of ensemble learning techniques could be valuable for finding optimal combinations of models for the various use cases.
 Ensemble methods can harness the strengths of multiple models to improve overall forecasting accuracy and reliability.
 By combining the predictions of multiple models, for example using a weighted average, ensemble learning approaches can mitigate the weaknesses of individual models and enhance the overall forecasting performance.
-Based on this concept, with the continuous advancement of AutoML, this technology can be used to obtain stronger ensembles letting it find good models providing many days as available training time.
+Based on this concept, with the continuous advancement of AutoML, this technology can be used to obtain more robust ensembles letting it find good models providing many days as available training time.
 
 Future research should focus on improving the accuracy and reliability of the consumption baseline, which serves as a reference for individual customers' energy consumption.
 A deeper understanding of individual customers' energy consumption habits and the factors influencing their choices can be helpful in this objective.
@@ -85,7 +84,7 @@ Including additional features in the models, such as customer-specific informati
 One possibility, having available more customers with more historical data, may also be to find a general model for dealing with all customers, using the knowledge of other customers' consumptions for improving the forecasts of a single customer.
 Furthermore, investigating tariff granularity can be a good future direction to understand whether it could be applicable to produce good results for this use case.
 
-Another future direction to offer scalability, flexibility, and accessibility for MIWenergía and potentially other energy retailers, is to implement the entire system as a SaaS solution with the architecture proposed in chapter~\ref{cha:system}.
+Another future direction to offer scalability, flexibility, and accessibility for MIWenergía and potentially other electricity suppliers, is to implement the entire system as a SaaS solution with the architecture proposed in chapter~\ref{cha:system}.
 This solution would allow for easier deployment, maintenance, and continuous improvement of the developed forecasting models.
 The full implementation would allow for verifying the effective scalability of the SaaS solution.
 By thoroughly assessing the system's performance, this implementation would help identify potential bottlenecks and address any issues that may arise, ensuring a smooth and optimized scalability process.
