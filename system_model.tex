@@ -5,7 +5,7 @@
 In this chapter, the model of the proposed system is presented.
 In the first section, an in-depth presentation of the designed system architecture is provided.
 The different components of the system with their functionalities and interactions are described.
-Tthe overall architecture was designed in order to build a Software as a Service (SaaS) solution capable of satisfying different use cases and being used directly by electricity suppliers.
+The overall architecture was designed in order to build a SaaS solution capable of satisfying different use cases and being used directly by electricity suppliers.
 Lastly, the modules focused on the three use cases of interest are treated more in detail in dedicated sections.
 After this chapter, it will be clear what the main parts of the system are and how they cooperate to accomplish the various use cases of interest.
 
@@ -98,7 +98,7 @@ As shown by the diagram in figure~\ref{fig:loadingflow}, the logic inside this t
 The data parser block transforms the user data in a system-compatible format and passes it to the data storage block which stores the data inside the data storage.
 If there is no model for the specific use case for which data is loaded, the task manager will also create a model training task to train all the available models on this data.
 This allows the system to be ready for the forecast requests on the loaded data.
-The model training task is described more in detail in subsection~\ref{sec:training}.
+The model training task is described more in detail in Subsection~\ref{sec:training}.
 
 \begin{figure}[H]
 \centering
@@ -213,9 +213,9 @@ The task scheduler periodically creates and triggers a performance evaluation ta
 As shown by the diagram in figure~\ref{fig:schedulerflow}, the logic inside the performance evaluation task can be formulated in 2 steps: preprocess the data and evaluate the performance.
 The data preprocessing block collects the data for the specific use case for which the model will be trained, aggregates it correctly, cleans it, and enriches it with weather data.
 The performance evaluation module takes the preprocessed data and evaluates the performance of the last available models.
-The performance evaluation procedure with the obtained results is described in chapter~\ref{cha:evaluation}.
+The performance evaluation procedure with the obtained results is described in Chapter~\ref{cha:evaluation}.
 When performance drops significantly, it triggers the models re-training by creating a model training task for having up-to-date models with respect to the user data so that they might perform better on future forecasts.
-The model training task is described more in detail in subsection~\ref{sec:training}.
+The model training task is described more in detail in Subsection~\ref{sec:training}.
 
 \begin{figure}[H]
 \centering

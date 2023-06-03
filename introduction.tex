@@ -2,14 +2,79 @@
 \label{cha:intro}
 \vspace{0.4 cm}
 
-This is the problem ...
+A brief introduction to the work and the context in which it was realized? ...
 
-This is why it is relevant ...
 
-These are the research questions ...
+These are the treated problems and why they are relevant ...
 
-This is the approach ...
+The accurate forecasting of customers' electricity demand is of vital importance for electricity suppliers.
+It allows them to optimize the purchase of the necessary electricity without having to rely solely on the instantaneous electricity market, thereby avoiding potential cost fluctuations.
+Furthermore, by accurately forecasting demand, electricity suppliers can efficiently offer customers the necessary electricity and supply it at a competitive price, ensuring customer satisfaction and loyalty.
+Additionally, forecasting the production from their own photovoltaic (PV) plants becomes crucial in determining the amount of electricity that needs to be purchased.
+Lastly, understanding the consumption habits of individual customers by establishing a reference consumption baseline aids in developing personalized energy solutions and promoting energy efficiency initiatives.
+This allows the integration of potential new services within the realm of Demand Side Management aiming to increase customer retention.
+
+However, these are open problems and as can be seen in the chapter dedicated to the state of the art, presenting a review of the literature on these problems, there is no clear solution that can be adopted in all the use cases and in every particular case but usually the approaches are tailored on specific datasets and have particular constraints or take advance of particular features that their use case allow.
+
+
+% These are the research questions ...
+
+The thesis addressed the following research questions:
+\begin{enumerate}
+  \item Can the customers' electricity demand be forecasted based on past aggregated consumption data over the customers and historical weather data? The findings contribute to understanding the feasibility of utilizing historical aggregated consumption data over the customers and historical weather data to develop a reliable forecasting model, enabling effective energy management and resource allocation.
+  \item Can the PV plants' production be forecasted based on past aggregated production data over the PV plants and historical weather data, including solar energy data? The thesis examined the potential for accurately predicting PV plants' output using historical production data over the PV plants and historical weather data, facilitating the integration of renewable energy sources and optimizing energy procurement strategies.
+  \item Can a consumption baseline of individual customers be established based on past consumption data of individual customers and historical weather data? The thesis explored the possibility of forecasting consumption baselines for individual customers utilizing historical consumption data of individual customers and historical weather data, offering insights into personalized energy solutions, energy efficiency, and tailored energy-saving recommendations.
+\end{enumerate}
+By addressing these research questions, this thesis advances knowledge in forecasting electricity demand, PV plants' production, and consumption baselines.
+The findings provide practical implications for enhancing energy management strategies, optimizing resource allocation, promoting renewable energy integration, and improving customer-centric energy solutions.
+
+
+% This is the approach to the problems ...
+
+A forecasting system was designed for addressing these research questions.
+For the forecasting system, a novel system architecture was designed in order to build a Software as a Service (SaaS) solution capable of satisfying different use cases and being used directly by electricity suppliers.
+A prototype was implemented with a focus on key components for validating the core system functionalities for each specific use case.
+In particular, the training of different models, the forecasting of new data, and the evaluation of the performance of the developed models were implemented for all the use cases.
+As evaluation methodologies, the blocked k-fold cross-validation and the test on the last split were adopted using as metrics either the MAPE or MAE depending on the specific use case.
+Datasets provided by MIWenergía were adopted for the training and validation of the models.
 
 MIWenergía\footnote{ \url{https://www.miwenergia.com/} } collaboration …
 
-Here is how the thesis is organized ...
+Maybe also add the requested things by MIWenergía:
+\begin{itemize}
+  \item Forecasts of electricity demand for the future month with hourly granularity;
+  \item Forecasts of electricity production for the future week with hourly granularity;
+  \item Forecasts of the consumption baseline of provided customers for a week with hourly granularity.
+\end{itemize}
+
+
+For electricity demand forecasting, the aggregated consumption data over the customers was used.
+This data was initially explored and analyzed and the correlation with weather data was also studied.
+After this, many different models were developed for producing accurate forecasts on this use case.
+
+For electricity production forecasting, the aggregated production data over the PV plants was used.
+The target of the predictions is the mean percentage of production, which is calculated as the division of the total produced energy by the nominal power of the PV plants.
+This data was initially explored and analyzed and the correlation with weather data, including solar energy data, was also studied.
+After this, many different models were developed for producing accurate forecasts on this use case.
+
+For consumption baseline forecasting, the consumption data of three customers was used.
+This data was initially explored and analyzed and the correlation with weather data was also studied.
+After this, many different models were developed for producing accurate forecasts on this use case with a focus on the second customer, which showed the best results.
+
+Among the developed models also AutoML approaches were included as baselines to show how a general-purpose framework can perform in specific use cases compared to specific architectures designed for that use case.
+
+
+% Here is how the thesis is organized ...
+
+The thesis is structured as follows. 
+Chapter~\ref{cha:soa} presents a comprehensive literature review of the current state of the art, discussing key theories and previous studies related to the research questions.
+The context of electricity data representation and time series forecasting methods are analyzed, including an extensive analysis of two prominent subjects in the research community such as Transformers and Automated Machine Learning (AutoML).
+Furthermore, the three use cases of interest, electricity demand forecasting, consumption baseline forecasting, and electricity production forecasting, are treated in detail in dedicated sections.
+In Chapter~\ref{cha:system}, the model of the proposed system is presented.
+An in-depth presentation of the designed system architecture is provided and the different components of the system with their functionalities and interactions are described.
+Moreover, the modules focused on the three use cases of interest are treated more in detail in dedicated sections.
+Chapter~\ref{cha:implementation} presents how the prototype of the system was developed and how the key components of the designed architecture were implemented.
+The implementation of the system’s common components across the various specific use cases is first presented and then dedicated sections explain the implementation details of the use case-specific modules.
+In Chapter~\ref{cha:evaluation}, the system prototype is validated and the performance of the models for the different use cases is evaluated.
+The datasets provided by MIWenergía and the adopted evaluation methodology are first described and then dedicated sections analyze and discuss the performance of the models for the different use cases.
+Finally, Chapter~\ref{cha:conclusions} reports the conclusions of the thesis, summarizing the key findings, their implications, and suggesting avenues for future research.

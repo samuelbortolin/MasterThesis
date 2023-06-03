@@ -2,11 +2,11 @@
 \label{cha:evaluation}
 \vspace{0.4 cm}
 
-In this chapter, the proposed system is validated and the performance of the models for the different use cases is evaluated.
+In this chapter, the system prototype is validated and the performance of the models for the different use cases is evaluated.
 The first section presents the datasets provided by MIWenergía.
 Subsequently, the adopted evaluation methodology is described.
 Finally, the evaluation of the performance of the models for the different use cases is presented.
-After this chapter, it will be clear how the system has been validated and what the performance achieved by the proposed system is.
+After this chapter, it will be clear how the system prototype has been validated and what the performance achieved for the different use cases is.
 
 
 \section{MIWenergía datasets}
@@ -147,7 +147,7 @@ It is the most suitable error metric in consumption baseline forecasting where t
 \label{fig:crossvalidation}
 \end{figure}
 
-For assessing the model performance when dealing with time series data, the traditional cross-validation techniques are not suitable as they assume that the data points are independent and identically distributed (i.i.d.), which is not the case in time series data, as also reported in the chapter~\ref{cha:soa} by the following articles \cite{BERGMEIR2012192, Cerqueira2020}.
+For assessing the model performance when dealing with time series data, the traditional cross-validation techniques are not suitable as they assume that the data points are independent and identically distributed (i.i.d.), which is not the case in time series data, as also reported in the Chapter~\ref{cha:soa} by the following articles \cite{BERGMEIR2012192, Cerqueira2020}.
 In fact, in time series data the order of the observations matters, and there are temporal dependencies between the observations.
 Therefore, a more appropriate technique for evaluating time series models is blocked k-fold cross-validation.
 The basic idea of blocked k-fold cross-validation is to split the data considering multiple training and test sets, where the training set only includes data from the past and the test set includes data from the future.
@@ -192,7 +192,7 @@ The combinations of the models were done just at forecasting time on the last ti
 The same was also done for the AutoML approach, in fact, it was tested just at forecasting time on the last time slot for comparison to the tested models.
 It was included as a baseline to show how a general-purpose framework can perform in specific use cases compared to specific architectures designed for the task.
 
-As explained in chapter~\ref{cha:implementation}, for all the use cases, there is a difference between training and forecasting time for the ML (support vector regressor, hist gradient boosting regressor, and extreme gradient boosting regressor) and DL (LSTM, GRU, and CNN) models.
+As explained in Chapter~\ref{cha:implementation}, for all the use cases, there is a difference between training and forecasting time for the ML (support vector regressor, hist gradient boosting regressor, and extreme gradient boosting regressor) and DL (LSTM, GRU, and CNN) models.
 In particular, for these models, a recursive strategy to generate multi-step forecasts was adopted.
 This approach is a standard classical technique covered in various textbooks, including \cite{Manu2022}.
 It offers advantages such as simplicity in understanding, clear temporal dependency as previous forecasts are used as input for subsequent ones, flexibility to be applied to different models, and adaptability to various forecasting horizons, which is crucial when integrating it into a SaaS solution.
@@ -641,7 +641,7 @@ This scatter plot demonstrates that there is no bias even though it seems that w
 \label{sec:productionval}
 \vspace{0.2 cm}
 
-As described in the data preprocessing in chapter~\ref{cha:implementation}, single PV plant production data are aggregated to obtain the aggregated production data over the PV plants.
+As described in the data preprocessing in Chapter~\ref{cha:implementation}, single PV plant production data are aggregated to obtain the aggregated production data over the PV plants.
 The target of the predictions is the mean percentage of production, which is calculated as the division of the total produced energy by the total nominal power of the PV plants.
 This allows us to have a bounded value from 0 to 100 from which it is possible to obtain the total produced energy simply by multiplying it by the total nominal power of the PV plants.
 This was also done since PV plants are added over time and this was unpredictable, this results in predicting the percentage of production of the PV plants.
@@ -1171,7 +1171,7 @@ The results showed that the daily consumption data of the three customers had:
 \end{itemize}
 It can be noticed that both the coefficients increased considering the daily data meaning that the mean weather data over the day is more correlated to the daily consumption of the three considered customers, compared to the hourly granularity.
 
-As described in chapter~\ref{cha:implementation}, tariff granularity has also been thought of as a possible granularity.
+As described in Chapter~\ref{cha:implementation}, tariff granularity has also been thought of as a possible granularity.
 Tariff granularity assumes that the tariff is a control signal capable of modifying consumption.
 However, after some initial experimental results with this granularity showing unsatisfactory performance, this granularity was not further investigated.
 Though, this granularity can be investigated in a possible future work to understand whether it could be applicable to produce good results.
