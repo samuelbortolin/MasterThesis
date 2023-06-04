@@ -40,6 +40,10 @@ Instead, for the daily granularity, no model was outperforming the four-week bas
 The CNN model performed slightly better in terms of MAPE with 13.46\% but with a MAE of 1.751 kWh.
 Results provided an indication of how with a low amount of data a simple baseline may provide reasonable results and on average they perform better than sophisticated models since these models are not able to be trained well due to the low amount and irregular pattern of this data.
 
+Among the developed models, also AutoML approaches were included as baselines to show how a general-purpose framework can perform in specific use cases compared to specific architectures designed for that use case.
+This approach obtained reasonable results for electricity demand forecasting but it was not able to excel, and in the case of electricity production forecasting and consumption baseline forecasting was not able to achieve competitive results.
+However, this technology showed great potential and with more total training time and powerful GPUs, the search process might lead to further optimized models able to reach better performance and excel in the considered use cases.
+
 Experimental results confirmed that the implemented prototype is able to obtain valuable forecasts for electricity demand and production.
 Instead, consumption baseline forecasts are not so valuable due to the low amount and irregular pattern of the data.
 More studies should be conducted in this direction for being able to obtain accurate and robust consumption baseline forecasts having available more historical data and data of more customers.

@@ -2,28 +2,31 @@
 \label{cha:intro}
 \vspace{0.4 cm}
 
-A brief introduction to the work and the context in which it was realized? ...
+This thesis is conducted in collaboration with U-Hopper\footnote{ \url{https://www.u-hopper.com/} } as part of a research project developed for MIWenergía\footnote{ \url{https://www.miwenergia.com/} }, called RedFox.
+U-Hopper is a deep-tech company located in Trento that develops big data analytics, business intelligence, and artificial intelligence solutions.
+U-Hopper creates high-tech solutions based on companies' business data with the aim of providing analytics to companies and enabling personalized services for their users.
+MIWenergía is an electricity supplier located in Murcia that supplies electricity to thousands of customers and manages multiple photovoltaic (PV) plants promoting sustainability and neutralizing polluting emissions.
+MIWenergía is able to offer an improved service to customers with respect to large companies, with personalized attention and getting customers to save the most on their electricity bill by proposing fair rates.
 
-
-These are the treated problems and why they are relevant ...
+% These are the treated problems and why they are relevant ...
 
 The accurate forecasting of customers' electricity demand is of vital importance for electricity suppliers.
 It allows them to optimize the purchase of the necessary electricity without having to rely solely on the instantaneous electricity market, thereby avoiding potential cost fluctuations.
 Furthermore, by accurately forecasting demand, electricity suppliers can efficiently offer customers the necessary electricity and supply it at a competitive price, ensuring customer satisfaction and loyalty.
-Additionally, forecasting the production from their own photovoltaic (PV) plants becomes crucial in determining the amount of electricity that needs to be purchased.
+Additionally, forecasting the production from their own PV plants becomes crucial in determining the amount of electricity that needs to be purchased.
 Lastly, understanding the consumption habits of individual customers by establishing a reference consumption baseline aids in developing personalized energy solutions and promoting energy efficiency initiatives.
 This allows the integration of potential new services within the realm of Demand Side Management aiming to increase customer retention.
 
-However, these are open problems and as can be seen in the chapter dedicated to the state of the art, presenting a review of the literature on these problems, there is no clear solution that can be adopted in all the use cases and in every particular case but usually the approaches are tailored on specific datasets and have particular constraints or take advance of particular features that their use case allow.
+However, these are open problems and as shown in the chapter dedicated to the state of the art, presenting a review of the literature on these problems, there is no clear solution that can be adopted in all the use cases and every particular situation since usually the approaches are tailored on specific datasets and have certain constraints or take advance of particular features that their use case allow.
 
 
 % These are the research questions ...
 
-The thesis addressed the following research questions:
+The thesis addresses the following research questions:
 \begin{enumerate}
   \item Can the customers' electricity demand be forecasted based on past aggregated consumption data over the customers and historical weather data? The findings contribute to understanding the feasibility of utilizing historical aggregated consumption data over the customers and historical weather data to develop a reliable forecasting model, enabling effective energy management and resource allocation.
-  \item Can the PV plants' production be forecasted based on past aggregated production data over the PV plants and historical weather data, including solar energy data? The thesis examined the potential for accurately predicting PV plants' output using historical production data over the PV plants and historical weather data, facilitating the integration of renewable energy sources and optimizing energy procurement strategies.
-  \item Can a consumption baseline of individual customers be established based on past consumption data of individual customers and historical weather data? The thesis explored the possibility of forecasting consumption baselines for individual customers utilizing historical consumption data of individual customers and historical weather data, offering insights into personalized energy solutions, energy efficiency, and tailored energy-saving recommendations.
+  \item Can the PV plants' production be forecasted based on past aggregated production data over the PV plants and historical weather data, including solar energy data? The thesis examines the potential for accurately predicting PV plants' output using historical production data over the PV plants and historical weather data, facilitating the integration of renewable energy sources and optimizing energy procurement strategies.
+  \item Can a consumption baseline of individual customers be established based on past consumption data of individual customers and historical weather data? The thesis explores the possibility of forecasting consumption baselines for individual customers utilizing historical consumption data of individual customers and historical weather data, offering insights into personalized energy solutions, energy efficiency, and tailored energy-saving recommendations.
 \end{enumerate}
 By addressing these research questions, this thesis advances knowledge in forecasting electricity demand, PV plants' production, and consumption baselines.
 The findings provide practical implications for enhancing energy management strategies, optimizing resource allocation, promoting renewable energy integration, and improving customer-centric energy solutions.
@@ -31,44 +34,41 @@ The findings provide practical implications for enhancing energy management stra
 
 % This is the approach to the problems ...
 
-A forecasting system was designed for addressing these research questions.
-For the forecasting system, a novel system architecture was designed in order to build a Software as a Service (SaaS) solution capable of satisfying different use cases and being used directly by electricity suppliers.
-A prototype was implemented with a focus on key components for validating the core system functionalities for each specific use case.
-In particular, the training of different models, the forecasting of new data, and the evaluation of the performance of the developed models were implemented for all the use cases.
-As evaluation methodologies, the blocked k-fold cross-validation and the test on the last split were adopted using as metrics either the MAPE or MAE depending on the specific use case.
-Datasets provided by MIWenergía were adopted for the training and validation of the models.
-
-MIWenergía\footnote{ \url{https://www.miwenergia.com/} } collaboration …
-
-Maybe also add the requested things by MIWenergía:
+A forecasting system is designed for addressing these research questions.
+For the forecasting system, a novel system architecture is designed in order to build a Software as a Service (SaaS) solution capable of satisfying different use cases and being used directly by electricity suppliers.
+A prototype is implemented with a focus on key components for validating the core system functionalities for each specific use case.
+In particular, the training of different models, the forecasting of new data, and the evaluation of the performance of the developed models are implemented for all the use cases.
+As evaluation methodologies, the blocked k-fold cross-validation and the test on the last split are adopted using as metrics either the MAPE or MAE depending on the specific use case.
+MIWenergía provided different datasets, including aggregated consumption data from all their customers, consumption data from single customers, and production data from PV plants, and these are adopted for the training and validation of the models.
+MIWenergía requested that the prototype would be able to provide forecasts for the following use cases:
 \begin{itemize}
-  \item Forecasts of electricity demand for the future month with hourly granularity;
-  \item Forecasts of electricity production for the future week with hourly granularity;
-  \item Forecasts of the consumption baseline of provided customers for a week with hourly granularity.
+  \item Electricity demand forecasting for the future month with an hourly granularity and possibly also with a daily granularity;
+  \item Electricity production forecasting for the future week with an hourly granularity;
+  \item Consumption baseline forecasting of provided customers for a week with an hourly granularity and possibly also with a daily or by tariff granularity.
 \end{itemize}
 
 
-For electricity demand forecasting, the aggregated consumption data over the customers was used.
-This data was initially explored and analyzed and the correlation with weather data was also studied.
-After this, many different models were developed for producing accurate forecasts on this use case.
+For electricity demand forecasting, the aggregated consumption data over the customers is used.
+This data is initially explored and analyzed and the correlation with weather data is also studied.
+After this, many different models are developed for producing accurate forecasts on this use case, including statistical, machine learning (ML), deep learning (DL), and Automated Machine Learning (AutoML) techniques.
 
-For electricity production forecasting, the aggregated production data over the PV plants was used.
+For electricity production forecasting, the aggregated production data over the PV plants is used.
 The target of the predictions is the mean percentage of production, which is calculated as the division of the total produced energy by the nominal power of the PV plants.
-This data was initially explored and analyzed and the correlation with weather data, including solar energy data, was also studied.
-After this, many different models were developed for producing accurate forecasts on this use case.
+This data is initially explored and analyzed and the correlation with weather data, including solar energy data, is also studied.
+After this, many different models are developed for producing accurate forecasts on this use case, including statistical, ML, DL, and AutoML techniques.
 
-For consumption baseline forecasting, the consumption data of three customers was used.
-This data was initially explored and analyzed and the correlation with weather data was also studied.
-After this, many different models were developed for producing accurate forecasts on this use case with a focus on the second customer, which showed the best results.
+For consumption baseline forecasting, the consumption data of three customers is used.
+This data is initially explored and analyzed and the correlation with weather data is also studied.
+After this, many different models are developed for producing accurate forecasts on this use case, including statistical, ML, DL, and AutoML techniques.
 
-Among the developed models also AutoML approaches were included as baselines to show how a general-purpose framework can perform in specific use cases compared to specific architectures designed for that use case.
+Among the developed models, also AutoML approaches are included as baselines to show how a general-purpose framework can perform in specific use cases compared to specific architectures designed for that use case.
 
 
 % Here is how the thesis is organized ...
 
 The thesis is structured as follows. 
 Chapter~\ref{cha:soa} presents a comprehensive literature review of the current state of the art, discussing key theories and previous studies related to the research questions.
-The context of electricity data representation and time series forecasting methods are analyzed, including an extensive analysis of two prominent subjects in the research community such as Transformers and Automated Machine Learning (AutoML).
+The context of electricity data representation and time series forecasting methods are analyzed, including an extensive analysis of two prominent subjects in the research community such as Transformers and AutoML.
 Furthermore, the three use cases of interest, electricity demand forecasting, consumption baseline forecasting, and electricity production forecasting, are treated in detail in dedicated sections.
 In Chapter~\ref{cha:system}, the model of the proposed system is presented.
 An in-depth presentation of the designed system architecture is provided and the different components of the system with their functionalities and interactions are described.

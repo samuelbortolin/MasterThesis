@@ -11,7 +11,7 @@ This allows the integration of potential new services within the realm of Demand
 
 The thesis addressed the following research questions:
 \begin{enumerate}
-  \item Can the customers' electricity demand be forecasted based on past aggregated consumption data over the customers and historical weather data? The findings contribute to understanding the feasibility of utilizing historical aggregated consumption data over the customers and historical weather data to develop a reliable forecasting model, enabling effective energy management and resource allocation.
+  \item Can the customers' electricity demand be forecasted based on past aggregated consumption data over the customers and historical weather data? The findings contributed to understanding the feasibility of utilizing historical aggregated consumption data over the customers and historical weather data to develop a reliable forecasting model, enabling effective energy management and resource allocation.
   \item Can the PV plants' production be forecasted based on past aggregated production data over the PV plants and historical weather data, including solar energy data? The thesis examined the potential for accurately predicting PV plants' output using historical production data over the PV plants and historical weather data, facilitating the integration of renewable energy sources and optimizing energy procurement strategies.
   \item Can a consumption baseline of individual customers be established based on past consumption data of individual customers and historical weather data? The thesis explored the possibility of forecasting consumption baselines for individual customers utilizing historical consumption data of individual customers and historical weather data, offering insights into personalized energy solutions, energy efficiency, and tailored energy-saving recommendations.
 \end{enumerate}
@@ -42,7 +42,7 @@ Taking into consideration the forecasts with a daily granularity, electricity su
 When a finer granularity is needed, as in the case of MIWenergía, forecasts results with an hourly granularity can be used and even though these are less accurate, they still offer useful information when considered across the entire period.
 
 For electricity production forecasting, the aggregated production data over the PV plants was used.
-The target of the predictions is the mean percentage of production, which is calculated as the division of the total produced energy by the nominal power of the PV plants.
+The target of the predictions was the mean percentage of production, which was calculated as the division of the total produced energy by the nominal power of the PV plants.
 This data was initially explored and analyzed and the correlation with weather data, including solar energy data, was also studied.
 After this, many different models were developed for producing accurate forecasts on this use case.
 Experimental results suggested that the GRU model was the best-performing model for the hourly granularity with a MAE normalized on PV plants' nominal power of 2.79\% on the test set composed of the last week of the percentage of production data.
@@ -65,9 +65,9 @@ Even though the value of the MAPE considering the daily granularity is noticeabl
 For answering whether a consumption baseline of individual customers can be established based on past consumption data the answer seems to be negative considering the quality of data of the provided customers and the limited amount of historical data.
 More studies should be conducted in this direction for being able to obtain accurate and robust consumption baseline forecasts having available more historical data and data of more customers.
 
-Among the developed models also AutoML approaches were included as baselines to show how a general-purpose framework can perform in specific use cases compared to specific architectures designed for that use case.
+Among the developed models, also AutoML approaches were included as baselines to show how a general-purpose framework can perform in specific use cases compared to specific architectures designed for that use case.
 This approach obtained reasonable results for electricity demand forecasting with 10 hours of total training time but it was not able to excel, and in the case of electricity production forecasting and consumption baseline forecasting was not able to achieve competitive results.
-However, this technology has great potential and with more total training time and powerful GPUs, the search process might lead to further optimized models able to reach better performance and excel in the considered use cases.
+However, this technology showed great potential and with more total training time and powerful GPUs, the search process might lead to further optimized models able to reach better performance and excel in the considered use cases.
 
 In the following, further possibilities for future studies that were not included in this thesis but could be addressed in subsequent research are reported.
 MIWenergía acknowledges the limitations of the provided data and expresses satisfaction with the initial results obtained through these solutions, indicating a desire to continue the collaboration.
