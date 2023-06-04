@@ -5,7 +5,7 @@
 \vspace{0.4 cm}
 
 The accurate forecasting of customers' electricity demand is of vital importance for electricity suppliers.
-It allows them to optimize the purchase of the necessary electricity without having to rely solely on the instantaneous electricity market, thereby avoiding potential cost fluctuations.
+It allows them to optimize the purchase of the necessary electricity without having to resort solely to the instantaneous electricity market, thereby avoiding potential cost fluctuations.
 Furthermore, by accurately forecasting demand, electricity suppliers can efficiently offer customers the necessary electricity and supply it at a competitive price, ensuring customer satisfaction and loyalty.
 Additionally, forecasting the production from their own photovoltaic (PV) plants becomes crucial in determining the amount of electricity that needs to be purchased.
 Lastly, understanding the consumption habits of individual customers by establishing a reference consumption baseline aids in developing personalized energy solutions and promoting energy efficiency initiatives.
@@ -26,11 +26,11 @@ Datasets provided by MIWenergía were adopted for the training and validation of
 For electricity demand forecasting, after an in-depth analysis of aggregated consumption data over the customers, many different models were developed for producing accurate forecasts, including statistical, machine learning (ML), deep learning (DL), and Automated Machine Learning (AutoML) techniques.
 Experimental results suggested that the Temporal Fusion Transformer (TFT) model was the best-performing model for the hourly granularity with a MAPE of 14.76\% on the test set composed of the last month of data.
 Instead, for the daily granularity, the best-performing model was the Convolutional Neural Network (CNN) model with a MAPE of 7.49\%.
-Taking into consideration these forecasts, electricity suppliers can gain valuable insights into the expected energy demand for upcoming days and can optimize their purchases.
+Taking into consideration these forecasts, electricity suppliers can gain valuable insights into the expected electricity demand for upcoming days and can optimize their purchases.
 
 For electricity production forecasting, after an in-depth analysis of the mean percentage of production data aggregated over the PV plants, many different models were developed for producing accurate forecasts, including statistical, ML, DL, and AutoML techniques.
 Experimental results suggested that the Gated Recurrent Unit (GRU) model was the best-performing model for the hourly granularity with a MAE normalized on PV plants' nominal power of 2.79\% on the test set composed of the last week of the percentage of production data.
-Taking into consideration these forecasts, electricity suppliers can access crucial insights into the expected energy production for upcoming days, and integrating them with demand forecasts enables electricity suppliers to optimize their purchasing decisions effectively.
+Taking into consideration these forecasts, electricity suppliers can access crucial insights into the expected electricity production for upcoming days, and integrating them with demand forecasts enables electricity suppliers to optimize their purchasing decisions effectively.
 
 For consumption baseline forecasting, after an in-depth analysis of the consumption data of three customers, many different models were developed for producing accurate forecasts, including statistical, ML, DL, and AutoML techniques.
 Experimental results suggested that the TFT model was the best-performing model for the hourly granularity in terms of MAE with 0.231 kWh on the test set composed of the last week of data and it presented a MAPE of 44.19\%.

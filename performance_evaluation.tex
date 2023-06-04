@@ -187,7 +187,7 @@ forecasting & & and test on the last split\\
 \end{table}
 
 This evaluation methodology was used at training time to study the performance over time.
-At forecasting time, the performance on the last time slot was treated with more attention as the most relevant for the energy retailers since the most related to the performance on imminent future data.
+At forecasting time, the performance on the last time slot was treated with more attention as the most relevant for the electricity retailers since the most related to the performance on imminent future data.
 The combinations of the models were done just at forecasting time on the last time slot using the average of some approaches for studying whether there could be a beneficial effect on the forecasts and compensation of error between the different approaches.
 The same was also done for the AutoML approach, in fact, it was tested just at forecasting time on the last time slot for comparison to the tested models.
 It was included as a baseline to show how a general-purpose framework can perform in specific use cases compared to specific architectures designed for the task.
@@ -285,7 +285,7 @@ The graphical representation shows 1 main frequency representing the weekly peri
 \label{fig:demandftday}
 \end{figure}
 
-Basic data is enhanced with the air temperature, the apparent temperature, and the relative humidity since they are considered the only weather features capable of influencing customers' energy consumption.
+Basic data is enhanced with the air temperature, the apparent temperature, and the relative humidity since they are considered the only weather features capable of influencing customers' electricity consumption.
 To assess the relationship between these weather variables and the aggregated consumption over the customers, two correlation coefficients were used: Pearson's correlation coefficient and Spearman's rank correlation coefficient.
 Pearson's correlation coefficient measures the strength of the linear relationship between two variables, while Spearman's rank correlation coefficient measures the strength of the monotonic relationship.
 The pearsonr and spearmanr methods of the SciPy library\footnote{ \url{https://scipy.org/} } were used to compute the correlation with weather data.
@@ -1080,7 +1080,7 @@ Instead, for the second customer there is a small peak at the daily periodicity.
 As can be noticed from the data, there is high variability in consumption and low auto-correlation, this suggests how it is difficult to produce highly accurate results on a single customer level.
 With just the time series of a few users, it is very difficult to learn a well-performing model, having more users it could be possible to learn certain generic trends or standard behaviors.
 
-Basic data is enhanced with the air temperature, the apparent temperature, and the relative humidity since they are considered the only weather features capable of influencing customers' energy consumption.
+Basic data is enhanced with the air temperature, the apparent temperature, and the relative humidity since they are considered the only weather features capable of influencing customers' electricity consumption.
 To assess the relationship between these weather variables and the consumption of the three customers, two correlation coefficients were used: Pearson's correlation coefficient and Spearman's rank correlation coefficient.
 Pearson's correlation coefficient measures the strength of the linear relationship between two variables, while Spearman's rank correlation coefficient measures the strength of the monotonic relationship.
 The pearsonr and spearmanr methods of the SciPy library were used to compute the correlation with weather data.

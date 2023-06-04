@@ -3,7 +3,7 @@
 \vspace{0.4 cm}
 
 The accurate forecasting of customers' electricity demand is of vital importance for electricity suppliers.
-It allows them to optimize the purchase of the necessary electricity without having to rely solely on the instantaneous electricity market, thereby avoiding potential cost fluctuations.
+It allows them to optimize the purchase of the necessary electricity without having to resort solely to the instantaneous electricity market, thereby avoiding potential cost fluctuations.
 Furthermore, by accurately forecasting demand, electricity suppliers can efficiently offer customers the necessary electricity and supply it at a competitive price, ensuring customer satisfaction and loyalty.
 Additionally, forecasting the production from their own PV plants becomes crucial in determining the amount of electricity that needs to be purchased.
 Lastly, understanding the consumption habits of individual customers by establishing a reference consumption baseline aids in developing personalized energy solutions and promoting energy efficiency initiatives.
@@ -12,7 +12,7 @@ This allows the integration of potential new services within the realm of Demand
 The thesis addressed the following research questions:
 \begin{enumerate}
   \item Can the customers' electricity demand be forecasted based on past aggregated consumption data over the customers and historical weather data? The findings contributed to understanding the feasibility of utilizing historical aggregated consumption data over the customers and historical weather data to develop a reliable forecasting model, enabling effective energy management and resource allocation.
-  \item Can the PV plants' production be forecasted based on past aggregated production data over the PV plants and historical weather data, including solar energy data? The thesis examined the potential for accurately predicting PV plants' output using historical production data over the PV plants and historical weather data, facilitating the integration of renewable energy sources and optimizing energy procurement strategies.
+  \item Can the PV plants' production be forecasted based on past aggregated production data over the PV plants and historical weather data, including solar energy data? The thesis examined the potential for accurately forecasting PV plants' output using historical production data over the PV plants and historical weather data, facilitating the integration of renewable energy sources and optimizing energy procurement strategies.
   \item Can a consumption baseline of individual customers be established based on past consumption data of individual customers and historical weather data? The thesis explored the possibility of forecasting consumption baselines for individual customers utilizing historical consumption data of individual customers and historical weather data, offering insights into personalized energy solutions, energy efficiency, and tailored energy-saving recommendations.
 \end{enumerate}
 By addressing these research questions, this thesis advances knowledge in forecasting electricity demand, PV plants' production, and consumption baselines.
@@ -47,7 +47,7 @@ This data was initially explored and analyzed and the correlation with weather d
 After this, many different models were developed for producing accurate forecasts on this use case.
 Experimental results suggested that the GRU model was the best-performing model for the hourly granularity with a MAE normalized on PV plants' nominal power of 2.79\% on the test set composed of the last week of the percentage of production data.
 These promising results can be considered a good indication of the soundness of the proposed approach and demonstrated that the PV plants' production can be forecasted based on past aggregated production data over the PV plants and historical weather data, including solar energy data.
-Taking into consideration the forecasts with an hourly granularity, electricity suppliers can access crucial insights into the expected energy production for upcoming days with higher accuracy compared to relying on simple baselines, standard statistical methods, or estimates just based on weather forecasts.
+Taking into consideration the forecasts with an hourly granularity, electricity suppliers can access crucial insights into the expected electricity production for upcoming days with higher accuracy compared to relying on simple baselines, standard statistical methods, or estimates just based on weather forecasts.
 Integrating these production forecasts with demand forecasts enables electricity suppliers to optimize their purchasing decisions effectively.
 By accurately forecasting production, electricity suppliers can avoid unnecessary excess or deficits in energy procurement, leading to substantial cost savings for the company.
 In fact, providing forecasts for both production and demand enables electricity suppliers to operate efficiently and maximize their financial returns.
@@ -78,8 +78,8 @@ Ensemble methods can harness the strengths of multiple models to improve overall
 By combining the predictions of multiple models, for example using a weighted average, ensemble learning approaches can mitigate the weaknesses of individual models and enhance the overall forecasting performance.
 Based on this concept, with the continuous advancement of AutoML, this technology can be used to obtain more robust ensembles letting it find good models providing many days as available training time.
 
-Future research should focus on improving the accuracy and reliability of the consumption baseline, which serves as a reference for individual customers' energy consumption.
-A deeper understanding of individual customers' energy consumption habits and the factors influencing their choices can be helpful in this objective.
+Future research should focus on improving the accuracy and reliability of the consumption baseline, which serves as a reference for individual customers' electricity consumption.
+A deeper understanding of individual customers' electricity consumption habits and the factors influencing their choices can be helpful in this objective.
 Including additional features in the models, such as customer-specific information and household information, coupled with the increase of available data could enhance the performance of consumption baseline forecasts and allow for exploring alternative models and techniques.
 One possibility, having available more customers with more historical data, may also be to find a general model for dealing with all customers, using the knowledge of other customers' consumptions for improving the forecasts of a single customer.
 Furthermore, investigating tariff granularity can be a good future direction to understand whether it could be applicable to produce good results for this use case.
@@ -91,7 +91,7 @@ By thoroughly assessing the system's performance, this implementation would help
 Moreover, the presented architecture would be able to support additional use cases other than the ones discussed in this thesis.
 
 Consumption disaggregation on a single customer level was also thought to be an interesting use case for MIWenergía.
-It consists of estimating individual appliances' energy consumption from individual customers' energy consumption data.
+It consists of estimating individual appliances' electricity consumption from individual customers' electricity consumption data.
 This would be an interesting application to explore in the near future which could provide valuable insights to both MIWenergía and its customers and facilitate more targeted energy-saving strategies.
 However, this use case requires dedicated devices for collecting finer aggregated data with a minute-level granularity.
 Moreover, a first round of data collection and ground truth annotation is required for developing dedicated models for this use case.
