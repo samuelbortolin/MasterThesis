@@ -52,7 +52,7 @@ InfluxDB\footnote{ \url{https://www.influxdata.com/} } was thought of as a possi
 
 The weather data storage consists of a CSV file and a JSON file containing the weather data, which are loaded using the pandas library.
 Weather data in the CSV file is manually obtained from Iowa Environmental Mesonet\footnote{ \url{https://mesonet.agron.iastate.edu/request/download.phtml} } for the weather station in the Murcia airport, and it was used for customers demand forecasting.
-Weather data in the JSON file is manually obtained from the Weatherbit\footnote{ \url{https://www.weatherbit.io/} } APIs for a weather station near Murcia airport, these were used for PV plants production forecasting since it provides also solar energy data.
+Weather data in the JSON file is manually obtained from the Weatherbit\footnote{ \url{https://www.weatherbit.io/} } APIs for a weather station near Murcia airport, these were used for PV plants' production forecasting since it provides also solar energy data.
 InfluxDB was thought of as a possible database in the complete system integration for managing the weather data with an automatic download of weather data using Weatherbit APIs.
 
 The ML models storage consists of pickle files containing the ML models.
@@ -90,7 +90,7 @@ In addition, the active incomings of the past 24 hours and the ones of the same 
 For the daily granularity instead, the hour information of the date for which to compute the prediction is not considered as a feature, the weather information is obtained as the average over the day, and in place of the active incomings described for the hourly granularity, the daily active incomings of the past 14 days are used.
 The training is performed using the fit method on the training data for one-step ahead forecasting.
 The specific models' parameters are discussed in the dedicated section of Chapter~\ref{cha:evaluation}.
-For the prediction, an recursive strategy is used by forecasting one time instant at a time using weather forecasts, and then uaing the predicted demand data as previous information for the next time instants.
+For the prediction, a recursive strategy is used by forecasting one time instant at a time using weather forecasts, and then using the predicted demand data as previous information for the next time instants.
 
 The prophet model is developed using the prophet library\footnote{ \url{https://facebook.github.io/prophet/} }.
 The fit method tasks as input a pandas data frame with just the information related to the time instants and the training active incomings and fits the optimal prophet model.
@@ -103,7 +103,7 @@ Since these models are able to deal with sequences, a look back at the past 3 ho
 For the daily granularity instead, the hour of the date for which to compute the prediction is not considered as a feature, the weather information is obtained as the average over the day, and the considered look back is at the past 14 days.
 The training is performed using the fit method on the training data for one-step ahead forecasting.
 The specific models' architecture and parameters are discussed in the dedicated section of Chapter~\ref{cha:evaluation}.
-For the prediction, an recursive strategy is used by forecasting one time instant at a time using weather forecasts, and then uaing the predicted demand data as previous information for the next time instants.
+For the prediction, a recursive strategy is used by forecasting one time instant at a time using weather forecasts, and then using the predicted demand data as previous information for the next time instants.
 
 The models derived by the combination of the previous techniques consist of the combination of one-day baseline, one-week baseline, and prophet with possibly one of LSTM, GRU, or CNN.
 Further details of the optimal combinations are discussed in the dedicated section of Chapter~\ref{cha:evaluation}.
@@ -159,7 +159,7 @@ In addition, the active incomings of the past 24 hours and the ones of the same 
 For the daily and tariff granularities instead, the hour information of the date for which to compute the prediction is not considered as a feature, the weather information is obtained as the average over the day or tariff ranges, and in place of the active incomings described for the hourly granularity, the daily or tariff active incomings of the past 14 days are used.
 The training is performed using the fit method on the training data for one-step ahead forecasting.
 The specific models' parameters are discussed in the dedicated section of Chapter~\ref{cha:evaluation}.
-For the prediction, an recursive strategy is used by forecasting one time instant at a time using weather forecasts, and then uaing the predicted demand data as previous information for the next time instants.
+For the prediction, a recursive strategy is used by forecasting one time instant at a time using weather forecasts, and then using the predicted demand data as previous information for the next time instants.
 
 The prophet model is developed using the prophet library.
 The fit method tasks as input a pandas data frame with just the information related to the time instants and the training active incomings and fits the optimal prophet model.
@@ -172,7 +172,7 @@ Since these models are able to deal with sequences, a look back at the past hour
 For the daily and tariff granularities instead, the hour of the date for which to compute the prediction is not considered as a feature, the weather information is obtained as the average over the day or tariff ranges, and the considered look back is at the past 14 days.
 The training is performed using the fit method on the training data for one-step ahead forecasting.
 The specific models' architecture and parameters are discussed in the dedicated section of Chapter~\ref{cha:evaluation}.
-For the prediction, an recursive strategy is used by forecasting one time instant at a time using weather forecasts, and then uaing the predicted demand data as previous information for the next time instants.
+For the prediction, a recursive strategy is used by forecasting one time instant at a time using weather forecasts, and then using the predicted demand data as previous information for the next time instants.
 
 The TFT model is developed using the PyTorch Forecasting library.
 A TimeSeriesDataSet is constructed using the following features for the hourly granularity: the time index, the hour, the day, the weekday, the month, and the year information of the time instant for which to compute the prediction, the air temperature, the apparent temperature, and the relative humidity in the considered hour.
@@ -215,7 +215,7 @@ Support vector regressor, hist gradient boosting regressor, and extreme gradient
 In addition, the mean percentages of production of the past 24 hours and the one of the same hour considered in the previous 14 days are also used.
 The training is performed using the fit method on the training data for one-step ahead forecasting.
 The specific models' parameters are discussed in the dedicated section of Chapter~\ref{cha:evaluation}.
-For the prediction, an recursive strategy is used by forecasting one time instant at a time using weather forecasts, and then uaing the predicted production data as previous information for the next time instants.
+For the prediction, a recursive strategy is used by forecasting one time instant at a time using weather forecasts, and then using the predicted production data as previous information for the next time instants.
 
 The prophet model is developed using the prophet library.
 The fit method tasks as input a pandas data frame with just the information related to the time instants and the training mean percentages of production and fits the optimal prophet model.
@@ -227,7 +227,7 @@ In addition, the mean percentage of production of the previous hour is also used
 Since these models are able to deal with sequences, a look back at the past hour and at the same hour over the past 14 days is considered and passed as input to the models with the same features as the time instant for which to compute the prediction but with the actual production data of the past time instants.
 The training is performed using the fit method on the training data for one-step ahead forecasting.
 The specific models' architecture and parameters are discussed in the dedicated section of Chapter~\ref{cha:evaluation}.
-For the prediction, an recursive strategy is used by forecasting one time instant at a time using weather forecasts, and then uaing the predicted production data as previous information for the next time instants.
+For the prediction, a recursive strategy is used by forecasting one time instant at a time using weather forecasts, and then using the predicted production data as previous information for the next time instants.
 
 The models derived by the combination of the previous techniques consist of the combination of one-day baseline and prophet with possibly one of LSTM, GRU, or CNN.
 Further details of the optimal combinations are discussed in the dedicated section of Chapter~\ref{cha:evaluation}.

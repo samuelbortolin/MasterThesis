@@ -632,10 +632,6 @@ This scatter plot demonstrates that there is no bias even though it seems that w
 \label{fig:demandcnndailyforecastsscatterplot}
 \end{figure}
 
-% TODO then add the comparison with forecasts of their provider
-% commentarli (sia il numero che il grafico dell'errore) --> interpretare il dato (perchè è buono?) --> benchmark in letteratura, come va il loro, ecc…
-% [valutare criticamente, aspetto tecnologico scientifico]
-
 
 \section{Electricity production forecasting}
 \label{sec:productionval}
@@ -776,7 +772,7 @@ In figure~\ref{fig:pvplantsmap}, the locations of the PV plants and of the weath
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{images/production/pv_plants_map}
-\caption{The map of the city of Murcia with indicated the location of the PV plants with a blue icon and of the revelation station with a lightblue icon. The distances between each PV plant and the weather station are reported in lightblue boxes near the PV plant locations.}
+\caption{The map of the city of Murcia with indicated the location of the PV plants with a blue icon and of the revelation station with a light blue icon. The distances between each PV plant and the weather station are reported in light blue boxes near the PV plant locations.}
 \label{fig:pvplantsmap}
 \end{figure}
 
@@ -945,10 +941,6 @@ The absolute error of forecasts produced by the GRU model for the last split in 
 It can be shown that, except for the peak when it overestimates the actual data and some other minor peaks, the error stays below 10\%.
 Finally, the scatter plot representing the error of the forecasts produced by the GRU model for the last split in comparison to the actual values is reported in figure~\ref{fig:productiongruhourlyforecastsscatterplot}.
 This scatter plot demonstrates that there is no bias and can be also noticed that when the predicted values are low also the error is limited, while when the prediction is high there are both high positive and negative errors.
-
-% TODO then add the comparison with forecasts of their provider
-% commentarli (sia il numero che il grafico dell'errore) --> interpretare il dato (perchè è buono?) --> benchmark in letteratura, come va il loro, ecc…
-% [valutare criticamente, aspetto tecnologico scientifico]
 
 
 \section{Consumption baseline forecasting} 
@@ -1349,7 +1341,7 @@ It still has great potential as demonstrated in demand prediction and potentiall
 
 The forecasts produced by the TFT model for the last split in comparison to the actual values are reported in figure~\ref{fig:baselinetfthourlyforecasts}.
 It can be noticed that it is not able to accurately follow the signal since this is very varying from hour to hour.
-Although, it is able to somehow predict that there is a peak during the day but it is not able to reach the correct quantity.
+Although it is able to somehow predict that there is a peak during the day it is not able to reach the correct quantity.
 
 \begin{figure}[H]
 \centering
@@ -1546,6 +1538,3 @@ This confirms that there is no clear pattern and it really depends on the custom
 \caption{The absolute percentage error of forecasts produced by the four-week baseline for the last split in comparison to the actual values.}
 \label{fig:baseline4weeksdailyforecastsmape}
 \end{figure}
-
-% commentarli (sia il numero che il grafico dell'errore) --> interpretare il dato (perchè è buono?) --> benchmark in letteratura, ecc…
-% [valutare criticamente, aspetto tecnologico scientifico]
