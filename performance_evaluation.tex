@@ -639,7 +639,7 @@ This scatter plot demonstrates that there is no bias even though it seems that w
 
 As described in the data preprocessing in Chapter~\ref{cha:implementation}, single PV plant production data are aggregated to obtain the aggregated production data over the PV plants.
 The target of the predictions is the mean percentage of production, which is calculated as the division of the total produced energy by the total nominal power of the PV plants.
-This allows us to have a bounded value from 0 to 100 from which it is possible to obtain the total produced energy simply by multiplying it by the total nominal power of the PV plants.
+This allows it to have a bounded value from 0 to 100 from which it is possible to obtain the total produced energy simply by multiplying it by the total nominal power of the PV plants.
 This was also done since PV plants are added over time and this was unpredictable, this results in predicting the percentage of production of the PV plants.
 This data is analyzed to get some descriptive analytics before finding adequate models to forecast the production.
 
