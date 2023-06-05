@@ -192,7 +192,7 @@ The combinations of the models were done just at forecasting time on the last ti
 The same was also done for the AutoML approach, in fact, it was tested just at forecasting time on the last time slot for comparison to the tested models.
 It was included as a baseline to show how a general-purpose framework can perform in specific use cases compared to specific architectures designed for the task.
 
-As explained in Chapter~\ref{cha:implementation}, for all the use cases, there is a difference between training and forecasting time for the ML (support vector regressor, hist gradient boosting regressor, and extreme gradient boosting regressor) and DL (LSTM, GRU, and CNN) models.
+As explained in Chapter~\ref{cha:implementation}, for all the use cases, there is a difference between training and forecasting time for the ML (SVR, hist gradient boosting regressor, and XGBoost regressor) and DL (LSTM, GRU, and CNN) models.
 In particular, for these models, a recursive strategy to generate multi-step forecasts was adopted.
 This approach is a standard classical technique covered in various textbooks, including \cite{Manu2022}.
 It offers advantages such as simplicity in understanding, clear temporal dependency as previous forecasts are used as input for subsequent ones, flexibility to be applied to different models, and adaptability to various forecasting horizons, which is crucial when integrating it into a SaaS solution.
@@ -285,7 +285,7 @@ The graphical representation shows 1 main frequency representing the weekly peri
 \label{fig:demandftday}
 \end{figure}
 
-Basic data is enhanced with the air temperature, the apparent temperature, and the relative humidity since they are considered the only weather features capable of influencing customers' electricity consumption.
+The basic data is enhanced with the air temperature, the apparent temperature, and the relative humidity since they are considered the only weather features capable of influencing customers' electricity consumption.
 To assess the relationship between these weather variables and the aggregated consumption over the customers, two correlation coefficients were used: Pearson's correlation coefficient and Spearman's rank correlation coefficient.
 Pearson's correlation coefficient measures the strength of the linear relationship between two variables, while Spearman's rank correlation coefficient measures the strength of the monotonic relationship.
 The pearsonr and spearmanr methods of the SciPy library\footnote{ \url{https://scipy.org/} } were used to compute the correlation with weather data.
@@ -309,11 +309,11 @@ After this data analysis, the specific parameters used in the models can be expl
 The parameters for the different models were tested and verified on training data to result in the best-performing models, this was done by trying different values and configurations.
 The baseline approaches are built considering the repetition of past days and weeks since data presents a high correlation with that time instants and could lead to a reasonable baseline performance to achieve.
 The SARIMA model considers the week as the period for seasonal differencing since data presents a high correlation with that time instants and the model can try to take advantage of the weekly seasonality.
-The support vector regressor model uses a radial basis function kernel with a configuration of the C parameter (regularization parameter of squared l2 penalty) to 1.0 to penalize the complexity of the model, and the epsilon parameter defining the epsilon-tube for no penalty to 0.1 as a trade-off between accuracy and generalization.
+The SVR model uses a radial basis function kernel with a configuration of the C parameter (regularization parameter of squared l2 penalty) to 1.0 to penalize the complexity of the model, and the epsilon parameter defining the epsilon-tube for no penalty to 0.1 as a trade-off between accuracy and generalization.
 The hist gradient boosting regressor model uses as loss the absolute error since this was the supported metric closer to our evaluation metric.
 The learning rate was set to 0.1, 100 estimators were used and l2 regularization was not set.
 The parameters for tree definition are 31 as the maximum number of leaves, depth is not constrained, 20 as the minimum number of samples per leaf, and 255 as the maximum number of bins.
-For the extreme gradient boosting regressor model, tree-based models were used and the construction algorithm is automatically chosen by heuristic to choose the fastest method.
+For the XGBoost regressor model, tree-based models were used and the construction algorithm is automatically chosen by heuristic to choose the fastest method.
 It uses a squared loss since this was the supported metric closer to our evaluation metric.
 The learning rate was set to 0.3, 100 estimators were used and l2 regularization was set with a weight of 1.0.
 The parameters for tree definition are 6 as the maximum depth, and the maximum number of leaves is not constrained.
@@ -379,7 +379,7 @@ SVR & 61.80 $\pm$ 22.63 & 29.47\\
 \hline
 Prophet & 28.68 $\pm$ 7.07 & 31.62\\
 \hline
-XGBRegressor & 16.88 $\pm$ 8.08 & 37.81\\
+XGBoostRegressor & 16.88 $\pm$ 8.08 & 37.81\\
 \hline
 \end{tabular}
 \caption{Table summarizing the results for hourly granularity.}
@@ -457,7 +457,7 @@ SVR & 29.06 & 29.47\\
 \hline
 Prophet & 33.94 & 31.62\\
 \hline
-XGBRegressor & 17.84 & 37.81\\
+XGBoostRegressor & 17.84 & 37.81\\
 \hline
 \end{tabular}
 \caption{Table summarizing the results for hourly granularity at forecasting time.}
@@ -508,7 +508,7 @@ Also, the boosters present very good results on the last time split and also on 
 \hline
 CNN & 50.55 $\pm$ 36.81 & 7.49\\
 \hline
-XGBRegressor & 12.96 $\pm$ 4.36 & 7.65\\
+XGBoostRegressor & 12.96 $\pm$ 4.36 & 7.65\\
 \hline
 HistGradientBoostingRegressor & 13.02 $\pm$ 5.54 & 9.81\\
 \hline
@@ -548,7 +548,7 @@ This probably can be explained by the fact that the first week of the last split
 \hline
 CNN & 8.36 & 7.49\\
 \hline
-XGBRegressor & 11.78 & 7.65\\
+XGBoostRegressor & 11.78 & 7.65\\
 \hline
 HistGradientBoostingRegressor & 12.42 & 9.81\\
 \hline
@@ -719,7 +719,7 @@ It shows a high auto-correlation value in the closest time lag and then a slight
 The coefficients given by the Fourier transform for the daily percentage of production data are reported in figure~\ref{fig:productionftday}.
 As expected from the time series decomposition, the graphical representation exhibits that there are no main frequencies in the daily percentage of production.
 
-Basic data is enhanced with the air temperature, the apparent temperature, the relative humidity, the wind speed, the wind direction, the pressure altimeter, the visibility, the sky coverage, the diffuse horizontal irradiance, the direct normal irradiance, the global horizontal irradiance, the solar radiation, the UV index, the solar elevation angle, and the solar azimuth angle.
+The basic data is enhanced with the air temperature, the apparent temperature, the relative humidity, the wind speed, the wind direction, the pressure altimeter, the visibility, the sky coverage, the diffuse horizontal irradiance, the direct normal irradiance, the global horizontal irradiance, the solar radiation, the UV index, the solar elevation angle, and the solar azimuth angle.
 To assess the relationship between these weather variables and the percentage of production, two correlation coefficients were used: Pearson's correlation coefficient and Spearman's rank correlation coefficient.
 Pearson's correlation coefficient measures the strength of the linear relationship between two variables, while Spearman's rank correlation coefficient measures the strength of the monotonic relationship.
 The pearsonr and spearmanr methods of the SciPy library were used to compute the correlation with weather data.
@@ -780,11 +780,11 @@ After this data analysis, the specific parameters used in the models can be expl
 The parameters for the different models were tested and verified on training data to result in the best-performing models, this was done by trying different values and configurations.
 The baseline approach is built considering the repetition of past days since data presents a high correlation with that time instant and could lead to a reasonable baseline performance to achieve.
 A simple ARIMA model considers the single hours without seasonally on the week period like for demand prediction since data does not present a relevant correlation with that time instants.
-The support vector regressor model uses a radial basis function kernel with a configuration of the C parameter (regularization parameter of squared l2 penalty) to 1.0 to penalize the complexity of the model, and the epsilon parameter defining the epsilon-tube for no penalty to 0.1 as a trade-off between accuracy and generalization.
+The SVR model uses a radial basis function kernel with a configuration of the C parameter (regularization parameter of squared l2 penalty) to 1.0 to penalize the complexity of the model, and the epsilon parameter defining the epsilon-tube for no penalty to 0.1 as a trade-off between accuracy and generalization.
 The hist gradient boosting regressor model uses as loss the absolute error.
 The learning rate was set to 0.1, 100 estimators were used and l2 regularization was not set.
 The parameters for tree definition are 31 as the maximum number of leaves, depth is not constrained, 20 as the minimum number of samples per leaf, and 255 as the maximum number of bins.
-For the extreme gradient boosting regressor model, tree-based models were used and the construction algorithm is automatically chosen by heuristic to choose the fastest method.
+For the XGBoost regressor model, tree-based models were used and the construction algorithm is automatically chosen by heuristic to choose the fastest method.
 It uses a squared loss since this was the supported metric closer to our evaluation metric.
 The learning rate was set to 0.3, 100 estimators were used and l2 regularization was set with a weight of 1.0.
 The parameters for tree definition are 6 as the maximum depth, and the maximum number of leaves is not constrained.
@@ -835,7 +835,7 @@ SVR & 5.20 $\pm$ 1.12 & 3.12\\
 \hline
 CNN & 5.98 $\pm$ 1.52 & 3.27\\
 \hline
-XGBRegressor & 4.57 $\pm$ 0.97 & 3.42\\
+XGBoostRegressor & 4.57 $\pm$ 0.97 & 3.42\\
 \hline
 LSTM & 5.23 $\pm$ 1.46 & 3.51\\
 \hline
@@ -874,7 +874,7 @@ SVR & 3.12\\
 \hline
 CNN & 3.27\\
 \hline
-XGBRegressor & 3.35\\
+XGBoostRegressor & 3.35\\
 \hline
 LSTM + One Day Baseline & 3.37\\
 \hline
@@ -1072,7 +1072,7 @@ Instead, for the second customer there is a small peak at the daily periodicity.
 As can be noticed from the data, there is high variability in consumption and low auto-correlation, this suggests how it is difficult to produce highly accurate results on a single customer level.
 With just the time series of a few users, it is very difficult to learn a well-performing model, having more users it could be possible to learn certain generic trends or standard behaviors.
 
-Basic data is enhanced with the air temperature, the apparent temperature, and the relative humidity since they are considered the only weather features capable of influencing customers' electricity consumption.
+The basic data is enhanced with the air temperature, the apparent temperature, and the relative humidity since they are considered the only weather features capable of influencing customers' electricity consumption.
 To assess the relationship between these weather variables and the consumption of the three customers, two correlation coefficients were used: Pearson's correlation coefficient and Spearman's rank correlation coefficient.
 Pearson's correlation coefficient measures the strength of the linear relationship between two variables, while Spearman's rank correlation coefficient measures the strength of the monotonic relationship.
 The pearsonr and spearmanr methods of the SciPy library were used to compute the correlation with weather data.
@@ -1174,11 +1174,11 @@ The baseline approaches are built considering the repetition of past days and we
 Instead of just considering the one-day and one-week baselines, for this use case also the four-week and the twelve-week baselines are considered taking an average of the consumption in the specified number of previous weeks.
 This is because averaging the consumption over the previous week may lead to a more robust prediction considering a month and a trimester range,
 The SARIMA model considers the week as the period for seasonal differencing since data presents a high correlation with that time instants and the model can try to take advantage of the weekly seasonality.
-The support vector regressor model uses a radial basis function kernel with a configuration of the C parameter (regularization parameter of squared l2 penalty) to 1.0 to penalize the complexity of the model, and the epsilon parameter defining the epsilon-tube for no penalty to 0.1 as a trade-off between accuracy and generalization.
+The SVR model uses a radial basis function kernel with a configuration of the C parameter (regularization parameter of squared l2 penalty) to 1.0 to penalize the complexity of the model, and the epsilon parameter defining the epsilon-tube for no penalty to 0.1 as a trade-off between accuracy and generalization.
 The hist gradient boosting regressor model uses as loss the absolute error.
 The learning rate was set to 0.1, 100 estimators were used and l2 regularization was not set.
 The parameters for tree definition are 31 as the maximum number of leaves, depth is not constrained, 20 as the minimum number of samples per leaf, and 255 as the maximum number of bins.
-For the extreme gradient boosting regressor model, tree-based models were used and the construction algorithm is automatically chosen by heuristic to choose the fastest method.
+For the XGBoost regressor model, tree-based models were used and the construction algorithm is automatically chosen by heuristic to choose the fastest method.
 It uses a squared loss since this was the supported metric closer to our evaluation metric.
 The learning rate was set to 0.3, 100 estimators were used and l2 regularization was set with a weight of 1.0.
 The parameters for tree definition are 6 as the maximum depth, and the maximum number of leaves is not constrained.
@@ -1222,7 +1222,7 @@ The model is trained using MAPE as loss and Nadam as optimizer with a learning r
 % \hline
 % TFT & 74.25 $\pm$ 34.86 | 0.219 $\pm$ 0.066 & 39.10 | 0.055\\
 % \hline
-% XGBRegressor & 117.86 $\pm$ 31.29 | 0.157 $\pm$ 0.038 & 120.87 | 0.067\\
+% XGBoostRegressor & 117.86 $\pm$ 31.29 | 0.157 $\pm$ 0.038 & 120.87 | 0.067\\
 % \hline
 % CNN & 167.29 $\pm$ 49.74 | 0.303 $\pm$ 0.067 & 165.55 | 0.110\\
 % \hline
@@ -1260,7 +1260,7 @@ SVR & 60.30 $\pm$ 6.81 | 0.278 $\pm$ 0.032 & 60.41 | 0.243\\
 \hline
 SARIMA & 74.17 $\pm$ 10.01 | 0.271 $\pm$ 0.021 & 78.02 | 0.244\\
 \hline
-XGBRegressor & 73.71 $\pm$ 9.54 | 0.275 $\pm$ 0.024 & 68.07 | 0.245\\
+XGBoostRegressor & 73.71 $\pm$ 9.54 | 0.275 $\pm$ 0.024 & 68.07 | 0.245\\
 \hline
 Prophet & 83.84 $\pm$ 10.23 | 0.280 $\pm$ 0.020 & 81.92 | 0.249\\
 \hline
@@ -1296,7 +1296,7 @@ CNN & 148.16 $\pm$ 30.05 | 0.510 $\pm$ 0.105 & 70.19 | 0.318\\
 % \hline
 % SVR & 146.78 $\pm$ 53.02 | 0.205 $\pm$ 0.043 & 92.01 | 0.160\\
 % \hline
-% XGBRegressor & 121.36 $\pm$ 34.22 | 0.184 $\pm$ 0.068 & 103.16 | 0.161\\
+% XGBoostRegressor & 121.36 $\pm$ 34.22 | 0.184 $\pm$ 0.068 & 103.16 | 0.161\\
 % \hline
 % 12 Week Baseline & 214.61 $\pm$ 94.84 | 0.256 $\pm$ 0.046 & 122.51 | 0.175\\
 % \hline
@@ -1396,7 +1396,7 @@ The error can be pretty high also when the predicted values are low.
 % \hline
 % GRU & 46.34 $\pm$ 16.29 | 3.409 $\pm$ 1.652 & 61.09 | 1.298\\
 % \hline
-% XGBRegressor & 50.01 $\pm$ 31.96 | 2.597 $\pm$ 0.890 & 89.73 | 1.939\\
+% XGBoostRegressor & 50.01 $\pm$ 31.96 | 2.597 $\pm$ 0.890 & 89.73 | 1.939\\
 % \hline
 % HistGradientBoostingRegressor & 45.34 $\pm$ 28.64 | 2.362 $\pm$ 0.682 & 102.34 | 2.115\\
 % \hline
@@ -1441,7 +1441,7 @@ HistGradientBoostingRegressor & 15.36 $\pm$ 3.72 | 1.889 $\pm$ 0.355 & 16.80 | 1
 \hline
 12 Week Baseline & 15.56 $\pm$ 4.43 | 1.861 $\pm$ 0.460 & 19.99 | 2.006\\
 \hline
-XGBRegressor & 17.62 $\pm$ 4.88 | 2.135 $\pm$ 0.558 & 21.38 | 2.111\\
+XGBoostRegressor & 17.62 $\pm$ 4.88 | 2.135 $\pm$ 0.558 & 21.38 | 2.111\\
 \hline
 GRU & 18.68 $\pm$ 3.36 | 2.463 $\pm$ 0.534 & 17.92 | 2.390\\
 \hline
@@ -1485,7 +1485,7 @@ SVR & 18.10 $\pm$ 3.24 | 2.449 $\pm$ 0.552 & 23.44 | 2.694\\
 % \hline
 % TFT & 55.70 $\pm$ 46.32 | 2.508 $\pm$ 1.143 & 44.25 | 2.587\\
 % \hline
-% XGBRegressor & 50.11 $\pm$ 56.39 | 2.027 $\pm$ 1.003 & 75.51 | 3.045\\
+% XGBoostRegressor & 50.11 $\pm$ 56.39 | 2.027 $\pm$ 1.003 & 75.51 | 3.045\\
 % \hline
 % GRU & 60.44 $\pm$ 53.78 | 2.513 $\pm$ 1.044 & 62.95 | 3.940\\
 % \hline

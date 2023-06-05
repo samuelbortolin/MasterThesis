@@ -245,14 +245,14 @@ In this section, the system's common components across the various specific use 
 
 The authentication layer manages the user authentication process.
 In particular, for accessing the system the user needs to be authenticated.
-When users interact with the system via dedicated APIs, to be authorized they must provide one valid token and have an account with an active subscription.
-It is also possible to have more users associated with the same account.
+When users interact with the system via dedicated APIs, to be authorized they must provide a valid token and have an account with an active subscription.
+Multiple users can also be associated with the same account, thinking of the case of a company account with its employees as users.
 
 The API layer manages the user interactions with the system.
 Many endpoints are available for managing the users' possible operations, such as data loading, model training, and forecasting requests.
-Data loading management endpoints consist of requesting the loading of new data and checking the status of the data loading operations.
-Model training management endpoints consist of requesting the training of new models and checking the status of the model training operations.
-Forecasting requests management endpoints consist of requesting the forecasts of future data and checking the status of the forecasting requests operations.
+Data loading management endpoints allow for requesting the loading of new data and checking the status of the data loading operations.
+Model training management endpoints allow for requesting the training of new models and checking the status of the model training operations.
+Forecasting requests management endpoints allow for requesting the forecasts of future data and checking the status of the forecasting requests operations.
 
 The task manager coordinates the execution of the different tasks requested by the users.
 Where the possible tasks, as described in the previous section, are the following:
@@ -270,16 +270,16 @@ For the data loading task, the main blocks are:
 
 The base blocks across the various specific use cases that are then described more in detail in the following sections are the following:
 \begin{itemize}
-  \item Data preprocessing, which retrieves the needed data from the data storage, aggregates it correctly, cleans it by filling the gaps by using a linear interpolation, and enriches it using the weather information retrieved from the weather data storage. For future data forecasts in addition to past weather data also weather forecasts are collected;
+  \item Data preprocessing, which retrieves the needed data from the data storage, enriches it with weather data retrieved from the weather data storage, cleans it by filling the gaps by using a linear interpolation, and aggregates it correctly on the basis of the granularity. For future data forecasts in addition to past weather data also weather forecasts are collected;
   \item Models training module, which takes the preprocessed data and trains the specified model with the provided specifications;
-  \item Prediction module, which takes the preprocessed data, requests the specified model, and computes the forecasts.
+  \item Prediction module, which takes the preprocessed data, retrieves the specified model, and computes the forecasts.
 \end{itemize}
 
 The ML model interface handles the interactions with the ML models storage where the trained ML models are stored.
-In particular, this component provides the functionalities to store and retrieve models in the ML models storage,
-This component allows the system to support lots of models for each account and new ones can be added over time.
-A versioning mechanism is also handled in the model storage.
-This component allows the system to provide users with the latest available models and choose the best-performing ones.
+In particular, this component provides the functionalities to store and retrieve models in the ML models storage.
+This component allows the system to support lots of models for each account and to integrate new ones over time.
+A versioning mechanism is also maintained in the ML model storage.
+This component allows the system to provide users with the latest models available and let them choose the best-performing ones for their forecasts.
 
 The task scheduler manages the periodic scheduled tasks.
 In particular, as described in the previous section, it is present just the performance evaluation task, which evaluates the performance of the available models and if needed triggers the models re-training.
@@ -295,7 +295,7 @@ The module handles the specialization of data models, training, and forecasts fo
 
 The UML (Unified Modeling Language) data class for electricity demand forecasting is represented in figure~\ref{fig:umldemand}.
 The considered attributes are the following: the date and time of the detection, the active incoming to the customers in the past hour, and the number of customers.
-The basic data is enhanced with the following weather information, the reported value is the average of the value in the last hour: air temperature, apparent temperature, and relative humidity.
+The basic data is enhanced with the following weather information, whose value is the average of the values in the last hour: air temperature, apparent temperature, and relative humidity.
 The mean active incoming per customer is calculated as the division of the total active incoming by the number of customers.
 
 \begin{figure}[H]
@@ -322,7 +322,7 @@ The mean active incoming per customer is calculated as the division of the total
 The schematic representation of the model training procedure for electricity demand forecasting is presented in figure~\ref{fig:modeltrainingdemand}.
 It consists of 2 modules: the data preprocessing module and the models training module.
 The data preprocessing module takes historical aggregated consumption data and historical weather data as input and prepares the data for the model training.
-The models training module based on the prepared data trains the set of available models for electricity demand forecasting: SARIMA, support vector regressor, hist gradient boosting regressor, extreme gradient boosting regressor, prophet, LSTM, GRU, CNN, TFT, and the combination of different techniques which is also tested.
+The models training module based on the prepared data trains the set of supported models for electricity demand forecasting: SARIMA, SVR, hist gradient boosting regressor, XGBoost regressor, prophet, LSTM, GRU, CNN, TFT, and the combination of different techniques which is also tested.
 Some baseline approaches which consider repeating past days and weeks, and an AutoML approach are also considered as comparisons.
 
 The schematic representation of the forecasting procedure for electricity demand forecasting is presented in figure~\ref{fig:modelforecastingdemand}.
@@ -339,9 +339,9 @@ In this section, the consumption baseline forecasting module is described.
 The module handles the specialization of data models, training, and forecasts for the consumption baseline forecasting use case.
 
 The UML data class for consumption baseline forecasting is represented in figure~\ref{fig:umlbaseline}.
-The considered attributes are the following: the date and time of the detection, the CUPS code (Universal Supply Point Code) which identifies the customer, and the active incoming to the customer in the past hour.
-In the case of other customer information, this might be used to try to improve the performance of the models.
-The basic data is enhanced with the following weather information, the reported value is the average of the value in the last hour: air temperature, apparent temperature, and relative humidity.
+The considered attributes are the following: the date and time of the detection, the CUPS code (Universal Supply Point Code) identifying the customer, and the active incoming to the customer in the past hour.
+In the case of other customer information will be provided, this can be integrated into the UML data class and used to try to improve the performance of the models.
+The basic data is enhanced with the following weather information, whose value is the average of the values in the last hour: air temperature, apparent temperature, and relative humidity.
 
 \begin{figure}[H]
 \centering
@@ -360,7 +360,7 @@ The basic data is enhanced with the following weather information, the reported 
 The schematic representation of the model training procedure for consumption baseline forecasting is presented in figure~\ref{fig:modeltrainingbaseline}.
 It consists of 2 modules: the data preprocessing module and the models training module.
 The data preprocessing module takes historical single customer consumption data and historical weather data as input and prepares the data for the model training.
-The models training module based on the prepared data trains the set of available models for consumption baseline forecasting: SARIMA, support vector regressor, hist gradient boosting regressor, extreme gradient boosting regressor, prophet, LSTM, GRU, CNN, and TFT.
+The models training module based on the prepared data trains the set of available models for consumption baseline forecasting: SARIMA, SVR, hist gradient boosting regressor, XGBoost regressor, prophet, LSTM, GRU, CNN, and TFT.
 Some baseline approaches which consider repeating past days and weeks, and an AutoML approach are also considered as comparisons.
 
 The schematic representation of the forecasting procedure for consumption baseline forecasting is presented in figure~\ref{fig:modelforecastingbaseline}.
@@ -402,12 +402,12 @@ The module handles the specialization of data models, training, and forecasts fo
 
 The UML data class for a single PV plant data for electricity production forecasting is represented in figure~\ref{fig:umlsingleplant}.
 The considered attributes are the following: the date and time of the detection, the id of the asset (intended as the PV plant identifier), the nominal power of the PV plant (intended as its maximum theoretical production power per hour), and the produced energy in the past hour by the PV plant.
-The basic data is enhanced with the following weather information, the reported value is the average of the value in the last hour: air temperature, apparent temperature, relative humidity, wind speed, wind direction, pressure altimeter, visibility, sky coverage, diffuse horizontal irradiance, direct normal irradiance, global horizontal irradiance, solar radiation, UV index, solar elevation angle, and solar azimuth angle.
+The basic data is enhanced with the following weather information, whose value is the average of the values in the last hour: air temperature, apparent temperature, relative humidity, wind speed, wind direction, pressure altimeter, visibility, sky coverage, diffuse horizontal irradiance, direct normal irradiance, global horizontal irradiance, solar radiation, UV index, solar elevation angle, and solar azimuth angle.
 The percentage of production is calculated by the division of the produced energy by the nominal power of the PV plant.
 
-While the UML data class for the aggregated data over PV plants for electricity production forecasting is represented in figure~\ref{fig:umlproduction}.
+Instead, the UML data class for the aggregated data over PV plants for electricity production forecasting is represented in figure~\ref{fig:umlproduction}.
 The considered attributes are the following: the date and time of the detection, the number of PV plants, the total nominal power of the PV plants (intended as the sum of the maximum theoretical production power per hour of all PV plants), and the produced energy in the past hour by the PV plants.
-The basic data is enhanced with the following weather information, the reported value is the average of the value in the last hour: air temperature, apparent temperature, relative humidity, wind speed, wind direction, pressure altimeter, visibility, sky coverage, diffuse horizontal irradiance, direct normal irradiance, global horizontal irradiance, solar radiation, UV index, solar elevation angle, and solar azimuth angle.
+The basic data is enhanced with the same weather information as in the case of the single PV plant.
 The mean produced energy for a single PV plant is calculated as the division of the total produced energy by the number of PV plants.
 The mean percentage of production is calculated as the division of the total produced energy by the total nominal power of the PV plants.
 
@@ -428,7 +428,7 @@ The mean percentage of production is calculated as the division of the total pro
 The schematic representation of the model training procedure for electricity production forecasting is presented in figure~\ref{fig:modeltrainingproduction}.
 It consists of 2 modules: the data preprocessing module and the models training module.
 The data preprocessing module takes historical PV plants' production data and historical weather data as input and prepares the data for the model training.
-The models training module based on the prepared data trains the set of available models for electricity production forecasting: ARIMA, support vector regressor, hist gradient boosting regressor, extreme gradient boosting regressor, prophet, LSTM, GRU, CNN, TFT, and the combination of different techniques which is also tested.
+The models training module based on the prepared data trains the set of available models for electricity production forecasting: ARIMA, SVR, hist gradient boosting regressor, XGBoost regressor, prophet, LSTM, GRU, CNN, TFT, and the combination of different techniques which is also tested.
 A baseline approach which considers repeating past days and an AutoML approach are also considered as comparisons.
 
 The schematic representation of the model training procedure for electricity production forecasting is presented in figure~\ref{fig:modelforecastingproduction}.
