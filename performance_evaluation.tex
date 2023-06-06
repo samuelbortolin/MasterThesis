@@ -247,7 +247,7 @@ Other minor peaks are present mostly at multiples of the 1/week frequency.
 \end{figure}
 
 The daily aggregated consumption data over the customers is reported in figure~\ref{fig:demanddataplotday}.
-Aggregating the data on a daily basis is possible to observe more clearly the weekly pattern of consumption, which exhibits an increase on weekdays and a decrease on weekends.
+Aggregating the data on a daily basis it is possible to observe more clearly the weekly pattern of consumption, which exhibits an increase on weekdays and a decrease on weekends.
 
 \begin{figure}[H]
 \centering
@@ -392,7 +392,7 @@ Prophet & 28.68 $\pm$ 7.07 & 31.62\\
 XGBoostRegressor & 16.88 $\pm$ 8.08 & 37.81\\
 \hline
 \end{tabular}
-\caption{Table summarizing the results in electricity demand forecasting with an hourly granularity.}
+\caption{Summary table of the results in electricity demand forecasting with an hourly granularity.}
 \label{tab:demandhourlyresults}
 \end{table}
 
@@ -470,7 +470,7 @@ Prophet & 33.94 & 31.62\\
 XGBoostRegressor & 17.84 & 37.81\\
 \hline
 \end{tabular}
-\caption{Table summarizing the results in electricity demand forecasting with an hourly granularity at forecasting time on the last split.}
+\caption{Summary table of the results in electricity demand forecasting with an hourly granularity at forecasting time on the last split.}
 \label{tab:demandhourlyresultsforecast}
 \end{table}
 
@@ -532,7 +532,7 @@ Prophet & 19.06 $\pm$ 10.81 & 26.33\\
 SVR & 53.63 $\pm$ 22.39 & 39.82\\
 \hline
 \end{tabular}
-\caption{Table summarizing the results in electricity demand forecasting with a daily granularity.}
+\caption{Summary table of the results in electricity demand forecasting with a daily granularity.}
 \label{tab:demanddailyresults}
 \end{table}
 
@@ -610,7 +610,7 @@ Prophet & 17.35 & 26.33\\
 SVR & 58.09 & 39.82\\
 \hline
 \end{tabular}
-\caption{Table summarizing the results in electricity demand forecasting with a daily granularity at forecasting time on the last split.}
+\caption{Summary table of the results in electricity demand forecasting with a daily granularity at forecasting time on the last split.}
 \label{tab:demanddailyresultsforecast}
 \end{table}
 
@@ -688,15 +688,15 @@ Other minor peaks are present mostly at multiples of the 1/day frequency.
 \label{fig:productionft}
 \end{figure}
 
-The daily mean percentage of production data is reported in figure~\ref{fig:productiondataplotday}.
-Aggregating the data on a daily basis is possible to observe that there is no pattern in the PV plants’ production over the days.
-
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.5\textwidth]{images/production/data_day_aggregated_plot}
 \caption{The daily mean percentage of production data.}
 \label{fig:productiondataplotday}
 \end{figure}
+
+The daily mean percentage of production data is reported in figure~\ref{fig:productiondataplotday}.
+Aggregating the data on a daily basis it is possible to observe that there is no pattern in the PV plants’ production over the days.
 
 The time series decomposition using an additive model of the daily mean percentage of production data considering as period of the time series a week is reported in figure~\ref{fig:productiondecompositionday}.
 It showed a considerable amount of noise, comparable to the trend in magnitude when not in the summer season.
@@ -865,7 +865,7 @@ Prophet & 7.90 $\pm$ 1.62 & 4.38\\
 One Day Baseline & 6.81 $\pm$ 3.14 & 4.58\\
 \hline
 \end{tabular}
-\caption{Table summarizing the results in electricity production forecasting with an hourly granularity.}
+\caption{Summary table of the results in electricity production forecasting with an hourly granularity.}
 \label{tab:productionhourlyresults}
 \end{table}
 
@@ -927,7 +927,7 @@ One Day Baseline & 4.58\\
 AutoML & 5.89\\
 \hline
 \end{tabular}
-\caption{Table summarizing the results in electricity production forecasting with an hourly granularity at forecasting time on the last split.}
+\caption{Summary table of the results in electricity production forecasting with an hourly granularity at forecasting time on the last split.}
 \label{tab:productionhourlyresultsforecast}
 \end{table}
 
@@ -1051,7 +1051,7 @@ Other minor peaks are present mostly at multiples of the 1/day frequency, in par
 It can be also noticed that a relevant peak at 1/week frequency is present just for the second customer.
 
 The daily consumption data of the three customers are reported in figure~\ref{fig:dataplotdaycustomer1}, figure~\ref{fig:dataplotdaycustomer2}, and figure~\ref{fig:dataplotdaycustomer3}.
-Aggregating the data on a daily basis is possible to observe a weekly pattern of consumption, which is more visible looking at the daily consumption data of the second customer.
+Aggregating the data on a daily basis it is possible to observe a weekly pattern of consumption, which is more visible looking at the daily consumption data of the second customer.
 
 \begin{figure}[H]
 \begin{minipage}[b]{8.5cm}
@@ -1237,7 +1237,7 @@ Only this customer is reported since it presented the most promising results and
 The blocked k-fold cross-validation suggests that the TFT model has the best MAPE and this is not confirmed on the last split just because there is GRU that performs slightly better in terms of MAPE.
 The not-encouraging thing is that even if it is the best model in terms of MAPE, this value is still close to 50\% indicating that on average the predictions are distant from the actual value by half of this value.
 TFT is also the best model in terms of MAE on the last split, but not on the basis of the blocked k-fold cross-validation which indicates that the best model is the hist gradient boosting regressor model.
-In general, this data is not well predictable since presents a high variability and also the different baselines confirm that having a look at the close history there is no relevant daily or weekly repetition with MAPE and MAE both higher than TFT and hist gradient boosting regressor model.
+In general, this data is not well predictable since it presents a high variability and also the different baselines confirm that having a look at the close history there is no relevant daily or weekly repetition with MAPE and MAE both higher than TFT and hist gradient boosting regressor model.
 
 % first customer
 % \begin{table}[H]
@@ -1275,7 +1275,7 @@ In general, this data is not well predictable since presents a high variability 
 % Prophet & 215.51 $\pm$ 113.13 | 0.253 $\pm$ 0.025 & 487.29 | 0.258\\
 % \hline
 % \end{tabular}
-% \caption{Table summarizing the results in consumption baseline forecasting for the first customer with an hourly granularity.}
+% \caption{Summary table of the results in consumption baseline forecasting for the first customer with an hourly granularity.}
 % \label{tab:baselinehourlyresults}
 % \end{table}
 
@@ -1315,7 +1315,7 @@ One Day Baseline & 75.80 $\pm$ 13.96 | 0.318 $\pm$ 0.035 & 71.25 | 0.292\\
 CNN & 148.16 $\pm$ 30.05 | 0.510 $\pm$ 0.105 & 70.19 | 0.318\\
 \hline
 \end{tabular}
-\caption{Table summarizing the results in consumption baseline forecasting for the second customer with an hourly granularity.}
+\caption{Summary table of the results in consumption baseline forecasting for the second customer with an hourly granularity.}
 \label{tab:baselinehourlyresults}
 \end{table}
 
@@ -1355,7 +1355,7 @@ CNN & 148.16 $\pm$ 30.05 | 0.510 $\pm$ 0.105 & 70.19 | 0.318\\
 % CNN & 1749.85 $\pm$ 2806.48 | 2.035 $\pm$ 3.380 & 546.16 | 0.665\\  % TODO relaunch
 % \hline
 % \end{tabular}
-% \caption{Table summarizing the results in consumption baseline forecasting for the third customer with an hourly granularity.}
+% \caption{Summary table of the results in consumption baseline forecasting for the third customer with an hourly granularity.}
 % \label{tab:baselinehourlyresults}
 % \end{table}
 
@@ -1452,7 +1452,7 @@ As for demand prediction, AutoML does not present very good results probably due
 % 12 Week Baseline & 64.66 $\pm$ 61.13 | 2.832 $\pm$ 1.158 & 233.05 | 4.945\\
 % \hline
 % \end{tabular}
-% \caption{Table summarizing the results in consumption baseline forecasting for the first customer with a daily granularity.}
+% \caption{Summary table of the results in consumption baseline forecasting for the first customer with a daily granularity.}
 % \label{tab:baselinedailyresults}
 % \end{table}
 
@@ -1491,7 +1491,7 @@ Prophet & 17.36 $\pm$ 5.18 | 1.947 $\pm$ 0.426 & 25.45 | 2.458\\
 SVR & 18.10 $\pm$ 3.24 | 2.449 $\pm$ 0.552 & 23.44 | 2.694\\
 \hline
 \end{tabular}
-\caption{Table summarizing the results in consumption baseline forecasting for the second customer with a daily granularity.}
+\caption{Summary table of the results in consumption baseline forecasting for the second customer with a daily granularity.}
 \label{tab:baselinedailyresults}
 \end{table}
 
@@ -1531,7 +1531,7 @@ SVR & 18.10 $\pm$ 3.24 | 2.449 $\pm$ 0.552 & 23.44 | 2.694\\
 % SVR & 199.33 $\pm$ 179.16 | 6.763 $\pm$ 2.162 & 158.47 | 6.146\\
 % \hline
 % \end{tabular}
-% \caption{Table summarizing the results in consumption baseline forecasting for the third customer with a daily granularity.}
+% \caption{Summary table of the results in consumption baseline forecasting for the third customer with a daily granularity.}
 % \label{tab:baselinedailyresults}
 % \end{table}
 
