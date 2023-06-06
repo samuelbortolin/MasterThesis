@@ -44,7 +44,7 @@ InfluxDB\footnote{ \url{https://www.influxdata.com/} } was thought of as a possi
 
 The weather data storage consists of a CSV file and a JSON (JavaScript Object Notation) file containing the weather data, which are loaded using the pandas library.
 Weather data in the CSV file is manually obtained from Iowa Environmental Mesonet\footnote{ \url{https://mesonet.agron.iastate.edu/request/download.phtml} } for the weather station in the Murcia airport, and it is used for the customers’ demand and consumption baseline forecasting use cases.
-Weather data in the JSON file is manually obtained from the Weatherbit\footnote{ \url{https://www.weatherbit.io/} } APIs for a weather station near Murcia airport, and it is used for the PV plants' production forecasting use case since it provides also solar energy data.
+Weather data in the JSON file is manually obtained from the Weatherbit\footnote{ \url{https://www.weatherbit.io/} } APIs for a weather station near Murcia airport, and it is used for the PV plants' production forecasting use case since it also provides solar energy data.
 InfluxDB was thought of as a possible database in the complete system integration for managing the storage of weather data with an automatic download of weather data using Weatherbit APIs.
 
 The ML models storage consists of pickle files containing the ML models.

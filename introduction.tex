@@ -2,18 +2,12 @@
 \label{cha:introduction}
 \vspace{0.4 cm}
 
-This thesis is conducted in collaboration with U-Hopper\footnote{ \url{https://www.u-hopper.com/} } as part of a research project developed for MIWenergía\footnote{ \url{https://www.miwenergia.com/} }, called RedFox.
-U-Hopper is a deep-tech company located in Trento that develops big data analytics, business intelligence, and artificial intelligence solutions.
-U-Hopper creates high-tech solutions based on companies' business data with the aim of providing analytics to companies and enabling personalized services for their customers.
-MIWenergía is an electricity supplier located in Murcia that supplies electricity to thousands of customers and manages multiple photovoltaic (PV) plants promoting sustainability and neutralizing polluting emissions.
-MIWenergía is able to offer an improved service to customers with respect to large companies, with personalized attention and getting customers to save the most on their electricity bill by proposing fair rates.
-
 The accurate forecasting of customers' electricity demand is of vital importance for electricity suppliers, especially in this moment of global crisis, who have to obtain supplies from the increasingly volatile electricity market.
 Having exact information on the electricity demand of their customers at any instant in time represents a great opportunity for this type of company.
 This will allow them to optimize the purchase of the necessary electricity without having to resort solely to the instantaneous electricity market, thereby avoiding potential cost fluctuations.
 They will become capable of proactively planning their energy procurement strategies, ensuring a stable and reliable supply while minimizing financial risks.
 Furthermore, by accurately forecasting demand, electricity suppliers can efficiently offer customers the necessary electricity and supply it at a competitive price, ensuring customer satisfaction and loyalty.
-Additionally, an escalating number of companies, MIWenergía included, possess their own electricity production facilities, such as PV plants.
+Additionally, an escalating number of companies possess their own electricity production facilities, such as PV plants.
 For these companies forecasting the production from their own PV plants becomes crucial in determining the amount of electricity that needs to be purchased to meet the demand.
 By forecasting the production of these facilities, electricity suppliers can efficiently balance their energy portfolios and minimize reliance on non-renewable sources, leading to a more sustainable and environmentally friendly energy supply.
 Lastly, understanding the consumption habits of individual customers by establishing a reference consumption baseline aids in developing personalized energy solutions and promoting energy efficiency initiatives.
@@ -22,8 +16,11 @@ By aligning their offerings with customers' consumption habits, electricity supp
 However, these are open research problems and as shown in the dedicated chapter on the state of the art, presenting a comprehensive review of the literature on these research problems, there is no universal solution that can be applicable to all use cases and all specific situations.
 Typically, the presented approaches are tailored to specific datasets, with certain constraints, or leveraging unique features that are available within each respective use case.
 
-MIWenergía provided various datasets, including aggregated consumption data from all their customers, consumption data from single customers, and production data from PV plants.
-Leveraging these datasets, the objective of the research project is to develop a prototype of a forecasting system that can deliver accurate forecasts for the following use cases:
+One of the key challenges in addressing these problems is the availability of suitable datasets.
+To overcome this challenge, this thesis leveraged various datasets provided by MIWenergía\footnote{ \url{https://www.miwenergia.com/} }, including aggregated consumption data from all their customers, consumption data from single customers, and production data from PV plants.
+MIWenergía is an electricity supplier located in Murcia that supplies electricity to thousands of customers and manages multiple photovoltaic (PV) plants promoting sustainability and neutralizing polluting emissions.
+MIWenergía is able to offer an improved service to customers with respect to large companies, with personalized attention and getting customers to save the most on their electricity bill by proposing fair rates.
+Leveraging these datasets, the objective of the thesis is to develop a prototype of a forecasting system that can deliver accurate forecasts for the following use cases:
 \begin{itemize}
   \item Electricity demand forecasting, generating forecasts for the upcoming month with an hourly granularity, and in the case with an hourly granularity is not feasible generating them with a daily granularity;
   \item Electricity production forecasting, generating forecasts for the future week with an hourly granularity;

@@ -43,7 +43,7 @@ The aggregated consumption data from all their customers consists of hourly aggr
 The graphical representation of the hourly aggregated consumption data is reported in figure~\ref{fig:demanddataplot}.
 The number of customers is variable, with a maximum of 4253, a minimum of 1591, a mean of 2988, and a standard deviation of 855.
 The graphical representation of the hourly number of customers is reported in figure~\ref{fig:customersplot}.
-It was thought to normalize the consumption on the basis of the number of customers in order to study the average consumption data per customer, as illustrated in figure~\ref{fig:meandemanddataplot}, and then multiply by the number of customers.
+It was thought to normalize the consumption on the basis of the number of customers in order to study the average consumption data per customer, as illustrated in figure~\ref{fig:meandemanddataplot}, and then multiply by the number of customers for obtaining the demand of the customers.
 However, this was not feasible since often this value changes significantly without reflecting on the consumption data, this information was deemed unreliable and not utilized.
 Despite this limitation, the average consumption per customer still provided valuable insights into consumption patterns.
 Specifically, it suggested the presence of two consumption peaks: one in the summer, likely attributed to air conditioning systems, and a second peak in the winter, likely caused by heating systems.
@@ -79,10 +79,10 @@ The total entries for the three customers are 25567 in the overall period from J
 \caption{The graphical representation of the consumption data of the three customers.}
 \end{figure}
 
-Only consumption data for three customers were provided, as electricity consumption data of customers is considered personal data as stated in the Directive (EU) 2019/944 of the European Parliament\footnote{ \url{https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019L0944} }, which establishes common rules for the internal market for electricity.
+Only consumption data for three customers was provided, as electricity consumption data of customers is considered personal data as stated in the Directive (EU) 2019/944 of the European Parliament\footnote{ \url{https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019L0944} }, which establishes common rules for the internal market for electricity.
 As such, the data falls under the scope of the General Data Protection Regulation (GDPR)\footnote{ \url{https://gdpr-info.eu/} }, which requires explicit consent for processing personal data.
-Therefore, it is likely that the provided data came from MIWenergía's internal employees who consented to participate in the research.
-In fact, the provided data were needed for a technical feasibility study.
+Therefore, it is likely that the provided data came from MIWenergía's internal employees who consented to provide it.
+In fact, the consumption data for some customers was needed for a technical feasibility study.
 However, to identify consumption patterns among a broader population, data from more customers would be required.
 
 By analyzing the data plots, it can be observed that the consumption patterns of the three customers are quite distinct.
@@ -93,7 +93,7 @@ For instance:
   \item The third customer has a dense series with some gaps with very low consumption in parts of the year, probably due to time periods away from home.
 \end{itemize}
 
-The production data from 8 PV plants consists of hourly aggregated production data:
+The production data from PV plants consists of hourly aggregated production data of eight PV plants:
 \begin{enumerate}
   \item from January 2022 to October 2022 for a total of 7296 total entries and it has a nominal power of 149.75 kW;
   \item from February 2022 to October 2022 for a total of 6552 total entries and it has a nominal power of 237.6 kW;
@@ -102,13 +102,15 @@ The production data from 8 PV plants consists of hourly aggregated production da
   \item from September 2022 to October 2022 for a total of 1465 total entries and it has a nominal power of 126.2 kW;
   \item from September 2022 to October 2022 for a total of 1465 total entries and it has a nominal power of 113 kW;
   \item from September 2022 to October 2022 for a total of 1465 total entries and it has a nominal power of 45 kW;
-  \item from September 2022 to October 2022 for a total of 1465 total entries and it has a nominal power of 100 kW;
+  \item from September 2022 to October 2022 for a total of 1465 total entries and it has a nominal power of 100 kW.
 \end{enumerate}
-The total entries for the 8 PV plants are 29836 total entries in the overall period from January 2022 to October 2022, aggregating over plants the resulting entries are 7296.
+The total entries for the eight PV plants are 29836 total entries in the overall period from January 2022 to October 2022, aggregating over plants the resulting entries are 7296.
 The graphical representation of the hourly aggregated total production data and mean percentage of production data are reported respectively in figure~\ref{fig:productiondataplot} and figure~\ref{fig:productiondataplotpercentage}.
 
-The same weather data from the same provider and the same weather station were used for all the tasks.
-While it is reasonable to assume that some weather conditions, such as clouds, may vary and affect consumption and production differently, this approach was taken since the customers and the PV plants were in the same area, with a maximum distance of around 100 km between them, and also because the value of the weather parameters is an average of the values recorded in the past hour.
+As explained in Chapter~\ref{cha:implementation}, weather data from the two providers are used for the tasks.
+Weather data from Iowa Environmental Mesonet for the weather station in the Murcia airport is used for the customers’ demand and consumption baseline forecasting use cases.
+Instead, weather data from the Weatherbit APIs for a weather station near Murcia airport is used for the PV plants’ production forecasting use case since it also provides solar energy data.
+While it is reasonable to assume that some weather conditions, such as clouds, may vary and affect consumption and production differently, this approach is taken since the customers and the PV plants are in the same area, with a maximum distance of around 100 km between them, and also because the value of the weather parameters is an average of the values recorded in the past hour.
 Therefore, using the same weather data is deemed appropriate for the analysis at hand, given that it reflects the weather conditions in the area over a broad time frame.
 
 \begin{figure}[H]
@@ -133,7 +135,7 @@ Therefore, using the same weather data is deemed appropriate for the analysis at
 \label{sec:methodology}
 \vspace{0.2 cm}
 
-The evaluation methodology was based on two relevant error metrics: MAPE and MAE.
+The evaluation methodology is based on two relevant error metrics: MAPE and MAE.
 These are standard and widely used metrics in time series forecasting for different use cases, as reported in many articles and books such as \cite{armstrong2001principles, DEGOOIJER2006443, HYNDMAN2006679}.
 The MAPE is defined as $\text{MAPE}(y, \hat{y}) = \frac{100\%}{N} \sum_{i=0}^{N - 1} \frac{|y_i - \hat{y}_i|}{|y_i|}$.
 It is the most relevant error metric for all the tasks since it is a percentage-based error metric that takes into account the magnitude of the errors relative to the actual values.
@@ -147,22 +149,23 @@ It is the most suitable error metric in consumption baseline forecasting where t
 \label{fig:crossvalidation}
 \end{figure}
 
-For assessing the model performance when dealing with time series data, the traditional cross-validation techniques are not suitable as they assume that the data points are independent and identically distributed (i.i.d.), which is not the case in time series data, as also reported in the Chapter~\ref{cha:soa} by the following articles \cite{BERGMEIR2012192, Cerqueira2020}.
+For assessing the model performance when dealing with time series data, the traditional cross-validation techniques are not suitable as they assume that the data points are i.i.d., which is not the case in time series data, as also reported in the Chapter~\ref{cha:soa} by the following articles \cite{BERGMEIR2012192, Cerqueira2020}.
 In fact, in time series data the order of the observations matters, and there are temporal dependencies between the observations.
 Therefore, a more appropriate technique for evaluating time series models is blocked k-fold cross-validation.
 The basic idea of blocked k-fold cross-validation is to split the data considering multiple training and test sets, where the training set only includes data from the past and the test set includes data from the future.
 This simulates the real-world scenario where we want to make predictions about the future based on past data.
-In figure~\ref{fig:crossvalidation}, the schematic representation of how the blocked k-fold cross-validation was performed is reported, 12 splits were used with a test size depending on the specific use case.
+The schematic representation of how the blocked k-fold cross-validation was performed is reported in figure~\ref{fig:crossvalidation}.
+The number of splits used is 12 with a test size depending on the specific use case.
 The training set is increased by adding the previous test elements at every successive evaluation.
 
-Another technique, reported in \cite{Cerqueira2020} is the repeated holdout approach repeated in multiple testing periods using a Monte Carlo simulation.
-This approach involved using 70\% of the total observations of the time series in each test.
-For each period, a random point from the time series was selected, and a training window comprising 60\% of the time series before the selected point was used for training, while a testing window of 10\% of the time series after the selected point was used for evaluation.
+Another technique, reported in \cite{Cerqueira2020} is the holdout approach repeated in multiple testing periods using a Monte Carlo simulation.
+This approach involves using 70\% of the total observations of the time series in each test.
+For each period, a random point from the time series is selected, and a training window comprising 60\% of the time series before the selected point is used for training, while a testing window of 10\% of the time series after the selected point is used for evaluation.
 In the paper, it was stated that the approach provided the most accurate estimates when the time series are non-stationary.
-However, for having the same evaluation mechanisms on all the models and simulating the fact that the model starts with limited data and then the training amount increases over time to obtain better performance, block validation was used using the TimeSeriesSplit provided by the scikit-learn library.
-Moreover, the considered data are without a strong trend as reported in the dedicated sections of the specific use cases where the data and the model forecasts are analyzed.
+However, for having the same evaluation mechanisms on all the models and simulating the fact that the model starts with limited data and then the training amount increases over time to obtain better performance, blocked k-fold cross-validation was used using the TimeSeriesSplit functionality provided by the scikit-learn library.
+Moreover, the considered data is without a strong trend as reported in the dedicated sections of the specific use cases where the data and the model forecasts are analyzed.
 
-In addition to the blocked k-fold cross-validation results also the results on the last test split using the rest as training are reported.
+In addition to the blocked k-fold cross-validation results also the results on the last test split using the rest for training are reported.
 This was done since it provides insight on which could be the performance of the models in forecasting the near future data with the currently available training data.
 A table summarizing the metrics and the evaluation mechanisms adopted for the use cases is reported in table~\ref{tab:metricstable}.
 
@@ -172,13 +175,13 @@ A table summarizing the metrics and the evaluation mechanisms adopted for the us
 \hline
 \textbf{Use case} & \textbf{Metrics} & \textbf{Evaluation mechanisms}\\
 \hline
-Electricity demand & MAPE & blocked k-fold cross-validation\\
+Electricity demand & MAPE & Blocked k-fold cross-validation\\
 forecasting & & and test on the last split\\
 \hline
-Electricity production & MAE & blocked k-fold cross-validation\\
+Electricity production & MAE & Blocked k-fold cross-validation\\
 forecasting & & and test on the last split\\
 \hline
-Consumption baseline & MAPE and MAE & blocked k-fold cross-validation\\
+Consumption baseline & MAPE and MAE & Blocked k-fold cross-validation\\
 forecasting & & and test on the last split\\
 \hline
 \end{tabular}
@@ -186,42 +189,42 @@ forecasting & & and test on the last split\\
 \label{tab:metricstable}
 \end{table}
 
-This evaluation methodology was used at training time to study the performance over time.
-At forecasting time, the performance on the last time slot was treated with more attention as the most relevant for the electricity retailers since the most related to the performance on imminent future data.
-The combinations of the models were done just at forecasting time on the last time slot using the average of some approaches for studying whether there could be a beneficial effect on the forecasts and compensation of error between the different approaches.
-The same was also done for the AutoML approach, in fact, it was tested just at forecasting time on the last time slot for comparison to the tested models.
-It was included as a baseline to show how a general-purpose framework can perform in specific use cases compared to specific architectures designed for the task.
+This evaluation methodology is used at training time to study the performance over time.
+At forecasting time, the performance on the last time slot is treated with more attention as the most relevant for the electricity retailers since the most related to the performance on imminent future data.
+The combinations of the models are performed just at forecasting time on the last time slot using the average of some approaches for studying whether there could be a beneficial effect on the forecasts and compensation of the error between the different approaches.
+The same is also done for the AutoML approach, in fact, it is tested just at forecasting time on the last time slot for comparison to the tested models.
+It is included as a baseline to show how a general-purpose framework can perform in specific use cases compared to specific architectures designed for the task.
 
 As explained in Chapter~\ref{cha:implementation}, for all the use cases, there is a difference between training and forecasting time for the ML (SVR, hist gradient boosting regressor, and XGBoost regressor) and DL (LSTM, GRU, and CNN) models.
-In particular, for these models, a recursive strategy to generate multi-step forecasts was adopted.
+In particular, for these models, a recursive strategy to generate multi-step forecasts is adopted.
 This approach is a standard classical technique covered in various textbooks, including \cite{Manu2022}.
 It offers advantages such as simplicity in understanding, clear temporal dependency as previous forecasts are used as input for subsequent ones, flexibility to be applied to different models, and adaptability to various forecasting horizons, which is crucial when integrating it into a SaaS solution.
-However, there are also disadvantages associated with this approach.
+However, there are also some disadvantages associated with this approach.
 Error propagation can occur, and this can be observed in the forecasting results, where small inaccuracies in initial predictions can accumulate and lead to larger errors over time.
 Sub-optimality is another drawback, as the optimality achieved for one-step forecasting may not generalize well to multi-step forecasting.
-Additionally, the computational complexity is high as the model needs to be run for each individual step.
-In contrast, the other approaches: baselines, ARIMA/SARIMA, Prophet, and TFT directly handle the concept of multi-step prediction and present no difference between training and forecasting time.
+Additionally, the computational complexity is high as the model needs to compute a prediction for each individual step.
+In contrast, the other approaches: baselines, ARIMA/SARIMA, prophet, TFT, and AutoML directly handle the concept of multi-step prediction and present no difference between training and forecasting time.
 
 
 \section{Electricity demand forecasting}
 \label{sec:demandval}
 \vspace{0.2 cm}
 
-The aggregated consumption data over the customers is analyzed to get some descriptive analytics before finding adequate models to forecast the demand.
+The aggregated consumption data over the customers is analyzed to get some descriptive analytics before finding adequate models for forecasting the customers' demand.
 
 The time series decomposition using an additive model of the hourly aggregated consumption data over the customers considering as period of the time series a week is reported in figure~\ref{fig:demanddecomposition}.
-It showed a considerable amount of noise, comparable to seasonality in magnitude.
-The trend showed 2 peaks during the summer season, the first being more emphasized since it also corresponds to a peak in the number of users.
+It shows a considerable amount of noise, comparable to seasonality in magnitude.
+The trend shows 2 peaks during the summer season, the first being more emphasized since it also corresponds to a peak in the number of customers.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.475\textwidth]{images/demand/hourly_decomposition_week_period}
+\includegraphics[width=0.5\textwidth]{images/demand/hourly_decomposition_week_period}
 \caption{The time series decomposition of the hourly aggregated consumption data over the customers considering as period of the time series a week.}
 \label{fig:demanddecomposition}
 \end{figure}
 
 The auto-correlation of the hourly aggregated consumption data over the customers is reported in figure~\ref{fig:demandcorrelation}.
-It shows a high auto-correlation value in the close time lags and also at every 24 hours, along with an even higher value at a one-week distance.
+It shows a high auto-correlation value in the closest time lags and also at every 24 hours, along with an even higher value at a one-week distance.
 This indicates that the consumption data from the closest time lags, particularly up to three closest ones, as well as those corresponding to the same hour in the preceding days and even better in the preceding weeks, may be valuable features for predicting a time instant's demand.
 A reasonable balance can be achieved by incorporating the consumption data from the past 14 days.
 
@@ -238,13 +241,13 @@ Other minor peaks are present mostly at multiples of the 1/week frequency.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.4\textwidth]{images/demand/ft_hour_week}
+\includegraphics[width=0.415\textwidth]{images/demand/ft_hour_week}
 \caption{The coefficients given by the Fourier transform for the hourly aggregated consumption data over the customers.}
 \label{fig:demandft}
 \end{figure}
 
 The daily aggregated consumption data over the customers is reported in figure~\ref{fig:demanddataplotday}.
-Aggregating the data on a daily basis, it is possible to more clearly observe the weekly pattern of consumption, which exhibits an increase on weekdays and a decrease on weekends.
+Aggregating the data on a daily basis is possible to observe more clearly the weekly pattern of consumption, which exhibits an increase on weekdays and a decrease on weekends.
 
 \begin{figure}[H]
 \centering
@@ -253,12 +256,13 @@ Aggregating the data on a daily basis, it is possible to more clearly observe th
 \label{fig:demanddataplotday}
 \end{figure}
 
-Figure~\ref{fig:demanddecompositionday} shows the time series decomposition of the daily aggregated consumption data over the customers, using an additive model with a period of one week.
+The time series decomposition using an additive model of the daily aggregated consumption data over the customers considering as period of the time series a week is reported in figure~\ref{fig:demanddecompositionday}.
 The decomposition is consistent with the hourly aggregated consumption over the customers.
+An interesting thing to note is that in this case, the trend has higher values in relation to the other components compared to the hourly granularity.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.475\textwidth]{images/demand/daily_aggregated_decomposition}
+\includegraphics[width=0.5\textwidth]{images/demand/daily_aggregated_decomposition}
 \caption{The time series decomposition of the daily aggregated consumption data over the customers considering as period of the time series a week.}
 \label{fig:demanddecompositionday}
 \end{figure}
@@ -280,16 +284,16 @@ The graphical representation shows 1 main frequency representing the weekly peri
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.4\textwidth]{images/demand/ft_day}
+\includegraphics[width=0.415\textwidth]{images/demand/ft_day}
 \caption{The coefficients given by the Fourier transform for the daily aggregated consumption data over the customers.}
 \label{fig:demandftday}
 \end{figure}
 
 The basic data is enhanced with the air temperature, the apparent temperature, and the relative humidity since they are considered the only weather features capable of influencing customers' electricity consumption.
-To assess the relationship between these weather variables and the aggregated consumption over the customers, two correlation coefficients were used: Pearson's correlation coefficient and Spearman's rank correlation coefficient.
+To assess the relationship between these weather variables and the aggregated consumption over the customers, two correlation coefficients are used: Pearson's correlation coefficient and Spearman's rank correlation coefficient.
 Pearson's correlation coefficient measures the strength of the linear relationship between two variables, while Spearman's rank correlation coefficient measures the strength of the monotonic relationship.
-The pearsonr and spearmanr methods of the SciPy library\footnote{ \url{https://scipy.org/} } were used to compute the correlation with weather data.
-The results showed that the hourly aggregated consumption data over the customers had:
+The \emph{pearsonr} and \emph{spearmanr} methods of the SciPy library\footnote{ \url{https://scipy.org/} } are used to compute the correlation with weather data.
+The results show that the hourly aggregated consumption data over the customers presents:
 \begin{itemize}
   \item a Pearson correlation coefficient of $0.4480$ and a Spearman's rank correlation coefficient of $0.4378$ with respect to the air temperature data;
   \item a Pearson correlation coefficient of $0.4475$ and a Spearman's rank correlation coefficient of $0.4368$ with respect to the apparent temperature data;
@@ -297,7 +301,7 @@ The results showed that the hourly aggregated consumption data over the customer
 \end{itemize}
 It can be noticed that both the coefficients indicate a moderate correlation between the weather variables and consumption, this suggests that incorporating weather data into the prediction models could be useful.
 
-The results showed that the daily aggregated consumption data over the customers had:
+The results show that the daily aggregated consumption data over the customers presents:
 \begin{itemize}
   \item a Pearson correlation coefficient of $0.3898$ and a Spearman's rank correlation coefficient of $0.3119$ with respect to the air temperature data;
   \item a Pearson correlation coefficient of $0.3823$ and a Spearman's rank correlation coefficient of $0.3114$ with respect to the apparent temperature data;
@@ -307,50 +311,56 @@ It can be noticed that both the coefficients decreased considering the daily dat
 
 After this data analysis, the specific parameters used in the models can be explained more in detail.
 The parameters for the different models were tested and verified on training data to result in the best-performing models, this was done by trying different values and configurations.
-The baseline approaches are built considering the repetition of past days and weeks since data presents a high correlation with that time instants and could lead to a reasonable baseline performance to achieve.
-The SARIMA model considers the week as the period for seasonal differencing since data presents a high correlation with that time instants and the model can try to take advantage of the weekly seasonality.
-The SVR model uses a radial basis function kernel with a configuration of the C parameter (regularization parameter of squared l2 penalty) to 1.0 to penalize the complexity of the model, and the epsilon parameter defining the epsilon-tube for no penalty to 0.1 as a trade-off between accuracy and generalization.
-The hist gradient boosting regressor model uses as loss the absolute error since this was the supported metric closer to our evaluation metric.
-The learning rate was set to 0.1, 100 estimators were used and l2 regularization was not set.
-The parameters for tree definition are 31 as the maximum number of leaves, depth is not constrained, 20 as the minimum number of samples per leaf, and 255 as the maximum number of bins.
-For the XGBoost regressor model, tree-based models were used and the construction algorithm is automatically chosen by heuristic to choose the fastest method.
-It uses a squared loss since this was the supported metric closer to our evaluation metric.
-The learning rate was set to 0.3, 100 estimators were used and l2 regularization was set with a weight of 1.0.
-The parameters for tree definition are 6 as the maximum depth, and the maximum number of leaves is not constrained.
-The Prophet model was built keeping the default parameters for automatically detecting seasonalities and best fitting the training data.
 
-The LSTM model was designed as a 2-layer model with 24 Bidirectional LSTM units in the first layer which use rectified linear unit (ReLU) activation function and sigmoid as recurrent activation function with both dropout and recurrent dropout of 0.02.
+The baseline approaches are built considering the repetition of past days and weeks since data presents a high correlation with that time instants and could lead to a reasonable baseline performance to achieve.
+
+The SARIMA model considers the week as the period for seasonal differencing since data presents a high correlation with that time instants and the model can try to take advantage of the weekly seasonality.
+
+The SVR model uses a radial basis function kernel with a configuration of the C parameter (regularization parameter of squared l2 penalty) to 1.0 to penalize the complexity of the model, and the epsilon parameter defining the epsilon-tube for no penalty to 0.1 as a trade-off between accuracy and generalization.
+
+The hist gradient boosting regressor model uses as loss the absolute error since this was the supported metric closer to our evaluation metric.
+The learning rate is set to 0.1, 100 estimators are used and l2 regularization is not set.
+The parameters for tree definition are 31 as the maximum number of leaves, depth is not constrained, 20 as the minimum number of samples per leaf, and 255 as the maximum number of bins.
+
+For the XGBoost regressor model, tree-based models are used and the construction algorithm is automatically chosen by heuristic to choose the fastest method.
+It uses a squared loss since this was the supported metric closer to our evaluation metric.
+The learning rate is set to 0.3, 100 estimators are used and l2 regularization is set with a weight of 1.0.
+The parameters for tree definition are 6 as the maximum depth, and the maximum number of leaves is not constrained.
+
+The prophet model is built keeping the default parameters for automatically detecting seasonalities and best fitting the training data.
+
+The LSTM model is designed as a 2-layer model with 24 Bidirectional LSTM units in the first layer which use rectified linear unit (ReLU) activation function and sigmoid as recurrent activation function with both dropout and recurrent dropout of 0.02.
 Batch normalization is then applied before entering the second layer composed of 16 Bidirectional LSTM units which use ReLU activation function and sigmoid as recurrent activation function without dropout and recurrent dropout.
 The output of the layer goes inside a dense unit to output the final prediction.
 The model is trained using MAPE as loss and Nadam (a version of Adam integrating the concept of Nesterov momentum) as optimizer with a learning rate of 0.005.
 
-The GRU model was designed as a 3-layer model with 24 Bidirectional GRU units in the first layer which use ReLU activation function and sigmoid as recurrent activation function with both dropout and recurrent dropout of 0.02.
+The GRU model is designed as a 3-layer model with 24 Bidirectional GRU units in the first layer which use ReLU activation function and sigmoid as recurrent activation function with both dropout and recurrent dropout of 0.02.
 Subsequently, the second layer is composed of 16 Bidirectional GRU units which use ReLU activation function and sigmoid as recurrent activation function without dropout and recurrent dropout.
 The output of the second layer goes inside a third dense layer composed of 4 units with ReLU activation function before entering the final dense unit to output the final prediction.
 The model is trained using MAPE as loss and Nadam as optimizer with a learning rate of 0.005.
 
-The CNN model was designed as a 3-layer model with a first layer composed of 24 1D Convolutional units with a kernel size of 5 which uses ReLU activation function.
+The CNN model is designed as a 3-layer model with a first layer composed of 24 1D Convolutional units with a kernel size of 5 which uses ReLU activation function.
 A 1D max polling operation is applied before entering the second layer composed of 16 1D Convolutional units with a kernel size of 3 which use ReLU activation function.
 A 1D max polling operation is applied before the flattening operation and entering the third dense layer composed of 4 units with ReLU activation function.
 The output of the layer goes inside a dense unit to output the final prediction.
 The model is trained using MAPE as loss and Nadam as optimizer with a learning rate of 0.005.
 
-The TFT model was configured with 2 LSTM layers with 16 as hidden size, 4 as attention size, and 8 as hidden continuous size.
+The TFT model is configured with 2 LSTM layers with 16 as hidden size, 4 as attention size, and 8 as hidden continuous size.
 The dropout is set to 0.02.
 The model is trained using MAPE as loss and Nadam as optimizer with a learning rate of 0.005.
 
-12 splits were used for block validation with a test size of a month each time, namely 30 days of data.
-For the hourly granularity, the models start with 5977 entries as training and predict every time 720 entries until reaching the last prediction instant where the model has a training size of 13897.
+The number of splits used for the blocked k-fold cross-validation is 12 with a size of a month for each test split, namely 30 days of data.
+For the hourly granularity, the models start with 5977 entries for training and predict every time 720 entries until reaching the last prediction instant where the model has a training size of 13897.
 The results for hourly granularity are reported in table~\ref{tab:demandhourlyresults}.
 Entries are sorted by best MAPE using the last split as the test set.
 The blocked k-fold cross-validation suggests that the one-week baseline has the best MAPE, but looking at the last split this is not confirmed.
-This is probably due to the fact that overall the weekly repetition seems to be quite effective over the year, but there are better approaches that with the increase of training data perform better, this can be the case in GRU and CNN since the results on the last split are quite good compared to the mean MAPE obtained over the splits.
+This is probably due to the fact that overall the weekly repetition seems to be quite effective over the year, but there are better approaches that with the increase of training data perform better, this may be the case for the GRU and CNN models since the results on the last split are quite good compared to the mean MAPE obtained over the splits.
 This can be explained by the fact that, due to their complexity, these models require more data and in the first splits there was not even a single year of data, so they didn't even have the possibility to infer a possible annual seasonality.
 Results seem also to confirm that not always sophisticated models perform better and some of them are no better than a baseline.
 Models treated in the literature that are performing well in similar tasks can also not be suited for this specific use case.
 Data makes a big difference and with a low amount of data, it is difficult for some complex networks to perform well and generalize.
-Instead, the TFT approach seems to have pretty much the same MAPE over the considered splits confirming the potential of this architecture despite the limited data.
-In contrast, the boosters that have a good blocked k-fold MAPE on the last split do not perform well.
+Instead, the TFT model has the best MAPE on the last split and seems to have pretty much the same MAPE over the considered splits confirming the potential of this architecture despite the limited data.
+In contrast, the boosters that have a good blocked k-fold MAPE do not perform well on the last split.
 
 \begin{table}[H]
 \centering
@@ -382,12 +392,12 @@ Prophet & 28.68 $\pm$ 7.07 & 31.62\\
 XGBoostRegressor & 16.88 $\pm$ 8.08 & 37.81\\
 \hline
 \end{tabular}
-\caption{Table summarizing the results for hourly granularity.}
+\caption{Table summarizing the results in electricity demand forecasting with an hourly granularity.}
 \label{tab:demandhourlyresults}
 \end{table}
 
 The results for hourly granularity at forecasting time on the last time slot including also the combinations of different techniques and the AutoML approach are reported in table~\ref{tab:demandhourlyresultsforecast}.
-The combination of the previous techniques was performed by combining one-day baseline, one-week baseline, and Prophet with possibly one of LSTM, GRU, or CNN with the intent of trying to improve the robustness of DL models with some stable baselines and Prophet model which internally automatically deals with seasonalities, even though for this task it is not performing very well.
+The combination of the previous techniques is performed by combining one-day baseline, one-week baseline, and prophet with possibly one of LSTM, GRU, or CNN with the intent of trying to improve the robustness of DL models with some stable baselines and prophet model which internally automatically deals with seasonalities, even though for this task it is not performing very well.
 The AutoML approach uses the mean MAPE forecasting as loss and it is launched for 10 hours with a maximum function evaluation time of 2 hours.
 Then the best ensemble of the found models is returned and can be used to forecast.
 In the table, it is also reported the performance on the one-week horizon, namely 7 days of data, from which it is possible to gain more insights on the models' forecasts.
@@ -395,8 +405,8 @@ Including also combinations and AutoML, there are a few observations that can be
 The combinations of DL models and the one-week baseline are the most beneficial, reducing by many points the MAPE of the techniques on the one-month time horizon.
 This suggests that it can make sense to investigate the concept of ensemble learning further and optimize this combination at training time to possibly have more robust results at forecasting time.
 AutoML has great potential and obtains very good results compared to many other models.
-Potentially providing more total training time the search process might lead to further optimized models able to reach better performance.
-TFT still dominates on the one-month MAPE but not on the one-week one on which the one-week baseline and many combinations but also SARIMA and hist gradient boosting regressor perform better.
+Potentially by providing more total training time the search process might lead to further optimized models able to reach better performance.
+The TFT model still dominates on the one-month MAPE but not on the one-week one on which the one-week baseline and many combinations but also SARIMA and hist gradient boosting regressor perform better.
 This confirmed that the strength of TFT is to have good performance and preserve it also on larger prediction horizons.
 
 \begin{table}[H]
@@ -460,16 +470,9 @@ Prophet & 33.94 & 31.62\\
 XGBoostRegressor & 17.84 & 37.81\\
 \hline
 \end{tabular}
-\caption{Table summarizing the results for hourly granularity at forecasting time.}
+\caption{Table summarizing the results in electricity demand forecasting with an hourly granularity at forecasting time on the last split.}
 \label{tab:demandhourlyresultsforecast}
 \end{table}
-
-The forecasts produced by the TFT model for the last split in comparison to the actual values are reported in figure~\ref{fig:demandtfthourlyforecasts}.
-It can be noticed that for the first week, it follows the signal very accurately, the second and third weeks are pretty good but it is missing the peaks over the day and the last week is decreasing while the actual values have high peaks.
-The absolute percentage error of forecasts produced by the TFT model for the last split in comparison to the actual values is reported in figure~\ref{fig:demandtfthourlyforecastsmape}.
-It can be shown that except for some peaks, the percentage error stays below 30\%, with most values around 10\%.
-Finally, the scatter plot representing the error of the forecasts produced by the TFT model for the last split in comparison to the actual values is reported in figure~\ref{fig:demandtfthourlyforecastsscatterplot}.
-This scatter plot demonstrates that there is no bias and can be also noticed that when the predicted values are low also the error is limited, while when the prediction is high there are both high positive and negative errors.
 
 \begin{figure}[H]
 \centering
@@ -481,9 +484,16 @@ This scatter plot demonstrates that there is no bias and can be also noticed tha
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{images/demand/TFT_mape}
-\caption{The absolute percentage error of forecasts produced by the TFT model for the last split in comparison to the actual values.}
+\caption{The absolute percentage error of the forecasts produced by the TFT model for the last split in comparison to the actual values.}
 \label{fig:demandtfthourlyforecastsmape}
 \end{figure}
+
+The forecasts produced by the TFT model for the last split in comparison to the actual values are reported in figure~\ref{fig:demandtfthourlyforecasts}.
+It can be noticed that for the first week, it follows the actual values accurately except for some days, the second and third weeks are pretty good but it is missing the peaks over the day, and in the last week, the forecasts are decreasing in magnitude while the actual values have high peaks.
+The absolute percentage error of the forecasts produced by the TFT model for the last split in comparison to the actual values is reported in figure~\ref{fig:demandtfthourlyforecastsmape}.
+It can be shown that except for some peaks, the percentage error stays below 30\%, with most values below 10\%.
+Finally, the scatter plot representing the error of the forecasts produced by the TFT model for the last split in comparison to the actual values is reported in figure~\ref{fig:demandtfthourlyforecastsscatterplot}.
+This scatter plot demonstrates that there is no bias and can be also noticed that when the predicted values are low also the error is limited, while when the prediction is high there are both high positive and negative errors.
 
 \begin{figure}[H]
 \centering
@@ -491,13 +501,6 @@ This scatter plot demonstrates that there is no bias and can be also noticed tha
 \caption{The scatter plot representing the error of the forecasts produced by the TFT model for the last split in comparison to the actual values.}
 \label{fig:demandtfthourlyforecastsscatterplot}
 \end{figure}
-
-For the daily granularity, the models start with 249 entries as training and predict every time 30 entries until reaching the last prediction instant where the model has a training size of 579.
-The results for daily granularity are reported in table~\ref{tab:demanddailyresults}.
-In this case, TFT is no longer the best-performing model, probably due to the fact of 24 times less quantity of data due to the daily granularity.
-Though, it is still a well-performing model on both blocked k-fold cross-validation and last split results.
-LSTM and CNN perform better in terms of the last split MAPE but present a high blocked k-fold MAPE, as in the case of the hourly granularity probably that to the increase of data, the results on the last time slots improved in a significant way.
-Also, the boosters present very good results on the last time split and also on the blocked k-fold validation showing consistency over time and good results also with few training data. 
 
 \begin{table}[H]
 \centering
@@ -529,13 +532,20 @@ Prophet & 19.06 $\pm$ 10.81 & 26.33\\
 SVR & 53.63 $\pm$ 22.39 & 39.82\\
 \hline
 \end{tabular}
-\caption{Table summarizing the results for daily granularity.}
+\caption{Table summarizing the results in electricity demand forecasting with a daily granularity.}
 \label{tab:demanddailyresults}
 \end{table}
 
+For the daily granularity, the models start with 249 entries for training and predict every time 30 entries until reaching the last prediction instant where the model has a training size of 579.
+The results for daily granularity are reported in table~\ref{tab:demanddailyresults}.
+In this case, the TFT model is no longer the best-performing model, probably due to the fact of 24 times less quantity of data due to the daily granularity.
+Though, it is still a well-performing model on both blocked k-fold cross-validation and last split results.
+The LSTM and CNN models perform better in terms of the last split MAPE but present a high blocked k-fold MAPE, as in the case of the hourly granularity probably thanks to the increase of data, the results on the last time slots improved in a significant way and the CNN result as the best-performing model on the last split.
+Also, the boosters present very good results on the last time split and also on the blocked k-fold validation showing consistency over time and good results also with few training data. 
+
 The results for daily granularity at forecasting time on the last time slot including also the combinations of different techniques and the AutoML approach are reported in table~\ref{tab:demanddailyresultsforecast}.
 In this case, the impact of the combinations is not so evident and does not improve the results in all the cases.
-AutoML presents not very good results being worse than the one-week baseline, this is probably due to the scarcity of training data and the fact of AutoML of trying very complex architectures when also simple ones may work well in certain cases.
+The AutoML approach does not present very good results being worse than the one-week baseline, this is probably due to the scarcity of training data and the fact of that this approach of trying very complex architectures when also simple ones may work well in certain cases.
 It can also be noticed that surprisingly for some of the best-performing models the MAPE on the first week of data is higher than the one on the whole month of data.
 This probably can be explained by the fact that the first week of the last split has a less regular pattern due to the Christmas holidays compared to the following ones.
 
@@ -600,13 +610,13 @@ Prophet & 17.35 & 26.33\\
 SVR & 58.09 & 39.82\\
 \hline
 \end{tabular}
-\caption{Table summarizing the results for hourly granularity at forecasting time.}
+\caption{Table summarizing the results in electricity demand forecasting with a daily granularity at forecasting time on the last split.}
 \label{tab:demanddailyresultsforecast}
 \end{table}
 
 The forecasts produced by the CNN model for the last split in comparison to the actual values are reported in figure~\ref{fig:demandcnndailyforecasts}.
-It can be noticed that for the first three weeks, it follows the signal very accurately and the last week is increasing correctly but not enough as the actual values.
-The absolute percentage error of forecasts produced by the CNN model for the last split in comparison to the actual values is reported in figure~\ref{fig:demandcnndailyforecastsmape}.
+It can be noticed that for the first three weeks it follows the actual values very accurately and in the last week the forecasts are increasing correctly but not enough as the actual values.
+The absolute percentage error of the forecasts produced by the CNN model for the last split in comparison to the actual values is reported in figure~\ref{fig:demandcnndailyforecastsmape}.
 It can be shown that except for some peaks, the percentage error stays below 10\%.
 Finally, the scatter plot representing the error of the forecasts produced by the CNN model for the last split in comparison to the actual values is reported in figure~\ref{fig:demandcnndailyforecastsscatterplot}.
 This scatter plot demonstrates that there is no bias even though it seems that when predicting high values it is missing some extra quantity in the forecasts, this is probably true in the specific considered last split and in particular the last week.
@@ -621,7 +631,7 @@ This scatter plot demonstrates that there is no bias even though it seems that w
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{images/demand/CNN_daily_aggregated_mape}
-\caption{The absolute percentage error of forecasts produced by the CNN model for the last split in comparison to the actual values.}
+\caption{The absolute percentage error of the forecasts produced by the CNN model for the last split in comparison to the actual values.}
 \label{fig:demandcnndailyforecastsmape}
 \end{figure}
 
@@ -640,22 +650,22 @@ This scatter plot demonstrates that there is no bias even though it seems that w
 As described in the data preprocessing in Chapter~\ref{cha:implementation}, single PV plant production data are aggregated to obtain the aggregated production data over the PV plants.
 The target of the predictions is the mean percentage of production, which is calculated as the division of the total produced energy by the total nominal power of the PV plants.
 This allows it to have a bounded value from 0 to 100 from which it is possible to obtain the total produced energy simply by multiplying it by the total nominal power of the PV plants.
-This was also done since PV plants are added over time and this was unpredictable, this results in predicting the percentage of production of the PV plants.
-This data is analyzed to get some descriptive analytics before finding adequate models to forecast the production.
+This was also done since PV plants can be added over time and this is unpredictable, predicting the mean percentage of production of the PV plants will allow the system to consider this eventuality.
+This data is analyzed to get some descriptive analytics before finding adequate models for forecasting the PV plants’ production.
 
-The time series decomposition using an additive model of the hourly percentage of production data considering as period of the time series a day is reported in figure~\ref{fig:productiondecomposition}.
-It showed a considerable amount of noise, comparable to seasonality and trend in magnitude.
+The time series decomposition using an additive model of the hourly mean percentage of production data considering as period of the time series a day is reported in figure~\ref{fig:productiondecomposition}.
+It shows a considerable amount of noise, comparable to seasonality and trend in magnitude.
 The trend component exhibits a clear peak during the summer season.
 As expected, the seasonality component appears to have the most significant impact on the time series.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.475\textwidth]{images/production/hourly_decomposition}
-\caption{The time series decomposition of the hourly percentage of production data considering as period of the time series a day.}
+\includegraphics[width=0.5\textwidth]{images/production/hourly_decomposition}
+\caption{The time series decomposition of the hourly mean percentage of production data considering as period of the time series a day.}
 \label{fig:productiondecomposition}
 \end{figure}
 
-The auto-correlation of the hourly percentage of production data is reported in figure~\ref{fig:productioncorrelation}.
+The auto-correlation of the hourly mean percentage of production data is reported in figure~\ref{fig:productioncorrelation}.
 It shows a high auto-correlation value in the closest time lag and also at every 24 hours, with the value slightly decreasing as the lag increases over days.
 This indicates that the production data from the closest time lag and those corresponding to the same hour in the preceding days may be valuable features for predicting a time instant's production.
 A reasonable balance can be achieved by incorporating the production data from the past 14 days.
@@ -663,67 +673,68 @@ A reasonable balance can be achieved by incorporating the production data from t
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.4\textwidth]{images/production/hourly_correlation_week_range}
-\caption{The auto-correlation of the hourly percentage of production data.}
+\caption{The auto-correlation of the hourly mean percentage of production data.}
 \label{fig:productioncorrelation}
 \end{figure}
 
-The coefficients given by the Fourier transform for the hourly percentage of production data are reported in figure~\ref{fig:productionft}.
+The coefficients given by the Fourier transform for the hourly mean percentage of production data are reported in figure~\ref{fig:productionft}.
 The graphical representation clearly shows a main frequency at the daily periodicity.
 Other minor peaks are present mostly at multiples of the 1/day frequency.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.4\textwidth]{images/production/ft_hour_day}
-\caption{The coefficients given by the Fourier transform for the hourly percentage of production data.}
+\includegraphics[width=0.415\textwidth]{images/production/ft_hour_day}
+\caption{The coefficients given by the Fourier transform for the hourly mean percentage of production data.}
 \label{fig:productionft}
 \end{figure}
 
-The daily percentage of production data is reported in figure~\ref{fig:productiondataplotday}.
+The daily mean percentage of production data is reported in figure~\ref{fig:productiondataplotday}.
+Aggregating the data on a daily basis is possible to observe that there is no pattern in the PV plants’ production over the days.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.5\textwidth]{images/production/data_day_aggregated_plot}
-\caption{The daily percentage of production data.}
+\caption{The daily mean percentage of production data.}
 \label{fig:productiondataplotday}
 \end{figure}
 
-The time series decomposition using an additive model of the daily percentage of production data considering as period of the time series a week is reported in figure~\ref{fig:productiondecompositionday}.
+The time series decomposition using an additive model of the daily mean percentage of production data considering as period of the time series a week is reported in figure~\ref{fig:productiondecompositionday}.
 It showed a considerable amount of noise, comparable to the trend in magnitude when not in the summer season.
 The trend component exhibits a clear peak during the summer season and appears to be the significant component of the time series.
 In this case, considering a weekly period, the seasonality component appears to not have a significant impact on the time series.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.475\textwidth]{images/production/daily_aggregated_decomposition}
-\caption{The time series decomposition of the daily percentage of production data considering as period of the time series a week.}
+\includegraphics[width=0.5\textwidth]{images/production/daily_aggregated_decomposition}
+\caption{The time series decomposition of the daily mean percentage of production data considering as period of the time series a week.}
 \label{fig:productiondecompositionday}
 \end{figure}
 
-The auto-correlation of the daily percentage of production data is reported in figure~\ref{fig:productioncorrelationday}.
+The auto-correlation of the daily mean percentage of production data is reported in figure~\ref{fig:productioncorrelationday}.
 It shows a high auto-correlation value in the closest time lag and then a slight decrease as the lag increases over days.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.4\textwidth]{images/production/daily_aggregated_correlation}
-\caption{The auto-correlation of the daily percentage of production data.}
+\caption{The auto-correlation of the daily mean percentage of production data.}
 \label{fig:productioncorrelationday}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.4\textwidth]{images/production/ft_day}
-\caption{The coefficients given by the Fourier transform for the daily percentage of production data.}
+\includegraphics[width=0.415\textwidth]{images/production/ft_day}
+\caption{The coefficients given by the Fourier transform for the daily mean percentage of production data.}
 \label{fig:productionftday}
 \end{figure}
 
-The coefficients given by the Fourier transform for the daily percentage of production data are reported in figure~\ref{fig:productionftday}.
-As expected from the time series decomposition, the graphical representation exhibits that there are no main frequencies in the daily percentage of production.
+The coefficients given by the Fourier transform for the daily mean percentage of production data are reported in figure~\ref{fig:productionftday}.
+As expected from the time series decomposition, the graphical representation exhibits that there are no main frequencies in the daily mean percentage of production.
 
 The basic data is enhanced with the air temperature, the apparent temperature, the relative humidity, the wind speed, the wind direction, the pressure altimeter, the visibility, the sky coverage, the diffuse horizontal irradiance, the direct normal irradiance, the global horizontal irradiance, the solar radiation, the UV index, the solar elevation angle, and the solar azimuth angle.
-To assess the relationship between these weather variables and the percentage of production, two correlation coefficients were used: Pearson's correlation coefficient and Spearman's rank correlation coefficient.
+To assess the relationship between these weather variables and the mean percentage of production, two correlation coefficients are used: Pearson's correlation coefficient and Spearman's rank correlation coefficient.
 Pearson's correlation coefficient measures the strength of the linear relationship between two variables, while Spearman's rank correlation coefficient measures the strength of the monotonic relationship.
-The pearsonr and spearmanr methods of the SciPy library were used to compute the correlation with weather data.
-The results showed that the hourly percentage of production data had:
+The \emph{pearsonr} and \emph{spearmanr} methods of the SciPy library are used to compute the correlation with weather data.
+The results show that the hourly mean percentage of production data presents:
 \begin{itemize}
   \item a Pearson correlation coefficient of $0.5621$ and a Spearman's rank correlation coefficient of $0.5185$ with respect to the air temperature data;
   \item a Pearson correlation coefficient of $0.5410$ and a Spearman's rank correlation coefficient of $0.5032$ with respect to the apparent temperature data;
@@ -741,10 +752,10 @@ The results showed that the hourly percentage of production data had:
   \item a Pearson correlation coefficient of $0.8107$ and a Spearman's rank correlation coefficient of $0.9057$ with respect to the solar elevation angle data;
   \item a Pearson correlation coefficient of $0.0450$ and a Spearman's rank correlation coefficient of $0.0465$ with respect to the solar azimuth angle data.
 \end{itemize}
-It can be noticed that both the coefficients indicate a moderate to strong correlation between the hourly percentage of production and several weather features, including the air temperature, the apparent temperature, the relative humidity, the diffuse horizontal irradiance, the direct normal irradiance, the global horizontal irradiance, the solar radiation, the UV index, and the solar elevation angle.
+It can be noticed that both the coefficients indicate a moderate to strong correlation between the hourly mean percentage of production and several weather features, including the air temperature, the apparent temperature, the relative humidity, the diffuse horizontal irradiance, the direct normal irradiance, the global horizontal irradiance, the solar radiation, the UV index, and the solar elevation angle.
 Therefore, these features are chosen to be incorporated into the prediction models, while the other weather features show weaker correlations and are not considered.
 
-The results showed that the daily percentage of production data had:
+The results show that the daily mean percentage of production data presents:
 \begin{itemize}
   \item a Pearson correlation coefficient of $0.7632$ and a Spearman's rank correlation coefficient of $0.7721$ with respect to the air temperature data;
   \item a Pearson correlation coefficient of $0.7434$ and a Spearman's rank correlation coefficient of $0.7471$ with respect to the apparent temperature data;
@@ -762,61 +773,67 @@ The results showed that the daily percentage of production data had:
   \item a Pearson correlation coefficient of $0.6502$ and a Spearman's rank correlation coefficient of $0.7079$ with respect to the solar elevation angle data;
   \item a Pearson correlation coefficient of $0.1457$ and a Spearman's rank correlation coefficient of $0.2813$ with respect to the solar azimuth angle data.
 \end{itemize}
-It can be noticed that both the coefficients decreased meaning that the mean weather data over the day is less correlated to the daily percentage of production, compared to the hourly granularity.
+It can be noticed that both the coefficients decreased for most of the weather features, including solar energy ones, meaning that the mean weather data over the day is less correlated to the daily mean percentage of production, compared to the hourly granularity.
 Only the hourly granularity is considered since PV plants are highly correlated with weather data and the aggregation over the day loses part of this correlation.
 
 If we were forecasting the production of each PV plant individually, the weather data at the specific locations of the plants would result in a higher correlation with the production data and likely allow the models to produce more accurate forecasts.
-However, since we are aggregating the production from multiple PV plants and looking for the overall percentage of production in the hour, using the weather data from a location located in the middle of the PV plants is also acceptable.
-In figure~\ref{fig:pvplantsmap}, the locations of the PV plants and of the weather station are reported.
+However, since we are aggregating the production from multiple PV plants and looking for the mean percentage of production in the hour, using the weather data from a location located in the middle of the PV plants is also acceptable.
+In figure~\ref{fig:pvplantsmap}, the locations of the PV plants and of the weather station are reported, showing that these are in the same area, with a maximum distance of around 100 km between them.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{images/production/pv_plants_map}
-\caption{The map of the city of Murcia with indicated the location of the PV plants with a blue icon and of the revelation station with a light blue icon. The distances between each PV plant and the weather station are reported in light blue boxes near the PV plant locations.}
+\caption{The map of the city of Murcia with the location of the PV plants indicated with a blue icon and the weather station with a light blue icon. The distances between each PV plant and the weather station are reported in light blue boxes near the PV plant locations.}
 \label{fig:pvplantsmap}
 \end{figure}
 
 After this data analysis, the specific parameters used in the models can be explained more in detail.
 The parameters for the different models were tested and verified on training data to result in the best-performing models, this was done by trying different values and configurations.
-The baseline approach is built considering the repetition of past days since data presents a high correlation with that time instant and could lead to a reasonable baseline performance to achieve.
-A simple ARIMA model considers the single hours without seasonally on the week period like for demand prediction since data does not present a relevant correlation with that time instants.
-The SVR model uses a radial basis function kernel with a configuration of the C parameter (regularization parameter of squared l2 penalty) to 1.0 to penalize the complexity of the model, and the epsilon parameter defining the epsilon-tube for no penalty to 0.1 as a trade-off between accuracy and generalization.
-The hist gradient boosting regressor model uses as loss the absolute error.
-The learning rate was set to 0.1, 100 estimators were used and l2 regularization was not set.
-The parameters for tree definition are 31 as the maximum number of leaves, depth is not constrained, 20 as the minimum number of samples per leaf, and 255 as the maximum number of bins.
-For the XGBoost regressor model, tree-based models were used and the construction algorithm is automatically chosen by heuristic to choose the fastest method.
-It uses a squared loss since this was the supported metric closer to our evaluation metric.
-The learning rate was set to 0.3, 100 estimators were used and l2 regularization was set with a weight of 1.0.
-The parameters for tree definition are 6 as the maximum depth, and the maximum number of leaves is not constrained.
-The Prophet model was built keeping the default parameters for automatically detecting seasonalities and best fitting the training data.
 
-The LSTM model was designed as a 2-layer model with 32 Bidirectional LSTM units in the first layer which use ReLU activation function and sigmoid as recurrent activation function with both dropout and recurrent dropout of 0.02.
+The baseline approach is built considering the repetition of past days since data presents a high correlation with that time instant and could lead to a reasonable baseline performance to achieve.
+
+A simple ARIMA model considers the single hours without seasonally on the week period like for demand prediction since data does not present a relevant correlation with that time instants.
+
+The SVR model uses a radial basis function kernel with a configuration of the C parameter (regularization parameter of squared l2 penalty) to 1.0 to penalize the complexity of the model, and the epsilon parameter defining the epsilon-tube for no penalty to 0.1 as a trade-off between accuracy and generalization.
+
+The hist gradient boosting regressor model uses as loss the absolute error.
+The learning rate is set to 0.1, 100 estimators are used and l2 regularization is not set.
+The parameters for tree definition are 31 as the maximum number of leaves, depth is not constrained, 20 as the minimum number of samples per leaf, and 255 as the maximum number of bins.
+
+For the XGBoost regressor model, tree-based models are used and the construction algorithm is automatically chosen by heuristic to choose the fastest method.
+It uses a squared loss since this was the supported metric closer to our evaluation metric.
+The learning rate is set to 0.3, 100 estimators are used and l2 regularization is set with a weight of 1.0.
+The parameters for tree definition are 6 as the maximum depth, and the maximum number of leaves is not constrained.
+
+The prophet model is built keeping the default parameters for automatically detecting seasonalities and best fitting the training data.
+
+The LSTM model is designed as a 2-layer model with 32 Bidirectional LSTM units in the first layer which use ReLU activation function and sigmoid as recurrent activation function with both dropout and recurrent dropout of 0.02.
 The second layer is composed of 16 Bidirectional LSTM units which use ReLU activation function and sigmoid as recurrent activation function without dropout and recurrent dropout.
 The output of the layer goes inside a dense unit to output the final prediction.
 The model is trained using MAE as loss and Nadam as optimizer with a learning rate of 0.005.
 
-The GRU model was designed as a 2-layer model with 32 Bidirectional GRU units in the first layer which use ReLU activation function and sigmoid as recurrent activation function with both dropout and recurrent dropout of 0.02.
+The GRU model is designed as a 2-layer model with 32 Bidirectional GRU units in the first layer which use ReLU activation function and sigmoid as recurrent activation function with both dropout and recurrent dropout of 0.02.
 Subsequently, the second layer is composed of 16 Bidirectional GRU units which use ReLU activation function and sigmoid as recurrent activation function without dropout and recurrent dropout.
 The output of the layer goes inside a dense unit to output the final prediction.
 The model is trained using MAE as loss and Nadam as optimizer with a learning rate of 0.005.
 
-The CNN model was designed as a 2-layer model with a first layer composed of 24 1D Convolutional units with a kernel size of 5 which uses ReLU activation function.
+The CNN model is designed as a 2-layer model with a first layer composed of 24 1D Convolutional units with a kernel size of 5 which uses ReLU activation function.
 A 1D max polling operation is applied before entering the second layer composed of 16 1D Convolutional units with a kernel size of 3 which use ReLU activation function.
 A 1D max polling operation is applied before the flattening operation and entering the final dense unit to output the final prediction.
 The model is trained using MAE as loss and Nadam as optimizer with a learning rate of 0.005.
 
-The TFT model was configured with 2 LSTM layers with 16 as hidden size, 4 as attention size, and 8 as hidden continuous size.
+The TFT model is configured with 2 LSTM layers with 16 as hidden size, 4 as attention size, and 8 as hidden continuous size.
 The dropout is set to 0.02.
 The model is trained using MAE as loss and Nadam as optimizer with a learning rate of 0.005.
 
-12 splits were used for block validation with a test size of a week each time, namely 7 days of data.
-The models start with 5280 entries as training and predict every time 168 entries until reaching the last prediction instant where the model has a training size of 7128.
+The number of splits used for the blocked k-fold cross-validation is 12 with a size of a week for each test split, namely 7 days of data.
+The models start with 5280 entries for training and predict every time 168 entries until reaching the last prediction instant where the model has a training size of 7128.
 The results for hourly granularity are reported in table~\ref{tab:productionhourlyresults}.
 Entries are sorted by best MAE normalized on PV plants' nominal power using the last split as the test set.
 The blocked k-fold cross-validation suggests that the hist gradient boosting regressor model has the best MAE, but looking at the last split this is not confirmed.
 In fact, the GRU model performs better on the last split, as the other DL models, this seems to confirm what is seen in demand prediction that with the increase of training data, these models perform better.
 It can also be noted that all the models are better than the one-day baseline.
-Prophet presents not very good results compared to the other models and is close to the baseline as results on the last split while considering the blocked k-fold cross-validation is the only model that performs worse than it,
+The prophet model does not present very good results compared to the other models and is close to the baseline as results on the last split while considering the blocked k-fold cross-validation is the only model that performs worse than it.
 In this case, the TFT approach does not seem to perform in an optimal way, and its results are close to the ones of LSTM and ARIMA models.
 
 \begin{table}[H]
@@ -848,15 +865,22 @@ Prophet & 7.90 $\pm$ 1.62 & 4.38\\
 One Day Baseline & 6.81 $\pm$ 3.14 & 4.58\\
 \hline
 \end{tabular}
-\caption{Table summarizing the results for hourly granularity.}
+\caption{Table summarizing the results in electricity production forecasting with an hourly granularity.}
 \label{tab:productionhourlyresults}
 \end{table}
 
 The results for hourly granularity at forecasting time on the last time slot including also the combinations of different techniques and the AutoML approach are reported in table~\ref{tab:productionhourlyresultsforecast}.
-The combination of the previous techniques was performed by combining one-day baseline and Prophet with possibly one of LSTM, GRU, or CNN with the intent of trying to improve the robustness of DL models with some stable baselines and Prophet model which internally automatically deals with seasonalities, even though for this task it is not performing very well.
+The combination of the previous techniques is performed by combining one-day baseline and prophet with possibly one of LSTM, GRU, or CNN with the intent of trying to improve the robustness of DL models with some stable baselines and prophet model which internally automatically deals with seasonalities, even though for this task it is not performing very well.
 The AutoML approach uses the mean MAPE forecasting as loss and it is launched for 10 hours with a maximum function evaluation time of 2 hours.
-Also, the mean MAE forecasting was used but provided worse results.
 Then the best ensemble of the found models is returned and can be used to forecast.
+Also, the mean MAE forecasting was tested as a possible loss but provided worse results.
+
+Including also combinations and AutoML, there are a few observations that can be done.
+The combinations of DL models and the one-day baseline are the most beneficial, but just in the case of LSTM there is an improvement and it is very marginal.
+Probably in this case since the baseline and prophet are not well-performing models they are not bringing any significant improvement or robustness to the DL models.
+Nonetheless, it might still make sense to investigate the concept of ensemble learning further and optimize this combination at training time to possibly have more robust results at forecasting time.
+In this case, AutoML is not able to achieve very good results compared to many other models.
+It still has great potential as demonstrated in demand prediction and potentially by providing more total training time it may be able to reach better performance.
 
 \begin{table}[H]
 \centering
@@ -903,9 +927,16 @@ One Day Baseline & 4.58\\
 AutoML & 5.89\\
 \hline
 \end{tabular}
-\caption{Table summarizing the results for hourly granularity at forecasting time.}
+\caption{Table summarizing the results in electricity production forecasting with an hourly granularity at forecasting time on the last split.}
 \label{tab:productionhourlyresultsforecast}
 \end{table}
+
+The forecasts produced by the GRU model for the last split in comparison to the actual values are reported in figure~\ref{fig:productiongruhourlyforecasts}.
+It can be noticed that it follows the actual values very accurately for most of the test days, but for 2 days it underestimates and for one overestimates the actual values.
+The absolute error normalized on PV plants' nominal power of the forecasts produced by the GRU model for the last split in comparison to the actual values is reported in figure~\ref{fig:productiongruhourlyforecastsmae}.
+It can be shown that, except for the peak when it overestimates the actual data and some other minor peaks, the error normalized on PV plants' nominal power stays below 10\%.
+Finally, the scatter plot representing the error normalized on PV plants' nominal power of the forecasts produced by the GRU model for the last split in comparison to the actual values is reported in figure~\ref{fig:productiongruhourlyforecastsscatterplot}.
+This scatter plot demonstrates that there is no bias and can be also noticed that when the predicted values are low also the error is limited, while when the prediction is high there are both high positive and negative errors.
 
 \begin{figure}[H]
 \centering
@@ -917,65 +948,46 @@ AutoML & 5.89\\
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{images/production/GRU_percentage_mae}
-\caption{The absolute error of forecasts produced by the GRU model for the last split in comparison to the actual values.}
+\caption{The absolute error normalized on PV plants' nominal power of the forecasts produced by the GRU model for the last split in comparison to the actual values.}
 \label{fig:productiongruhourlyforecastsmae}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{images/production/GRU_percentage_error_scatter_plot_predicted}
-\caption{The scatter plot representing the error of the forecasts produced by the GRU model for the last split in comparison to the actual values.}
+\caption{The scatter plot representing the error normalized on PV plants' nominal power of the forecasts produced by the GRU model for the last split in comparison to the actual values.}
 \label{fig:productiongruhourlyforecastsscatterplot}
 \end{figure}
-
-Including also combinations and AutoML, there are a few observations that can be done.
-The combinations of DL models and the one-week baseline are the most beneficial, but just in the case of LSTM there is an improvement and it is very marginal.
-Probably in this case since the baseline and prophet are not well-performing models they are not bringing any significant improvement or robustness to the DL models.
-Nonetheless, it might still make sense to investigate the concept of ensemble learning further and optimize this combination at training time to possibly have more robust results at forecasting time.
-In this case, AutoML is not able to achieve very good results compared to many other models.
-It still has great potential as demonstrated in demand prediction and potentially providing more total training time it can be able to reach better performance.
-
-The forecasts produced by the GRU model for the last split in comparison to the actual values are reported in figure~\ref{fig:productiongruhourlyforecasts}.
-It can be noticed that it follows very accurately the signal for most of the test days, for 2 days it underestimates and for one overestimates the actual data.
-The absolute error of forecasts produced by the GRU model for the last split in comparison to the actual values is reported in figure~\ref{fig:productiongruhourlyforecastsmae}.
-It can be shown that, except for the peak when it overestimates the actual data and some other minor peaks, the error stays below 10\%.
-Finally, the scatter plot representing the error of the forecasts produced by the GRU model for the last split in comparison to the actual values is reported in figure~\ref{fig:productiongruhourlyforecastsscatterplot}.
-This scatter plot demonstrates that there is no bias and can be also noticed that when the predicted values are low also the error is limited, while when the prediction is high there are both high positive and negative errors.
 
 
 \section{Consumption baseline forecasting} 
 \label{sec:baselineval}
 \vspace{0.2 cm}
 
-The consumption data of the three customers are analyzed to get some descriptive analytics before finding adequate models to forecast the consumption baseline of each customer.
+The consumption data of the three customers are analyzed to get some descriptive analytics before finding adequate models for forecasting the consumption baseline of each customer.
 
 \begin{figure}[H]
 \begin{minipage}[b]{8.5cm}
 \centering
-\includegraphics[width=0.95\textwidth]{images/baseline/hourly_decomposition_week_period_customer1}
+\includegraphics[width=1\textwidth]{images/baseline/hourly_decomposition_week_period_customer1}
 \subcaption{First customer.}
 \label{fig:decompositioncustomer1}
 \end{minipage}
 \ \hspace{2mm} \
 \begin{minipage}[b]{8.5cm}
 \centering
-\includegraphics[width=0.95\textwidth]{images/baseline/hourly_decomposition_week_period_customer2}
+\includegraphics[width=1\textwidth]{images/baseline/hourly_decomposition_week_period_customer2}
 \subcaption{Second customer.}
 \label{fig:decompositioncustomer2}
 \end{minipage}
 \begin{minipage}[b]{17cm}
 \centering
-\includegraphics[width=0.475\textwidth]{images/baseline/hourly_decomposition_week_period_customer3}
+\includegraphics[width=0.5\textwidth]{images/baseline/hourly_decomposition_week_period_customer3}
 \subcaption{Third customer.}
 \label{fig:decompositioncustomer3}
 \end{minipage}
 \caption{The time series decompositions of the hourly consumption data of the three customers considering as period of the time series a week.}
 \end{figure}
-
-The time series decompositions using an additive model of the hourly consumption data of the three customers considering as period of the time series a week are reported in figure~\ref{fig:decompositioncustomer1}, figure~\ref{fig:decompositioncustomer2}, and figure~\ref{fig:decompositioncustomer3}.
-All three decompositions show a considerable amount of noise, which is dominant in magnitude compared to the trend and seasonality.
-For all the customers the seasonal component appears to not have a significant impact on the time series, with the exception of the second customer for which it is twice high in magnitude with respect to the others.
-The trend component has a slight impact, for the first customer it is possible to see a peak in the winter, for the second customer it is present a peak in April, and for the third customer there is not a clear trend.
 
 \begin{figure}[H]
 \begin{minipage}[b]{8.5cm}
@@ -1003,25 +1015,30 @@ The trend component has a slight impact, for the first customer it is possible t
 \begin{figure}[H]
 \begin{minipage}[b]{8.5cm}
 \centering
-\includegraphics[width=0.8\textwidth]{images/baseline/ft_hour_week_customer1}
+\includegraphics[width=0.83\textwidth]{images/baseline/ft_hour_week_customer1}
 \subcaption{First customer.}
 \label{fig:ftcustomer1}
 \end{minipage}
 \ \hspace{2mm} \
 \begin{minipage}[b]{8.5cm}
 \centering
-\includegraphics[width=0.8\textwidth]{images/baseline/ft_hour_week_customer2}
+\includegraphics[width=0.83\textwidth]{images/baseline/ft_hour_week_customer2}
 \subcaption{Second customer.}
 \label{fig:ftcustomer2}
 \end{minipage}
 \begin{minipage}[b]{17cm}
 \centering
-\includegraphics[width=0.4\textwidth]{images/baseline/ft_hour_week_customer3}
+\includegraphics[width=0.415\textwidth]{images/baseline/ft_hour_week_customer3}
 \subcaption{Third customer.}
 \label{fig:ftcustomer3}
 \end{minipage}
 \caption{The coefficients given by the Fourier transform of the hourly consumption data of the three customers.}
 \end{figure}
+
+The time series decompositions using an additive model of the hourly consumption data of the three customers considering as period of the time series a week are reported in figure~\ref{fig:decompositioncustomer1}, figure~\ref{fig:decompositioncustomer2}, and figure~\ref{fig:decompositioncustomer3}.
+All three decompositions show a considerable amount of noise, which is dominant in magnitude compared to the trend and seasonality.
+For all the customers the seasonal component does not appear to have a significant impact on the time series considering the low magnitude, and this is even more evident on the first customer whose magnitude is half compared to the others.
+The trend component has a slight impact: for the first customer it is possible to see a peak in the winter, for the second customer it is present a peak in April, and for the third customer there is no clear trend.
 
 The auto-correlations of the hourly consumption data of the three customers are reported in figure~\ref{fig:correlationcustomer1}, figure~\ref{fig:correlationcustomer2}, and figure~\ref{fig:correlationcustomer3}.
 All the customers' consumptions are not very auto-correlated, it can be shown that the maximum auto-correlation value is around 0.5 in the closest time lag and that there is a peak every 24 hours, with a slightly greater value at one week distance.
@@ -1031,8 +1048,10 @@ A reasonable balance can be achieved by incorporating the consumption data from 
 The coefficients given by the Fourier transform for the hourly consumption data of the three customers are reported in figure~\ref{fig:ftcustomer1}, figure~\ref{fig:ftcustomer2}, and figure~\ref{fig:ftcustomer3}.
 The graphical representations show for all the customers a main frequency at the daily periodicity.
 Other minor peaks are present mostly at multiples of the 1/day frequency, in particular for the third customer where the 2/day frequency is almost equal to the 1/day.
+It can be also noticed that a relevant peak at 1/week frequency is present just for the second customer.
 
 The daily consumption data of the three customers are reported in figure~\ref{fig:dataplotdaycustomer1}, figure~\ref{fig:dataplotdaycustomer2}, and figure~\ref{fig:dataplotdaycustomer3}.
+Aggregating the data on a daily basis is possible to observe a weekly pattern of consumption, which is more visible looking at the daily consumption data of the second customer.
 
 \begin{figure}[H]
 \begin{minipage}[b]{8.5cm}
@@ -1058,48 +1077,45 @@ The daily consumption data of the three customers are reported in figure~\ref{fi
 \end{figure}
 
 The time series decompositions using an additive model of the daily consumption data of the three customers considering as period of the time series a week are reported in figure~\ref{fig:decompositiondaycustomer1}, figure~\ref{fig:decompositiondaycustomer2}, and figure~\ref{fig:decompositiondaycustomer3}.
-The decomposition is consistent with the hourly aggregated consumption over the customers.
-
-The auto-correlations of the daily consumption data of the three customers are reported in figure~\ref{fig:correlationdaycustomer1},  figure~\ref{fig:correlationdaycustomer2}, and  figure~\ref{fig:correlationdaycustomer3}.
-With the daily granularity, all the customers' consumptions show a slightly high value with respect to the hourly granularity.
-It can be shown that for the first and third customers, the auto-correlation value is slightly high in the closest time lag and then decreases with the days, with a slightly greater value at one week distance.
-Instead, for the second customer the only relevant values are only at a multiple of 7 days.
-
-The coefficients given by the Fourier transform for the daily consumption data of the three customers are reported in figure~\ref{fig:ftdaycustomer1}, figure~\ref{fig:ftdaycustomer2}, and figure~\ref{fig:ftdaycustomer3}.
-The graphical representation exhibits that there are no main frequencies in the daily consumption of the first and third customers.
-Instead, for the second customer there is a small peak at the daily periodicity.
-
-As can be noticed from the data, there is high variability in consumption and low auto-correlation, this suggests how it is difficult to produce highly accurate results on a single customer level.
-With just the time series of a few users, it is very difficult to learn a well-performing model, having more users it could be possible to learn certain generic trends or standard behaviors.
-
-The basic data is enhanced with the air temperature, the apparent temperature, and the relative humidity since they are considered the only weather features capable of influencing customers' electricity consumption.
-To assess the relationship between these weather variables and the consumption of the three customers, two correlation coefficients were used: Pearson's correlation coefficient and Spearman's rank correlation coefficient.
-Pearson's correlation coefficient measures the strength of the linear relationship between two variables, while Spearman's rank correlation coefficient measures the strength of the monotonic relationship.
-The pearsonr and spearmanr methods of the SciPy library were used to compute the correlation with weather data.
+All three decompositions show a considerable amount of noise, but in contrast to the hourly granularity, it is not dominant in magnitude compared to the trend, except for the third customer where the magnitude is similar.
+For all the customers the seasonal component appears to not have a significant impact on the time series considering the low magnitude, with the exception of the second customer for which it is twice high in magnitude with respect to the others.
+The trend component has a higher impact compared to the hourly granularity, for the first customer it is possible to see a peak in the winter, for the second customer it is present a peak in April, and for the third customer there is not a clear trend.
 
 \begin{figure}[H]
 \begin{minipage}[b]{8.5cm}
 \centering
-\includegraphics[width=0.95\textwidth]{images/baseline/daily_aggregated_decomposition_customer1}
+\includegraphics[width=1\textwidth]{images/baseline/daily_aggregated_decomposition_customer1}
 \subcaption{First customer.}
 \label{fig:decompositiondaycustomer1}
 \end{minipage}
 \ \hspace{2mm} \
 \begin{minipage}[b]{8.5cm}
 \centering
-\includegraphics[width=0.95\textwidth]{images/baseline/daily_aggregated_decomposition_customer2}
+\includegraphics[width=1\textwidth]{images/baseline/daily_aggregated_decomposition_customer2}
 \subcaption{Second customer.}
 \label{fig:decompositiondaycustomer2}
 \end{minipage}
 \begin{minipage}[b]{17cm}
 \centering
-\includegraphics[width=0.475\textwidth]{images/baseline/daily_aggregated_decomposition_customer3}
+\includegraphics[width=0.5\textwidth]{images/baseline/daily_aggregated_decomposition_customer3}
 \subcaption{Third customer.}
 \label{fig:decompositiondaycustomer3}
 \end{minipage}
 \label{fig:decompositiondaycustomer}
 \caption{The time series decompositions of the daily consumption data of the three customers considering as period of the time series a week.}
 \end{figure}
+
+The auto-correlations of the daily consumption data of the three customers are reported in figure~\ref{fig:correlationdaycustomer1},  figure~\ref{fig:correlationdaycustomer2}, and  figure~\ref{fig:correlationdaycustomer3}.
+With the daily granularity, all the customers' consumptions show slightly high values with respect to the hourly granularity.
+It can be shown that for the first and third customers, the auto-correlation value is slightly high in the closest time lag and then decreases with the days, with a slightly greater value at one week distance.
+Instead, for the second customer the only relevant values are at a multiple of 7 days.
+
+The coefficients given by the Fourier transform for the daily consumption data of the three customers are reported in figure~\ref{fig:ftdaycustomer1}, figure~\ref{fig:ftdaycustomer2}, and figure~\ref{fig:ftdaycustomer3}.
+The graphical representation exhibits that there are no main frequencies in the daily consumption of the first and third customers.
+Instead, for the second customer there is a small peak at the weekly periodicity.
+
+As can be noticed from the descriptive analytics, there is high variability in the consumption of single customers and a low auto-correlation, this suggests how it is difficult to produce highly accurate results on a single customer level.
+With just the time series of a few users, it is very difficult to learn a well-performing model, having more users it could be possible to learn certain generic trends or standard behaviors.
 
 \begin{figure}[H]
 \begin{minipage}[b]{8.5cm}
@@ -1127,27 +1143,31 @@ The pearsonr and spearmanr methods of the SciPy library were used to compute the
 \begin{figure}[H]
 \begin{minipage}[b]{8.5cm}
 \centering
-\includegraphics[width=0.8\textwidth]{images/baseline/ft_day_customer1}
+\includegraphics[width=0.83\textwidth]{images/baseline/ft_day_customer1}
 \subcaption{First customer.}
 \label{fig:ftdaycustomer1}
 \end{minipage}
 \ \hspace{2mm} \
 \begin{minipage}[b]{8.5cm}
 \centering
-\includegraphics[width=0.8\textwidth]{images/baseline/ft_day_customer2}
+\includegraphics[width=0.83\textwidth]{images/baseline/ft_day_customer2}
 \subcaption{Second customer.}
 \label{fig:ftdaycustomer2}
 \end{minipage}
 \begin{minipage}[b]{17cm}
 \centering
-\includegraphics[width=0.4\textwidth]{images/baseline/ft_day_customer3}
+\includegraphics[width=0.415\textwidth]{images/baseline/ft_day_customer3}
 \subcaption{Third customer.}
 \label{fig:ftdaycustomer3}
 \end{minipage}
 \caption{The coefficients given by the Fourier transform of the daily consumption data of the three customers.}
 \end{figure}
 
-The results showed that the hourly consumption data of the three customers had:
+The basic data is enhanced with the air temperature, the apparent temperature, and the relative humidity since they are considered the only weather features capable of influencing customers' electricity consumption.
+To assess the relationship between these weather variables and the consumption of the three customers, two correlation coefficients are used: Pearson's correlation coefficient and Spearman's rank correlation coefficient.
+Pearson's correlation coefficient measures the strength of the linear relationship between two variables, while Spearman's rank correlation coefficient measures the strength of the monotonic relationship.
+The \emph{pearsonr} and \emph{spearmanr} methods of the SciPy library are used to compute the correlation with weather data.
+The results show that the hourly consumption data of the three customers presents:
 \begin{itemize}
   \item a Pearson correlation coefficient of $-0.2491$, $0.0240$, and $-0.1338$ respectively and a Spearman's rank correlation coefficient of $-0.2088$, $0.1304$, and $-0.0196$ respectively with respect to the air temperature data;
   \item a Pearson correlation coefficient of $-0.2434$, $0.0266$, and $-0.1356$ respectively and a Spearman's rank correlation coefficient of $-0.2082$, $0.1305$, and $-0.0207$ respectively with respect to the apparent temperature data;
@@ -1155,7 +1175,7 @@ The results showed that the hourly consumption data of the three customers had:
 \end{itemize}
 It can be noticed that both the coefficients indicate a weak correlation between the weather variables and the consumption of the three customers, nevertheless, it may still be useful to incorporate weather data into the prediction models since also the auto-correlation values are not particularly high.
 
-The results showed that the daily consumption data of the three customers had:
+The results show that the daily consumption data of the three customers presents:
 \begin{itemize}
   \item a Pearson correlation coefficient of $-0.5542$, $-0.2341$, and $-0.6727$ respectively and a Spearman's rank correlation coefficient of $-0.5164$, $-0.2592$, and $-0.6978$ respectively with respect to the air temperature data;
   \item a Pearson correlation coefficient of $-0.5361$, $-0.2329$, and $-0.6787$ respectively and a Spearman's rank correlation coefficient of $-0.5166$, $-0.2584$, and $-0.7004$ respectively with respect to the apparent temperature data;
@@ -1163,45 +1183,61 @@ The results showed that the daily consumption data of the three customers had:
 \end{itemize}
 It can be noticed that both the coefficients increased considering the daily data meaning that the mean weather data over the day is more correlated to the daily consumption of the three considered customers, compared to the hourly granularity.
 
-As described in Chapter~\ref{cha:implementation}, tariff granularity has also been thought of as a possible granularity.
-Tariff granularity assumes that the tariff is a control signal capable of modifying consumption.
+As described in Chapter~\ref{cha:implementation}, tariff granularity was also thought of as a possible granularity.
+In particular, tariff granularity assumes that the tariff is a control signal capable of modifying consumption.
 However, after some initial experimental results with this granularity showing unsatisfactory performance, this granularity was not further investigated.
 Though, this granularity can be investigated in a possible future work to understand whether it could be applicable to produce good results.
 
 After this data analysis, the specific parameters used in the models can be explained more in detail.
 The parameters for the different models were tested and verified on training data to result in the best-performing models, this was done by trying different values and configurations.
+
 The baseline approaches are built considering the repetition of past days and weeks since data presents a high correlation with that time instants and could lead to a reasonable baseline performance to achieve.
 Instead of just considering the one-day and one-week baselines, for this use case also the four-week and the twelve-week baselines are considered taking an average of the consumption in the specified number of previous weeks.
-This is because averaging the consumption over the previous week may lead to a more robust prediction considering a month and a trimester range,
-The SARIMA model considers the week as the period for seasonal differencing since data presents a high correlation with that time instants and the model can try to take advantage of the weekly seasonality.
-The SVR model uses a radial basis function kernel with a configuration of the C parameter (regularization parameter of squared l2 penalty) to 1.0 to penalize the complexity of the model, and the epsilon parameter defining the epsilon-tube for no penalty to 0.1 as a trade-off between accuracy and generalization.
-The hist gradient boosting regressor model uses as loss the absolute error.
-The learning rate was set to 0.1, 100 estimators were used and l2 regularization was not set.
-The parameters for tree definition are 31 as the maximum number of leaves, depth is not constrained, 20 as the minimum number of samples per leaf, and 255 as the maximum number of bins.
-For the XGBoost regressor model, tree-based models were used and the construction algorithm is automatically chosen by heuristic to choose the fastest method.
-It uses a squared loss since this was the supported metric closer to our evaluation metric.
-The learning rate was set to 0.3, 100 estimators were used and l2 regularization was set with a weight of 1.0.
-The parameters for tree definition are 6 as the maximum depth, and the maximum number of leaves is not constrained.
-The Prophet model was built keeping the default parameters for automatically detecting seasonalities and best fitting the training data.
+This is because averaging the consumption over the previous week may lead to a more robust prediction considering a month and a quarter range.
 
-The LSTM model was designed as a 2-layer model with 32 Bidirectional LSTM units in the first layer which use ReLU activation function and sigmoid as recurrent activation function with both dropout and recurrent dropout of 0.02.
+The SARIMA model considers the week as the period for seasonal differencing since data presents a good correlation with that time instants and the model can try to take advantage of the weekly seasonality.
+
+The SVR model uses a radial basis function kernel with a configuration of the C parameter (regularization parameter of squared l2 penalty) to 1.0 to penalize the complexity of the model, and the epsilon parameter defining the epsilon-tube for no penalty to 0.1 as a trade-off between accuracy and generalization.
+
+The hist gradient boosting regressor model uses as loss the absolute error.
+The learning rate is set to 0.1, 100 estimators are used and l2 regularization is not set.
+The parameters for tree definition are 31 as the maximum number of leaves, depth is not constrained, 20 as the minimum number of samples per leaf, and 255 as the maximum number of bins.
+
+For the XGBoost regressor model, tree-based models are used and the construction algorithm is automatically chosen by heuristic to choose the fastest method.
+It uses a squared loss since this was the supported metric closer to our evaluation metric.
+The learning rate is set to 0.3, 100 estimators are used and l2 regularization is set with a weight of 1.0.
+The parameters for tree definition are 6 as the maximum depth, and the maximum number of leaves is not constrained.
+
+The prophet model is built keeping the default parameters for automatically detecting seasonalities and best fitting the training data.
+
+The LSTM model is designed as a 2-layer model with 32 Bidirectional LSTM units in the first layer which use ReLU activation function and sigmoid as recurrent activation function with both dropout and recurrent dropout of 0.02.
 The second layer is composed of 16 Bidirectional LSTM units which use ReLU activation function and sigmoid as recurrent activation function without dropout and recurrent dropout.
 The output of the layer goes inside a dense unit to output the final prediction.
 The model is trained using a combination of MAE and MAPE as loss and Nadam as optimizer with a learning rate of 0.005.
 
-The GRU model was designed as a 2-layer model with 32 Bidirectional GRU units in the first layer which use ReLU activation function and sigmoid as recurrent activation function with both dropout and recurrent dropout of 0.02.
+The GRU model is designed as a 2-layer model with 32 Bidirectional GRU units in the first layer which use ReLU activation function and sigmoid as recurrent activation function with both dropout and recurrent dropout of 0.02.
 Subsequently, the second layer is composed of 16 Bidirectional GRU units which use ReLU activation function and sigmoid as recurrent activation function without dropout and recurrent dropout.
 The output of the layer goes inside a dense unit to output the final prediction.
 The model is trained using a combination of MAE and MAPE as loss and Nadam as optimizer with a learning rate of 0.005.
 
-The CNN model was designed as a 2-layer model with a first layer composed of 32 1D Convolutional units with a kernel size of 5 which uses ReLU activation function.
+The CNN model is designed as a 2-layer model with a first layer composed of 32 1D Convolutional units with a kernel size of 5 which uses ReLU activation function.
 A 1D max polling operation is applied before entering the second layer composed of 16 1D Convolutional units with a kernel size of 3 which use ReLU activation function.
 A 1D max polling operation is applied before the flattening operation and entering the final dense unit to output the final prediction.
 The model is trained using a combination of MAE and MAPE as loss and Nadam as optimizer with a learning rate of 0.005.
 
-The TFT model was configured with 2 LSTM layers with 16 as hidden size, 4 as attention size, and 8 as hidden continuous size.
+The TFT model is configured with 2 LSTM layers with 16 as hidden size, 4 as attention size, and 8 as hidden continuous size.
 The dropout is set to 0.02.
 The model is trained using MAPE as loss and Nadam as optimizer with a learning rate of 0.005.
+
+The number of splits used for the blocked k-fold cross-validation is 12 with a size of a week for each test split, namely 7 days of data.
+For the hourly granularity, the models start with the total number of entries for the customer minus 2016 entries for training and predict every time 168 entries until reaching the last prediction instant where the model has a training size of the total number of entries for the customer minus the last 168 entries.
+The results for hourly granularity for the second customer are reported in table~\ref{tab:baselinehourlyresults}.
+Entries are sorted by best MAE using the last split as the test set.
+Only this customer is reported since it presented the most promising results and the models were optimized for this customer.
+The blocked k-fold cross-validation suggests that the TFT model has the best MAPE and this is not confirmed on the last split just because there is GRU that performs slightly better in terms of MAPE.
+The not-encouraging thing is that even if it is the best model in terms of MAPE, this value is still close to 50\% indicating that on average the predictions are distant from the actual value by half of this value.
+TFT is also the best model in terms of MAE on the last split, but not on the basis of the blocked k-fold cross-validation which indicates that the best model is the hist gradient boosting regressor model.
+In general, this data is not well predictable since presents a high variability and also the different baselines confirm that having a look at the close history there is no relevant daily or weekly repetition with MAPE and MAE both higher than TFT and hist gradient boosting regressor model.
 
 % first customer
 % \begin{table}[H]
@@ -1239,7 +1275,7 @@ The model is trained using MAPE as loss and Nadam as optimizer with a learning r
 % Prophet & 215.51 $\pm$ 113.13 | 0.253 $\pm$ 0.025 & 487.29 | 0.258\\
 % \hline
 % \end{tabular}
-% \caption{Table summarizing the results for hourly granularity.}
+% \caption{Table summarizing the results in consumption baseline forecasting for the first customer with an hourly granularity.}
 % \label{tab:baselinehourlyresults}
 % \end{table}
 
@@ -1279,7 +1315,7 @@ One Day Baseline & 75.80 $\pm$ 13.96 | 0.318 $\pm$ 0.035 & 71.25 | 0.292\\
 CNN & 148.16 $\pm$ 30.05 | 0.510 $\pm$ 0.105 & 70.19 | 0.318\\
 \hline
 \end{tabular}
-\caption{Table summarizing the results for hourly granularity.}
+\caption{Table summarizing the results in consumption baseline forecasting for the second customer with an hourly granularity.}
 \label{tab:baselinehourlyresults}
 \end{table}
 
@@ -1319,39 +1355,42 @@ CNN & 148.16 $\pm$ 30.05 | 0.510 $\pm$ 0.105 & 70.19 | 0.318\\
 % CNN & 1749.85 $\pm$ 2806.48 | 2.035 $\pm$ 3.380 & 546.16 | 0.665\\  % TODO relaunch
 % \hline
 % \end{tabular}
-% \caption{Table summarizing the results for hourly granularity.}
+% \caption{Table summarizing the results in consumption baseline forecasting for the third customer with an hourly granularity.}
 % \label{tab:baselinehourlyresults}
 % \end{table}
 
-12 splits were used for block validation with a test size of a week each time, namely 7 days of data.
-For the hourly granularity, the models start with the total number of entries for the customer minus 2016 entries as training and predict every time 168 entries until reaching the last prediction instant where the model has a training size of the total number of entries for the customer minus the last 168 entries.
-The results for hourly granularity for the second customer are reported in table~\ref{tab:baselinehourlyresults}.
-Entries are sorted by best MAE using the last split as the test set.
-Only this customer is reported since it presents the best results and the models were optimized for this customer.
-The blocked k-fold cross-validation suggests that the TFT model has the best MAPE and this is not confirmed on the last split just because there is GRU that performs slightly better in terms of MAPE.
-The not-encouraging thing is that even if it is the best model in terms of MAPE, this value is still close to 50\% indicating that on average the predictions are distant from the actual value by half of this value.
-TFT is also the best approach in terms of MAE on the last split, but not on the basis of the blocked k-fold cross-validation which indicates that the best model is the hist gradient boosting regressor model.
-In general, this data is not well predictable since it presents a high variability and also the different baselines confirm that having a look at the close history there is no relevant daily or weekly repetition with MAPE and MAE both higher than TFT and hist gradient boosting regressor model.
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{images/baseline/TFT}
+\caption{The forecasts produced by the TFT model for the last split in comparison to the actual values for the second customer.}
+\label{fig:baselinetfthourlyforecasts}
+\end{figure}
 
 The AutoML approach uses the mean MAPE forecasting as loss and it is launched for 10 hours with a maximum function evaluation time of 2 hours.
 Then the best ensemble of the found models is returned and can be used to forecast.
 This approach obtained a one-week MAPE of 61.64\% and a MAE of 0.338 kWh.
 In this case, AutoML is not able to achieve very good results compared to many other models but this is probably related to the quality of the data.
-It still has great potential as demonstrated in demand prediction and potentially providing more total training time and more data, potentially also of different customers, it can be able to reach better performance.
-
-The forecasts produced by the TFT model for the last split in comparison to the actual values are reported in figure~\ref{fig:baselinetfthourlyforecasts}.
-It can be noticed that it is not able to accurately follow the signal since this is very varying from hour to hour.
-Although it is able to somehow predict that there is a peak during the day it is not able to reach the correct quantity.
+It still has great potential as demonstrated in demand forecasting and potentially by providing more total training time and more data, potentially also of different customers, it may be able to reach better performance.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=1\textwidth]{images/baseline/TFT}
-\caption{The forecasts produced by the TFT model for the last split in comparison to the actual values.}
-\label{fig:baselinetfthourlyforecasts}
+\includegraphics[width=1\textwidth]{images/baseline/TFT_mae}
+\caption{The absolute error of the forecasts produced by the TFT model for the last split in comparison to the actual values for the second customer.}
+\label{fig:baselinetfthourlyforecastsmae}
 \end{figure}
 
-The absolute error of forecasts produced by the TFT model for the last split in comparison to the actual values is reported in figure~\ref{fig:baselinetfthourlyforecastsmae}.
-While the absolute percentage error of forecasts produced by the TFT model for the last split in comparison to the actual values is reported in figure~\ref{fig:baselinetfthourlyforecastsmape}.
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{images/baseline/TFT_mape}
+\caption{The absolute percentage error of the forecasts produced by the TFT model for the last split in comparison to the actual values for the second customer.}
+\label{fig:baselinetfthourlyforecastsmape}
+\end{figure}
+
+The forecasts produced by the TFT model for the last split in comparison to the actual values are reported in figure~\ref{fig:baselinetfthourlyforecasts}.
+It can be noticed that it is not able to accurately follow the actual values since these are highly varying from hour to hour.
+Although it is able to somehow predict that there is a peak during the day it is not able to reach the correct quantity.
+The absolute error of the forecasts produced by the TFT model for the last split in comparison to the actual values is reported in figure~\ref{fig:baselinetfthourlyforecastsmae}.
+While the absolute percentage error of the forecasts produced by the TFT model for the last split in comparison to the actual values is reported in figure~\ref{fig:baselinetfthourlyforecastsmape}.
 It can be shown that the entity of the errors is quite high both in terms of absolute error and in terms of absolute percentage error.
 Moreover, the error signal seems to have some periodicity that the TFT model is not able to capture, probably due to the high variability of the data.
 Finally, the scatter plot representing the error of the forecasts produced by the TFT model for the last split in comparison to the actual values is reported in figure~\ref{fig:baselinetfthourlyforecastsscatterplot}.
@@ -1360,24 +1399,22 @@ The error can be pretty high also when the predicted values are low.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=1\textwidth]{images/baseline/TFT_mae}
-\caption{The absolute error of forecasts produced by the TFT model for the last split in comparison to the actual values.}
-\label{fig:baselinetfthourlyforecastsmae}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=1\textwidth]{images/baseline/TFT_mape}
-\caption{The absolute percentage error of forecasts produced by the TFT model for the last split in comparison to the actual values.}
-\label{fig:baselinetfthourlyforecastsmape}
-\end{figure}
-
-\begin{figure}[H]
-\centering
 \includegraphics[width=1\textwidth]{images/baseline/TFT_error_scatter_plot_predicted}
-\caption{The scatter plot representing the error of the forecasts produced by the TFT model for the last split in comparison to the actual values.}
+\caption{The scatter plot representing the error of the forecasts produced by the TFT model for the last split in comparison to the actual values for the second customer.}
 \label{fig:baselinetfthourlyforecastsscatterplot}
 \end{figure}
+
+For the daily granularity, the models start with the total number of entries for the customer minus 84 entries for training and predict every time 30 entries until reaching the last prediction instant where the model has a training size of the total number of entries for the customer minus the last 7 entries.
+The results for daily granularity for the second customer are reported in table~\ref{tab:baselinedailyresults}.
+In this case, TFT is no longer the best-performing model, probably due to the fact of 24 times less quantity of data due to the daily granularity.
+Though, it is still a well-performing model on both blocked k-fold cross-validation and last split results.
+The four-week baseline and the one-week baseline models perform better in terms of the last split MAE.
+This gives an indication of how with a low amount of data a simple baseline may provide reasonable results and on average they perform better than sophisticated models since these models are not able to be trained well due to the low amount and irregular pattern of this data.
+Looking at the last split MAPE instead the CNN model outperforms the other models even though by less than a percentage point.
+Actually, in terms of blocked k-fold validation, it results to be the worst in both MAPE and MAE but on the last splits it recovers, probably the increase of data leads this model to a significant improvement.
+Also, the SARIMA and hist gradient boosting regressor models present good results on the last time split and also on the blocked k-fold validation showing consistency over time and good results also with few training data.
+Instead, the AutoML approach obtained a one-week MAPE of 19.88\% and a MAE of 2.197 kWh.
+As for demand prediction, AutoML does not present very good results probably due to the scarcity of training data and the fact of AutoML of trying very complex architectures when also simple ones may work well in certain cases.
 
 % first customer
 % \begin{table}[H]
@@ -1415,7 +1452,7 @@ The error can be pretty high also when the predicted values are low.
 % 12 Week Baseline & 64.66 $\pm$ 61.13 | 2.832 $\pm$ 1.158 & 233.05 | 4.945\\
 % \hline
 % \end{tabular}
-% \caption{Table summarizing the results for daily granularity.}
+% \caption{Table summarizing the results in consumption baseline forecasting for the first customer with a daily granularity.}
 % \label{tab:baselinedailyresults}
 % \end{table}
 
@@ -1454,7 +1491,7 @@ Prophet & 17.36 $\pm$ 5.18 | 1.947 $\pm$ 0.426 & 25.45 | 2.458\\
 SVR & 18.10 $\pm$ 3.24 | 2.449 $\pm$ 0.552 & 23.44 | 2.694\\
 \hline
 \end{tabular}
-\caption{Table summarizing the results for daily granularity.}
+\caption{Table summarizing the results in consumption baseline forecasting for the second customer with a daily granularity.}
 \label{tab:baselinedailyresults}
 \end{table}
 
@@ -1494,47 +1531,34 @@ SVR & 18.10 $\pm$ 3.24 | 2.449 $\pm$ 0.552 & 23.44 | 2.694\\
 % SVR & 199.33 $\pm$ 179.16 | 6.763 $\pm$ 2.162 & 158.47 | 6.146\\
 % \hline
 % \end{tabular}
-% \caption{Table summarizing the results for daily granularity.}
+% \caption{Table summarizing the results in consumption baseline forecasting for the third customer with a daily granularity.}
 % \label{tab:baselinedailyresults}
 % \end{table}
-
-For the daily granularity, the models start with the total number of entries for the customer minus 84 entries as training and predict every time 30 entries until reaching the last prediction instant where the model has a training size of the total number of entries for the customer minus the last 7 entries.
-The results for daily granularity for the second customer are reported in table~\ref{tab:baselinedailyresults}.
-In this case, TFT is no longer the best-performing model, probably due to the fact of 24 times less quantity of data due to the daily granularity.
-Though, it is still a well-performing model on both blocked k-fold cross-validation and last split results.
-The four-week baseline and the one-week baseline models perform better in terms of the last split MAE.
-This gives an indication of how with a low amount of data a simple baseline may provide reasonable results and on average they perform better than sophisticated models since these models are not able to be trained well due to the low amount and irregular pattern of this data.
-Looking at the last split MAPE instead the CNN outperforms the other models even though by less than a percentage point.
-Actually, in terms of blocked k-fold validation, it results to be the worst in both MAPE and MAE but on the last split it recovers, probably the increase of data lead to a significant improvement to this model.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{images/baseline/baseline_average_4_weeks_daily_aggregated}
-\caption{The forecasts produced by the four-week baseline for the last split in comparison to the actual values.}
+\caption{The forecasts produced by the four-week baseline for the last split in comparison to the actual values for the second customer.}
 \label{fig:baseline4weeksdailyforecasts}
 \end{figure}
+
+The forecasts produced by the four-week baseline for the last split in comparison to the actual values are reported in figure~\ref{fig:baseline4weeksdailyforecasts}.
+It can be noticed that it accurately follows the actual values meaning that this baseline can provide a good indication of what will be the daily consumption for this customer.
+The absolute error of the forecasts produced by the four-week baseline for the last split in comparison to the actual values is reported in figure~\ref{fig:baseline4weeksdailyforecastsmae}.
+While the absolute percentage error of the forecasts produced by the four-week baseline for the last split in comparison to the actual values is reported in figure~\ref{fig:baseline4weeksdailyforecastsmape}.
+It can be seen that the error increases until the third day, then decreases and grows exponentially on the last day both in terms of absolute error and in terms of absolute percentage error.
+This confirms that there is no clear pattern in the daily consumption of a single customer and it really depends on the customer, its overall daily consumption can be very different also on the same day of the week, although the four-week average seems to capture some basic information about the daily consumption.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{images/baseline/baseline_average_4_weeks_daily_aggregated_mae}
-\caption{The absolute error of forecasts produced by the four-week baseline for the last split in comparison to the actual values.}
+\caption{The absolute error of the forecasts produced by the four-week baseline for the last split in comparison to the actual values for the second customer.}
 \label{fig:baseline4weeksdailyforecastsmae}
 \end{figure}
-
-Also, the SARIMA and hist gradient boosting regressor models present good results on the last time split and also on the blocked k-fold validation showing consistency over time and good results also with few training data.
-Instead, the AutoML approach obtained a one-week MAPE of 19.88\% and a MAE of 2.197 kWh.
-As for demand prediction, AutoML presents not very good results probably due to the scarcity of training data and the fact of AutoML of trying very complex architectures when also simple ones may work well in certain cases.
-
-The forecasts produced by the four-week baseline for the last split in comparison to the actual values are reported in figure~\ref{fig:baseline4weeksdailyforecasts}.
-It can be noticed that it accurately follows the signal meaning that this baseline can provide a good indication of what will be the daily consumption for this customer.
-The absolute error of forecasts produced by the four-week baseline for the last split in comparison to the actual values is reported in figure~\ref{fig:baseline4weeksdailyforecastsmae}.
-While the absolute percentage error of forecasts produced by the four-week baseline for the last split in comparison to the actual values is reported in figure~\ref{fig:baseline4weeksdailyforecastsmape}.
-It can be seen that the error increases until the third day, then decreases and explodes on the last day both in terms of absolute error and in terms of absolute percentage error.
-This confirms that there is no clear pattern and it really depends on the customer's overall daily consumption, which can be very different also on the same day of the week, although the four-week average does seem to capture some basic information about consumption.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{images/baseline/baseline_average_4_weeks_daily_aggregated_mape}
-\caption{The absolute percentage error of forecasts produced by the four-week baseline for the last split in comparison to the actual values.}
+\caption{The absolute percentage error of the forecasts produced by the four-week baseline for the last split in comparison to the actual values for the second customer.}
 \label{fig:baseline4weeksdailyforecastsmape}
 \end{figure}
